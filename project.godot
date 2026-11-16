@@ -13,14 +13,14 @@ config_version=5
 config/name="Balance"
 config/description="RTS/RPG tribute to Dune II"
 config/version="0.1.0"
-run/main_scene="res://scenes/maps/desert_mission_1_2d.tscn"
+run/main_scene="res://scenes/maps/desert_canyon_playable.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1024
-window/size/viewport_height=709
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
 [rendering]

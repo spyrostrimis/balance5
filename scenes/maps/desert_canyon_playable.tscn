@@ -1,0 +1,151 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_approach_rpg_albedo.png" id="1_lw7lc"]
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_approach_rpg_normal.png" id="2_r2b24"]
+[ext_resource type="Script" path="res://scripts/blue_commander_player.gd" id="3_ud8bd"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_commander_shadow.png" id="4_irw4u"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_commander_rpg.png" id="5_d7866"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_commander_rpg_normal.png" id="6_j2hrr"]
+[ext_resource type="Texture2D" path="res://assets/textures/effects/light_radial.png" id="7_11ymf"]
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_approach_rpg_foreground.png" id="8_hg2o3"]
+[ext_resource type="Shader" path="res://assets/shaders/god_rays.gdshader" id="9_h4u72"]
+[ext_resource type="Script" path="res://scripts/rpg_camera_parallax.gd" id="10_yf1k3"]
+[ext_resource type="Shader" path="res://assets/shaders/tilt_shift_hd2d.gdshader" id="11_s7rlk"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_fcfrg"]
+diffuse_texture = ExtResource("1_lw7lc")
+normal_texture = ExtResource("2_r2b24")
+specular_shininess = 0.25
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gk57r"]
+radius = 14.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0knqx"]
+diffuse_texture = ExtResource("5_d7866")
+normal_texture = ExtResource("6_j2hrr")
+specular_shininess = 0.35
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mk0qq"]
+shader = ExtResource("9_h4u72")
+shader_parameter/angle = -0.42
+shader_parameter/ray_density = 14.0
+shader_parameter/ray_speed = 0.12
+shader_parameter/ray_intensity = 0.2
+shader_parameter/ray_color = Color(1, 0.92, 0.72, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wk374"]
+shader = ExtResource("11_s7rlk")
+shader_parameter/focal_position_y = 0.58
+shader_parameter/focal_width = 0.22
+shader_parameter/blur_amount = 3.2
+shader_parameter/vignette_strength = 0.2
+shader_parameter/warm_tint = Color(1.02, 1, 0.98, 1)
+
+[node name="DesertCanyonPlayable" type="Node2D" unique_id=998460788]
+
+[node name="TerrainBackground" type="Sprite2D" parent="." unique_id=1157579578]
+texture = SubResource("CanvasTexture_fcfrg")
+centered = false
+
+[node name="CanyonWallsCollision" type="StaticBody2D" parent="." unique_id=1446194895]
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="CanyonWallsCollision" unique_id=1359242145]
+polygon = PackedVector2Array(0, 0, 620, 0, 600, 260, 530, 420, 480, 560, 380, 768, 0, 768)
+
+[node name="RightWall" type="CollisionPolygon2D" parent="CanyonWallsCollision" unique_id=727110167]
+polygon = PackedVector2Array(730, 0, 1376, 0, 1376, 768, 950, 768, 850, 600, 780, 420, 720, 260)
+
+[node name="BlueCommander" type="CharacterBody2D" parent="." unique_id=1703875123]
+z_index = 2
+position = Vector2(650, 480)
+script = ExtResource("3_ud8bd")
+
+[node name="FeetCollision" type="CollisionShape2D" parent="BlueCommander" unique_id=83975436]
+shape = SubResource("CircleShape2D_gk57r")
+
+[node name="ContactShadow" type="Sprite2D" parent="BlueCommander" unique_id=699753542]
+modulate = Color(0.15, 0.1, 0.08, 0.75)
+position = Vector2(-8, 5)
+scale = Vector2(0.9, 0.45)
+texture = ExtResource("4_irw4u")
+
+[node name="FootstepDust" type="CPUParticles2D" parent="BlueCommander" unique_id=1758028177]
+position = Vector2(0, 8)
+emitting = false
+lifetime = 0.4
+direction = Vector2(0, -1)
+gravity = Vector2(0, 20)
+initial_velocity_min = 10.0
+initial_velocity_max = 25.0
+scale_amount_max = 2.5
+color = Color(0.85, 0.72, 0.52, 0.6)
+
+[node name="CommanderSprite" type="Sprite2D" parent="BlueCommander" unique_id=101942129]
+scale = Vector2(0.13, 0.13)
+texture = SubResource("CanvasTexture_0knqx")
+offset = Vector2(0, -540)
+
+[node name="GauntletGlow" type="PointLight2D" parent="BlueCommander" unique_id=2054657035]
+position = Vector2(28, -75)
+color = Color(0.15, 0.95, 0.85, 1)
+energy = 1.1
+texture = ExtResource("7_11ymf")
+texture_scale = 0.65
+
+[node name="ForegroundCliffs" type="Sprite2D" parent="." unique_id=1252052776]
+z_index = 4
+texture = ExtResource("8_hg2o3")
+centered = false
+
+[node name="SunLight2D" type="DirectionalLight2D" parent="." unique_id=1386991765]
+rotation = -0.61086524
+color = Color(1, 0.95, 0.85, 1)
+energy = 0.35
+height = 0.6
+
+[node name="ExitHorizonGlow" type="PointLight2D" parent="." unique_id=1118212298]
+position = Vector2(688, 180)
+color = Color(1, 0.82, 0.48, 1)
+energy = 0.9
+texture = ExtResource("7_11ymf")
+texture_scale = 3.5
+
+[node name="GodRaysOverlay" type="ColorRect" parent="." unique_id=1252134582]
+z_index = 6
+material = SubResource("ShaderMaterial_mk0qq")
+offset_right = 1376.0
+offset_bottom = 768.0
+
+[node name="DustMotes" type="CPUParticles2D" parent="." unique_id=162839950]
+z_index = 7
+position = Vector2(688, 384)
+amount = 45
+lifetime = 6.0
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(650, 350)
+direction = Vector2(-0.8, 0.3)
+spread = 25.0
+gravity = Vector2(-2, 1)
+initial_velocity_min = 8.0
+initial_velocity_max = 20.0
+scale_amount_min = 1.5
+scale_amount_max = 3.5
+color = Color(1, 0.94, 0.78, 0.55)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=211990651]
+position = Vector2(650, 480)
+zoom = Vector2(1.18, 1.18)
+position_smoothing_enabled = true
+script = ExtResource("10_yf1k3")
+target_path = NodePath("../BlueCommander")
+foreground_path = NodePath("../ForegroundCliffs")
+horizon_glow_path = NodePath("../ExitHorizonGlow")
+post_processing_path = NodePath("../PostProcessing/TiltShiftDof")
+
+[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=1800398040]
+
+[node name="TiltShiftDof" type="ColorRect" parent="PostProcessing" unique_id=1625716826]
+material = SubResource("ShaderMaterial_wk374")
+offset_right = 1376.0
+offset_bottom = 768.0

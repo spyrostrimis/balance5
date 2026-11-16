@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_mission_1_clean_albedo.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_mission_1_clean_normal.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/effects/light_radial.png" id="3"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_1"]
+diffuse_texture = ExtResource("1")
+normal_texture = ExtResource("2")
+specular_shininess = 0.2
+
+[node name="DesertMission1_2D" type="Node2D"]
+
+[node name="MapBackground" type="Sprite2D" parent="."]
+texture = SubResource("CanvasTexture_1")
+centered = false
+
+[node name="OrichalcumGlow" type="PointLight2D" parent="."]
+position = Vector2(495, 360)
+color = Color(1, 0.82, 0.3, 1)
+energy = 1.6
+texture = ExtResource("3")
+texture_scale = 1.2
+
+[node name="RTSCamera" type="Camera2D" parent="."]
+position = Vector2(512, 355)

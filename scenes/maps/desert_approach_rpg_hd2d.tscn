@@ -1,0 +1,75 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_approach_rpg_albedo.png" id="1_qpnfr"]
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_approach_rpg_normal.png" id="2_dnlrn"]
+[ext_resource type="Texture2D" path="res://assets/textures/effects/light_radial.png" id="3_4db1d"]
+[ext_resource type="Shader" path="res://assets/shaders/god_rays.gdshader" id="4_dv7hn"]
+[ext_resource type="Shader" path="res://assets/shaders/tilt_shift_hd2d.gdshader" id="5_w5mqh"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bu4g3"]
+diffuse_texture = ExtResource("1_qpnfr")
+normal_texture = ExtResource("2_dnlrn")
+specular_shininess = 0.25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpbwa"]
+shader = ExtResource("4_dv7hn")
+shader_parameter/angle = -0.42
+shader_parameter/ray_density = 14.0
+shader_parameter/ray_speed = 0.12
+shader_parameter/ray_intensity = 0.22
+shader_parameter/ray_color = Color(1, 0.92, 0.72, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s4n47"]
+shader = ExtResource("5_w5mqh")
+shader_parameter/focal_position_y = 0.58
+shader_parameter/focal_width = 0.22
+shader_parameter/blur_amount = 2.8
+shader_parameter/vignette_strength = 0.22
+shader_parameter/warm_tint = Color(1.02, 1, 0.97, 1)
+
+[node name="DesertApproachRPG" type="Node2D" unique_id=183109733]
+
+[node name="TerrainBackground" type="Sprite2D" parent="." unique_id=1304141056]
+texture = SubResource("CanvasTexture_bu4g3")
+centered = false
+
+[node name="SunLight2D" type="DirectionalLight2D" parent="." unique_id=827708745]
+rotation = -0.61086524
+color = Color(1, 0.95, 0.85, 1)
+energy = 0.35
+height = 0.6
+
+[node name="ExitHorizonGlow" type="PointLight2D" parent="." unique_id=1498307746]
+position = Vector2(688, 180)
+color = Color(1, 0.82, 0.48, 1)
+energy = 0.9
+texture = ExtResource("3_4db1d")
+texture_scale = 3.5
+
+[node name="GodRaysOverlay" type="ColorRect" parent="." unique_id=1041103376]
+material = SubResource("ShaderMaterial_bpbwa")
+offset_right = 1376.0
+offset_bottom = 768.0
+
+[node name="DustMotes" type="CPUParticles2D" parent="." unique_id=462901461]
+position = Vector2(688, 384)
+amount = 45
+lifetime = 6.0
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(650, 350)
+direction = Vector2(-0.8, 0.3)
+spread = 25.0
+gravity = Vector2(-2, 1)
+initial_velocity_min = 8.0
+initial_velocity_max = 20.0
+scale_amount_min = 1.5
+scale_amount_max = 3.5
+color = Color(1, 0.94, 0.78, 0.55)
+
+[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=260264519]
+
+[node name="TiltShiftDof" type="ColorRect" parent="PostProcessing" unique_id=614794441]
+material = SubResource("ShaderMaterial_s4n47")
+offset_right = 1376.0
+offset_bottom = 768.0

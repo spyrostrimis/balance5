@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=8 format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/desert_terrain.gdshader" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/splatmap.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/sand_albedo.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/sand_normal.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/rock_albedo.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/rock_normal.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/flagstone_albedo.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/flagstone_normal.png" id="8"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/splatmap = ExtResource("2")
+shader_parameter/sand_albedo = ExtResource("3")
+shader_parameter/sand_normal = ExtResource("4")
+shader_parameter/rock_albedo = ExtResource("5")
+shader_parameter/rock_normal = ExtResource("6")
+shader_parameter/path_albedo = ExtResource("7")
+shader_parameter/path_normal = ExtResource("8")
+shader_parameter/uv_scale_sand = Vector2(1.2, 1.2)
+shader_parameter/uv_scale_rock = Vector2(8, 8)
+shader_parameter/uv_scale_path = Vector2(18, 18)
+shader_parameter/dune_height_scale = 0.65
+shader_parameter/rock_height_scale = 0.90

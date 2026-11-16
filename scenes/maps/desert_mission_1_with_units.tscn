@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_mission_1_clean_albedo.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/effects/light_radial.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_tank.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_infantry_squad.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_buggy.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/red_harvester.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/red_buggy_road.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/red_commander_squad.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/red_tank.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/red_buggy_sand.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/turret.png" id="11"]
+
+[node name="DesertMission1_WithUnits" type="Node2D"]
+
+[node name="MapBackground" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false
+
+[node name="OrichalcumGlow" type="PointLight2D" parent="."]
+position = Vector2(495, 360)
+color = Color(1, 0.82, 0.3, 1)
+energy = 1.6
+texture = ExtResource("2")
+texture_scale = 1.2
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="BlueForces" type="Node2D" parent="Units"]
+
+[node name="BlueTank" type="Sprite2D" parent="Units/BlueForces"]
+position = Vector2(170, 222)
+texture = ExtResource("3")
+
+[node name="BlueInfantry" type="Sprite2D" parent="Units/BlueForces"]
+position = Vector2(265, 255)
+texture = ExtResource("4")
+
+[node name="BlueBuggy" type="Sprite2D" parent="Units/BlueForces"]
+position = Vector2(340, 288)
+texture = ExtResource("5")
+
+[node name="RedForces" type="Node2D" parent="Units"]
+
+[node name="RedHarvester" type="Sprite2D" parent="Units/RedForces"]
+position = Vector2(624, 370)
+texture = ExtResource("6")
+
+[node name="RedBuggyRoad" type="Sprite2D" parent="Units/RedForces"]
+position = Vector2(674, 474)
+texture = ExtResource("7")
+
+[node name="RedCommanderSquad" type="Sprite2D" parent="Units/RedForces"]
+position = Vector2(716, 510)
+texture = ExtResource("8")
+
+[node name="RedTank" type="Sprite2D" parent="Units/RedForces"]
+position = Vector2(826, 566)
+texture = ExtResource("9")
+
+[node name="RedBuggySand" type="Sprite2D" parent="Units/RedForces"]
+position = Vector2(830, 292)
+texture = ExtResource("10")
+
+[node name="Turret" type="Sprite2D" parent="Units/RedForces"]
+position = Vector2(940, 178)
+texture = ExtResource("11")
+
+[node name="RTSCamera" type="Camera2D" parent="."]
+position = Vector2(512, 355)

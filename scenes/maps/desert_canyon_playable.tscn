@@ -18,7 +18,7 @@ normal_texture = ExtResource("2_r2b24")
 specular_shininess = 0.25
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gk57r"]
-radius = 14.0
+radius = 12.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_0knqx"]
 diffuse_texture = ExtResource("5_d7866")
@@ -41,35 +41,35 @@ shader_parameter/blur_amount = 3.2
 shader_parameter/vignette_strength = 0.2
 shader_parameter/warm_tint = Color(1.02, 1, 0.98, 1)
 
-[node name="DesertCanyonPlayable" type="Node2D" unique_id=998460788]
+[node name="DesertCanyonPlayable" type="Node2D" unique_id=945797928]
 
-[node name="TerrainBackground" type="Sprite2D" parent="." unique_id=1157579578]
+[node name="TerrainBackground" type="Sprite2D" parent="." unique_id=56250959]
 texture = SubResource("CanvasTexture_fcfrg")
 centered = false
 
-[node name="CanyonWallsCollision" type="StaticBody2D" parent="." unique_id=1446194895]
+[node name="CanyonWallsCollision" type="StaticBody2D" parent="." unique_id=105768151]
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="CanyonWallsCollision" unique_id=1359242145]
-polygon = PackedVector2Array(0, 0, 620, 0, 600, 260, 530, 420, 480, 560, 380, 768, 0, 768)
+[node name="LeftWall" type="CollisionPolygon2D" parent="CanyonWallsCollision" unique_id=1376193005]
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 175, 620, 240, 595, 310, 535, 420, 480, 560, 380, 768, 0, 768)
 
-[node name="RightWall" type="CollisionPolygon2D" parent="CanyonWallsCollision" unique_id=727110167]
-polygon = PackedVector2Array(730, 0, 1376, 0, 1376, 768, 950, 768, 850, 600, 780, 420, 720, 260)
+[node name="RightWall" type="CollisionPolygon2D" parent="CanyonWallsCollision" unique_id=863844859]
+polygon = PackedVector2Array(725, 0, 1376, 0, 1376, 768, 950, 768, 850, 600, 780, 420, 725, 310, 720, 240, 725, 175)
 
-[node name="BlueCommander" type="CharacterBody2D" parent="." unique_id=1703875123]
+[node name="BlueCommander" type="CharacterBody2D" parent="." unique_id=1319692762]
 z_index = 2
 position = Vector2(650, 480)
 script = ExtResource("3_ud8bd")
 
-[node name="FeetCollision" type="CollisionShape2D" parent="BlueCommander" unique_id=83975436]
+[node name="FeetCollision" type="CollisionShape2D" parent="BlueCommander" unique_id=2106273682]
 shape = SubResource("CircleShape2D_gk57r")
 
-[node name="ContactShadow" type="Sprite2D" parent="BlueCommander" unique_id=699753542]
+[node name="ContactShadow" type="Sprite2D" parent="BlueCommander" unique_id=1516243405]
 modulate = Color(0.15, 0.1, 0.08, 0.75)
 position = Vector2(-8, 5)
 scale = Vector2(0.9, 0.45)
 texture = ExtResource("4_irw4u")
 
-[node name="FootstepDust" type="CPUParticles2D" parent="BlueCommander" unique_id=1758028177]
+[node name="FootstepDust" type="CPUParticles2D" parent="BlueCommander" unique_id=1110526343]
 position = Vector2(0, 8)
 emitting = false
 lifetime = 0.4
@@ -80,43 +80,42 @@ initial_velocity_max = 25.0
 scale_amount_max = 2.5
 color = Color(0.85, 0.72, 0.52, 0.6)
 
-[node name="CommanderSprite" type="Sprite2D" parent="BlueCommander" unique_id=101942129]
+[node name="CommanderSprite" type="Sprite2D" parent="BlueCommander" unique_id=1570127386]
 scale = Vector2(0.13, 0.13)
 texture = SubResource("CanvasTexture_0knqx")
 offset = Vector2(0, -540)
 
-[node name="GauntletGlow" type="PointLight2D" parent="BlueCommander" unique_id=2054657035]
+[node name="GauntletGlow" type="PointLight2D" parent="BlueCommander" unique_id=1934420632]
 position = Vector2(28, -75)
 color = Color(0.15, 0.95, 0.85, 1)
 energy = 1.1
 texture = ExtResource("7_11ymf")
 texture_scale = 0.65
 
-[node name="ForegroundCliffs" type="Sprite2D" parent="." unique_id=1252052776]
+[node name="ForegroundCliffs" type="Sprite2D" parent="." unique_id=1684017800]
 z_index = 4
 texture = ExtResource("8_hg2o3")
 centered = false
 
-[node name="SunLight2D" type="DirectionalLight2D" parent="." unique_id=1386991765]
+[node name="SunLight2D" type="DirectionalLight2D" parent="." unique_id=1817801045]
 rotation = -0.61086524
 color = Color(1, 0.95, 0.85, 1)
 energy = 0.35
 height = 0.6
 
-[node name="ExitHorizonGlow" type="PointLight2D" parent="." unique_id=1118212298]
-position = Vector2(688, 180)
-color = Color(1, 0.82, 0.48, 1)
-energy = 0.9
+[node name="ExitHorizonGlow" type="PointLight2D" parent="." unique_id=281279684]
+position = Vector2(688, 160)
+color = Color(1, 0.84, 0.5, 1)
 texture = ExtResource("7_11ymf")
-texture_scale = 3.5
+texture_scale = 3.8
 
-[node name="GodRaysOverlay" type="ColorRect" parent="." unique_id=1252134582]
+[node name="GodRaysOverlay" type="ColorRect" parent="." unique_id=1312548753]
 z_index = 6
 material = SubResource("ShaderMaterial_mk0qq")
 offset_right = 1376.0
 offset_bottom = 768.0
 
-[node name="DustMotes" type="CPUParticles2D" parent="." unique_id=162839950]
+[node name="DustMotes" type="CPUParticles2D" parent="." unique_id=1144751017]
 z_index = 7
 position = Vector2(688, 384)
 amount = 45
@@ -133,7 +132,7 @@ scale_amount_min = 1.5
 scale_amount_max = 3.5
 color = Color(1, 0.94, 0.78, 0.55)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=211990651]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=859260963]
 position = Vector2(650, 480)
 zoom = Vector2(1.18, 1.18)
 position_smoothing_enabled = true
@@ -143,9 +142,9 @@ foreground_path = NodePath("../ForegroundCliffs")
 horizon_glow_path = NodePath("../ExitHorizonGlow")
 post_processing_path = NodePath("../PostProcessing/TiltShiftDof")
 
-[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=1800398040]
+[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=812436299]
 
-[node name="TiltShiftDof" type="ColorRect" parent="PostProcessing" unique_id=1625716826]
+[node name="TiltShiftDof" type="ColorRect" parent="PostProcessing" unique_id=1925269034]
 material = SubResource("ShaderMaterial_wk374")
 offset_right = 1376.0
 offset_bottom = 768.0

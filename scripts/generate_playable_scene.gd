@@ -2,7 +2,7 @@
 extends SceneTree
 
 func _init():
-	print("Generating Playable Desert Canyon Scene...")
+	print("Generating Enhanced Playable Desert Canyon Scene (Step 1)...")
 	var root = Node2D.new()
 	root.name = "DesertCanyonPlayable"
 
@@ -35,21 +35,22 @@ func _init():
 	root.add_child(terrain)
 	terrain.owner = root
 
-	# ─── 2. Canyon Cliff Collision Boundaries ───
-	# Stops Commander from walking up sheer vertical cliffs, guiding her down the stone trail
+	# ─── 2. Canyon Cliff Collision Boundaries (Funneling up to Opening) ───
 	var walls_body = StaticBody2D.new()
 	walls_body.name = "CanyonWallsCollision"
 	root.add_child(walls_body)
 	walls_body.owner = root
 
-	# Left Wall Collision Polygon
+	# Left Wall Collision Polygon (Funneling up to the canyon opening ledge at Y=178)
 	var col_left = CollisionPolygon2D.new()
 	col_left.name = "LeftWall"
 	var pts_l = PackedVector2Array([
 		Vector2(0, 0),
-		Vector2(620, 0),
-		Vector2(600, 260),
-		Vector2(530, 420),
+		Vector2(640, 0),
+		Vector2(640, 175),
+		Vector2(620, 240),
+		Vector2(595, 310),
+		Vector2(535, 420),
 		Vector2(480, 560),
 		Vector2(380, 768),
 		Vector2(0, 768)
@@ -62,13 +63,15 @@ func _init():
 	var col_right = CollisionPolygon2D.new()
 	col_right.name = "RightWall"
 	var pts_r = PackedVector2Array([
-		Vector2(730, 0),
+		Vector2(725, 0),
 		Vector2(1376, 0),
 		Vector2(1376, 768),
 		Vector2(950, 768),
 		Vector2(850, 600),
 		Vector2(780, 420),
-		Vector2(720, 260)
+		Vector2(725, 310),
+		Vector2(720, 240),
+		Vector2(725, 175)
 	])
 	col_right.polygon = pts_r
 	walls_body.add_child(col_right)
@@ -87,7 +90,7 @@ func _init():
 	var player_col = CollisionShape2D.new()
 	player_col.name = "FeetCollision"
 	var circle_shape = CircleShape2D.new()
-	circle_shape.radius = 14.0
+	circle_shape.radius = 12.0
 	player_col.shape = circle_shape
 	player.add_child(player_col)
 	player_col.owner = root
@@ -151,7 +154,7 @@ func _init():
 	fg_sprite.texture = fg_map
 	fg_sprite.centered = false
 	fg_sprite.position = Vector2(0, 0)
-	fg_sprite.z_index = 4 # Above player so player walks behind foreground rocks
+	fg_sprite.z_index = 4
 	root.add_child(fg_sprite)
 	fg_sprite.owner = root
 
@@ -168,10 +171,10 @@ func _init():
 	var exit_light = PointLight2D.new()
 	exit_light.name = "ExitHorizonGlow"
 	exit_light.texture = radial_light
-	exit_light.texture_scale = 3.5
-	exit_light.color = Color(1.0, 0.82, 0.48, 1.0)
-	exit_light.energy = 0.9
-	exit_light.position = Vector2(688, 180)
+	exit_light.texture_scale = 3.8
+	exit_light.color = Color(1.0, 0.84, 0.50, 1.0)
+	exit_light.energy = 1.0
+	exit_light.position = Vector2(688, 160) # Positioned right at the sunlit canyon mouth!
 	root.add_child(exit_light)
 	exit_light.owner = root
 
@@ -212,12 +215,12 @@ func _init():
 	root.add_child(dust)
 	dust.owner = root
 
-	# ─── 7. Smooth Tracking Camera with 2.5D Parallax ───
+	# ─── 7. Smooth Tracking Camera with Dynamic Zoom & Parallax ───
 	var cam = Camera2D.new()
 	cam.name = "Camera2D"
 	cam.set_script(script_camera)
 	cam.position = Vector2(650, 480)
-	cam.zoom = Vector2(1.18, 1.18) # Subtle zoom for cinematic panning
+	cam.zoom = Vector2(1.18, 1.18)
 	cam.position_smoothing_enabled = true
 	cam.position_smoothing_speed = 5.0
 	cam.set("target_path", NodePath("../BlueCommander"))
@@ -247,7 +250,7 @@ func _init():
 	post_layer.add_child(tilt_rect)
 	tilt_rect.owner = root
 
-	# ─── Save Scene ───
+	# ─── 9. Save Scene ───
 	var scene = PackedScene.new()
 	var err = scene.pack(root)
 	if err == OK:

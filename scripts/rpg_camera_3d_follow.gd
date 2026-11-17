@@ -1,24 +1,32 @@
 extends Camera3D
 
 @export var target_path: NodePath = NodePath("../BlueCommander")
-@export var follow_offset: Vector3 = Vector3(0.0, 2.1, 4.2)
-@export var look_ahead_dist: float = 3.8
-@export var follow_smooth_speed: float = 6.0
+@export var follow_offset: Vector3 = Vector3(0.0, 3.8, 12.6)
+@export var fixed_pitch_deg: float = -13.0
+@export var x_follow_factor: float = 0.35
+@export var follow_smooth_speed: float = 6.5
 
-var target: Node3D
+var _target: Node3D = null
 
-func _ready():
-	fov = 42.0
-	if has_node(target_path):
-		target = get_node(target_path) as Node3D
-		if target:
-			global_position = target.global_position + follow_offset
-			var look_at_pt = target.global_position + Vector3(0.0, 1.15, -look_ahead_dist)
-			look_at(look_at_pt, Vector3.UP)
 
-func _process(delta: float):
-	if target:
-		var desired_pos = target.global_position + follow_offset
-		global_position = global_position.lerp(desired_pos, clamp(follow_smooth_speed * delta, 0.0, 1.0))
-		var look_at_pt = target.global_position + Vector3(0.0, 1.15, -look_ahead_dist)
-		look_at(look_at_pt, Vector3.UP)
+func _ready() -> void:
+	fov = 30.0
+	rotation_degrees = Vector3(fixed_pitch_deg, 0.0, 0.0)
+	_target = get_node_or_null(target_path) as Node3D
+	if _target:
+		global_position = _desired_position()
+
+
+func _desired_position() -> Vector3:
+	return Vector3(
+		_target.global_position.x * x_follow_factor,
+		follow_offset.y,
+		_target.global_position.z + follow_offset.z
+	)
+
+
+func _process(delta: float) -> void:
+	if _target == null:
+		return
+	global_position = global_position.lerp(_desired_position(), clampf(delta * follow_smooth_speed, 0.0, 1.0))
+	rotation_degrees = Vector3(fixed_pitch_deg, 0.0, 0.0)

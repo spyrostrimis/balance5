@@ -1,0 +1,35 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_true_3d.tscn" id="1_d4b"]
+[ext_resource type="Shader" path="res://assets/shaders/hd2d_canyon_ground.gdshader" id="2_ground"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_cobble_albedo.png" id="3_cobble"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_cobble_normal.png" id="4_cobble_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_albedo.png" id="5_sand"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_normal.png" id="6_sand_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_albedo.png" id="7_dune"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_normal.png" id="8_dune_normal"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ground_diagnostic"]
+resource_local_to_scene = true
+shader = ExtResource("2_ground")
+shader_parameter/cobble_tex = ExtResource("3_cobble")
+shader_parameter/cobble_norm = ExtResource("4_cobble_normal")
+shader_parameter/sand_tex = ExtResource("5_sand")
+shader_parameter/sand_norm = ExtResource("6_sand_normal")
+shader_parameter/desert_sand_tex = ExtResource("7_dune")
+shader_parameter/desert_sand_norm = ExtResource("8_dune_normal")
+shader_parameter/painted_right_shadow_strength = 0.0
+
+[node name="DesertCanyonButtressControl" instance=ExtResource("1_d4b")]
+
+[node name="GroundFloorMesh" parent="." index="3"]
+surface_material_override/0 = SubResource("ShaderMaterial_ground_diagnostic")
+
+[node name="GodRaysOverlay" parent="AtmosphereLayer" index="0"]
+visible = false
+
+[node name="DustMotes" parent="AtmosphereLayer" index="1"]
+visible = false
+
+[node name="TiltShiftDof" parent="PostProcessing" index="0"]
+visible = false

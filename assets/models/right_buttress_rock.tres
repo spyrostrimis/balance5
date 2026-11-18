@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/hd2d_octopath_rock.gdshader" id="1_rock"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_sandstone_strata_albedo.png" id="2_sandstone"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_sandstone_strata_normal.png" id="3_sandstone_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_basalt_cap_albedo.png" id="4_slate"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_basalt_cap_normal.png" id="5_slate_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_boulder_rock_albedo.png" id="6_boulder"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_boulder_rock_normal.png" id="7_boulder_normal"]
+
+[resource]
+shader = ExtResource("1_rock")
+shader_parameter/sandstone_tex = ExtResource("2_sandstone")
+shader_parameter/sandstone_norm = ExtResource("3_sandstone_normal")
+shader_parameter/basalt_tex = ExtResource("4_slate")
+shader_parameter/basalt_norm = ExtResource("5_slate_normal")
+shader_parameter/boulder_tex = ExtResource("6_boulder")
+shader_parameter/boulder_norm = ExtResource("7_boulder_normal")
+shader_parameter/haze_color = Color(0.95, 0.78, 0.52, 1)
+shader_parameter/haze_strength = 0.24

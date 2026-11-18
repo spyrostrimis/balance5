@@ -1,0 +1,22 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://assets/models/right_buttress.glb" id="1_rock"]
+[ext_resource type="ShaderMaterial" path="res://assets/models/right_buttress_rock.tres" id="2_material"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_blocker"]
+size = Vector3(1.8, 2.4, 5.0)
+
+[node name="RightButtress" type="Node3D"]
+
+[node name="Rock" parent="." instance=ExtResource("1_rock")]
+
+[node name="ButtressMesh" parent="Rock" index="0"]
+material_override = ExtResource("2_material")
+
+[node name="Blocker" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocker"]
+position = Vector3(1.72, 1.2, -0.18)
+shape = SubResource("BoxShape3D_blocker")
+
+[editable path="Rock"]

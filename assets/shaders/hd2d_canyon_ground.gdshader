@@ -8,6 +8,8 @@ uniform sampler2D sand_norm : hint_normal, filter_linear_mipmap, repeat_enable;
 uniform sampler2D desert_sand_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform sampler2D desert_sand_norm : hint_normal, filter_linear_mipmap, repeat_enable;
 uniform vec3 player_pos = vec3(0.0, 0.0, 6.0);
+uniform float painted_right_shadow_strength : hint_range(0.0, 1.0) = 0.28;
+uniform float cobble_tile_metres = 0.0;
 
 varying vec3 world_pos;
 
@@ -18,10 +20,18 @@ void vertex() {
 void fragment() {
 	float path_cx = sin(world_pos.z * 0.22) * 0.65;
 	float macro_w = sin(world_pos.x * 1.1 + sin(world_pos.z * 0.7)) * 0.5 + 0.5;
-	vec2 cobble_uv1 = world_pos.xz * vec2(0.82, 0.26);
-	vec2 cobble_uv2 = world_pos.xz * vec2(0.57, 0.19) + vec2(0.37, 0.61);
-	vec3 c_col = mix(texture(cobble_tex, cobble_uv1).rgb, texture(cobble_tex, cobble_uv2).rgb, macro_w * 0.45);
-	vec3 c_norm = normalize(mix(texture(cobble_norm, cobble_uv1).rgb, texture(cobble_norm, cobble_uv2).rgb, macro_w * 0.45));
+	vec3 c_col;
+	vec3 c_norm;
+	if (cobble_tile_metres > 0.0) {
+		vec2 cobble_uv = world_pos.xz / cobble_tile_metres;
+		c_col = texture(cobble_tex, cobble_uv).rgb;
+		c_norm = texture(cobble_norm, cobble_uv).rgb;
+	} else {
+		vec2 cobble_uv1 = world_pos.xz * vec2(0.82, 0.26);
+		vec2 cobble_uv2 = world_pos.xz * vec2(0.57, 0.19) + vec2(0.37, 0.61);
+		c_col = mix(texture(cobble_tex, cobble_uv1).rgb, texture(cobble_tex, cobble_uv2).rgb, macro_w * 0.45);
+		c_norm = normalize(mix(texture(cobble_norm, cobble_uv1).rgb, texture(cobble_norm, cobble_uv2).rgb, macro_w * 0.45));
+	}
 
 	vec2 sand_uv1 = world_pos.xz * vec2(0.46, 0.24);
 	vec2 sand_uv2 = world_pos.xz * vec2(0.31, 0.17) + vec2(0.43, 0.29);
@@ -50,7 +60,7 @@ void fragment() {
 
 	// Grounded ambient occlusion under the roadside ledges and diagonal right-wall shadow
 	float cliff_ao = smoothstep(1.35, 2.65, abs(world_pos.x - path_cx)) * (1.0 - dune_t) * 0.46;
-	float right_shadow = smoothstep(0.35, 1.95, world_pos.x - path_cx) * (1.0 - dune_t) * 0.28;
+	float right_shadow = smoothstep(0.35, 1.95, world_pos.x - path_cx) * (1.0 - dune_t) * painted_right_shadow_strength;
 	base_col *= (1.0 - cliff_ao) * (1.0 - right_shadow);
 
 	vec2 p_delta = world_pos.xz - player_pos.xz;

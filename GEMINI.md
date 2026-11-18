@@ -14,7 +14,7 @@
 3. **One Variable / One Piece at a Time:**
    - Do not change Hero, Camera, ground, bushes, lighting, and canyon geometry simultaneously. Isolate one hypothesis per small test so visual before/after comparison is unambiguous.
 4. **Post-Test Inspection & Memory Update:**
-   - Visually inspect every captured PNG (`pos1_start`, `pos2_midway`, `pos3_exit`) using `read_file` before reporting results.
+   - Visually inspect every captured PNG (`pos1_start`, `pos2_midway`, `pos3_exit`) in an image viewer before reporting results. Check the logged coordinates, floor contact and exit signal alongside the images.
    - Never guess or extrapolate what changed—update [`docs/HD2D_CHECKLIST_AND_RUBRIC.md`](docs/HD2D_CHECKLIST_AND_RUBRIC.md) and [`docs/EXPERIMENT_LOG_AND_LESSONS.md`](docs/EXPERIMENT_LOG_AND_LESSONS.md) immediately after every verified run.
 
 ---
@@ -25,11 +25,15 @@
 | :--- | :--- | :--- |
 | **Hero Character** | [`scripts/blue_commander_3d_player.gd`](scripts/blue_commander_3d_player.gd) | `CharacterBody3D` (`BlueCommander`), `CommanderSprite` `pixel_size = 0.00118`, `y = 0.64`, spawn `Vector3(_path_cx(6.0), 0.02, 6.0)`, path clamp `x in [cx - 1.15, cx + 1.15]`, `z in [-14.5, 7.5]`, exit signal at `z <= -13.5` |
 | **Camera Rig** | [`scripts/rpg_camera_3d_follow.gd`](scripts/rpg_camera_3d_follow.gd) | `Camera3D` (`CameraRig`), `fov = 30.0`, `follow_offset = Vector3(0.0, 3.8, 12.6)`, `fixed_pitch_deg = -13.0`, `x_follow_factor = 0.35`, `follow_smooth_speed = 6.5` |
-| **Camera-Only Blur** | [`assets/shaders/tilt_shift_hd2d.gdshader`](assets/shaders/tilt_shift_hd2d.gdshader) | Depth-of-field tilt-shift blur lives **exclusively** in `PostProcessing/TiltShiftDof`. **NEVER** bake Gaussian/bokeh blur into 2D or 3D textures, terrain strips, or billboard cards |
+| **Focus and sharp source art** | [`assets/shaders/tilt_shift_hd2d.gdshader`](assets/shaders/tilt_shift_hd2d.gdshader) | D4b uses the screen-height filter on `PostProcessing/TiltShiftDof`. Keep source textures sharp. In the requested bend experiment, use a test-scene override to disable it for diagnostics or compare it with native camera DOF, one method per capture. |
 
 ---
 
 ## 3. Living Guide Directory
+
+The primary checkout holds the local `docs/` guides. Git intentionally excludes this directory. The root [AGENTS.md](AGENTS.md) summarizes the baseline for Codex and for checkouts without the local guides.
+
+- **[`docs/CANYON_BEND_SESSIONS.md`](docs/CANYON_BEND_SESSIONS.md)** — Execution prompts, capture comparisons and acceptance criteria for the right buttress and the playable bend.
 
 - **[`docs/HD2D_CHECKLIST_AND_RUBRIC.md`](docs/HD2D_CHECKLIST_AND_RUBRIC.md)** — The 8 Core Reference Checkboxes against Picture 1 + *Octopath Traveler* and the full per-test regression matrix (`A` → `Strata Wall`).
 - **[`docs/EXPERIMENT_LOG_AND_LESSONS.md`](docs/EXPERIMENT_LOG_AND_LESSONS.md)** — Proven dead ends (never repeat), proven winners, shader/Blender technical gotchas, and chronological experiment log.

@@ -18,3 +18,12 @@ Thumbs.db
 # Render outputs / temp captures
 render_captures/
 tmp/
+
+# Godot builds and binaries
+builds/
+export/
+bin/
+*.exe
+*.pck
+*.apk
+*.aab

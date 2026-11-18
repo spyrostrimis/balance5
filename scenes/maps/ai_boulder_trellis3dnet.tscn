@@ -1,0 +1,16 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://assets/models/ai_boulder_trellis3dnet.glb" id="1_glb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_blocker"]
+size = Vector3(1.8, 1.15, 1.8)
+
+[node name="AIBoulderTrellis3DNet" type="Node3D"]
+
+[node name="MeshRoot" parent="." instance=ExtResource("1_glb")]
+
+[node name="Blocker" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocker"]
+position = Vector3(0, 0.575, 0)
+shape = SubResource("BoxShape3D_blocker")

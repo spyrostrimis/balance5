@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/hd2d_canyon_ground.gdshader" id="1_ground"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/handlaid_sandstone_albedo.png" id="2_cobble"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/handlaid_sandstone_normal.png" id="3_cobble_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_albedo.png" id="4_sand"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_normal.png" id="5_sand_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_albedo.png" id="6_dune"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_normal.png" id="7_dune_normal"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/crisp_sandstone_patch_albedo.png" id="8_patch"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/crisp_sandstone_patch_normal.png" id="9_patch_normal"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_ground")
+shader_parameter/cobble_tex = ExtResource("2_cobble")
+shader_parameter/cobble_norm = ExtResource("3_cobble_normal")
+shader_parameter/patch_albedo = ExtResource("8_patch")
+shader_parameter/patch_normal = ExtResource("9_patch_normal")
+shader_parameter/sand_tex = ExtResource("4_sand")
+shader_parameter/sand_norm = ExtResource("5_sand_normal")
+shader_parameter/desert_sand_tex = ExtResource("6_dune")
+shader_parameter/desert_sand_norm = ExtResource("7_dune_normal")
+shader_parameter/painted_right_shadow_strength = 0.0
+shader_parameter/cobble_tile_metres = 4.0
+shader_parameter/cobble_verge_wear = 0.94
+shader_parameter/road_patch_xz = Vector4(0.28, 6.91, 1.0, 1.5)

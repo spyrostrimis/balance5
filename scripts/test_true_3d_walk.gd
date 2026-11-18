@@ -18,18 +18,23 @@ var _shadow_pair := false
 var _normal_pair := false
 var _road_material: ShaderMaterial
 var _road_normal: Texture2D
+var _normal_pair_restore: Texture2D
+var _normal_uniform: StringName = &"cobble_norm"
+var _road_patch_original_art := false
+var _road_clip := false
+var _clip_frame := 0
+var _anisotropy := -1
 var _bend_probes := false
 var _focus := "scene"
 var _landmark := Vector3.INF
 var _buttress: MeshInstance3D
 
 
-func _send_key(keycode: int, pressed: bool) -> void:
-	var ev := InputEventKey.new()
-	ev.keycode = keycode
-	ev.physical_keycode = keycode
-	ev.pressed = pressed
-	Input.parse_input_event(ev)
+func _move(action: StringName, pressed: bool) -> void:
+	if pressed:
+		Input.action_press(action)
+	else:
+		Input.action_release(action)
 
 
 func _fail(message: String) -> bool:
@@ -76,9 +81,13 @@ func _initialize() -> void:
 				_shadow_pair = true
 			"--normal-pair":
 				_normal_pair = true
+			"--road-patch-original-art":
+				_road_patch_original_art = true
+			"--road-clip":
+				_road_clip = true
 			"--bend-probes":
 				_bend_probes = true
-			"--scene", "--capture-dir", "--prefix", "--landmark", "--resolution", "--focus":
+			"--scene", "--capture-dir", "--prefix", "--landmark", "--resolution", "--focus", "--anisotropy":
 				if i >= args.size():
 					_fail("Missing value for " + option)
 					return
@@ -88,6 +97,12 @@ func _initialize() -> void:
 					"--scene": _scene_path = value
 					"--capture-dir": _capture_dir = value
 					"--prefix": _prefix = value
+					"--anisotropy":
+						var levels := {"4": Viewport.ANISOTROPY_4X, "8": Viewport.ANISOTROPY_8X, "16": Viewport.ANISOTROPY_16X}
+						if not levels.has(value):
+							_fail("--anisotropy requires 4, 8 or 16")
+							return
+						_anisotropy = levels[value]
 					"--focus":
 						if value not in ["off", "screen", "scene"]:
 							_fail("--focus requires off, screen or scene")
@@ -120,6 +135,8 @@ func _initialize() -> void:
 	DisplayServer.window_set_size(CAPTURE_SIZE)
 	root.size = CAPTURE_SIZE
 	root.content_scale_size = CAPTURE_SIZE
+	if _anisotropy >= 0:
+		root.anisotropic_filtering_level = _anisotropy
 	var packed := load(_scene_path) as PackedScene
 	if packed == null:
 		_fail("Cannot load scene " + _scene_path)
@@ -131,7 +148,7 @@ func _initialize() -> void:
 	if _commander == null or _cam == null:
 		_fail("Scene is missing the D4b commander or camera")
 		return
-	if _bend_probes or _normal_pair:
+	if _bend_probes or _normal_pair or _road_patch_original_art:
 		var ground := _scene.get_node_or_null("GroundFloorMesh") as MeshInstance3D
 		if ground:
 			_road_material = ground.get_surface_override_material(0) as ShaderMaterial
@@ -139,6 +156,26 @@ func _initialize() -> void:
 			_road_normal = _road_material.get_shader_parameter("cobble_norm") as Texture2D
 		if _road_normal == null:
 			_fail("Scene is missing the cobble normal map")
+			return
+		var patch: Variant = _road_material.get_shader_parameter("road_patch_xz")
+		if patch is Vector4 and patch.z > 0.0:
+			if _road_patch_original_art:
+				_road_material.set_shader_parameter("patch_albedo", _road_material.get_shader_parameter("cobble_tex"))
+				_road_material.set_shader_parameter("patch_normal", _road_normal)
+			_normal_uniform = &"patch_normal"
+			var patch_albedo := _road_material.get_shader_parameter("patch_albedo") as Texture2D
+			var patch_normal := _road_material.get_shader_parameter(_normal_uniform) as Texture2D
+			if patch_albedo == null or patch_normal == null:
+				_fail("Scene is missing a road patch texture")
+				return
+			print("Road patch XZ=%s | Anisotropy=%dx" % [patch, 1 << root.anisotropic_filtering_level])
+			if _bend_probes:
+				for texture in [patch_albedo, patch_normal]:
+					print("Patch map %s %s | %d levels beyond base" % [
+						texture.resource_path, texture.get_size(), texture.get_image().get_mipmap_count()
+					])
+		elif _road_patch_original_art:
+			_fail("--road-patch-original-art requires a road patch")
 			return
 	if _focus != "scene":
 		var overlay := _scene.get_node_or_null("PostProcessing/TiltShiftDof") as ColorRect
@@ -212,7 +249,7 @@ func _log_bend_frame() -> void:
 
 
 func _begin_walk() -> void:
-	_send_key(KEY_W, true)
+	_move(&"ui_up", true)
 	_frames = 0
 	_stage = Stage.WALK_TO_MIDWAY
 
@@ -241,27 +278,34 @@ func _process(_delta: float) -> bool:
 			if _frames >= 8:
 				if not _capture("normal_on"):
 					return true
+				_normal_pair_restore = _road_material.get_shader_parameter(_normal_uniform) as Texture2D
 				var flat := Image.create_empty(1, 1, false, Image.FORMAT_RGBF)
 				flat.fill(Color(0.5, 0.5, 1.0))
-				_road_material.set_shader_parameter("cobble_norm", ImageTexture.create_from_image(flat))
+				_road_material.set_shader_parameter(_normal_uniform, ImageTexture.create_from_image(flat))
 				_frames = 0
 				_stage = Stage.NORMAL_OFF
 		Stage.NORMAL_OFF:
 			if _frames >= 8:
 				if not _capture("normal_off"):
 					return true
-				_road_material.set_shader_parameter("cobble_norm", _road_normal)
+				_road_material.set_shader_parameter(_normal_uniform, _normal_pair_restore)
 				_commander.set_physics_process(true)
 				_cam.set_process(true)
 				_begin_walk()
 		Stage.WALK_TO_MIDWAY:
+			_move(&"ui_up", true)
+			if _road_clip and _frames <= 48 and _frames % 2 == 0:
+				var clip_path := _capture_dir.path_join("%s_clip_%03d.png" % [_prefix, _clip_frame])
+				if root.get_texture().get_image().save_png(clip_path) != OK:
+					return _fail("Could not save walking clip frame " + clip_path)
+				_clip_frame += 1
 			if _bend_probes and _frames in [65, 69]:
 				var label := "motion" if _frames == 65 else "motion_followup"
 				if not _capture(label):
 					return true
 			# Walk forward to canyon midpoint (~Z = -3.5)
 			if _commander.global_position.z <= -3.5:
-				_send_key(KEY_W, false)
+				_move(&"ui_up", false)
 				_frames = 0
 				_stage = Stage.MIDWAY
 			elif _frames >= 2400:
@@ -271,13 +315,14 @@ func _process(_delta: float) -> bool:
 			if _frames >= 45:
 				if not _capture("pos2_midway"):
 					return true
-				_send_key(KEY_W, true)
+				_move(&"ui_up", true)
 				_frames = 0
 				_stage = Stage.WALK_TO_EXIT
 		Stage.WALK_TO_EXIT:
+			_move(&"ui_up", true)
 			# Walk forward to canyon exit (~Z = -14.0)
 			if _commander.global_position.z <= -13.95:
-				_send_key(KEY_W, false)
+				_move(&"ui_up", false)
 				_frames = 0
 				_stage = Stage.EXIT
 			elif _frames >= 3000:
@@ -295,13 +340,13 @@ func _process(_delta: float) -> bool:
 					_frames = 0
 					_stage = Stage.SHADOW_ON
 					return false
-				_send_key(KEY_A, true)
+				_move(&"ui_left", true)
 				_frames = 0
 				_stage = Stage.STRAFE
 		Stage.STRAFE:
 			# Verify left movement & horizontal path clamp
 			if _frames >= 18:
-				_send_key(KEY_A, false)
+				_move(&"ui_left", false)
 				print("Post-strafe check: Hero=%s flip_h=%s on_floor=%s" % [
 					str(_commander.global_position),
 					str(_commander.get_node("CommanderSprite").flip_h),

@@ -3,6 +3,8 @@ render_mode diffuse_burley, specular_schlick_ggx;
 
 uniform sampler2D cobble_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform sampler2D cobble_norm : hint_normal, filter_linear_mipmap, repeat_enable;
+uniform sampler2D patch_albedo : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D patch_normal : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D sand_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform sampler2D sand_norm : hint_normal, filter_linear_mipmap, repeat_enable;
 uniform sampler2D desert_sand_tex : source_color, filter_linear_mipmap, repeat_enable;
@@ -11,6 +13,8 @@ uniform vec3 player_pos = vec3(0.0, 0.0, 6.0);
 uniform float painted_right_shadow_strength : hint_range(0.0, 1.0) = 0.28;
 uniform float cobble_tile_metres = 0.0;
 uniform float cobble_verge_wear : hint_range(0.0, 1.0) = 0.0;
+// World X/Z centre and full width/length. Zero width disables the comparison patch.
+uniform vec4 road_patch_xz = vec4(0.0);
 
 varying vec3 world_pos;
 
@@ -27,6 +31,12 @@ void fragment() {
 		vec2 cobble_uv = world_pos.xz / cobble_tile_metres;
 		c_col = texture(cobble_tex, cobble_uv).rgb;
 		c_norm = texture(cobble_norm, cobble_uv).rgb;
+		if (road_patch_xz.z > 0.0) {
+			vec2 to_edge = road_patch_xz.zw * 0.5 - abs(world_pos.xz - road_patch_xz.xy);
+			float patch_weight = smoothstep(0.0, 0.14, min(to_edge.x, to_edge.y));
+			c_col = mix(c_col, texture(patch_albedo, cobble_uv).rgb, patch_weight);
+			c_norm = mix(c_norm, texture(patch_normal, cobble_uv).rgb, patch_weight);
+		}
 	} else {
 		vec2 cobble_uv1 = world_pos.xz * vec2(0.82, 0.26);
 		vec2 cobble_uv2 = world_pos.xz * vec2(0.57, 0.19) + vec2(0.37, 0.61);

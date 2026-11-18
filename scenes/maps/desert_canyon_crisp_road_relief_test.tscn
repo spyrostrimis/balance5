@@ -1,0 +1,23 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_crisp_road_patch.tscn" id="1_road"]
+[ext_resource type="PackedScene" path="res://assets/models/crisp_patch_crowns.glb" id="2_crowns"]
+[ext_resource type="ShaderMaterial" path="res://assets/materials/crisp_sandstone_patch.tres" id="3_material"]
+
+[node name="DesertCanyonCrispRoadReliefTest" instance=ExtResource("1_road")]
+
+[node name="RaisedCrowns" parent="." instance=ExtResource("2_crowns")]
+
+[node name="RaisedSetts_1" parent="RaisedCrowns" index="0"]
+material_override = ExtResource("3_material")
+
+[node name="RaisedSetts_2" parent="RaisedCrowns" index="1"]
+material_override = ExtResource("3_material")
+
+[node name="RaisedSetts_3" parent="RaisedCrowns" index="2"]
+material_override = ExtResource("3_material")
+
+[node name="RaisedSetts_4" parent="RaisedCrowns" index="3"]
+material_override = ExtResource("3_material")
+
+[editable path="RaisedCrowns"]

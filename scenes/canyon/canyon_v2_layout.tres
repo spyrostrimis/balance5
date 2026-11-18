@@ -1,0 +1,402 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/canyon/canyon_placement.gd" id="1_3srkp"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/terrace_tall_a.tscn" id="2_c58qj"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/terrace_tall_b.tscn" id="3_wh7hd"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/gateway_bluff.tscn" id="4_pksve"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/curb_strip.tscn" id="5_illog"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/boulder_cluster.tscn" id="6_fhefx"]
+[ext_resource type="PackedScene" path="res://scenes/maps/right_buttress.tscn" id="7_dj8ng"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_hf_trellis2.tscn" id="8_5say1"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_trellis3dnet.tscn" id="9_enf3b"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/bush_cluster.tscn" id="10_1daq8"]
+[ext_resource type="PackedScene" path="res://scenes/canyon/modules/bush_sage.tscn" id="11_bmuve"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_layout_data.gd" id="12_el6lk"]
+
+[sub_resource type="Resource" id="Resource_cgl2a"]
+script = ExtResource("1_3srkp")
+label = "TerraceLeft_0"
+scene = ExtResource("2_c58qj")
+z = 14.8
+lateral = -1.54
+
+[sub_resource type="Resource" id="Resource_3fuh2"]
+script = ExtResource("1_3srkp")
+label = "TerraceLeft_1"
+scene = ExtResource("3_wh7hd")
+z = 8.6
+lateral = -1.54
+
+[sub_resource type="Resource" id="Resource_17dee"]
+script = ExtResource("1_3srkp")
+label = "TerraceLeft_2"
+scene = ExtResource("2_c58qj")
+z = 2.4
+lateral = -1.54
+
+[sub_resource type="Resource" id="Resource_s4tf5"]
+script = ExtResource("1_3srkp")
+label = "TerraceLeft_3"
+scene = ExtResource("3_wh7hd")
+z = -3.8
+lateral = -1.54
+
+[sub_resource type="Resource" id="Resource_m4nhv"]
+script = ExtResource("1_3srkp")
+label = "TerraceLeft_4"
+scene = ExtResource("2_c58qj")
+z = -10.0
+lateral = -1.54
+
+[sub_resource type="Resource" id="Resource_klf56"]
+script = ExtResource("1_3srkp")
+label = "GatewayBluffLeft"
+scene = ExtResource("4_pksve")
+z = -13.2
+lateral = -1.54
+yaw_offset_deg = -12.246
+
+[sub_resource type="Resource" id="Resource_hm8qk"]
+script = ExtResource("1_3srkp")
+label = "CurbLeft_0"
+scene = ExtResource("5_illog")
+z = 10.0
+lateral = -1.24
+
+[sub_resource type="Resource" id="Resource_of7eg"]
+script = ExtResource("1_3srkp")
+label = "CurbRight_0"
+scene = ExtResource("5_illog")
+z = 10.0
+lateral = 1.24
+yaw_offset_deg = -180.0
+
+[sub_resource type="Resource" id="Resource_7skma"]
+script = ExtResource("1_3srkp")
+label = "BoulderLeft_0"
+scene = ExtResource("6_fhefx")
+z = 11.15
+lateral = -1.8800000000000001
+yaw_offset_deg = 25.412
+scale = Vector3(0.9, 0.9, 0.9)
+
+[sub_resource type="Resource" id="Resource_ntj86"]
+script = ExtResource("1_3srkp")
+label = "BoulderRight_0"
+scene = ExtResource("6_fhefx")
+z = 9.15
+lateral = 2.08
+yaw_offset_deg = 131.255
+scale = Vector3(0.97999996, 0.97999996, 0.97999996)
+
+[sub_resource type="Resource" id="Resource_xe3cy"]
+script = ExtResource("1_3srkp")
+label = "CurbLeft_1"
+scene = ExtResource("5_illog")
+z = 3.8
+lateral = -1.24
+
+[sub_resource type="Resource" id="Resource_2w53b"]
+script = ExtResource("1_3srkp")
+label = "CurbRight_1"
+scene = ExtResource("5_illog")
+z = 3.8
+lateral = 1.24
+yaw_offset_deg = 180.0
+
+[sub_resource type="Resource" id="Resource_kjnha"]
+script = ExtResource("1_3srkp")
+label = "CurbLeft_2"
+scene = ExtResource("5_illog")
+z = -2.4
+lateral = -1.24
+
+[sub_resource type="Resource" id="Resource_25nrk"]
+script = ExtResource("1_3srkp")
+label = "CurbRight_2"
+scene = ExtResource("5_illog")
+z = -2.4
+lateral = 1.24
+yaw_offset_deg = 180.0
+
+[sub_resource type="Resource" id="Resource_1wbme"]
+script = ExtResource("1_3srkp")
+label = "BoulderRight_2"
+scene = ExtResource("6_fhefx")
+z = -3.25
+lateral = 2.08
+yaw_offset_deg = -110.526
+scale = Vector3(0.97999996, 0.97999996, 0.97999996)
+
+[sub_resource type="Resource" id="Resource_jd2wu"]
+script = ExtResource("1_3srkp")
+label = "CurbLeft_3"
+scene = ExtResource("5_illog")
+z = -8.6
+lateral = -1.24
+
+[sub_resource type="Resource" id="Resource_8sfwp"]
+script = ExtResource("1_3srkp")
+label = "CurbRight_3"
+scene = ExtResource("5_illog")
+z = -8.6
+lateral = 1.24
+yaw_offset_deg = -180.0
+
+[sub_resource type="Resource" id="Resource_r2wgr"]
+script = ExtResource("1_3srkp")
+label = "BoulderLeft_3"
+scene = ExtResource("6_fhefx")
+z = -7.45
+lateral = -1.8800000000000001
+yaw_offset_deg = -131.357
+scale = Vector3(1.02, 1.02, 1.02)
+
+[sub_resource type="Resource" id="Resource_gpnsy"]
+script = ExtResource("1_3srkp")
+label = "BoulderRight_3"
+scene = ExtResource("6_fhefx")
+z = -9.45
+lateral = 2.08
+yaw_offset_deg = -65.916
+scale = Vector3(0.85999995, 0.85999995, 0.85999995)
+
+[sub_resource type="Resource" id="Resource_1ad68"]
+script = ExtResource("1_3srkp")
+label = "TerraceRightTall_0"
+scene = ExtResource("3_wh7hd")
+z = 11.7
+lateral = 1.54
+yaw_offset_deg = 180.0
+
+[sub_resource type="Resource" id="Resource_5i7q7"]
+script = ExtResource("1_3srkp")
+label = "TerraceRightTall_1"
+scene = ExtResource("2_c58qj")
+z = 5.5
+lateral = 1.54
+yaw_offset_deg = 180.0
+
+[sub_resource type="Resource" id="Resource_xo7p5"]
+script = ExtResource("1_3srkp")
+label = "TerraceRightTall_2"
+scene = ExtResource("3_wh7hd")
+z = -0.7
+lateral = 1.54
+yaw_offset_deg = 180.0
+
+[sub_resource type="Resource" id="Resource_lolm1"]
+script = ExtResource("1_3srkp")
+label = "TerraceRightTall_3"
+scene = ExtResource("2_c58qj")
+z = -6.4
+lateral = 1.54
+yaw_offset_deg = 180.0
+
+[sub_resource type="Resource" id="Resource_qyemc"]
+script = ExtResource("1_3srkp")
+label = "GatewayBluffRight"
+scene = ExtResource("4_pksve")
+z = -15.6
+lateral = 1.54
+yaw_offset_deg = 186.875
+
+[sub_resource type="Resource" id="Resource_cipha"]
+script = ExtResource("1_3srkp")
+label = "RightButtress"
+scene = ExtResource("7_dj8ng")
+z = -9.3
+lateral = 1.778
+yaw_offset_deg = 3.624
+
+[sub_resource type="Resource" id="Resource_4e6e2"]
+script = ExtResource("1_3srkp")
+label = "ChatGPTBoulder_HF_Trellis2"
+scene = ExtResource("8_5say1")
+z = 4.85
+lateral = -1.8192000000000002
+yaw_offset_deg = -3.823
+scale = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="Resource" id="Resource_geksj"]
+script = ExtResource("1_3srkp")
+label = "ChatGPTBoulder_Trellis3DNet"
+scene = ExtResource("9_enf3b")
+z = 4.65
+lateral = 1.4951
+yaw_offset_deg = -4.124
+scale = Vector3(0.79999995, 0.79999995, 0.79999995)
+
+[sub_resource type="Resource" id="Resource_kakdn"]
+script = ExtResource("1_3srkp")
+label = "BushCoveL0"
+scene = ExtResource("10_1daq8")
+z = 9.8
+lateral = -1.52
+height = 0.16
+align_to_route = false
+scale = Vector3(1.12, 1.12, 1.12)
+tint = Color(0.98, 0.94, 0.88, 1)
+
+[sub_resource type="Resource" id="Resource_mf2eh"]
+script = ExtResource("1_3srkp")
+label = "BushCoveR0"
+scene = ExtResource("11_bmuve")
+z = 8.9
+lateral = 1.48
+height = 0.22
+align_to_route = false
+scale = Vector3(0.84, 0.84, 0.84)
+tint = Color(0.84, 0.78, 0.72, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_sihsb"]
+script = ExtResource("1_3srkp")
+label = "BushCoveL1"
+scene = ExtResource("11_bmuve")
+z = 7.4
+lateral = -1.48
+height = 0.22
+align_to_route = false
+scale = Vector3(0.79999995, 0.79999995, 0.79999995)
+tint = Color(0.98, 0.94, 0.88, 1)
+
+[sub_resource type="Resource" id="Resource_1j5tl"]
+script = ExtResource("1_3srkp")
+label = "BushCoveR1"
+scene = ExtResource("10_1daq8")
+z = 6.2
+lateral = 1.54
+height = 0.17
+align_to_route = false
+scale = Vector3(1.0799999, 1.0799999, 1.0799999)
+tint = Color(0.84, 0.78, 0.72, 1)
+
+[sub_resource type="Resource" id="Resource_h12aq"]
+script = ExtResource("1_3srkp")
+label = "BushLedgeL0"
+scene = ExtResource("10_1daq8")
+z = 5.5
+lateral = -2.18
+height = 0.56
+align_to_route = false
+tint = Color(0.98, 0.94, 0.88, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_gydmn"]
+script = ExtResource("1_3srkp")
+label = "BushLedgeR0"
+scene = ExtResource("11_bmuve")
+z = 4.3
+lateral = 2.15
+height = 0.58
+align_to_route = false
+scale = Vector3(0.76, 0.76, 0.76)
+tint = Color(0.84, 0.78, 0.72, 1)
+
+[sub_resource type="Resource" id="Resource_ufuby"]
+script = ExtResource("1_3srkp")
+label = "BushCoveL2"
+scene = ExtResource("10_1daq8")
+z = 2.5
+lateral = -1.5
+height = 0.16
+align_to_route = false
+scale = Vector3(1.12, 1.12, 1.12)
+tint = Color(0.98, 0.94, 0.88, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_p6oj0"]
+script = ExtResource("1_3srkp")
+label = "BushCoveR2"
+scene = ExtResource("11_bmuve")
+z = 1.2
+lateral = 1.5
+height = 0.22
+align_to_route = false
+scale = Vector3(0.84, 0.84, 0.84)
+tint = Color(0.84, 0.78, 0.72, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_cqhwf"]
+script = ExtResource("1_3srkp")
+label = "BushLedgeL1"
+scene = ExtResource("11_bmuve")
+z = -0.3
+lateral = -2.25
+height = 0.6
+align_to_route = false
+scale = Vector3(0.79999995, 0.79999995, 0.79999995)
+tint = Color(0.98, 0.94, 0.88, 1)
+
+[sub_resource type="Resource" id="Resource_5nqep"]
+script = ExtResource("1_3srkp")
+label = "BushCoveR3"
+scene = ExtResource("10_1daq8")
+z = -1.8
+lateral = 1.5
+height = 0.17
+align_to_route = false
+scale = Vector3(1.0799999, 1.0799999, 1.0799999)
+tint = Color(0.84, 0.78, 0.72, 1)
+
+[sub_resource type="Resource" id="Resource_6na0r"]
+script = ExtResource("1_3srkp")
+label = "BushCoveL3"
+scene = ExtResource("10_1daq8")
+z = -3.9
+lateral = -1.5
+height = 0.16
+align_to_route = false
+scale = Vector3(1.12, 1.12, 1.12)
+tint = Color(0.98, 0.94, 0.88, 1)
+
+[sub_resource type="Resource" id="Resource_0wdmn"]
+script = ExtResource("1_3srkp")
+label = "BushLedgeR1"
+scene = ExtResource("10_1daq8")
+z = -4.6
+lateral = 2.18
+height = 0.56
+align_to_route = false
+tint = Color(0.84, 0.78, 0.72, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_543cg"]
+script = ExtResource("1_3srkp")
+label = "BushCoveR4"
+scene = ExtResource("11_bmuve")
+z = -6.3
+lateral = 1.52
+height = 0.22
+align_to_route = false
+scale = Vector3(0.84, 0.84, 0.84)
+tint = Color(0.84, 0.78, 0.72, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_m0i5b"]
+script = ExtResource("1_3srkp")
+label = "BushCoveL4"
+scene = ExtResource("11_bmuve")
+z = -8.1
+lateral = -1.5
+height = 0.22
+align_to_route = false
+scale = Vector3(0.79999995, 0.79999995, 0.79999995)
+tint = Color(0.98, 0.94, 0.88, 1)
+flip_h = true
+
+[sub_resource type="Resource" id="Resource_nbat4"]
+script = ExtResource("1_3srkp")
+label = "BushCoveR5"
+scene = ExtResource("10_1daq8")
+z = -9.8
+lateral = 1.52
+height = 0.16
+align_to_route = false
+scale = Vector3(1.0799999, 1.0799999, 1.0799999)
+tint = Color(0.84, 0.78, 0.72, 1)
+
+[resource]
+script = ExtResource("12_el6lk")
+placements = Array[ExtResource("1_3srkp")]([SubResource("Resource_cgl2a"), SubResource("Resource_3fuh2"), SubResource("Resource_17dee"), SubResource("Resource_s4tf5"), SubResource("Resource_m4nhv"), SubResource("Resource_klf56"), SubResource("Resource_hm8qk"), SubResource("Resource_of7eg"), SubResource("Resource_7skma"), SubResource("Resource_ntj86"), SubResource("Resource_xe3cy"), SubResource("Resource_2w53b"), SubResource("Resource_kjnha"), SubResource("Resource_25nrk"), SubResource("Resource_1wbme"), SubResource("Resource_jd2wu"), SubResource("Resource_8sfwp"), SubResource("Resource_r2wgr"), SubResource("Resource_gpnsy"), SubResource("Resource_1ad68"), SubResource("Resource_5i7q7"), SubResource("Resource_xo7p5"), SubResource("Resource_lolm1"), SubResource("Resource_qyemc"), SubResource("Resource_cipha"), SubResource("Resource_4e6e2"), SubResource("Resource_geksj"), SubResource("Resource_kakdn"), SubResource("Resource_mf2eh"), SubResource("Resource_sihsb"), SubResource("Resource_1j5tl"), SubResource("Resource_h12aq"), SubResource("Resource_gydmn"), SubResource("Resource_ufuby"), SubResource("Resource_p6oj0"), SubResource("Resource_cqhwf"), SubResource("Resource_5nqep"), SubResource("Resource_6na0r"), SubResource("Resource_0wdmn"), SubResource("Resource_543cg"), SubResource("Resource_m0i5b"), SubResource("Resource_nbat4")])

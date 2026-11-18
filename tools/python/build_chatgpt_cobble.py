@@ -2,8 +2,8 @@
 1024x1024 PBR maps (albedo, normal, ORM) for an isolated Godot comparison test.
 
 Usage:
-  & "C:/Python312/python.exe" "d:/Games/Balance5/scripts/build_chatgpt_cobble.py"
-  & "C:/Python312/python.exe" "d:/Games/Balance5/scripts/build_chatgpt_cobble.py" --make-strips
+  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_chatgpt_cobble.py"
+  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_chatgpt_cobble.py" --make-strips
 """
 
 import argparse

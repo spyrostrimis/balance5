@@ -39,7 +39,108 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"meshes": {
+"BoulderCluster": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/boulder_cluster.res",
+"save_to_file/path": "uid://cw5wjq2q6bleu"
+},
+"CurbStoneStrip": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/curb_strip.res",
+"save_to_file/path": "uid://bif8sew8dgf5e"
+},
+"GatewayBluffLeft": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/gateway_bluff.res",
+"save_to_file/path": "uid://dvg31nqx2hvfe"
+},
+"TerraceLeftModule": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_left_a.res",
+"save_to_file/path": "uid://wrab6l40bxwy"
+},
+"TerraceLeftModuleB": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_left_b.res",
+"save_to_file/path": "uid://diltl1sxwyjp3"
+},
+"TerraceRightModule": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_low_a.res",
+"save_to_file/path": "uid://c0kmijskta0ec"
+},
+"TerraceRightModuleB": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_low_b.res",
+"save_to_file/path": "uid://b1h72t0mctgs5"
+},
+"canyon_kit_test_d_BoulderCluster": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/boulder_cluster.res",
+"save_to_file/path": "uid://xw3u1n2u014w"
+},
+"canyon_kit_test_d_CurbStoneStrip": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/curb_strip.res",
+"save_to_file/path": "uid://y5bu1ow7ag1s"
+},
+"canyon_kit_test_d_GatewayBluffLeft": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/gateway_bluff.res",
+"save_to_file/path": "uid://bnltea71br24x"
+},
+"canyon_kit_test_d_TerraceLeftModule": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_left_a.res",
+"save_to_file/path": "uid://dcl76oqjrgh5o"
+},
+"canyon_kit_test_d_TerraceLeftModuleB": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_left_b.res",
+"save_to_file/path": "uid://r1q2oy46y4qc"
+},
+"canyon_kit_test_d_TerraceRightModule": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_low_a.res",
+"save_to_file/path": "uid://d0kxfkg8qea4o"
+},
+"canyon_kit_test_d_TerraceRightModuleB": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/canyon_kit/terrace_low_b.res",
+"save_to_file/path": "uid://dk6llo6hg3m8h"
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
 gltf/texture_map_mode=1

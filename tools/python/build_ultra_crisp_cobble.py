@@ -2,8 +2,8 @@
 and assemble side-by-side comparison strips for desert_canyon_ultra_crisp_test.
 
 Usage:
-  & "C:/Python312/python.exe" "d:/Games/Balance5/scripts/build_ultra_crisp_cobble.py"
-  & "C:/Python312/python.exe" "d:/Games/Balance5/scripts/build_ultra_crisp_cobble.py" --make-strips
+  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_ultra_crisp_cobble.py"
+  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_ultra_crisp_cobble.py" --make-strips
 """
 
 import argparse

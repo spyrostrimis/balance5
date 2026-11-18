@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/d_sage_bush_2.png" id="1_tex"]
+
+[node name="BushSage" type="Sprite3D"]
+editor_description = "Unshaded-look alpha-cut bush card tilted 18 degrees toward the camera. Base pixel size 0.005; scale a placement to resize."
+transform = Transform3D(1, 0, 0, 0, 0.95105654, 0.309017, 0, -0.309017, 0.95105654, 0, 0, 0)
+cast_shadow = 0
+pixel_size = 0.005
+alpha_cut = 2
+alpha_scissor_threshold = 0.24
+texture = ExtResource("1_tex")

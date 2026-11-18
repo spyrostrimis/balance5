@@ -7,10 +7,10 @@
 | Stage | Tool | What Happens | Who Does It |
 | :--- | :--- | :--- | :--- |
 | **1. Concept & Palette Lock** | Img 1 (`desert_approach_rpg_albedo.png`) + Python palette sampling | Sample target shadow/mid/highlight RGB bands and inspect geometry proportions (height vs camera `Y=3.8m`, terrace step depth) | Agent + User review |
-| **2. PBR Texture & Sprite Prep** | `image-generator` (sharp `f/22` material sheets) + `C:\Python312\python.exe` (PIL / OpenCV / NumPy) | Tile seamlessly (cosine wrap), flatten blotches, impress fine horizontal bedding, generate wrapped Sobel normal maps, extract crisp alpha-cut `Sprite3D` bushes (never bake DOF blur) | Agent (`scripts/build_test_d_textures.py`) |
-| **3. 3D Stepped Diorama Kit** | Blender 5.2.3 LTS | Build stepped courses, boulders and irregular curbs with vertex masks. D4b reaches 7.55 m at Course 7 and 8.15 m at the left gateway. Export `assets/models/canyon_kit_test_d.glb`. | `scripts/blender_build_test_d_kit.py` |
+| **2. PBR Texture & Sprite Prep** | `image-generator` (sharp `f/22` material sheets) + `C:\Python312\python.exe` (PIL / OpenCV / NumPy) | Tile seamlessly (cosine wrap), flatten blotches, impress fine horizontal bedding, generate wrapped Sobel normal maps, extract crisp alpha-cut `Sprite3D` bushes (never bake DOF blur) | Agent (`tools/python/build_test_d_textures.py`) |
+| **3. 3D Stepped Diorama Kit** | Blender 5.2.3 LTS | Build stepped courses, boulders and irregular curbs with vertex masks. D4b reaches 7.55 m at Course 7 and 8.15 m at the left gateway. Export `assets/models/canyon_kit_test_d.glb`. | `tools/blender/blender_build_test_d_kit.py` |
 | **4. Lit Spatial Shading** | Godot 4.7 GLSL (`assets/shaders/*.gdshader`) | Triplanar / world-Y stratified mapping (`sandstone_tex`, `basalt_tex`, `boulder_tex`), normal maps, crevice AO, distance atmospheric haze | Agent (`assets/shaders/hd2d_octopath_rock.gdshader`) |
-| **5. Diorama Assembly** | `C:\Godot\Godot_v4.7.2-stable_win64_console.exe` (`--headless --script`) | Place overlapping `.glb` slices along `_path_cx(z)`, crisp `Sprite3D` bushes, `DesertSun`, fog, `GodRaysOverlay`, and camera-only `TiltShiftDof` → save `res://scenes/maps/desert_canyon_true_3d.tscn` | Agent (`scripts/assemble_cinematic_canyon.gd`) |
+| **5. Diorama Assembly** | `C:\Godot\Godot_v4.7.2-stable_win64_console.exe` (`--headless --script`) | Place overlapping `.glb` slices along `_path_cx(z)`, crisp `Sprite3D` bushes, `DesertSun`, fog, `GodRaysOverlay`, and camera-only `TiltShiftDof` → save `res://scenes/maps/desert_canyon_true_3d.tscn` | Agent (`tools/godot/assemble_cinematic_canyon.gd`) |
 | **6. Visual & Walk QA** | Godot live window (`test_true_3d_walk.gd`, `1376x768`) + `read_file` | Automated walk captures `pos1_start` (`Z=6.0`), `pos2_midway` (`Z=-3.52`), `pos3_exit` (`Z=-13.95`, `ExitSignal=true`) + post-strafe `on_floor=true`; inspect PNGs via `read_file` and update `docs/` | Agent + User sign-off |
 
 ---
@@ -28,9 +28,9 @@
 
 ### Integrated road and boulder assets
 
-For the current road, the game loads exported 1024² color, normal and packed surface maps at 3.2 m per repeat. The paired input images for `scripts/build_chatgpt_cobble.py` and `scripts/build_chatgpt_sandstone.py` use absolute paths into the original local uploads. The exported maps and editable cobble sources are in Git. A fresh checkout can play the scene; regenerating it from the original uploads requires locating those inputs. The Tiled sandbox is a separate authoring preview.
+For the current road, the game loads exported 1024² color, normal and packed surface maps at 3.2 m per repeat. The paired input images for `tools/python/build_chatgpt_cobble.py` and `tools/python/build_chatgpt_sandstone.py` use absolute paths into the original local uploads. The exported maps and editable cobble sources are in Git. A fresh checkout can play the scene; regenerating it from the original uploads requires locating those inputs. The Tiled sandbox is a separate authoring preview.
 
-For roadside rocks, `scripts/blender_import_ai_boulders.py` welds and simplifies the meshes and sets ground-level pivots. Godot wrappers apply a shared 1.65 m triplanar sandstone material and individual box blockers. Compare the two boulder scenes from the Developers Page under identical lighting before changing the material. Anti's capture scripts explicitly set 16× anisotropy. Use the normal menu route as the final walking check.
+For roadside rocks, `tools/blender/blender_import_ai_boulders.py` welds and simplifies the meshes and sets ground-level pivots. Godot wrappers apply a shared 1.65 m triplanar sandstone material and individual box blockers. Compare the two boulder scenes from the Developers Page under identical lighting before changing the material. Anti's capture scripts explicitly set 16× anisotropy. Use the normal menu route as the final walking check.
 
 ## 2. Rebuilding the D4b launch scene
 
@@ -47,10 +47,10 @@ These commands describe the original primary Windows checkout. The assembler ext
 & "C:\Godot\Godot_v4.7.2-stable_win64_console.exe" --path "d:\Games\Balance5" --headless --editor --quit
 
 # 4. Assemble and pack res://scenes/maps/desert_canyon_true_3d.tscn
-& "C:\Godot\Godot_v4.7.2-stable_win64_console.exe" --path "d:\Games\Balance5" --headless --script "res://scripts/assemble_cinematic_canyon.gd"
+& "C:\Godot\Godot_v4.7.2-stable_win64_console.exe" --path "d:\Games\Balance5" --headless --script "res://tools/godot/assemble_cinematic_canyon.gd"
 
 # 5. Run automated walk & screenshot capture (NEVER pass --headless here!)
-& "C:\Godot\Godot_v4.7.2-stable_win64_console.exe" --path "d:\Games\Balance5" --script "res://scripts/test_true_3d_walk.gd" -- --resolution 1376x768
+& "C:\Godot\Godot_v4.7.2-stable_win64_console.exe" --path "d:\Games\Balance5" --script "res://tests/test_true_3d_walk.gd" -- --resolution 1376x768
 ```
 
 ---

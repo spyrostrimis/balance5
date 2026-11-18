@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/blue_commander_3d_player.gd" id="1_3c3n3"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/blue_commander_rpg.png" id="2_4wkj8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bac7f"]
+radius = 0.28
+height = 1.2
+
+[node name="BlueCommander" type="CharacterBody3D" unique_id=2037101112]
+script = ExtResource("1_3c3n3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=156323732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CapsuleShape3D_bac7f")
+
+[node name="CommanderSprite" type="Sprite3D" parent="." unique_id=268462317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+pixel_size = 0.00118
+alpha_cut = 2
+alpha_scissor_threshold = 0.25
+render_priority = 2
+texture = ExtResource("2_4wkj8")
+
+[node name="GauntletGlow" type="OmniLight3D" parent="." unique_id=108061556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18, 0.68, 0.14)
+light_color = Color(0.28, 0.88, 1, 1)
+light_energy = 0.35
+omni_range = 0.65

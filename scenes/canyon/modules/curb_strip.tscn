@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/canyon_kit/curb_strip.res" id="1_mesh"]
+[ext_resource type="ShaderMaterial" path="res://assets/materials/canyon_rock.tres" id="2_rock"]
+
+[node name="CurbStrip" type="MeshInstance3D"]
+editor_description = "6 m strip of flat curb stones. Mesh saved from canyon_kit_test_d.glb on import; reexport the GLB from Blender to update it."
+mesh = ExtResource("1_mesh")
+surface_material_override/0 = ExtResource("2_rock")

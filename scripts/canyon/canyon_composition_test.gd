@@ -4,7 +4,7 @@ extends Node3D
 ## stepped stone courses, closes the far road with a right gateway and changes camera, sun and atmosphere.
 ## Keys: C toggles the original camera, V cycles atmosphere, B toggles the sun direction.
 
-const CanyonRoute := preload("res://scripts/canyon_route.gd")
+const CanyonRoute := preload("res://scripts/canyon/canyon_route.gd")
 const ATMOSPHERES: Array[String] = ["volumetric", "overlay", "off"]
 
 ## Route the D4b assembler used. Every inherited module was placed against it.
@@ -26,8 +26,8 @@ const WALL_SETBACK := 1.54
 @export var rock_haze_strength := 0.1
 
 var _d4b_route: Resource
-var _commander: Node3D ## composition_commander.gd
-var _camera: Node3D ## composition_camera.gd
+var _commander: Node3D ## blue_commander_3d_player.gd
+var _camera: Node3D ## canyon/canyon_camera.gd
 var _sun: DirectionalLight3D
 var _sun_d4b: Transform3D
 var _environment: Environment

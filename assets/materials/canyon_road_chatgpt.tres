@@ -1,0 +1,37 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/hd2d_canyon_ground_crisp.gdshader" id="1_6l0oy"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/chatgpt_cobble_normal.png" id="2_6ysdv"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/chatgpt_cobble_orm.png" id="3_0g2l8"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/chatgpt_cobble_albedo.png" id="4_foklt"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_normal.png" id="5_irpsr"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_albedo.png" id="6_pake2"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/handlaid_sandstone_normal.png" id="7_u1sou"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/handlaid_sandstone_albedo.png" id="8_wdc6f"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_normal.png" id="9_8nnvk"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_albedo.png" id="10_b5cxu"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_6l0oy")
+shader_parameter/cobble_tex = ExtResource("4_foklt")
+shader_parameter/cobble_norm = ExtResource("2_6ysdv")
+shader_parameter/cobble_orm = ExtResource("3_0g2l8")
+shader_parameter/patch_compare_tex = ExtResource("8_wdc6f")
+shader_parameter/patch_compare_norm = ExtResource("7_u1sou")
+shader_parameter/sand_tex = ExtResource("10_b5cxu")
+shader_parameter/sand_norm = ExtResource("9_8nnvk")
+shader_parameter/desert_sand_tex = ExtResource("6_pake2")
+shader_parameter/desert_sand_norm = ExtResource("5_irpsr")
+shader_parameter/player_pos = null
+shader_parameter/painted_right_shadow_strength = 0.0
+shader_parameter/cobble_tile_metres = 3.2
+shader_parameter/cobble_verge_wear = 0.94
+shader_parameter/compare_mode = 0
+shader_parameter/route_amplitude = null
+shader_parameter/route_frequency = null
+shader_parameter/route_phase = null
+shader_parameter/route_mode = null
+shader_parameter/route_lookup = null
+shader_parameter/route_lookup_z0 = null
+shader_parameter/route_lookup_dz = null

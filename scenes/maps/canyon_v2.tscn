@@ -1,0 +1,87 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/canyon/canyon_level.gd" id="1_dl3ly"]
+[ext_resource type="Environment" path="res://assets/environments/canyon_clear_air.tres" id="2_k58tc"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_route_path.gd" id="3_lisqp"]
+[ext_resource type="Material" path="res://assets/materials/canyon_road_chatgpt.tres" id="4_3hj4k"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_layout.gd" id="5_tfaux"]
+[ext_resource type="Resource" path="res://scenes/canyon/canyon_v2_layout.tres" id="6_62jha"]
+[ext_resource type="Material" path="res://assets/materials/orichalcum_crater_ground.tres" id="7_k14ay"]
+[ext_resource type="Material" path="res://assets/materials/canyon_vista_backdrop.tres" id="8_oe1ld"]
+[ext_resource type="PackedScene" path="res://scenes/actors/blue_commander_3d.tscn" id="9_t2fc6"]
+[ext_resource type="PackedScene" path="res://scenes/actors/canyon_camera.tscn" id="11_r0olc"]
+
+[sub_resource type="Curve3D" id="Curve3D_287ag"]
+bake_interval = 0.25
+_data = {
+"points": PackedVector3Array(-0.40091908, 0, 1.3333334, 0.40091908, 0, -1.3333334, -1.4601167, 0, 18, -0.58555424, 0, 1.3333334, 0.58555424, 0, -1.3333334, 0.12310743, 0, 14, -0.345254, 0, 1.3333334, 0.345254, 0, -1.3333334, 1.6169928, 0, 10, 0.14559627, 0, 1.3333334, -0.14559627, 0, -1.3333334, 1.9374301, 0, 6, 0.53078765, 0, 1.3333334, -0.53078765, 0, -1.3333334, 0.85187894, 0, 2, 0.53078765, 0, 1.3333334, -0.53078765, 0, -1.3333334, -0.85187894, 0, -2, 0.14559627, 0, 1.3333334, -0.14559627, 0, -1.3333334, -1.9374301, 0, -6, -0.345254, 0, 1.3333334, 0.345254, 0, -1.3333334, -1.6169928, 0, -10, -0.58555424, 0, 1.3333334, 0.58555424, 0, -1.3333334, -0.12310743, 0, -14, -0.40091908, 0, 1.3333334, 0.40091908, 0, -1.3333334, 1.4601167, 0, -18, 0.074662104, 0, 1.3333334, -0.074662104, 0, -1.3333334, 1.9837375, 0, -22, 0.49606118, 0, 1.3333334, -0.49606118, 0, -1.3333334, 1.0677645, 0, -26, 0.55746984, 0, 1.3333334, -0.55746984, 0, -1.3333334, -0.6230827, 0, -30),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_26jdi"]
+size = Vector3(60, 1, 90)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y37dp"]
+size = Vector2(60, 90)
+
+[sub_resource type="QuadMesh" id="QuadMesh_rucqs"]
+size = Vector2(7.6, 5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ysfic"]
+size = Vector2(72, 34)
+
+[node name="CanyonV2" type="Node3D" unique_id=556224770]
+script = ExtResource("1_dl3ly")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=250090505]
+environment = ExtResource("2_k58tc")
+
+[node name="DesertSun" type="DirectionalLight3D" parent="." unique_id=98825342]
+transform = Transform3D(-0.81915206, -0.38379756, 0.42625037, 0, 0.7431448, 0.6691306, -0.57357645, 0.5481197, -0.6087486, 0, 0, 0)
+light_color = Color(1, 0.93, 0.78, 1)
+light_energy = 1.65
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Route" type="Path3D" parent="." unique_id=1829457255]
+curve = SubResource("Curve3D_287ag")
+script = ExtResource("3_lisqp")
+
+[node name="GroundFloor" type="StaticBody3D" parent="." unique_id=1627980862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -14)
+
+[node name="FloorShape" type="CollisionShape3D" parent="GroundFloor" unique_id=219840518]
+shape = SubResource("BoxShape3D_26jdi")
+
+[node name="GroundFloorMesh" type="MeshInstance3D" parent="." unique_id=840902278]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+mesh = SubResource("PlaneMesh_y37dp")
+surface_material_override/0 = ExtResource("4_3hj4k")
+
+[node name="Layout" type="Node3D" parent="." unique_id=139466030]
+script = ExtResource("5_tfaux")
+route_path = NodePath("../Route")
+data = ExtResource("6_62jha")
+
+[node name="OrichalcumCraterGround" type="MeshInstance3D" parent="." unique_id=411628886]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.25, 0.03, -22.2)
+mesh = SubResource("QuadMesh_rucqs")
+surface_material_override/0 = ExtResource("7_k14ay")
+
+[node name="CraterOrichalcumGlow" type="OmniLight3D" parent="." unique_id=1576365939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.65, -22.2)
+light_color = Color(1, 0.74, 0.26, 1)
+light_energy = 1.15
+omni_range = 4.5
+
+[node name="BattlefieldVistaBackdrop" type="MeshInstance3D" parent="." unique_id=781658799]
+transform = Transform3D(1, 0, 0, 0, 0.97437006, 0.22495104, 0, -0.22495104, 0.97437006, 0, -2.4, -52)
+mesh = SubResource("QuadMesh_ysfic")
+surface_material_override/0 = ExtResource("8_oe1ld")
+
+[node name="BlueCommander" parent="." unique_id=2037101112 instance=ExtResource("9_t2fc6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 6)
+
+[node name="CameraRig" parent="." unique_id=214904899 instance=ExtResource("11_r0olc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 17.9)

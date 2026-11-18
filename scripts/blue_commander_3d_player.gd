@@ -8,6 +8,9 @@ enum Mode { EXPLORATION, COMBAT_LOCKED }
 @export var move_speed: float = 4.5
 @export var gravity: float = 18.0
 @export var ground_mesh_path: NodePath = NodePath("../GroundFloorMesh")
+## Walkable Z span and exit threshold. Defaults are the D4b canyon.
+@export var path_z_limits := Vector2(-14.5, 7.5)
+@export var exit_z := -13.5
 
 @onready var sprite: Sprite3D = $CommanderSprite
 @onready var gauntlet_light: OmniLight3D = $GauntletGlow
@@ -16,15 +19,25 @@ var idle_time: float = 0.0
 var walk_cycle: float = 0.0
 var was_at_exit: bool = false
 var _ground_mat: ShaderMaterial = null
+## Optional route object with center_x(z) and half_width, e.g. canyon_route_path.gd. Null keeps D4b.
+var route: Object = null
 
 
 static func get_path_center_x(z: float) -> float:
 	return sin(z * 0.22) * 0.65
 
 
-## Route used by the path clamp. Test scenes may override it; D4b scenes keep the curve above.
+## Route used by the path clamp. Without a route object the D4b curve above applies.
 func _route_center_x(z: float) -> float:
+	if route != null:
+		return route.center_x(z)
 	return get_path_center_x(z)
+
+
+func _route_half_width() -> float:
+	if route != null and "half_width" in route:
+		return route.half_width
+	return 1.15
 
 
 func _ready() -> void:
@@ -75,9 +88,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	# 3. Clamp smoothly inside winding cobblestone canyon trail
-	global_position.z = clampf(global_position.z, -14.5, 7.5)
+	global_position.z = clampf(global_position.z, path_z_limits.x, path_z_limits.y)
 	var cx: float = _route_center_x(global_position.z)
-	global_position.x = clampf(global_position.x, cx - 1.15, cx + 1.15)
+	var half_width := _route_half_width()
+	global_position.x = clampf(global_position.x, cx - half_width, cx + half_width)
 
 	# 4. Update dynamic grounded contact shadow under boots
 	if _ground_mat:
@@ -101,7 +115,7 @@ func _physics_process(delta: float) -> void:
 		gauntlet_light.light_energy = 0.35 + sin(Time.get_ticks_msec() * 0.004) * 0.08
 
 	# 6. Canyon Exit Threshold (Z <= -13.5)
-	var at_exit: bool = (global_position.z <= -13.5)
+	var at_exit: bool = (global_position.z <= exit_z)
 	if at_exit != was_at_exit:
 		was_at_exit = at_exit
 		reached_canyon_exit.emit(at_exit)

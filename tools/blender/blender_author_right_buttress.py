@@ -12,7 +12,7 @@ import bmesh
 import bpy
 
 
-MODELS = Path(__file__).resolve().parents[1] / "assets" / "models"
+MODELS = Path(__file__).resolve().parents[2] / "assets" / "models"
 OBJECT_NAME = "ButtressMesh"
 NOTCH_GROUP = "Trailward notch"
 NOTCH_DEPTHS = {"shallow": 0.10, "deep": 0.78}

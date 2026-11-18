@@ -28,3 +28,6 @@ bin/
 *.pck
 *.apk
 *.aab
+
+# Python caches
+__pycache__/

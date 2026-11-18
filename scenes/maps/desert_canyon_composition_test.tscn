@@ -1,10 +1,9 @@
 [gd_scene format=4]
 
 [ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_chatgpt_boulder_test.tscn" id="1_integrated"]
-[ext_resource type="Script" path="res://scripts/canyon_composition_test.gd" id="2_root"]
-[ext_resource type="Script" path="res://scripts/canyon_route.gd" id="3_route"]
-[ext_resource type="Script" path="res://scripts/composition_commander.gd" id="4_commander"]
-[ext_resource type="Script" path="res://scripts/composition_camera.gd" id="5_camera"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_composition_test.gd" id="2_root"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_route.gd" id="3_route"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_camera.gd" id="5_camera"]
 
 [sub_resource type="Resource" id="Resource_route"]
 script = ExtResource("3_route")
@@ -15,9 +14,6 @@ phase = 0.0
 [node name="DesertCanyonCompositionTest" instance=ExtResource("1_integrated")]
 script = ExtResource("2_root")
 route = SubResource("Resource_route")
-
-[node name="BlueCommander" parent="." index="10"]
-script = ExtResource("4_commander")
 
 [node name="CameraRig" parent="." index="11"]
 script = ExtResource("5_camera")

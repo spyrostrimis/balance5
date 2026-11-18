@@ -84,7 +84,7 @@ The launcher checks covered main Play, all 13 playable cards, both static previe
 
 **Play `res://scenes/maps/desert_canyon_buttress_test.tscn`.** It inherits `res://scenes/maps/desert_canyon_buttress_control.tscn`, the matched diagnostic control derived from the D4b launch scene at `6576387`. The test hides `RightWing_6`, `RightWing_7` and `RightWing_8` to put one stepped buttress across that section. The diagnostics disable `TiltShiftDof`, `GodRaysOverlay`, dust motes and the painted right road shadow in both scenes. Both use the D4b road, sun, exposure, left wall, commander, floor and path bounds. The camera ran at 30° FOV and −13° pitch with follow offset `(0, 3.8, 12.6)` m. The launch scene file matched the D4b Git blob `aedeab65135633deb2326a10761ae03cf34a3d9c` and passed a separate launch walk.
 
-- Blender master `assets/models/source/right_buttress.blend` and author/export script `scripts/blender_author_right_buttress.py`. The `ButtressMesh` object uses metre units, a foot-level origin, a matte preview material at 0.88 roughness and the `Trailward notch` vertex group. The master is saved with the 0.78 m recess. Red marks slate, green carries AO and blue is zero because this module has no ochre boulders.
+- Blender master `assets/models/source/right_buttress.blend` and author/export script `tools/blender/blender_author_right_buttress.py`. The `ButtressMesh` object uses metre units, a foot-level origin, a matte preview material at 0.88 roughness and the `Trailward notch` vertex group. The master is saved with the 0.78 m recess. Red marks slate, green carries AO and blue is zero because this module has no ochre boulders.
 - GLB `assets/models/right_buttress.glb`, instanced by `scenes/maps/right_buttress.tscn`. The wrapper owns `assets/models/right_buttress_rock.tres` and an enabled static box blocker. The test level places the wrapper at `(1.2, 0, -9.3)` m. The blocker center is `(2.92, 1.2, -9.48)` m in world space and its dimensions are `(1.8, 2.4, 5.0)` m.
 - Captures and raw logs are under `D:/Games/Balance5/render_captures/session1_buttress/`. The renderer was Godot 4.7.2 Forward+ on Vulkan. All full-size Session 1 images are 1376×768. The harness now applies that exact viewport ratio, checks PNG saves and floor contact, and fails on a missed stop or exit signal. Its default scene and filename pattern still target the launch walk.
 
@@ -122,8 +122,8 @@ $test = 'res://scenes/maps/desert_canyon_buttress_test.tscn'
 $out = 'res://render_captures/session1_buttress'
 $landmark = '1.73465,0.03,-22.23546'
 $master = 'assets/models/source/right_buttress.blend'
-$author = 'scripts/blender_author_right_buttress.py'
-$walk = @('--path', '.', '--rendering-method', 'forward_plus', '--fixed-fps', '60', '--max-fps', '60', '--script', 'res://scripts/test_true_3d_walk.gd', '--')
+$author = 'tools/blender/blender_author_right_buttress.py'
+$walk = @('--path', '.', '--rendering-method', 'forward_plus', '--fixed-fps', '60', '--max-fps', '60', '--script', 'res://tests/test_true_3d_walk.gd', '--')
 
 New-Item -ItemType Directory -Force render_captures/session1_buttress | Out-Null
 New-Item -ItemType File -Force render_captures/session1_buttress/.gdignore | Out-Null
@@ -202,7 +202,7 @@ $godot = 'C:/Godot/Godot_v4.7.2-stable_win64_console.exe'
 $bend = 'res://scenes/maps/desert_canyon_bend.tscn'
 $session1 = 'res://scenes/maps/desert_canyon_buttress_test.tscn'
 $out = 'res://render_captures/session2_bend'
-$walk = @('--path', '.', '--rendering-method', 'forward_plus', '--fixed-fps', '60', '--max-fps', '60', '--script', 'res://scripts/test_true_3d_walk.gd', '--', '--capture-dir', $out, '--landmark', '1.73465,0.03,-22.23546')
+$walk = @('--path', '.', '--rendering-method', 'forward_plus', '--fixed-fps', '60', '--max-fps', '60', '--script', 'res://tests/test_true_3d_walk.gd', '--', '--capture-dir', $out, '--landmark', '1.73465,0.03,-22.23546')
 
 New-Item -ItemType Directory -Force render_captures/session2_bend | Out-Null
 New-Item -ItemType File -Force render_captures/session2_bend/.gdignore | Out-Null
@@ -221,7 +221,7 @@ The capture directory contains the full-size PNGs, comparisons, and `ground_befo
 
 Verified 18 Nov 2026 at 15:29 EET by OpenAI Codex. Open **Developers Page → Session 3** to play `res://scenes/maps/desert_canyon_handlaid_sandstone.tscn`. At the time of Session 3, Session 2 was featured as the comparison. The new scene inherits it and overrides the ground material with `assets/materials/handlaid_sandstone_road.tres`. The control and candidate use the same sun, exposure, camera (30°, −13°, offset `(0, 3.8, 12.6)` m), terrain geometry, atmosphere and native DOF (10/16.5 m, amount `0.014`). The isolated ground variant uses the original road mask with localized pockets of sand in the outer verge, starting at 0.76 m off center.
 
-- **Source.** `assets/textures/source/handlaid_sandstone.kra` is the Krita master, with separate packed joint sand, stone faces, mineral flecks and a hidden linear height layer spanning 0–40 mm. `scripts/build_handlaid_sandstone.py` generates the periodic OpenRaster layers and derives the tangent-space normal using wrapped differences of the editable height values. The two imported maps are `assets/textures/canyon_pbr/handlaid_sandstone_albedo.png` (the Krita composite) and `handlaid_sandstone_normal.png`.
+- **Source.** `assets/textures/source/handlaid_sandstone.kra` is the Krita master, with separate packed joint sand, stone faces, mineral flecks and a hidden linear height layer spanning 0–40 mm. `tools/python/build_handlaid_sandstone.py` generates the periodic OpenRaster layers and derives the tangent-space normal using wrapped differences of the editable height values. The two imported maps are `assets/textures/canyon_pbr/handlaid_sandstone_albedo.png` (the Krita composite) and `handlaid_sandstone_normal.png`.
 - **Engineering — PASS.** Both maps are 1024² at 4 × 4 m in world X/Z (256 texels/m), and Godot loaded all 10 mip levels beyond the base. One stone measured across the diffuse footprint is 98 texels or 0.383 m. Its endpoints are projected beside the commander and a marked 1 m reference. Ground geometry and curb positions carry through from Session 2. [Metre reference](../render_captures/session3_sandstone/metre_reference.png)
 - **Visual — PASS for this road pass.** Eighteen short transverse courses and warm, recessed joints read at walking height. The setts have rounded ends and chipped shoulders, with 19 strongly tapered wedges among 207 stones. Individual wedges are easiest to see near the boots. Sand covers occasional outer stones and breaks the road boundary while leaving the center legible. At the frozen spawn pose, substituting a flat tangent normal reduced the directional highlights. A slightly deeper second crown pass brought the mean absolute RGB difference in the sunlit crop `(570, 470, 804, 575)` from 3.34 to 3.81 levels. Relief remains gentler and the courses more regular than in the concept, especially in shade and at the far end of the road. [Concept and spawn boot crop](../render_captures/session3_sandstone/pos1_start_Boots_and_verge.png) · [Midway crop](../render_captures/session3_sandstone/pos2_midway_Boots_and_verge.png) · [Exit crop](../render_captures/session3_sandstone/pos3_exit_Boots_and_verge.png) · [Frozen normal toggle](../render_captures/session3_sandstone/relief_normal_toggle.png)
 
@@ -246,7 +246,7 @@ The 1376×768 Forward+ walks matched at all stops. The commander stayed grounded
 ```powershell
 $godot = 'C:/Godot/Godot_v4.7.2-stable_win64_console.exe'
 $out = 'res://render_captures/session3_sandstone'
-$walk = @('--path', '.', '--rendering-method', 'forward_plus', '--fixed-fps', '60', '--max-fps', '60', '--script', 'res://scripts/test_true_3d_walk.gd', '--', '--capture-dir', $out, '--landmark', '1.73465,0.03,-22.23546', '--bend-probes')
+$walk = @('--path', '.', '--rendering-method', 'forward_plus', '--fixed-fps', '60', '--max-fps', '60', '--script', 'res://tests/test_true_3d_walk.gd', '--', '--capture-dir', $out, '--landmark', '1.73465,0.03,-22.23546', '--bend-probes')
 New-Item -ItemType Directory -Force render_captures/session3_sandstone | Out-Null
 New-Item -ItemType File -Force render_captures/session3_sandstone/.gdignore | Out-Null
 & $godot --path . --headless --editor --import
@@ -270,22 +270,22 @@ Verified 18 Nov 2026 at 16:05 EET by OpenAI Codex. Play **Developers Page → Ro
 
 The matched run grounded the commander at Z = `6.000000`, `-3.524998`, and `-14.024970` m with the exit signal at the final stop. The original buttress still cast across the exit road, and the glint crops match the control exactly at all three stops. The menu launch and Esc return passed. [Full spawn](../render_captures/road_crispness/refined_pos1_start.png) · [Full walk comparison](../render_captures/road_crispness/walk_full_framing.png) · [Diagnostics](../render_captures/road_crispness/refined_verified.log)
 
-The edited master is `assets/textures/source/crisp_sandstone_patch.kra`, with `crisp_sandstone_patch_albedo.png` and `crisp_sandstone_patch_normal.png` under `assets/textures/canyon_pbr/`. Use `scripts/build_handlaid_sandstone.py --crisp-patch` for the OpenRaster layers and wrapped tangent normal. The optional relief source is `assets/models/source/crisp_patch_crowns.blend` and its GLB is `assets/models/crisp_patch_crowns.glb`. The walk harness supports `--road-clip` and `--anisotropy 4|8|16`. Use `--road-patch-original-art` on the patch scene to reproduce the filtering-only runs and `--normal-pair` to capture the refined normals versus a flat normal. Use distinct capture prefixes.
+The edited master is `assets/textures/source/crisp_sandstone_patch.kra`, with `crisp_sandstone_patch_albedo.png` and `crisp_sandstone_patch_normal.png` under `assets/textures/canyon_pbr/`. Use `tools/python/build_handlaid_sandstone.py --crisp-patch` for the OpenRaster layers and wrapped tangent normal. The optional relief source is `assets/models/source/crisp_patch_crowns.blend` and its GLB is `assets/models/crisp_patch_crowns.glb`. The walk harness supports `--road-clip` and `--anisotropy 4|8|16`. Use `--road-patch-original-art` on the patch scene to reproduce the filtering-only runs and `--normal-pair` to capture the refined normals versus a flat normal. Use distinct capture prefixes.
 
 ## 9. Ultra-Crisp Code Road (`2048²` + ORM Cavity Shader + Camera Pitch Comparison)
 
-Verified 18 Nov 2026 at 16:31 EET in isolated scene `res://scenes/maps/desert_canyon_ultra_crisp_test.tscn` via `scripts/test_ultra_crisp_road.gd`. Root cause of Session 2/3 blurriness diagnosed: `-13°` pitch squashes 1 vertical screen pixel to `~20.6 texels` at `512 tex/m`, so `6–12 texel` soft stone shoulders + `INTER_CUBIC` blobs + uniform matte `ROUGHNESS=0.86` + low joint/crown contrast washed stone boundaries together.
+Verified 18 Nov 2026 at 16:31 EET in isolated scene `res://scenes/maps/desert_canyon_ultra_crisp_test.tscn` via `tests/test_ultra_crisp_road.gd`. Root cause of Session 2/3 blurriness diagnosed: `-13°` pitch squashes 1 vertical screen pixel to `~20.6 texels` at `512 tex/m`, so `6–12 texel` soft stone shoulders + `INTER_CUBIC` blobs + uniform matte `ROUGHNESS=0.86` + low joint/crown contrast washed stone boundaries together.
 
-- **Implementation:** `scripts/build_ultra_crisp_cobble.py` builds `2048×2048` (`4.0 m × 4.0 m`, wrap `X=1.32×`, `Z=1.06×`) with `1.8-texel` hard edges, piecewise-linear crystal facets, angular corner chamfers, bright upper-right crown bevels against deep crevices, and `ultra_crisp_cobble_orm.png` (`R=cavity AO 0.16..1.0`, `G=roughness 0.48..0.96`). Applied in `assets/shaders/hd2d_canyon_ground_crisp.gdshader` with `mipmaps/generate=true` and `ANISOTROPY_16X`.
+- **Implementation:** `tools/python/build_ultra_crisp_cobble.py` builds `2048×2048` (`4.0 m × 4.0 m`, wrap `X=1.32×`, `Z=1.06×`) with `1.8-texel` hard edges, piecewise-linear crystal facets, angular corner chamfers, bright upper-right crown bevels against deep crevices, and `ultra_crisp_cobble_orm.png` (`R=cavity AO 0.16..1.0`, `G=roughness 0.48..0.96`). Applied in `assets/shaders/hd2d_canyon_ground_crisp.gdshader` with `mipmaps/generate=true` and `ANISOTROPY_16X`.
 - **Result:** Split-patch proof at the locked `-13.0°` camera (`1_locked_cam_split_patch_pos1_start.png`) immediately eliminated the out-of-focus look right beside Session 3's soft road. Testing steeper diorama camera angles at matched `13.1 m` hero focus depth showed **`-17.5°` (`Y=4.85 m, Z=12.2 m`)** adds crisp vertical definition to both cobbles and Left Strata Wall steps while keeping distant mountains visible (`-21.0°` clips horizon mountains). Procedural stone borders still read slightly uniform/graphic compared to the concept. Captures in `render_captures/ultra_crisp_test/`.
 
 ## 10. ChatGPT Image Road (`3.2 m` Seamless + Aligned Height + Krita/Aseprite/Tiled Pack)
 
-Verified 18 Nov 2026 at 17:21 EET in isolated scene `res://scenes/maps/desert_canyon_chatgpt_road_test.tscn` via `scripts/test_chatgpt_road.gd`.
+Verified 18 Nov 2026 at 17:21 EET in isolated scene `res://scenes/maps/desert_canyon_chatgpt_road_test.tscn` via `tests/test_chatgpt_road.gd`.
 
-- **Source Processing (`scripts/build_chatgpt_cobble.py`):** Processed user-generated `1024×1024` top-down ChatGPT albedo + aligned height map (`0.8145` low-frequency correlation) with `36 px` cosine edge-healing (`X wrap = 1.12×`, `Z wrap = 1.10×`, height `X = 1.10×`, `Z = 1.06×`) at **`3.2 m` tile scale**. Combined `32 mm` macro height + `8.5 mm` micro-grain albedo into `chatgpt_cobble_normal.png` and derived `chatgpt_cobble_orm.png` (`0.22` cavity AO, `0.52` crown roughness vs `0.95` joint roughness, mipmaps enabled).
+- **Source Processing (`tools/python/build_chatgpt_cobble.py`):** Processed user-generated `1024×1024` top-down ChatGPT albedo + aligned height map (`0.8145` low-frequency correlation) with `36 px` cosine edge-healing (`X wrap = 1.12×`, `Z wrap = 1.10×`, height `X = 1.10×`, `Z = 1.06×`) at **`3.2 m` tile scale**. Combined `32 mm` macro height + `8.5 mm` micro-grain albedo into `chatgpt_cobble_normal.png` and derived `chatgpt_cobble_orm.png` (`0.22` cavity AO, `0.52` crown roughness vs `0.95` joint roughness, mipmaps enabled).
 - **Result — Clear Road Winner:** Eliminated the uniform graphic borders of procedural generation while preserving crisp micro-chips, ochre/salmon/olive stone diversity, and wind-blown sand grains at both `-13.0°` (`1_chatgpt_split_patch_pos1_start.png`, `2_chatgpt_full_pos1_start.png`) and `-17.5°` (`3_chatgpt_cam17_5_pos1_start.png`). Captures in `render_captures/chatgpt_road_test/`.
-- **Editable Authoring Sources (`scripts/export_chatgpt_authoring.py`):** Exported native layered Krita master (`assets/textures/source/chatgpt_cobble.kra`), layered Aseprite sources (`chatgpt_cobble_1024.aseprite`, `chatgpt_cobble_pixel_256.aseprite` 48-color `32×32` grid), and a playable Tiled winding-road tileset & map (`assets/textures/source/tiled/chatgpt_road_tileset.tsx`, `canyon_road_sandbox.tmx`).
+- **Editable Authoring Sources (`tools/python/export_chatgpt_authoring.py`):** Exported native layered Krita master (`assets/textures/source/chatgpt_cobble.kra`), layered Aseprite sources (`chatgpt_cobble_1024.aseprite`, `chatgpt_cobble_pixel_256.aseprite` 48-color `32×32` grid), and a playable Tiled winding-road tileset & map (`assets/textures/source/tiled/chatgpt_road_tileset.tsx`, `canyon_road_sandbox.tmx`).
 
 ## Nine-stone road study at spawn
 
@@ -308,11 +308,11 @@ All three runs kept floor contact at Z +6.000, −3.525 and −14.025 and fired 
 
 ## 11. Composition test — route, right wall, camera, sun and air
 
-19 November 2026, Claude Code. Play **Developers Page → Composition test** (local study, no milestone). `res://scenes/maps/desert_canyon_composition_test.tscn` inherits the integrated ChatGPT AI Boulders scene. `scripts/canyon_composition_test.gd` changes the composition at runtime so every value stays switchable. In game, **C** restores the original camera, **V** cycles atmosphere (off → volumetric → overlay) and **B** restores the D4b sun. [Control vs test](../render_captures/composition_test/compare_final.jpg) · [All variants](../render_captures/composition_test/compare_v4.jpg) · [Haze diagnosis](../render_captures/composition_test/compare_diag.jpg)
+19 November 2026, Claude Code. Play **Developers Page → Composition test** (local study, no milestone). `res://scenes/maps/desert_canyon_composition_test.tscn` inherits the integrated ChatGPT AI Boulders scene. `scripts/canyon/canyon_composition_test.gd` changes the composition at runtime so every value stays switchable. In game, **C** restores the original camera, **V** cycles atmosphere (off → volumetric → overlay) and **B** restores the D4b sun. [Control vs test](../render_captures/composition_test/compare_final.jpg) · [All variants](../render_captures/composition_test/compare_v4.jpg) · [Haze diagnosis](../render_captures/composition_test/compare_diag.jpg)
 
 | Change | Value | Why |
 | --- | --- | --- |
-| Route | `2.0 · sin(0.22 z)` from a shared `scripts/canyon_route.gd` resource (D4b 0.65) | The D4b route reads as straight. All `Roadside3DKits`, props, buttress and Trellis boulders are re-laid by Δcx(z) and re-aligned to the new heading. The ground shader and commander clamp use the same route. |
+| Route | `2.0 · sin(0.22 z)` from a shared `scripts/canyon/canyon_route.gd` resource (D4b 0.65) | The D4b route reads as straight. All `Roadside3DKits`, props, buttress and Trellis boulders are re-laid by Δcx(z) and re-aligned to the new heading. The ground shader and commander clamp use the same route. |
 | Right wall | `RightWing_*`, `GatewayWingRight` and low `TerraceRight_*` hidden. Four left terrace meshes turned 180° at z 11.7, 5.5, −0.7, −6.4, plus `GatewayBluffLeft` turned 180° at z −15.6 | Removes the painted card blob and gives a continuous stepped right wall in shade. |
 | Camera | 30° FOV, −21° pitch, offset (0, 5.5, 11.9) m, 60% route-centre follow, 45% yaw toward the road 9 m ahead | Hides the horizon at spawn and midway. The commander stays at about 13.1 m, inside the native DOF band. |
 | Sun | Same 42° elevation, yaw 145°: from ahead-right instead of behind-right | The right wall casts img1's diagonal shadow across the road. |
@@ -320,7 +320,7 @@ All three runs kept floor contact at Z +6.000, −3.525 and −14.025 and fired 
 
 **Haze diagnosis.** The steeper camera sees more wall beyond 16 m, and the D4b exponential fog (0.0075) washed it to flat beige. Turning off glow or DOF changed little. Turning off exponential fog brought back the dark umber right wall and readable strata. Global volumetric fog at 0.008–0.018 only hazed the walls, with no visible shafts even with the backlit sun. Default atmosphere is off. Shafts need a localized `FogVolume` at a wall opening in the atmosphere pass.
 
-**Walk (1376×768 Forward+, `scripts/test_composition_walk.gd`).** Grounded at all stops. Exit signal at the final stop. Spawn hero (1.937, 0, 6.0), camera (1.162, 5.5, 17.9) at yaw 2.9°. Midway hero (−0.250, 0, −3.525), camera (−0.437, 5.5, 8.379). Exit hero (−0.850, 0, −14.025), camera (−0.326, 5.5, −2.118). The harness only holds forward, so the commander rides the right clamp edge at midway. The crater glint is now occluded by `ButtressMesh` at spawn **and midway** and is clear at the exit. The reveal moved later, which matches the concealed far road. Re-time it if the midway reveal remains a requirement.
+**Walk (1376×768 Forward+, `tests/test_composition_walk.gd`).** Grounded at all stops. Exit signal at the final stop. Spawn hero (1.937, 0, 6.0), camera (1.162, 5.5, 17.9) at yaw 2.9°. Midway hero (−0.250, 0, −3.525), camera (−0.437, 5.5, 8.379). Exit hero (−0.850, 0, −14.025), camera (−0.326, 5.5, −2.118). The harness only holds forward, so the commander rides the right clamp edge at midway. The crater glint is now occluded by `ButtressMesh` at spawn **and midway** and is clear at the exit. The reveal moved later, which matches the concealed far road. Re-time it if the midway reveal remains a requirement.
 
 **Regression check.** The ground shader gained `route_amplitude/frequency/phase` with D4b defaults. The player clamp calls an overridable `_route_center_x`. The control walk is pixel-identical to the earlier integrated capture (max channel difference 1), so existing builds are unchanged. Main Play still opens ChatGPT AI Boulders. Card launch, C/V/B, a grounded walk and Esc return passed.
 
@@ -330,4 +330,22 @@ All three runs kept floor contact at Z +6.000, −3.525 and −14.025 and fired 
 - The right wall reuses the left module, so both sides share a silhouette. Author dedicated right modules once the composition is accepted.
 - Still open: slate caps read as flat grey, sage bushes are small, the exit vista is a flat orange plane.
 
-Reproduce: `COMPOSITION_CAMERA=original|composition`, `COMPOSITION_ATMOSPHERE=off|volumetric|overlay`, `COMPOSITION_SUN=backlit|d4b`, plus diagnostics `COMPOSITION_FOG/GLOW/DOF=off`, with the usual walk arguments, `--script res://scripts/test_composition_walk.gd` and `--landmark 1.73465,0.03,-22.23546`.
+Reproduce: `COMPOSITION_CAMERA=original|composition`, `COMPOSITION_ATMOSPHERE=off|volumetric|overlay`, `COMPOSITION_SUN=backlit|d4b`, plus diagnostics `COMPOSITION_FOG/GLOW/DOF=off`, with the usual walk arguments, `--script res://tests/test_composition_walk.gd` and `--landmark 1.73465,0.03,-22.23546`.
+
+## 12. Foundations — flat canyon v2, route node, module wrappers, repo layout
+
+19 November 2026, Claude Code. Play **Developers Page → Canyon v2** (local study). `res://scenes/maps/canyon_v2.tscn` replaces the six-level inheritance chain (D4b → buttress control → buttress test → bend → road → boulders → composition) with one 5 KB scene. The D4b chain stays untouched as the comparison set.
+
+| Piece | File | Role |
+| --- | --- | --- |
+| Route | `scripts/canyon/canyon_route_path.gd` on a `Path3D` | Authored Bezier curve. `center_x(z)`, `heading(z)`, `half_width`. Writes a 64-sample lookup into the road shader (`route_mode = 1`; mode 0 keeps the D4b sine). |
+| Layout | `scripts/canyon/canyon_layout.gd` + `scenes/canyon/canyon_v2_layout.tres` | 42 route-relative placements (z, lateral, yaw offset, scale, sprite tint and flip). Unsaved children rebuild on route or data edits, in the editor too. |
+| Modules | `scenes/canyon/modules/*.tscn` | Seven rock wrappers on `assets/materials/canyon_rock.tres` and two bush sprites. Kit meshes come from `canyon_kit_test_d.glb` import `save_to_file` (`assets/models/canyon_kit/*.res`), so a Blender re-export updates them. |
+| Actors | `scenes/actors/blue_commander_3d.tscn`, `canyon_camera.tscn` | The commander script takes an optional `route` and exports Z limits and exit threshold (D4b defaults). The camera is the former composition camera. |
+| Shared look | `assets/materials/canyon_road_chatgpt.tres`, `assets/environments/canyon_clear_air.tres`, `canyon_lens.tres` | Extracted from the D4b chain with the composition-test values. |
+
+`tools/godot/build_canyon_v2.gd` bootstrapped these files from the composition test. Assembler modules kept their offset from the D4b `-heading` yaw and are re-aligned with the correct sign.
+
+**Verification (1376×768 Forward+).** Canyon v2 against the composition test with atmosphere off: mean absolute difference 0.4–1.2 RGB levels per channel. The residual comes from the Bezier route versus the sine. Positions match to 3 mm, and the glint is occluded by `ButtressMesh` at spawn and midway and clear at the exit. Commander grounded at all stops and exit signal fired. After the edits, the integrated control and the composition test both matched their earlier captures (max channel difference 1). The scene opens in the editor without errors. The card launch, grounded walk and Esc return passed. [v2 vs composition](../render_captures/canyon_v2/compare_v2.jpg)
+
+**Repository layout.** Runtime scripts stay in `scripts/` (canyon systems in `scripts/canyon/`). Harnesses moved to `tests/`, Godot tools to `tools/godot/`, Blender scripts to `tools/blender/` (project root now `parents[2]`), image tools to `tools/python/`, and superseded map-cleaning and debug one-offs to `tools/legacy/`. References in scenes, scripts and docs were rewritten, and no stale paths remain. The walks ran unchanged from the new locations. `AGENTS.md` is now the single source of truth. `GEMINI.md` and `CLAUDE.md` point to it.

@@ -2,7 +2,7 @@
 for Krita (.kra), Aseprite (.aseprite), and Tiled (.tsx + .tmx) inside assets/textures/source/.
 
 Usage:
-  & "C:/Python312/python.exe" "d:/Games/Balance5/scripts/export_chatgpt_authoring.py"
+  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/export_chatgpt_authoring.py"
 """
 
 import io

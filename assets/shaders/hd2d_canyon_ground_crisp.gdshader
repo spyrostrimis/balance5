@@ -23,6 +23,21 @@ uniform int compare_mode = 0; // 0 = full road ultra-crisp, 1 = center compariso
 uniform float route_amplitude = 0.65;
 uniform float route_frequency = 0.22;
 uniform float route_phase = 0.0;
+// route_mode 1 samples an authored Path3D route written by canyon_route_path.gd.
+uniform int route_mode = 0;
+uniform float route_lookup[64];
+uniform float route_lookup_z0 = 0.0;
+uniform float route_lookup_dz = 1.0;
+
+float route_center(float z) {
+	if (route_mode == 0) {
+		return sin(z * route_frequency + route_phase) * route_amplitude;
+	}
+	float f = clamp((z - route_lookup_z0) / route_lookup_dz, 0.0, 63.0);
+	int i = int(floor(f));
+	int j = min(i + 1, 63);
+	return mix(route_lookup[i], route_lookup[j], f - float(i));
+}
 
 varying vec3 world_pos;
 
@@ -31,7 +46,7 @@ void vertex() {
 }
 
 void fragment() {
-	float path_cx = sin(world_pos.z * route_frequency + route_phase) * route_amplitude;
+	float path_cx = route_center(world_pos.z);
 	float macro_w = sin(world_pos.x * 1.1 + sin(world_pos.z * 0.7)) * 0.5 + 0.5;
 	vec2 cobble_uv = world_pos.xz / cobble_tile_metres;
 

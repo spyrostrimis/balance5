@@ -1,4 +1,4 @@
-extends "res://scripts/test_true_3d_walk.gd"
+extends "res://tests/test_true_3d_walk.gd"
 ## Walk harness for the composition test. Adds whole-scene landmark occlusion and variant switches.
 ## Environment variables select a variant without changing the shared harness options:
 ##   COMPOSITION_CAMERA=original|composition  COMPOSITION_ATMOSPHERE=volumetric|overlay|off

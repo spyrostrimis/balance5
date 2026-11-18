@@ -1,5 +1,5 @@
 extends "res://scripts/rpg_camera_3d_follow.gd"
-## Composition-test camera. Tracks the route centre and turns slightly toward the road ahead.
+## Canyon follow camera. Tracks the route centre and turns slightly toward the road ahead.
 ## With use_original the inherited D4b rig runs unchanged: 30° FOV, −13° pitch, offset (0, 3.8, 12.6).
 
 const ORIGINAL_PITCH := -13.0
@@ -14,7 +14,7 @@ const ORIGINAL_OFFSET := Vector3(0.0, 3.8, 12.6)
 @export var yaw_follow := 0.45
 @export var look_ahead := 9.0
 
-var route: Resource
+var route: Object ## canyon_route_path.gd node or canyon_route.gd resource
 var _yaw := 0.0
 
 

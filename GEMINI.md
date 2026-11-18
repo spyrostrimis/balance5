@@ -31,6 +31,8 @@
 
 ## 3. Living Guide Directory
 
+The integrated walking control is `scenes/maps/desert_canyon_chatgpt_boulder_test.tscn` at `246e989`. It combines the image-authored 3.2 m cobbles and two Trellis meshes with the shared sandstone material. Keep Session 2 for lens and buttress comparisons and Session 3 for the 4 m road comparison. Use the integrated control for the right gateway, followed by atmosphere and the tactical handoff. The Developers Page selects the latest available published Play milestone by its UTC date. See [catalog rules](AGENTS.md#developers-page) and [current evidence](docs/EXPERIMENT_LOG_AND_LESSONS.md#integrated-canyon-review).
+
 The primary checkout holds the local `docs/` guides. Git intentionally excludes this directory. The root [AGENTS.md](AGENTS.md) summarizes the baseline for Codex and for checkouts without the local guides.
 
 - **[`docs/CANYON_BEND_SESSIONS.md`](docs/CANYON_BEND_SESSIONS.md)** — Execution prompts, capture comparisons and acceptance criteria for the right buttress and the playable bend.

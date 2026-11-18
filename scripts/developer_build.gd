@@ -7,8 +7,9 @@ extends Resource
 @export var summary: String
 @export_file("*.tscn") var scene_path: String
 @export var credit: String
-@export var recorded_at: String
-@export var action := "Play"
+## Playable milestone time in UTC, formatted YYYY-MM-DD HH:MM. Leave blank for a local study.
+@export var milestone_utc: String
+@export_enum("Play", "View") var action: String = "Play"
 
 
 func is_available() -> bool:

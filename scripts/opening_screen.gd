@@ -1,6 +1,6 @@
 extends Control
 
-## Add active builds in display order. Uncheck Listed to retire a build.
+## Cards are grouped by section and ordered by milestone. Uncheck Listed to retire a build.
 @export var builds: Array[DeveloperBuild]
 
 @onready var _opening: Control = %Opening
@@ -27,9 +27,17 @@ func _ready() -> void:
 
 func _build_catalog() -> void:
 	var sections: Dictionary[String, VBoxContainer] = {}
+	var available: Array[DeveloperBuild] = []
 	for build in builds:
-		if build == null or not build.is_available():
-			continue
+		if build != null and build.is_available():
+			available.append(build)
+	available.sort_custom(func(a: DeveloperBuild, b: DeveloperBuild) -> bool:
+		if a.milestone_utc == b.milestone_utc:
+			return a.title < b.title
+		return a.milestone_utc > b.milestone_utc
+	)
+	var latest: DeveloperBuild
+	for build in available:
 		if not sections.has(build.section):
 			var group := VBoxContainer.new()
 			group.add_theme_constant_override("separation", 9)
@@ -39,9 +47,12 @@ func _build_catalog() -> void:
 		var button := _add_card(sections[build.section], build)
 		if _first_build_button == null:
 			_first_build_button = button
-			_play_button.text = "%s %s" % [build.action, build.title]
-			_play_button.pressed.connect(_play.bind(build))
-	_play_button.visible = _first_build_button != null
+		if latest == null and build.action == "Play":
+			latest = build
+	_play_button.visible = latest != null
+	if latest != null:
+		_play_button.text = "Play " + latest.title
+		_play_button.pressed.connect(_play.bind(latest))
 	if _first_build_button == null:
 		_catalog.add_child(_label("No builds are currently available.", "MutedLabel", 18))
 
@@ -58,7 +69,8 @@ func _add_card(group: VBoxContainer, build: DeveloperBuild) -> Button:
 	row.add_child(details)
 	details.add_child(_label(build.title, "DisplayLabel", 22))
 	details.add_child(_label(build.summary, "", 16))
-	details.add_child(_label("AI: %s  ·  %s" % [build.credit, build.recorded_at], "MutedLabel", 14))
+	var milestone := "Local study" if build.milestone_utc.is_empty() else build.milestone_utc + " UTC"
+	details.add_child(_label("AI: %s  ·  %s" % [build.credit, milestone], "MutedLabel", 14))
 	var button := Button.new()
 	button.text = build.action
 	button.custom_minimum_size = Vector2(86, 36)

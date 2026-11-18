@@ -21,7 +21,7 @@ title = "Session 2"
 summary = "Playable bend with metre-scaled cobbles and native depth of field."
 scene_path = "res://scenes/maps/desert_canyon_bend.tscn"
 credit = "OpenAI Codex"
-recorded_at = "18 Nov 2026, 04:19 EET · verified"
+milestone_utc = "2026-11-18 02:19"
 
 [sub_resource type="Resource" id="Build_chatgpt_boulders"]
 script = ExtResource("4")
@@ -29,7 +29,7 @@ title = "ChatGPT AI Boulders"
 summary = "Trellis AI boulders with seamless ChatGPT sandstone PBR/ORM shader."
 scene_path = "res://scenes/maps/desert_canyon_chatgpt_boulder_test.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "18 Nov 2026, 19:37 EET · verified"
+milestone_utc = "2026-11-18 17:37"
 
 [sub_resource type="Resource" id="Build_chatgpt_road"]
 script = ExtResource("4")
@@ -37,7 +37,7 @@ title = "ChatGPT Cobble Road"
 summary = "Top-down 1024px ChatGPT albedo and height at 3.2m scale with ORM cavity AO."
 scene_path = "res://scenes/maps/desert_canyon_chatgpt_road_test.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "18 Nov 2026, 17:20 EET · verified"
+milestone_utc = "2026-11-18 15:20"
 
 [sub_resource type="Resource" id="Build_session_3"]
 script = ExtResource("4")
@@ -45,7 +45,7 @@ title = "Session 3"
 summary = "Hand-laid sandstone courses on the Session 2 bend."
 scene_path = "res://scenes/maps/desert_canyon_handlaid_sandstone.tscn"
 credit = "OpenAI Codex"
-recorded_at = "18 Nov 2026, 15:29 EET · verified"
+milestone_utc = "2026-11-18 13:29"
 
 [sub_resource type="Resource" id="Build_crisp_road"]
 script = ExtResource("4")
@@ -53,15 +53,14 @@ title = "Road Crispness Test"
 summary = "Compare one sharper sandstone patch at the Session 3 spawn."
 scene_path = "res://scenes/maps/desert_canyon_crisp_road_patch.tscn"
 credit = "OpenAI Codex"
-recorded_at = "18 Nov 2026, 16:05 EET · verified"
+milestone_utc = "2026-11-18 14:05"
 
 [sub_resource type="Resource" id="Build_sett_study"]
 script = ExtResource("4")
 title = "Nine-stone road study"
-summary = "Inspect the patch at your feet. Press 1 for Session 3, 2 for painted normals, or 3 for raised stones."
+summary = "Local study from 18 Nov 2026, 20:03 EET. Press 1 for Session 3, 2 for painted normals, or 3 for raised stones."
 scene_path = "res://scenes/maps/desert_canyon_sett_study.tscn"
 credit = "OpenAI Codex"
-recorded_at = "18 Nov 2026, 20:03 EET · road detail study"
 
 [sub_resource type="Resource" id="Build_session_1"]
 script = ExtResource("4")
@@ -69,7 +68,7 @@ title = "Session 1"
 summary = "Right-hand buttress, real road shadow and crater landmark reveal."
 scene_path = "res://scenes/maps/desert_canyon_buttress_test.tscn"
 credit = "OpenAI Codex"
-recorded_at = "18 Nov 2026, 04:00 EET · verified"
+milestone_utc = "2026-11-18 02:00"
 
 [sub_resource type="Resource" id="Build_d4b"]
 script = ExtResource("4")
@@ -77,7 +76,7 @@ title = "D4b"
 summary = "Left strata-wall baseline with the original screen-height focus."
 scene_path = "res://scenes/maps/desert_canyon_true_3d.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "18 Nov 2026, 03:30 EET · recorded"
+milestone_utc = "2026-11-18 01:30"
 
 [sub_resource type="Resource" id="Build_3d_walk"]
 script = ExtResource("4")
@@ -87,7 +86,7 @@ title = "Early 3D Canyon Walk"
 summary = "Walk the original stepped 3D approach to the battlefield."
 scene_path = "res://scenes/maps/desert_canyon_3d_rpg.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "16 Nov 2026, 21:18 EET · recorded"
+milestone_utc = "2026-11-16 19:18"
 
 [sub_resource type="Resource" id="Build_2d_walk"]
 script = ExtResource("4")
@@ -96,7 +95,7 @@ title = "2D Parallax Canyon"
 summary = "Walk the painted approach with a parallax camera."
 scene_path = "res://scenes/maps/desert_canyon_playable.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "16 Nov 2026, 20:37 EET · recorded"
+milestone_utc = "2026-11-16 18:37"
 
 [sub_resource type="Resource" id="Build_battlefield"]
 script = ExtResource("4")
@@ -105,7 +104,7 @@ title = "Desert Mission 1 — Unit Lineup"
 summary = "View the 2D battlefield and the original unit sprites."
 scene_path = "res://scenes/maps/desert_mission_1_with_units.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "16 Nov 2026, 16:00 EET · recorded"
+milestone_utc = "2026-11-16 14:00"
 action = "View"
 
 [sub_resource type="Resource" id="Build_battlefield_3d"]
@@ -115,8 +114,40 @@ title = "Desert Mission 1 — 3D Terrain"
 summary = "View the early isometric terrain and crystal field."
 scene_path = "res://scenes/maps/desert_mission_1.tscn"
 credit = "Antigravity (Gemini workspace)"
-recorded_at = "16 Nov 2026, 15:10 EET · recorded"
+milestone_utc = "2026-11-16 13:10"
 action = "View"
+
+[sub_resource type="Resource" id="Build_ai_boulders"]
+script = ExtResource("4")
+title = "Trellis Boulders — Native Materials"
+summary = "Compare the two original Trellis boulders beside the 3.2 m cobble road."
+scene_path = "res://scenes/maps/desert_canyon_ai_boulder_test.tscn"
+credit = "Antigravity (Gemini workspace)"
+milestone_utc = "2026-11-18 17:15"
+
+[sub_resource type="Resource" id="Build_ultra_crisp"]
+script = ExtResource("4")
+title = "2048px Cobble Road"
+summary = "Walk the 4 m procedural tile and inspect its dark joints at the original pitch."
+scene_path = "res://scenes/maps/desert_canyon_ultra_crisp_test.tscn"
+credit = "Antigravity (Gemini workspace)"
+milestone_utc = "2026-11-18 14:31"
+
+[sub_resource type="Resource" id="Build_four_crowns"]
+script = ExtResource("4")
+title = "Four-Crown Relief Test"
+summary = "Compare four raised crowns at spawn with the flat Road Crispness Test."
+scene_path = "res://scenes/maps/desert_canyon_crisp_road_relief_test.tscn"
+credit = "OpenAI Codex"
+milestone_utc = "2026-11-18 14:05"
+
+[sub_resource type="Resource" id="Build_buttress_control"]
+script = ExtResource("4")
+title = "Session 1 — Before the Buttress"
+summary = "Walk the effects-off control used to measure the first right buttress."
+scene_path = "res://scenes/maps/desert_canyon_buttress_control.tscn"
+credit = "OpenAI Codex"
+milestone_utc = "2026-11-18 02:00"
 
 [node name="OpeningScreen" type="Control"]
 layout_mode = 3
@@ -127,7 +158,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield"), SubResource("Build_battlefield_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield"), SubResource("Build_battlefield_3d")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1
@@ -183,7 +214,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 54)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Play Session 2"
+text = "Play"
 
 [node name="DevelopersPage" type="Button" parent="Opening"]
 unique_name_in_owner = true

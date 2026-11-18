@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_handlaid_sandstone.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/sett_study.gd" id="2"]
+[ext_resource type="PackedScene" path="res://assets/models/sett_study.glb" id="3"]
+
+[node name="DesertCanyonSettStudy" instance=ExtResource("1")]
+
+[node name="SettStudy" type="Node3D" parent="."]
+script = ExtResource("2")
+
+[node name="StoneInsert" parent="SettStudy" instance=ExtResource("3")]
+position = Vector3(-0.08, 0, 6.45)
+

@@ -4,7 +4,8 @@ Balance is a Godot 4 Forward+ RTS/RPG prototype. Running the project opens `scen
 
 ## Developers Page
 
-- Edit the opening scene's **Builds** array in the Inspector to list a standalone build. Record its scene path, AI credit and a dated milestone with the time zone. Put the featured build first. Use **View** for static prototypes.
+- Add a standalone scene to the opening scene's **Builds** array with its title, scene path, AI credit and **Milestone UTC** (`YYYY-MM-DD HH:MM`). For a published playable build choose **Play**. The main button selects the newest dated, listed, available Play entry regardless of array order. Use **View** for static previews. A local study can be played from its card with the milestone blank until publication.
+- The Windows Desktop preset produces `builds/Balance.exe`. Re-export after changing the catalog to refresh the executable.
 - Uncheck **Listed** to retire an entry. Missing scenes are skipped. Tests A, B and C1 are retired. The Early 3D Canyon Walk is unlisted because its Forward+ view is severely overexposed. Check new entries by launching them from the page and returning with Esc.
 
 ## Canyon baseline
@@ -25,6 +26,6 @@ The detailed rubric, experiment history, art guide, pipeline and `docs/CANYON_BE
 
 Commit `8e05e40` completed the buttress and playable bend. Use `scenes/maps/desert_canyon_bend.tscn` as the comparison build. It has a reimportable blocker and shadow caster, a 4 m road tile, and native camera DOF (near 10 m, far 16.5 m, amount 0.014). The glint is occluded at spawn and visible by midway.
 
-Session 3 is the road variant at `scenes/maps/desert_canyon_handlaid_sandstone.tscn`. It passed the 4 m scale, wrap seam, forward walk, landmark and shadow checks. Its road master is `assets/textures/source/handlaid_sandstone.kra`. Session 2 remains the featured comparison in the Developers Page. See the Session 3 experiment log for the matched concept crops and normal-map proof.
+Session 3 (`3093d36`) is the 4 m hand-laid road control. The 2048px procedural road (`88f25da`) resolved the edges but reads as heavily outlined. Use the 1024px ChatGPT cobbles at 3.2 m (`1c23695`) for the full-road candidate. Editable Krita, Aseprite and Tiled sources arrived in `e4e0c7e`. The nine-stone scene is a local close-detail study with three switchable treatments.
 
-Next test the right gateway silhouette using the Session 3 road. Test light shafts through that opening in a separate atmosphere pass, then begin the tactical handoff. Record the actual scene, source maps, camera stops and evidence for each pass.
+The latest integrated canyon is `scenes/maps/desert_canyon_chatgpt_boulder_test.tscn` (`246e989`). It adds two Trellis boulders with shared sandstone to the 3.2 m road. The native-material control is `desert_canyon_ai_boulder_test.tscn` (`b2f0f26`). Next inherit the integrated scene for one right gateway outcrop. At the original camera, compare the far road end at spawn, its reveal by midway, and a clear grounded route to the exit. Follow with a separately measured atmosphere pass, then a single-unit tactical handoff.

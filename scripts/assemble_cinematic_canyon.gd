@@ -193,16 +193,7 @@ func build_and_save_scene() -> void:
 		var haze: float = 0.14 + depth_t * 0.18
 		var exit_flare: float = maxf(0.0, (-z - 6.0) * 0.10)
 
-		_add_wing(
-			wings_root, root,
-			"LeftWing_%d" % i,
-			"res://assets/textures/diorama_wings/wing_left_main.png",
-			Vector3(cx - 4.85 - exit_flare + jx, 4.35, z),
-			Vector3(-12.0, 16.0, 0.0),
-			Vector2(9.2, 8.8),
-			warm_tint,
-			haze
-		)
+		# LeftWing removed for Strata Wall test (real 3D wall frames the left side)
 		_add_wing(
 			wings_root, root,
 			"RightWing_%d" % i,
@@ -214,18 +205,8 @@ func build_and_save_scene() -> void:
 			haze
 		)
 
-	# Canyon exit gateway wings framing centered sunlit battlefield opening
+	# Canyon exit right gateway wing kept untouched while left wing is retired for Strata Wall
 	var gate_cx: float = _path_cx(-15.5)
-	_add_wing(
-		wings_root, root,
-		"GatewayWingLeft",
-		"res://assets/textures/diorama_wings/wing_gate_left.png",
-		Vector3(gate_cx - 5.85, 4.35, -15.5),
-		Vector3(-11.0, 10.0, 0.0),
-		Vector2(9.6, 9.2),
-		Color(1.04, 0.99, 0.94),
-		0.24
-	)
 	_add_wing(
 		wings_root, root,
 		"GatewayWingRight",
@@ -258,12 +239,45 @@ func build_and_save_scene() -> void:
 	var kit_inst := kit_scene.instantiate()
 	var m_left_a := _find_mesh_recursive(kit_inst, "TerraceLeftModule")
 	var m_left_b := _find_mesh_recursive(kit_inst, "TerraceLeftModuleB")
+	var m_gate_left := _find_mesh_recursive(kit_inst, "GatewayBluffLeft")
 	var m_right_a := _find_mesh_recursive(kit_inst, "TerraceRightModule")
 	var m_right_b := _find_mesh_recursive(kit_inst, "TerraceRightModuleB")
 	var m_boulder := _find_mesh_recursive(kit_inst, "BoulderCluster")
 	var m_curb := _find_mesh_recursive(kit_inst, "CurbStoneStrip")
 	kit_inst.free()
 
+	# Continuous 5-slice Full-Height Left Strata Wall (6.2m spacing with 6.5m module = 0.3m overlap)
+	var left_z_slices: Array[float] = [14.8, 8.6, 2.4, -3.8, -10.0]
+	for li in range(left_z_slices.size()):
+		var lkz: float = left_z_slices[li]
+		var lkcx: float = _path_cx(lkz)
+		var l_slope_dx: float = _path_cx(lkz + 2.0) - _path_cx(lkz - 2.0)
+		var l_yaw_rad: float = -atan2(l_slope_dx, 4.0)
+		var m_left: Mesh = m_left_a if (li % 2 == 0 or m_left_b == null) else m_left_b
+		if m_left:
+			var tl := MeshInstance3D.new()
+			tl.name = "TerraceLeft_%d" % li
+			tl.mesh = m_left
+			tl.position = Vector3(lkcx - 1.54, 0.0, lkz)
+			tl.rotation = Vector3(0.0, l_yaw_rad, 0.0)
+			tl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			tl.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(tl)
+			_own(tl, root)
+
+	# Upper-left canyon-mouth gateway bluff closing the far-left sky corner
+	if m_gate_left:
+		var gbl := MeshInstance3D.new()
+		gbl.name = "GatewayBluffLeft"
+		gbl.mesh = m_gate_left
+		gbl.position = Vector3(_path_cx(-13.2) - 1.54, 0.0, -13.2)
+		gbl.rotation = Vector3(0.0, -0.08, 0.0)
+		gbl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		gbl.set_surface_override_material(0, mat_rock)
+		kit_root_node.add_child(gbl)
+		_own(gbl, root)
+
+	# Keep Right side, Curbs, and Boulders unchanged for direct side-by-side comparison
 	var kit_z_slices: Array[float] = [10.0, 3.8, -2.4, -8.6]
 	for i in range(kit_z_slices.size()):
 		var kz: float = kit_z_slices[i]
@@ -271,20 +285,7 @@ func build_and_save_scene() -> void:
 		var slope_dx: float = _path_cx(kz + 2.0) - _path_cx(kz - 2.0)
 		var yaw_rad: float = -atan2(slope_dx, 4.0)
 
-		var m_left: Mesh = m_left_a if (i % 2 == 0 or m_left_b == null) else m_left_b
 		var m_right: Mesh = m_right_a if (i % 2 == 0 or m_right_b == null) else m_right_b
-
-		# Left and right 3D chiseled polygonal basalt + red-sandstone terrace modules (A/B alternated)
-		if m_left:
-			var tl := MeshInstance3D.new()
-			tl.name = "TerraceLeft_%d" % i
-			tl.mesh = m_left
-			tl.position = Vector3(kcx - 1.58, 0.0, kz)
-			tl.rotation = Vector3(0.0, yaw_rad, 0.0)
-			tl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
-			tl.set_surface_override_material(0, mat_rock)
-			kit_root_node.add_child(tl)
-			_own(tl, root)
 
 		if m_right:
 			var tr := MeshInstance3D.new()
@@ -325,7 +326,7 @@ func build_and_save_scene() -> void:
 			bl.name = "BoulderLeft_%d" % i
 			bl.mesh = m_boulder
 			var bl_z: float = kz + 1.15
-			bl.position = Vector3(_path_cx(bl_z) - 2.08, 0.0, bl_z)
+			bl.position = Vector3(_path_cx(bl_z) - 1.88, 0.0, bl_z)
 			bl.rotation = Vector3(0.0, 0.55 + i * 1.15, 0.0)
 			bl.scale = Vector3.ONE * (0.90 + (i % 2) * 0.12)
 			bl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON

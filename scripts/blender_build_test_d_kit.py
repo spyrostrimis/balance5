@@ -287,6 +287,296 @@ def build_terrace_module(name: str, side: str, variant_seed_offset: int = 0) -> 
     return obj
 
 
+def _stamp_stepped_ledge_block(
+    target_bm: bmesh.types.BMesh,
+    center: Vector,
+    size: Vector,
+    yaw_rad: float,
+    mat_id: float,
+    base_ao: float,
+    seed: int,
+    bevel_width: float = 0.028,
+    taper_top: float = 0.95,
+    cap_basalt_on_top: bool = True,
+) -> None:
+    """
+    Builds a crisp, blocky Octopath-style sedimentary terrace block with a flat
+    horizontal top, near-vertical striated walls, subtle micro-roughness, and
+    small bevelled edges (preserving D1's locked blocky structure).
+    """
+    sub_stages = 2 if size.z > 1.25 else 1
+    z_base = center.z
+
+    uv_layer = target_bm.loops.layers.uv.get("UVMap") or target_bm.loops.layers.uv.new("UVMap")
+    col_layer = target_bm.loops.layers.color.get("Col") or target_bm.loops.layers.color.new("Col")
+
+    for st in range(sub_stages):
+        st_frac_0 = float(st) / float(sub_stages)
+        st_frac_1 = float(st + 1) / float(sub_stages)
+        st_h = size.z * (st_frac_1 - st_frac_0)
+        st_shrink = 1.0 - st * 0.06
+        st_z = z_base + size.z * st_frac_0
+
+        tmp = bmesh.new()
+        bmesh.ops.create_cube(tmp, size=1.0)
+        for v in tmp.verts:
+            is_top = v.co.z > 0.0
+            taper = taper_top if is_top else 1.0
+            n_val = noise.noise(Vector((v.co.x * 1.3 + seed + st * 17, v.co.y * 1.3, v.co.z * 1.5)))
+            vx = v.co.x * size.x * st_shrink * taper + n_val * 0.018 * size.x
+            vy = v.co.y * size.y * (1.0 - st * 0.02) * taper + n_val * 0.018 * size.y
+            # Keep horizontal tops crisp and flat (tiny 0.008m vertical variation only)
+            vz = (v.co.z + 0.5) * st_h + (n_val * 0.008 if is_top else 0.0)
+            v.co = Vector((vx, vy, vz))
+
+        bmesh.ops.bevel(
+            tmp,
+            geom=list(tmp.edges),
+            offset=bevel_width,
+            segments=1,
+            affect='EDGES',
+            clamp_overlap=True,
+        )
+        bmesh.ops.recalc_face_normals(tmp, faces=list(tmp.faces))
+
+        rot = Matrix.Rotation(yaw_rad, 4, 'Z')
+        xform = Matrix.Translation(Vector((center.x - st * 0.06, center.y, st_z))) @ rot
+        bmesh.ops.transform(tmp, matrix=xform, verts=list(tmp.verts))
+        tmp.normal_update()
+
+        z_min = min((v.co.z for v in tmp.verts), default=0.0)
+        z_max = max((v.co.z for v in tmp.verts), default=1.0)
+        z_span = max(z_max - z_min, 0.05)
+
+        vert_map = {v: target_bm.verts.new(v.co) for v in tmp.verts}
+        for face in tmp.faces:
+            try:
+                nf = target_bm.faces.new([vert_map[v] for v in face.verts])
+            except ValueError:
+                continue
+            n = face.normal
+            ax, ay, az = abs(n.x), abs(n.y), abs(n.z)
+            # Only true flat horizontal shelf tops receive warm grey-brown cap stone when enabled
+            face_mat = 1.0 if (cap_basalt_on_top and n.z > 0.82) else mat_id
+
+            for loop in nf.loops:
+                co = loop.vert.co
+                if az >= ax and az >= ay:
+                    loop[uv_layer].uv = (co.x * 0.55, co.y * 0.55)
+                elif ax >= ay:
+                    loop[uv_layer].uv = (co.y * 0.55, co.z * 0.55)
+                else:
+                    loop[uv_layer].uv = (co.x * 0.55, co.z * 0.55)
+
+                rel_z = max(0.0, min(1.0, (co.z - z_min) / z_span))
+                ground_ao = 0.56 + 0.44 * max(0.0, min(1.0, co.z / 0.55))
+                ao = min(1.0, base_ao * (0.76 + 0.24 * rel_z) * ground_ao)
+                edge_wear = max(0.0, min(0.40, rel_z * (0.16 + 0.22 * max(0.0, n.z))))
+                loop[col_layer] = (face_mat, ao, edge_wear, 1.0)
+
+        tmp.free()
+
+
+def build_strata_wall_left(name: str, variant_seed_offset: int = 0) -> bpy.types.Object:
+    """
+    Full-Height Left 'Strata Wall' (6.5m along Blender Y = -3.25..+3.25, overlapping 0.3m at 6.2m spacing):
+    7 continuous blocky stepped courses rising from road verge (x = 0.0) up to Y = 5.95m (above camera 3.8m)
+    matching Img 1's left terraced sedimentary cliff framing.
+    """
+    seed_base = 101 + variant_seed_offset
+    rng = random.Random(seed_base)
+    bm = bmesh.new()
+
+    def _stamp_course(
+        y_start: float,
+        y_end: float,
+        len_range: tuple,
+        x_inner_range: tuple,
+        width_range: tuple,
+        height_range: tuple,
+        mat_id: float,
+        base_ao: float,
+        cap_on_top: bool,
+        course_seed: int,
+        cove_y: tuple = (),
+        cove_recess: float = 0.38,
+        promontory_y: float = -99.0,
+        overhang_cap: bool = False,
+        base_z: float = -0.06,
+    ) -> None:
+        yc = y_start
+        idx = 0
+        while yc < y_end:
+            blk_len = rng.uniform(len_range[0], len_range[1])
+            blk_mid_y = yc + blk_len * 0.5
+            in_cove = any(abs(blk_mid_y - cy) < 0.68 for cy in cove_y)
+            cove_dx = -cove_recess if in_cove else 0.0
+            prom_dx = 0.34 if abs(blk_mid_y - promontory_y) < 0.85 else 0.0
+
+            x_in = -rng.uniform(x_inner_range[0], x_inner_range[1]) + cove_dx + prom_dx
+            blk_w = rng.uniform(width_range[0], width_range[1])
+            blk_h = rng.uniform(height_range[0], height_range[1])
+            cx = x_in - blk_w * 0.48
+            cy = yc + blk_len * 0.48
+            step_yaw = rng.uniform(-0.045, 0.045)
+
+            if overhang_cap:
+                # Terracotta riser underneath + thick flat dark weathered stone cap overhang
+                riser_h = blk_h * 0.82
+                cap_h = max(0.22, blk_h * 0.22)
+                _stamp_stepped_ledge_block(
+                    bm,
+                    center=Vector((cx, cy, base_z)),
+                    size=Vector((blk_w, blk_len * 1.08, riser_h - base_z)),
+                    yaw_rad=step_yaw,
+                    mat_id=0.0,
+                    base_ao=base_ao * 0.94,
+                    seed=course_seed + idx * 17,
+                    bevel_width=0.026,
+                    taper_top=0.96,
+                    cap_basalt_on_top=False,
+                )
+                _stamp_stepped_ledge_block(
+                    bm,
+                    center=Vector((cx + 0.04, cy, riser_h - 0.04)),
+                    size=Vector((blk_w * 1.03, blk_len * 1.08, cap_h)),
+                    yaw_rad=step_yaw * 0.8,
+                    mat_id=1.0,
+                    base_ao=min(1.0, base_ao * 1.06),
+                    seed=course_seed + 400 + idx * 19,
+                    bevel_width=0.024,
+                    taper_top=0.95,
+                    cap_basalt_on_top=True,
+                )
+            else:
+                _stamp_stepped_ledge_block(
+                    bm,
+                    center=Vector((cx, cy, base_z)),
+                    size=Vector((blk_w, blk_len * 1.09, blk_h - base_z)),
+                    yaw_rad=step_yaw,
+                    mat_id=mat_id,
+                    base_ao=base_ao,
+                    seed=course_seed + idx * 17,
+                    bevel_width=0.030,
+                    taper_top=0.95,
+                    cap_basalt_on_top=cap_on_top,
+                )
+
+            yc += blk_len * 0.92
+            idx += 1
+
+    # Course 0: Continuous dark slate verge step along road border (h = 0.38..0.52m, deeper coves at y=-1.35 & +1.15)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(0.75, 1.12), x_inner_range=(0.04, 0.16), width_range=(0.58, 0.72), height_range=(0.38, 0.52),
+        mat_id=1.0, base_ao=0.88, cap_on_top=True, course_seed=seed_base + 100,
+        cove_y=(-1.35, 1.15), cove_recess=0.54,
+    )
+
+    # Course 1: Second dark stepped course (h = 0.82..1.06m)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(0.82, 1.18), x_inner_range=(0.48, 0.66), width_range=(0.72, 0.88), height_range=(0.82, 1.06),
+        mat_id=1.0, base_ao=0.86, cap_on_top=True, course_seed=seed_base + 200,
+        cove_y=(1.15,), cove_recess=0.34,
+    )
+
+    # Course 2: Transition terracotta riser topped with continuous warm grey-brown cap slab (h = 1.32..1.65m)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(0.90, 1.32), x_inner_range=(1.05, 1.24), width_range=(0.88, 1.04), height_range=(1.32, 1.65),
+        mat_id=0.0, base_ao=0.89, cap_on_top=True, course_seed=seed_base + 300,
+        overhang_cap=True,
+    )
+
+    # Course 3: Lower blocky red sandstone bluff course (h = 2.15..2.65m) with flat grey-brown top shelf
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(1.05, 1.52), x_inner_range=(1.72, 1.96), width_range=(1.08, 1.26), height_range=(2.15, 2.65),
+        mat_id=0.0, base_ao=0.92, cap_on_top=True, course_seed=seed_base + 500,
+        promontory_y=-0.35 if variant_seed_offset == 0 else 0.75,
+    )
+
+    # Course 4: Mid sandstone cliff wall with stacked buttress & promontories (h = 3.10..3.75m)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(1.12, 1.58), x_inner_range=(2.52, 2.78), width_range=(1.18, 1.42), height_range=(3.10, 3.75),
+        mat_id=0.0, base_ao=0.93, cap_on_top=True, course_seed=seed_base + 700,
+        promontory_y=0.95 if variant_seed_offset == 0 else -1.10,
+    )
+
+    # Course 5: Above-camera sandstone cliff wall rising past CameraRig Y=3.8m (h = 4.15..4.85m)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(1.18, 1.65), x_inner_range=(3.32, 3.62), width_range=(1.32, 1.58), height_range=(4.15, 4.85),
+        mat_id=0.0, base_ao=0.94, cap_on_top=True, course_seed=seed_base + 900,
+        promontory_y=-1.40 if variant_seed_offset == 0 else 0.45,
+    )
+
+    # Course 6: Upper canyon rim wall (h = 5.20..6.10m)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(1.25, 1.72), x_inner_range=(4.12, 4.46), width_range=(1.75, 2.10), height_range=(5.20, 6.10),
+        mat_id=0.0, base_ao=0.96, cap_on_top=True, course_seed=seed_base + 1100,
+    )
+
+    # Course 7: Outer Mesa Rim Wall extending wide & high so no sky peeks at upper-left (h = 6.35..7.55m)
+    _stamp_course(
+        y_start=-3.25, y_end=3.20,
+        len_range=(1.35, 1.85), x_inner_range=(5.25, 5.65), width_range=(2.60, 3.10), height_range=(6.35, 7.55),
+        mat_id=0.0, base_ao=0.98, cap_on_top=True, course_seed=seed_base + 1300,
+    )
+
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    if mesh.color_attributes:
+        mesh.color_attributes.active_color_index = 0
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    return obj
+
+
+def build_gateway_bluff_left(name: str = "GatewayBluffLeft") -> bpy.types.Object:
+    """
+    Tall outer stepped canyon-mouth shoulder placed at Z = -13.2 on the left flank
+    to frame the upper-left canyon mouth cleanly (closing the sky triangle at far left
+    while keeping the sunlit canyon exit corridor completely open).
+    """
+    bm = bmesh.new()
+    # Stepped buttresses rising outward from x = -1.6m out to -14.5m and h = 1.6m -> 8.2m
+    steps = [
+        # (cx, cy, sx, sy, h, mat_id, seed)
+        (-2.25, 0.2, 1.5, 2.8, 1.65, 1.0, 2101),
+        (-3.45, 0.0, 2.1, 3.2, 3.10, 0.0, 2102),
+        (-5.10, -0.2, 2.6, 3.5, 4.85, 0.0, 2103),
+        (-7.40, -0.4, 3.4, 3.8, 6.45, 0.0, 2104),
+        (-10.80, -0.6, 4.6, 4.2, 8.15, 0.0, 2105),
+    ]
+    for cx, cy, sx, sy, h, mid, sd in steps:
+        _stamp_stepped_ledge_block(
+            bm,
+            center=Vector((cx, cy, -0.06)),
+            size=Vector((sx, sy, h + 0.06)),
+            yaw_rad=0.06,
+            mat_id=mid,
+            base_ao=0.94,
+            seed=sd,
+            bevel_width=0.04,
+            taper_top=0.93,
+            cap_basalt_on_top=True,
+        )
+
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    if mesh.color_attributes:
+        mesh.color_attributes.active_color_index = 0
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    return obj
+
+
 def _make_faceted_boulder(target_bm: bmesh.types.BMesh, center: Vector, radii: Vector, seed: int) -> None:
     """Carves an angular planar-faceted chiseled sandstone boulder using bisect planes."""
     rng = random.Random(seed)
@@ -428,14 +718,15 @@ def main() -> None:
     bpy.ops.wm.read_factory_settings(use_empty=True)
     os.makedirs(os.path.dirname(OUT_GLB), exist_ok=True)
 
-    left_obj = build_terrace_module("TerraceLeftModule", "left", 0)
-    left_obj_b = build_terrace_module("TerraceLeftModuleB", "left", 77)
+    left_obj = build_strata_wall_left("TerraceLeftModule", 0)
+    left_obj_b = build_strata_wall_left("TerraceLeftModuleB", 77)
+    gate_left_obj = build_gateway_bluff_left("GatewayBluffLeft")
     right_obj = build_terrace_module("TerraceRightModule", "right", 0)
     right_obj_b = build_terrace_module("TerraceRightModuleB", "right", 91)
     boulder_obj = build_boulder_cluster("BoulderCluster")
     curb_obj = build_curb_strip("CurbStoneStrip")
 
-    for ob in (left_obj, left_obj_b, right_obj, right_obj_b, boulder_obj, curb_obj):
+    for ob in (left_obj, left_obj_b, gate_left_obj, right_obj, right_obj_b, boulder_obj, curb_obj):
         mesh = ob.data
         print(f"Built {ob.name}: verts={len(mesh.vertices)}, faces={len(mesh.polygons)}, cols={list(mesh.color_attributes.keys())}")
 

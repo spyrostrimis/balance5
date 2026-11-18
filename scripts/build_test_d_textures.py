@@ -25,13 +25,13 @@ def make_seamless_512(patch_bgr: np.ndarray, pad: int = 64) -> np.ndarray:
     return np.clip(seamless, 0.0, 255.0).astype(np.uint8)
 
 
-def generate_normal_map(albedo_bgr: np.ndarray, strength: float = 2.8) -> np.ndarray:
+def generate_normal_map(albedo_bgr: np.ndarray, strength: float = 2.8, dy_boost: float = 1.0) -> np.ndarray:
     """Computes a wrapped tangent-space normal map from luminance Sobel gradients."""
     gray = cv2.cvtColor(albedo_bgr, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255.0
     gray = cv2.GaussianBlur(gray, (3, 3), sigmaX=0.6)
     padded = cv2.copyMakeBorder(gray, 2, 2, 2, 2, cv2.BORDER_WRAP)
     dx = cv2.Sobel(padded, cv2.CV_32F, 1, 0, ksize=3)[2:-2, 2:-2]
-    dy = cv2.Sobel(padded, cv2.CV_32F, 0, 1, ksize=3)[2:-2, 2:-2]
+    dy = cv2.Sobel(padded, cv2.CV_32F, 0, 1, ksize=3)[2:-2, 2:-2] * dy_boost
 
     nx = -dx * strength
     ny = -dy * strength
@@ -47,31 +47,88 @@ def generate_normal_map(albedo_bgr: np.ndarray, strength: float = 2.8) -> np.nda
     return cv2.merge([norm_b, norm_g, norm_r])
 
 
+def _tile_seamless_2x(tile: np.ndarray) -> np.ndarray:
+    """Halves feature scale cleanly (2x2 seamless repeat at 512x512) without introducing seams."""
+    half = cv2.resize(tile, (256, 256), interpolation=cv2.INTER_AREA)
+    return np.tile(half, (2, 2, 1))
+
+
 def enhance_basalt_mortar(tile: np.ndarray) -> np.ndarray:
-    """Keeps basalt cap charcoal-slate while darkening mortar crevices without pure-black holes."""
-    f = tile.astype(np.float32) / 255.0
-    # Clamp crushed blacks slightly up to warm dark basalt so Godot lights & shadows still read
-    f = np.maximum(f, 0.09)
+    """
+    Re-grades dark stone cap texture into rough, weathered grey-brown desert shelf stone
+    with softer joints and granular rock grit (avoiding harsh black spiderweb paving cracks).
+    """
+    finer = _tile_seamless_2x(tile)
+    f = finer.astype(np.float32) / 255.0
     gray = 0.299 * f[:, :, 2] + 0.587 * f[:, :, 1] + 0.114 * f[:, :, 0]
-    crevice = np.clip((0.26 - gray) / 0.14, 0.0, 1.0)
-    f *= (1.0 - crevice[:, :, None] * 0.28)
-    return np.clip(f * 255.0, 0, 255).astype(np.uint8)
+    p5, p95 = np.percentile(gray, [5.0, 95.0])
+    t = np.clip((gray - p5) / max(p95 - p5, 1e-4), 0.0, 1.0)
+    # Compress deep paving cracks upward and mix fine rock grit so ledges read like natural weathered rock
+    t = np.power(t, 0.72)
+    rng = np.random.default_rng(42)
+    grit = rng.normal(0.0, 0.055, size=t.shape).astype(np.float32)
+    grit = cv2.GaussianBlur(grit, (3, 3), sigmaX=0.7)
+    t = np.clip(t * 0.88 + 0.08 + grit, 0.0, 1.0)
+
+    # BGR: soft warm crevice RGB(48,38,30) -> midtone RGB(94,72,56) -> sunlit highlight RGB(150,116,90)
+    c_dark = np.array([30.0, 38.0, 48.0], dtype=np.float32)
+    c_mid = np.array([56.0, 72.0, 94.0], dtype=np.float32)
+    c_hi = np.array([90.0, 116.0, 150.0], dtype=np.float32)
+
+    low_t = np.clip(t * 2.0, 0.0, 1.0)[:, :, None]
+    hi_t = np.clip((t - 0.5) * 2.0, 0.0, 1.0)[:, :, None]
+    graded = np.where(
+        t[:, :, None] < 0.5,
+        c_dark[None, None, :] * (1.0 - low_t) + c_mid[None, None, :] * low_t,
+        c_mid[None, None, :] * (1.0 - hi_t) + c_hi[None, None, :] * hi_t,
+    )
+    return np.clip(graded, 0.0, 255.0).astype(np.uint8)
 
 
 def enhance_sandstone_strata(tile: np.ndarray, ref_bgr: np.ndarray) -> np.ndarray:
-    """Warm-grades sandstone strata toward Picture 1's terracotta tone and deepens strata grooves."""
-    f = tile.astype(np.float32)
-    h, w = f.shape[:2]
-    ref_cliff = ref_bgr[80:320, 40:300].astype(np.float32)
-    ref_mean = ref_cliff.mean(axis=(0, 1))
-    cur_mean = f.mean(axis=(0, 1))
-    ratio = np.clip(ref_mean / (cur_mean + 1e-4), 0.80, 1.25)
-    f = f * (0.50 + 0.50 * ratio[None, None, :])
+    """
+    Produces natural, horizontally varied sedimentary sandstone with subtle broken strata
+    seams and blocky rock texture (no uniform zebra stripes) matching Img 1's left_wall_upper.
+    """
+    finer = _tile_seamless_2x(tile).astype(np.float32)
+    h, w = finer.shape[:2]
 
+    # Preserve rich fractured rock grit while keeping gentle horizontal sedimentary alignment
+    padded = cv2.copyMakeBorder(finer, 16, 16, 32, 32, cv2.BORDER_WRAP)
+    horiz_bed = cv2.GaussianBlur(padded, (35, 3), sigmaX=9.0, sigmaY=0.7)[16:-16, 32:-32]
+    wide_blur = cv2.GaussianBlur(padded, (29, 29), sigmaX=9.0, sigmaY=9.0)[16:-16, 32:-32]
+    grain = finer - wide_blur
+    flat_rock = np.clip(horiz_bed * 0.35 + finer * 0.65 + grain * 0.55, 0.0, 255.0)
+
+    gray = (0.299 * flat_rock[:, :, 2] + 0.587 * flat_rock[:, :, 1] + 0.114 * flat_rock[:, :, 0]) / 255.0
     yy = np.linspace(0.0, 2.0 * np.pi, h, dtype=np.float32)[:, None]
-    strata = 1.0 + 0.07 * np.sin(yy * 7.0) + 0.04 * np.cos(yy * 15.0 + 0.4)
-    f *= strata[:, :, None]
-    return np.clip(f, 0, 255).astype(np.uint8)
+    xx = np.linspace(0.0, 2.0 * np.pi, w, dtype=np.float32)[None, :]
+    # Pinching horizontal modulation so strata bands vary naturally across X instead of ruler stripes
+    horiz_mod = 0.58 + 0.42 * np.sin(xx * 2.0 + 0.6 * np.sin(yy * 2.0))
+    patch_var = 0.045 * np.sin(xx * 1.0 + yy * 2.0) * np.cos(xx * 3.0 - yy * 1.0)
+    phase = yy + 0.018 * np.sin(xx * 2.0 + yy * 2.0) + 0.010 * np.cos(xx * 5.0)
+
+    strata_wave = (
+        0.036 * np.tanh(1.5 * np.sin(phase * 11.0 + 0.4 * np.sin(phase * 3.0))) * horiz_mod
+        + 0.024 * np.sin(phase * 25.0 + 1.1) * (1.1 - 0.35 * horiz_mod)
+        + 0.018 * np.tanh(1.8 * np.cos(phase * 43.0))
+    )
+    bed_val = np.clip(gray * 0.90 + 0.05 + strata_wave + patch_var, 0.0, 1.0)
+    p4, p96 = np.percentile(bed_val, [4.0, 96.0])
+    t = np.clip((bed_val - p4) / max(p96 - p4, 1e-4), 0.0, 1.0)
+
+    # Map cleanly to Img 1 left_wall_upper BGR (~[22,36,68] -> [46,74,134] -> [88,134,202])
+    c_dark = np.array([22.0, 36.0, 68.0], dtype=np.float32)
+    c_mid = np.array([46.0, 74.0, 134.0], dtype=np.float32)
+    c_hi = np.array([88.0, 134.0, 202.0], dtype=np.float32)
+    low_t = np.clip(t * 2.0, 0.0, 1.0)[:, :, None]
+    hi_t = np.clip((t - 0.5) * 2.0, 0.0, 1.0)[:, :, None]
+    graded = np.where(
+        t[:, :, None] < 0.5,
+        c_dark[None, None, :] * (1.0 - low_t) + c_mid[None, None, :] * low_t,
+        c_mid[None, None, :] * (1.0 - hi_t) + c_hi[None, None, :] * hi_t,
+    )
+    return np.clip(graded, 0.0, 255.0).astype(np.uint8)
 
 
 def extract_clean_bush(ref_bgr: np.ndarray, x0: int, y0: int, x1: int, y1: int, out_path: str) -> None:
@@ -129,15 +186,15 @@ def main() -> None:
     # 2. Pure terracotta Sandstone Strata from clean bottom half
     strata_patch = sheet[int(sh * 0.52):sh, :]
     strata_alb = enhance_sandstone_strata(make_seamless_512(strata_patch), ref)
-    strata_nrm = generate_normal_map(strata_alb, strength=3.2)
+    strata_nrm = generate_normal_map(strata_alb, strength=3.6, dy_boost=1.45)
     cv2.imwrite(os.path.join(OUT_DIR, "d_sandstone_strata_albedo.png"), strata_alb)
     cv2.imwrite(os.path.join(OUT_DIR, "d_sandstone_strata_normal.png"), strata_nrm)
 
-    # 3. Warm golden-ochre fractured Boulder surface (recolored clean basalt-grain + warm sandstone warmth)
-    b_f = basalt_alb.astype(np.float32) / 255.0
-    # Transform grey-slate basalt fracture facets into warm sunlit golden-ochre desert sandstone boulders
-    boulder_warm = np.zeros_like(b_f)
-    gray_b = 0.299 * b_f[:, :, 2] + 0.587 * b_f[:, :, 1] + 0.114 * b_f[:, :, 0]
+    # 3. Warm golden-ochre fractured Boulder surface derived from clean fractured stone facets
+    b_raw = make_seamless_512(basalt_patch).astype(np.float32) / 255.0
+    boulder_warm = np.zeros_like(b_raw)
+    gray_b = 0.299 * b_raw[:, :, 2] + 0.587 * b_raw[:, :, 1] + 0.114 * b_raw[:, :, 0]
+    gray_b = np.maximum(gray_b, 0.09)
     boulder_warm[:, :, 2] = np.clip(gray_b * 2.15 + 0.16, 0.0, 0.96)  # R
     boulder_warm[:, :, 1] = np.clip(gray_b * 1.62 + 0.08, 0.0, 0.82)  # G
     boulder_warm[:, :, 0] = np.clip(gray_b * 1.05 + 0.03, 0.0, 0.58)  # B

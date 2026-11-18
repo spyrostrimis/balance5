@@ -21,7 +21,6 @@ def flatten_sand_tone(patch_bgr: np.ndarray, target_bgr: np.ndarray, sigma: floa
 
 def build_sand_macro_grid(clean: np.ndarray) -> tuple[np.ndarray, list[np.ndarray]]:
     """Build a seamless 128x128 (4x4 grid of 32x32) stippled sand texture and its 16 tiles."""
-    # Four clean pebble-free 48x48 sand patches well outside the uploaded reference box
     raw_patches = [
         clean[500:548, 292:340],  # mid-lower left flat sand
         clean[490:538, 368:416],  # mid-lower center sand
@@ -30,7 +29,6 @@ def build_sand_macro_grid(clean: np.ndarray) -> tuple[np.ndarray, list[np.ndarra
     ]
     patches = [flatten_sand_tone(p, TARGET_SAND_BGR, sigma=18.0).astype(np.float32) for p in raw_patches]
 
-    # Tile a 168x168 buffer with 24px step and smooth C^1 sin^2 weights (zero boundary kinks)
     buf = np.zeros((168, 168, 3), dtype=np.float32)
     w_sum = np.zeros((168, 168, 1), dtype=np.float32)
     t1d = np.sin(np.pi * np.linspace(0.0, 1.0, 48, dtype=np.float32)) ** 2
@@ -47,7 +45,6 @@ def build_sand_macro_grid(clean: np.ndarray) -> tuple[np.ndarray, list[np.ndarra
     canvas = buf / np.maximum(w_sum, 1e-6)
     canvas = flatten_sand_tone(np.clip(canvas, 0, 255).astype(np.uint8), TARGET_SAND_BGR, sigma=24.0).astype(np.float32)
 
-    # Wrap central 128x128 seamlessly using the 16px border continuation in the 168x168 buffer
     ramp = 0.5 - 0.5 * np.cos(np.pi * (np.arange(16, dtype=np.float32) / 16.0))
     horiz = canvas[20:164, 20:148].copy()
     horiz[:, :16, :] = (
@@ -70,6 +67,100 @@ def build_sand_macro_grid(clean: np.ndarray) -> tuple[np.ndarray, list[np.ndarra
             cv2.imwrite(str(KIT_DIR / f"sand_base_{idx}.png"), tile)
             tiles.append(tile)
     return seamless_128, tiles
+
+
+def build_cobble_road_tileset(clean: np.ndarray) -> Path:
+    """Build a 128x128 (4x4 of 32x32) 4-bit orthogonal autotile cobblestone road atlas.
+
+    Tile index = mask (0..15) where bits are N=1, E=2, S=4, W=8, at (col=mask%4, row=mask//4).
+    """
+    # Clean sandstone flagstone patches from the central roundabout apron
+    c1 = clean[256:288, 488:552].copy()  # 32x64 clean flagstones
+    c2 = clean[420:452, 464:528].copy()  # 32x64 lower apron flagstones
+    target_cobble = np.array([124.0, 162.0, 200.0], dtype=np.float32)
+    p1 = flatten_sand_tone(c1, target_cobble, sigma=16.0).astype(np.float32)
+    p2 = flatten_sand_tone(c2, target_cobble, sigma=16.0).astype(np.float32)
+
+    # Assemble a 64x64 seamless flagstone canvas
+    buf = np.zeros((96, 96, 3), dtype=np.float32)
+    wsum = np.zeros((96, 96, 1), dtype=np.float32)
+    tx = np.sin(np.pi * np.linspace(0.0, 1.0, 64, dtype=np.float32)) ** 2
+    ty = np.sin(np.pi * np.linspace(0.0, 1.0, 32, dtype=np.float32)) ** 2
+    wt = (ty[:, None] * tx[None, :])[..., None]
+    for r in range(5):
+        for c in range(2):
+            p = p1 if (r + c) % 2 == 0 else p2
+            y0, x0 = r * 16, c * 32
+            buf[y0:y0 + 32, x0:x0 + 64] += p * wt
+            wsum[y0:y0 + 32, x0:x0 + 64] += wt
+    cob = buf / np.maximum(wsum, 1e-6)
+    cob_32 = np.clip(cob[32:64, 16:48], 0, 255).astype(np.float32)
+
+    # Smooth wrap cob_32 across 32x32 so connecting roads show zero seam across tile borders
+    ramp = 0.5 - 0.5 * np.cos(np.pi * (np.arange(8, dtype=np.float32) / 8.0))
+    cob_h = cob[24:64, 16:48].copy()
+    cob_h[:, :8, :] = cob[24:64, 48:56, :] * (1.0 - ramp[None, :, None]) + cob[24:64, 16:24, :] * ramp[None, :, None]
+    cob_tile = cob_h[:32, :, :].copy()
+    cob_tile[:8, :, :] = cob_h[32:40, :, :] * (1.0 - ramp[:, None, None]) + cob_h[:8, :, :] * ramp[:, None, None]
+
+    # Precompute deterministic subtle stone-curb wobble field (periodic on 32x32)
+    yy, xx = np.mgrid[0:32, 0:32].astype(np.float32)
+    wobble = (
+        0.95 * np.sin(2.0 * np.pi * xx / 16.0 + 0.7) * np.cos(2.0 * np.pi * yy / 16.0 - 0.4)
+        + 0.55 * np.sin(2.0 * np.pi * (xx + yy) / 10.6667)
+    )
+
+    atlas = np.zeros((128, 128, 4), dtype=np.uint8)
+    cx, cy = 15.5, 15.5
+    half_w = 11.2
+
+    for mask in range(16):
+        has_n = bool(mask & 1)
+        has_e = bool(mask & 2)
+        has_s = bool(mask & 4)
+        has_w = bool(mask & 8)
+
+        # Signed distance to union of rounded central hub + connected arms
+        dist = np.hypot(xx - cx, yy - cy) - half_w
+        if has_n:
+            d_n = np.where(yy <= cy, np.abs(xx - cx) - half_w, np.hypot(xx - cx, yy - cy) - half_w)
+            dist = np.minimum(dist, d_n)
+        if has_s:
+            d_s = np.where(yy >= cy, np.abs(xx - cx) - half_w, np.hypot(xx - cx, yy - cy) - half_w)
+            dist = np.minimum(dist, d_s)
+        if has_w:
+            d_w = np.where(xx <= cx, np.abs(yy - cy) - half_w, np.hypot(xx - cx, yy - cy) - half_w)
+            dist = np.minimum(dist, d_w)
+        if has_e:
+            d_e = np.where(xx >= cx, np.abs(yy - cy) - half_w, np.hypot(xx - cx, yy - cy) - half_w)
+            dist = np.minimum(dist, d_e)
+
+        # Keep boundary arms exact on tile edges so adjacent tiles connect cleanly
+        edge_fade = np.minimum(np.minimum(xx, 31.0 - xx), np.minimum(yy, 31.0 - yy))
+        wob_weight = np.clip(edge_fade / 4.0, 0.0, 1.0)
+        sdf = dist + wobble * wob_weight
+
+        # Subtle dark stone curb shadow along outer rim (sdf in [-1.8..+1.5])
+        curb_darken = np.exp(-((sdf - 0.2) ** 2) / 1.8) * 0.28
+        tile_rgb = cob_tile * (1.0 - curb_darken[..., None])
+        # Warm sandy dust blend right at the outer 1.5px fringe
+        sand_fringe = np.clip((sdf + 1.0) / 2.2, 0.0, 1.0)[..., None] * 0.45
+        tile_rgb = tile_rgb * (1.0 - sand_fringe) + TARGET_SAND_BGR[None, None, :] * sand_fringe
+
+        alpha = np.clip((1.6 - sdf) / 2.4, 0.0, 1.0)
+        alpha = 0.5 - 0.5 * np.cos(np.pi * alpha)
+        alpha[alpha < 0.04] = 0.0
+
+        rgba = np.dstack([
+            np.clip(tile_rgb, 0, 255).astype(np.uint8),
+            np.clip(alpha * 255.0, 0, 255).astype(np.uint8),
+        ])
+        col, row = mask % 4, mask // 4
+        atlas[row * 32:(row + 1) * 32, col * 32:(col + 1) * 32] = rgba
+
+    out_path = KIT_DIR / "road_tileset.png"
+    cv2.imwrite(str(out_path), atlas)
+    return out_path
 
 
 def heal_spot(img: np.ndarray, cx: int, cy: int, r: int, _dx: int = 0, _dy: int = 0) -> None:
@@ -100,7 +191,6 @@ def extract_dune_stamp(
     low_freq_bg = cv2.GaussianBlur(f_crop, (0, 0), sigmaX=26.0, sigmaY=26.0, borderType=cv2.BORDER_REFLECT_101)
     norm_bgr = np.clip(f_crop - low_freq_bg + TARGET_SAND_BGR[None, None, :], 0, 255).astype(np.uint8)
 
-    # Organic relief mask so flat-sand rectangular corners fade cleanly to zero alpha
     gray = cv2.cvtColor(norm_bgr, cv2.COLOR_BGR2GRAY).astype(np.float32)
     gray_low = cv2.GaussianBlur(gray, (0, 0), sigmaX=18.0, sigmaY=18.0, borderType=cv2.BORDER_REFLECT_101)
     relief = cv2.GaussianBlur(np.abs(gray - gray_low), (0, 0), sigmaX=9.0, sigmaY=9.0, borderType=cv2.BORDER_REFLECT_101)
@@ -163,7 +253,6 @@ def extract_prop_stamp(
     alpha = cv2.GaussianBlur(alpha.astype(np.float32), (3, 3), 0.55)
     alpha[alpha < 0.05] = 0.0
 
-    # Shift semi-transparent perimeter colors subtly toward TARGET_SAND_BGR to avoid halos
     bgr_out = crop.astype(np.float32)
     fringe = (alpha > 0.0) & (alpha < 0.6)
     if np.any(fringe):
@@ -176,17 +265,112 @@ def extract_prop_stamp(
     return out_path
 
 
-def export_tiled_kitbash(seamless_128: np.ndarray, stamp_paths: list[Path]) -> None:
+def extract_landmark_stamps(clean: np.ndarray) -> list[Path]:
+    """Extract reusable obstacle landmarks: Orichalcum crystal mound, basalt mesa, and oasis spring."""
+    out: list[Path] = []
+
+    def fill_holes(bin_mask: np.ndarray) -> np.ndarray:
+        h, w = bin_mask.shape
+        inv = (bin_mask == 0).astype(np.uint8)
+        ff = inv.copy()
+        ff_mask = np.zeros((h + 2, w + 2), dtype=np.uint8)
+        for sx in range(w):
+            if ff[0, sx] == 1:
+                cv2.floodFill(ff, ff_mask, (sx, 0), 2)
+            if ff[h - 1, sx] == 1:
+                cv2.floodFill(ff, ff_mask, (sx, h - 1), 2)
+        for sy in range(h):
+            if ff[sy, 0] == 1:
+                cv2.floodFill(ff, ff_mask, (0, sy), 2)
+            if ff[sy, w - 1] == 1:
+                cv2.floodFill(ff, ff_mask, (w - 1, sy), 2)
+        return (ff != 2).astype(np.uint8)
+
+    # 1. Orichalcum crystal mound (398..596, 282..428): dark basalt ring + interior glowing crystals
+    cryst = clean[282:428, 398:596].copy()
+    ch, cw = cryst.shape[:2]
+    gray_c = cv2.cvtColor(cryst, cv2.COLOR_BGR2GRAY)
+    b, g, r = cv2.split(cryst)
+    # Dark basalt & rubble skirt is significantly darker than the surrounding tan cobblestones (~145..200)
+    dark_ring = ((gray_c < 108) & (r < 140)).astype(np.uint8)
+    dark_ring = cv2.morphologyEx(dark_ring, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
+    fg = fill_holes(dark_ring)
+    fg = cv2.morphologyEx(fg, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+    num, labels, stats, _ = cv2.connectedComponentsWithStats(fg)
+    if num > 1:
+        largest = 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA]))
+        fg = (labels == largest).astype(np.uint8)
+    alpha_c = cv2.GaussianBlur(fg.astype(np.float32), (3, 3), 0.75)
+    alpha_c = np.where(cv2.erode(fg, np.ones((3, 3), np.uint8)) > 0, 1.0, alpha_c)
+    alpha_c[alpha_c < 0.06] = 0.0
+    p_cryst = KIT_DIR / "rock_crystal_outcrop.png"
+    cv2.imwrite(str(p_cryst), np.dstack([cryst, np.clip(alpha_c * 255, 0, 255).astype(np.uint8)]))
+    out.append(p_cryst)
+
+    # 2. Standalone basalt rock mesa from top-left outcrop (52..204, 12..98) with clean right margin
+    mesa = clean[12:98, 52:204].copy()
+    mh, mw = mesa.shape[:2]
+    b, g, r = cv2.split(mesa)
+    hsv_m = cv2.cvtColor(mesa, cv2.COLOR_BGR2HSV)
+    is_green_m = (hsv_m[:, :, 0] >= 24) & (hsv_m[:, :, 0] <= 80) & (hsv_m[:, :, 1] > 80)
+    is_sand = (((r.astype(int) - b.astype(int)) > 72) & (r > 145)) | is_green_m
+    yy, xx = np.mgrid[0:mh, 0:mw]
+    fg_m = (~is_sand).astype(np.uint8)
+    fg_m[(xx + yy * 1.1) < 32] = 0
+    fg_m[(xx > mw - 34) & (yy > mh - 24)] = 0
+    fg_m[:, -6:] = 0
+    top_curve = 7.0 + 10.0 * ((xx - mw * 0.48) / (mw * 0.46)) ** 2
+    fg_m[yy < top_curve] = 0
+    fg_m = cv2.morphologyEx(fg_m, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
+    fg_m = fill_holes(fg_m)
+    fg_m = cv2.morphologyEx(fg_m, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+    num, labels, stats, _ = cv2.connectedComponentsWithStats(fg_m)
+    if num > 1:
+        largest = 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA]))
+        fg_m = (labels == largest).astype(np.uint8)
+    alpha_m = cv2.GaussianBlur(fg_m.astype(np.float32), (5, 5), 1.0)
+    alpha_m = np.where(cv2.erode(fg_m, np.ones((5, 5), np.uint8)) > 0, 1.0, alpha_m)
+    alpha_m[alpha_m < 0.05] = 0.0
+    p_mesa = KIT_DIR / "rock_basalt_mesa.png"
+    cv2.imwrite(str(p_mesa), np.dstack([mesa, np.clip(alpha_m * 255, 0, 255).astype(np.uint8)]))
+    out.append(p_mesa)
+
+    # 3. Full oval oasis spring pool + lush green reed rim from clean[96:194, 746:874]
+    oasis = clean[96:194, 746:874].copy()
+    b, g, r = cv2.split(oasis)
+    hsv = cv2.cvtColor(oasis, cv2.COLOR_BGR2HSV)
+    is_water = (b.astype(int) > r.astype(int) + 12) & (b > 90)
+    is_green = (hsv[:, :, 0] >= 24) & (hsv[:, :, 0] <= 85) & (hsv[:, :, 1] > 75) & (hsv[:, :, 2] > 35)
+    fg_o = (is_water | is_green).astype(np.uint8)
+    fg_o = cv2.morphologyEx(fg_o, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+    fg_o = fill_holes(fg_o)
+    fg_o = cv2.dilate(fg_o, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)), iterations=1)
+    num, labels, stats, _ = cv2.connectedComponentsWithStats(fg_o)
+    keep_o = np.zeros_like(fg_o)
+    for idx in range(1, num):
+        if stats[idx, cv2.CC_STAT_AREA] >= 50:
+            keep_o[labels == idx] = 1
+    alpha_o = cv2.GaussianBlur(keep_o.astype(np.float32), (5, 5), 1.2)
+    alpha_o = np.where(cv2.erode(keep_o, np.ones((3, 3), np.uint8)) > 0, 1.0, alpha_o)
+    alpha_o[alpha_o < 0.05] = 0.0
+    p_oasis = KIT_DIR / "oasis_spring.png"
+    cv2.imwrite(str(p_oasis), np.dstack([oasis, np.clip(alpha_o * 255, 0, 255).astype(np.uint8)]))
+    out.append(p_oasis)
+
+    return out
+
+
+def export_tiled_kitbash(seamless_128: np.ndarray, road_path: Path, stamp_paths: list[Path]) -> None:
     """Create desert_kitbash_tileset.png, .tsx files, and desert_kitbash_examples.tmx."""
     TILED_DIR.mkdir(parents=True, exist_ok=True)
 
-    # 256x256 (8x8 grid of 32x32 tiles):
-    # Top-left 4x4 (cols 0..3, rows 0..3) holds the exact contiguous 128x128 seamless sand macro-grid!
     atlas = np.zeros((256, 256, 4), dtype=np.uint8)
     atlas[0:128, 0:128, :3] = seamless_128
     atlas[0:128, 0:128, 3] = 255
+    road_img = cv2.imread(str(road_path), cv2.IMREAD_UNCHANGED)
+    if road_img is not None:
+        atlas[0:128, 128:256] = road_img
 
-    # Remaining atlas cells (rows 4..7) hold preview thumbnails of dune banks & props
     cur_x, cur_y = 0, 132
     row_h = 0
     for sp in stamp_paths:
@@ -243,7 +427,7 @@ def export_tiled_kitbash(seamless_128: np.ndarray, stamp_paths: list[Path]) -> N
         encoding="utf-8",
     )
 
-    cols, rows = 12, 8
+    cols, rows = 20, 11
     csv_lines = []
     for r in range(rows):
         line = [str(1 + (r % 4) * 8 + (c % 4)) for c in range(cols)]
@@ -264,17 +448,17 @@ def export_tiled_kitbash(seamless_128: np.ndarray, stamp_paths: list[Path]) -> N
 </data>
  </layer>
  <objectgroup id="2" name="DuneRidges">
-  <object id="1" gid="{name_to_gid['dune_bank_ml']}" x="0" y="210" width="130" height="100"/>
-  <object id="2" gid="{name_to_gid['dune_bank_ul']}" x="190" y="70" width="145" height="64"/>
-  <object id="3" gid="{name_to_gid['dune_bank_mr']}" x="246" y="246" width="138" height="106"/>
+  <object id="1" gid="{name_to_gid['dune_bank_ml']}" x="0" y="106" width="130" height="100"/>
+  <object id="2" gid="{name_to_gid['dune_bank_ul']}" x="470" y="70" width="145" height="64"/>
+  <object id="3" gid="{name_to_gid['dune_bank_mr']}" x="498" y="346" width="138" height="106"/>
  </objectgroup>
- <objectgroup id="3" name="ShrubsAndPebbles">
-  <object id="4" gid="{name_to_gid['shrub_0']}" x="92" y="102" width="22" height="20"/>
-  <object id="5" gid="{name_to_gid['shrub_2']}" x="148" y="136" width="22" height="20"/>
-  <object id="6" gid="{name_to_gid['shrub_4']}" x="220" y="182" width="24" height="22"/>
-  <object id="7" gid="{name_to_gid['pebble_0']}" x="120" y="154" width="14" height="14"/>
-  <object id="8" gid="{name_to_gid['pebble_3']}" x="188" y="120" width="12" height="12"/>
-  <object id="9" gid="{name_to_gid['speck_0']}" x="164" y="148" width="10" height="10"/>
+ <objectgroup id="3" name="LandmarksAndProps">
+  <object id="4" gid="{name_to_gid['rock_crystal_outcrop']}" x="246" y="218" width="124" height="92"/>
+  <object id="5" gid="{name_to_gid['oasis_spring']}" x="404" y="136" width="104" height="90"/>
+  <object id="6" gid="{name_to_gid['rock_basalt_mesa']}" x="32" y="318" width="112" height="68"/>
+  <object id="7" gid="{name_to_gid['shrub_0']}" x="150" y="112" width="22" height="20"/>
+  <object id="8" gid="{name_to_gid['shrub_4']}" x="378" y="274" width="24" height="22"/>
+  <object id="9" gid="{name_to_gid['pebble_0']}" x="192" y="244" width="14" height="14"/>
  </objectgroup>
 </map>
 """,
@@ -289,9 +473,9 @@ def main() -> None:
         raise FileNotFoundError(f"Missing clean albedo: {SRC_ALBEDO}")
 
     seamless_128, _ = build_sand_macro_grid(clean)
+    road_path = build_cobble_road_tileset(clean)
 
     stamps: list[Path] = [
-        # Dune banks with natural wave-tip tapers on exposed sides (zero mid-wave rectangular cuts)
         extract_dune_stamp(
             clean,
             "dune_bank_ul",
@@ -300,7 +484,7 @@ def main() -> None:
             145,
             64,
             margin=(12, 10, 10, 12),
-            heals=[(352, 36, 3, -6, 0)],
+            heals=[(352, 36, 3)],
         ),
         extract_dune_stamp(
             clean,
@@ -321,7 +505,7 @@ def main() -> None:
             138,
             106,
             margin=(14, 8, 8, 8),
-            heals=[(956, 442, 3, -6, 0), (969, 469, 3, -6, 0)],
+            heals=[(956, 442, 3), (969, 469, 3)],
         ),
         extract_dune_stamp(
             clean,
@@ -331,9 +515,11 @@ def main() -> None:
             160,
             78,
             margin=(12, 10, 12, 10),
-            heals=[(564, 667, 3, -6, 0)],
+            heals=[(564, 667, 3)],
         ),
     ]
+
+    stamps.extend(extract_landmark_stamps(clean))
 
     shrub_specs = [
         (278, 325, 22, 20, 6.2),
@@ -368,8 +554,8 @@ def main() -> None:
     for i, (cx, cy, kw, kh, rad) in enumerate(speck_specs):
         stamps.append(extract_prop_stamp(clean, f"speck_{i}", cx, cy, kw, kh, core_radius=rad, diff_thresh=20.0))
 
-    export_tiled_kitbash(seamless_128, stamps)
-    print(f"Built 16 seamless 32x32 macro-grid sand tiles + {len(stamps)} kitbash stamps + Tiled pack.")
+    export_tiled_kitbash(seamless_128, road_path, stamps)
+    print(f"Built sand macro-grid + 16 cobble road tiles + {len(stamps)} kitbash stamps + Tiled pack.")
 
 
 if __name__ == "__main__":

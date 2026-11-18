@@ -55,6 +55,13 @@ scene_path = "res://scenes/maps/desert_canyon_crisp_road_patch.tscn"
 credit = "OpenAI Codex"
 milestone_utc = "2026-11-18 14:05"
 
+[sub_resource type="Resource" id="Build_composition"]
+script = ExtResource("4")
+title = "Composition test"
+summary = "Local study from 19 Nov 2026. S-curve route, stone right wall, −21° camera and backlit sun. C original camera · V atmosphere · B sun."
+scene_path = "res://scenes/maps/desert_canyon_composition_test.tscn"
+credit = "Claude Code"
+
 [sub_resource type="Resource" id="Build_sett_study"]
 script = ExtResource("4")
 title = "Nine-stone road study"
@@ -97,15 +104,23 @@ scene_path = "res://scenes/maps/desert_canyon_playable.tscn"
 credit = "Antigravity (Gemini workspace)"
 milestone_utc = "2026-11-16 18:37"
 
+[sub_resource type="Resource" id="Build_kitbash_minimap"]
+script = ExtResource("4")
+section = "Desert RTS builds"
+title = "Desert Kitbash Mini-Map"
+summary = "Drive the 8-directional Balance4 Blue Tank across a tile-built modular desert map with road, oasis, and crystal obstacles."
+scene_path = "res://scenes/maps/desert_kitbash_minimap.tscn"
+credit = "Antigravity (Gemini workspace)"
+milestone_utc = "2026-11-18 23:15"
+
 [sub_resource type="Resource" id="Build_battlefield"]
 script = ExtResource("4")
-section = "Battlefield previews"
-title = "Desert Mission 1 — Unit Lineup"
-summary = "View the 2D battlefield and the original unit sprites."
+section = "Desert RTS builds"
+title = "Desert Mission 1 — Playable Tank"
+summary = "Drive the 8-directional Blue Tank around the 2.5D Mission 1 battlefield with water, turret, cliff, and unit colliders."
 scene_path = "res://scenes/maps/desert_mission_1_with_units.tscn"
 credit = "Antigravity (Gemini workspace)"
-milestone_utc = "2026-11-16 14:00"
-action = "View"
+milestone_utc = "2026-11-18 23:10"
 
 [sub_resource type="Resource" id="Build_battlefield_3d"]
 script = ExtResource("4")
@@ -158,7 +173,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield"), SubResource("Build_battlefield_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

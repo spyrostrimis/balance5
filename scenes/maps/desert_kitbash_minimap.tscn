@@ -1,0 +1,365 @@
+[gd_scene load_steps=32 format=3]
+
+[ext_resource type="Script" path="res://scripts/desert_kitbash_minimap.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/sand_macro_tileset.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/road_tileset.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/dune_bank_ml.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/dune_bank_ul.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/dune_bank_mr.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/dune_bank_lm_taper.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/rock_crystal_outcrop.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/oasis_spring.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/rock_basalt_mesa.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/textures/effects/light_radial.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/tank_blue.png" id="12"]
+[ext_resource type="Script" path="res://scripts/rts_tank_controller.gd" id="13"]
+[ext_resource type="Script" path="res://scripts/rts_collision_overlay.gd" id="14"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/shrub_0.png" id="15"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/shrub_1.png" id="16"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/shrub_2.png" id="17"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/shrub_3.png" id="18"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/shrub_4.png" id="19"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/shrub_5.png" id="20"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/pebble_0.png" id="21"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/pebble_1.png" id="22"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/pebble_2.png" id="23"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/pebble_3.png" id="24"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/pebble_4.png" id="25"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/pebble_5.png" id="26"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/speck_0.png" id="27"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/speck_1.png" id="28"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/speck_2.png" id="29"]
+[ext_resource type="Texture2D" path="res://assets/textures/kitbash/speck_3.png" id="30"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sand"]
+texture = ExtResource("2")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sand"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_sand")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_road"]
+texture = ExtResource("3")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_road"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_road")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tank"]
+radius = 13.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hint"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+bg_color = Color(0.08, 0.06, 0.05, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.68, 0.54, 0.34, 0.65)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="DesertKitbashMiniMap" type="Node2D"]
+script = ExtResource("1")
+
+[node name="SandBaseLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_sand")
+
+[node name="DuneStamps" type="Node2D" parent="."]
+
+[node name="UpperLeftDunes" type="Sprite2D" parent="DuneStamps"]
+texture_filter = 2
+position = Vector2(56, 46)
+texture = ExtResource("4")
+
+[node name="UpperRightDunes" type="Sprite2D" parent="DuneStamps"]
+texture_filter = 2
+position = Vector2(578, 22)
+texture = ExtResource("5")
+
+[node name="LowerRightDunes" type="Sprite2D" parent="DuneStamps"]
+texture_filter = 2
+position = Vector2(576, 304)
+texture = ExtResource("6")
+
+[node name="LowerCenterDunes" type="Sprite2D" parent="DuneStamps"]
+texture_filter = 2
+position = Vector2(288, 344)
+texture = ExtResource("5")
+
+[node name="RoadLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_road")
+
+[node name="PropStamps" type="Node2D" parent="."]
+
+[node name="Shrub1" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(138, 92)
+texture = ExtResource("15")
+
+[node name="Shrub2" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(36, 128)
+texture = ExtResource("16")
+
+[node name="Shrub3" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(142, 224)
+texture = ExtResource("17")
+
+[node name="Shrub4" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(334, 62)
+texture = ExtResource("18")
+
+[node name="Shrub5" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(436, 214)
+texture = ExtResource("19")
+
+[node name="Shrub6" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(452, 286)
+texture = ExtResource("20")
+
+[node name="Shrub7" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(204, 294)
+texture = ExtResource("15")
+
+[node name="Shrub8" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(552, 168)
+texture = ExtResource("17")
+
+[node name="Shrub9" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(598, 198)
+texture = ExtResource("18")
+
+[node name="OasisShrub1" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(492, 118)
+texture = ExtResource("16")
+
+[node name="OasisShrub2" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(516, 102)
+texture = ExtResource("18")
+
+[node name="Pebble1" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(118, 134)
+texture = ExtResource("21")
+
+[node name="Pebble2" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(166, 274)
+texture = ExtResource("22")
+
+[node name="Pebble3" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(302, 76)
+texture = ExtResource("23")
+
+[node name="Pebble4" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(430, 146)
+texture = ExtResource("24")
+
+[node name="Pebble5" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(534, 186)
+texture = ExtResource("25")
+
+[node name="Pebble6" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(390, 294)
+texture = ExtResource("26")
+
+[node name="Pebble7" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(46, 224)
+texture = ExtResource("24")
+
+[node name="Speck1" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(106, 110)
+texture = ExtResource("27")
+
+[node name="Speck2" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(262, 82)
+texture = ExtResource("28")
+
+[node name="Speck3" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(364, 78)
+texture = ExtResource("29")
+
+[node name="Speck4" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(456, 232)
+texture = ExtResource("30")
+
+[node name="Speck5" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(228, 282)
+texture = ExtResource("27")
+
+[node name="Speck6" type="Sprite2D" parent="PropStamps"]
+texture_filter = 1
+position = Vector2(522, 162)
+texture = ExtResource("28")
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="CrystalOutcrop" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(288, 176)
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacles/CrystalOutcrop"]
+texture_filter = 2
+scale = Vector2(0.62, 0.56)
+texture = ExtResource("8")
+
+[node name="OrichalcumGlow" type="PointLight2D" parent="Obstacles/CrystalOutcrop"]
+color = Color(1, 0.82, 0.3, 1)
+energy = 1.15
+texture = ExtResource("11")
+texture_scale = 0.72
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/CrystalOutcrop"]
+polygon = PackedVector2Array(-54, -20, -24, -34, 12, -36, 52, -20, 56, 12, 24, 32, -22, 32, -54, 12)
+
+[node name="OasisWater" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(486, 98)
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacles/OasisWater"]
+texture_filter = 2
+scale = Vector2(0.86, 0.86)
+texture = ExtResource("9")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/OasisWater"]
+polygon = PackedVector2Array(-36, 24, -42, 4, -18, -16, 8, -32, 42, -30, 46, -8, 22, 10, -14, 30)
+
+[node name="SouthWestMesa" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(88, 286)
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacles/SouthWestMesa"]
+texture_filter = 2
+scale = Vector2(0.84, 0.84)
+texture = ExtResource("10")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/SouthWestMesa"]
+polygon = PackedVector2Array(-48, 4, -36, -22, 10, -26, 46, -16, 50, 12, 22, 26, -20, 24)
+
+[node name="NorthWestMesa" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(222, 44)
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacles/NorthWestMesa"]
+texture_filter = 2
+scale = Vector2(0.68, 0.68)
+texture = ExtResource("10")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/NorthWestMesa"]
+polygon = PackedVector2Array(-38, 4, -28, -18, 8, -22, 36, -12, 40, 10, 18, 22, -16, 20)
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="BlueForces" type="Node2D" parent="Units"]
+
+[node name="BlueTank" type="CharacterBody2D" parent="Units/BlueForces"]
+position = Vector2(72, 176)
+z_index = 2
+script = ExtResource("13")
+map_bounds = Rect2(20, 20, 600, 312)
+move_speed = 115.0
+
+[node name="TankShadow" type="Sprite2D" parent="Units/BlueForces/BlueTank"]
+modulate = Color(0.08, 0.04, 0.01, 0.28)
+texture_filter = 1
+position = Vector2(2, 2.5)
+texture = ExtResource("12")
+hframes = 8
+vframes = 3
+frame = 6
+
+[node name="TankSprite" type="Sprite2D" parent="Units/BlueForces/BlueTank"]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("12")
+hframes = 8
+vframes = 3
+frame = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Units/BlueForces/BlueTank"]
+shape = SubResource("CircleShape2D_tank")
+
+[node name="CollisionOverlay" type="Node2D" parent="."]
+visible = false
+z_index = 20
+script = ExtResource("14")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HintPanel" type="PanelContainer" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -42.0
+offset_right = 710.0
+offset_bottom = -12.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hint")
+
+[node name="HintLabel" type="Label" parent="HUD/HintPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Modular Desert Kitbash Mini-Map  ·  Click or WASD/Arrows to drive Blue Tank  ·  Press C for colliders (OFF)"
+
+[node name="RTSCamera" type="Camera2D" parent="."]
+position = Vector2(320, 176)
+zoom = Vector2(2, 2)

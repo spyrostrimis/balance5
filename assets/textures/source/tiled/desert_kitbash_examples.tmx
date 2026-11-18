@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="12" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="12">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="12">
  <tileset firstgid="1" source="desert_kitbash_tileset.tsx"/>
  <tileset firstgid="65" source="desert_kitbash_stamps.tsx"/>
- <layer id="1" name="SandBase" width="12" height="8">
+ <layer id="1" name="SandBase" width="20" height="11">
   <data encoding="csv">
-1,2,3,4,1,2,3,4,1,2,3,4,
-9,10,11,12,9,10,11,12,9,10,11,12,
-17,18,19,20,17,18,19,20,17,18,19,20,
-25,26,27,28,25,26,27,28,25,26,27,28,
-1,2,3,4,1,2,3,4,1,2,3,4,
-9,10,11,12,9,10,11,12,9,10,11,12,
-17,18,19,20,17,18,19,20,17,18,19,20,
-25,26,27,28,25,26,27,28,25,26,27,28
+1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,
+9,10,11,12,9,10,11,12,9,10,11,12,9,10,11,12,9,10,11,12,
+17,18,19,20,17,18,19,20,17,18,19,20,17,18,19,20,17,18,19,20,
+25,26,27,28,25,26,27,28,25,26,27,28,25,26,27,28,25,26,27,28,
+1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,
+9,10,11,12,9,10,11,12,9,10,11,12,9,10,11,12,9,10,11,12,
+17,18,19,20,17,18,19,20,17,18,19,20,17,18,19,20,17,18,19,20,
+25,26,27,28,25,26,27,28,25,26,27,28,25,26,27,28,25,26,27,28,
+1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,
+9,10,11,12,9,10,11,12,9,10,11,12,9,10,11,12,9,10,11,12,
+17,18,19,20,17,18,19,20,17,18,19,20,17,18,19,20,17,18,19,20
 </data>
  </layer>
  <objectgroup id="2" name="DuneRidges">
-  <object id="1" gid="66" x="0" y="210" width="130" height="100"/>
-  <object id="2" gid="65" x="190" y="70" width="145" height="64"/>
-  <object id="3" gid="68" x="246" y="246" width="138" height="106"/>
+  <object id="1" gid="66" x="0" y="106" width="130" height="100"/>
+  <object id="2" gid="65" x="470" y="70" width="145" height="64"/>
+  <object id="3" gid="68" x="498" y="346" width="138" height="106"/>
  </objectgroup>
- <objectgroup id="3" name="ShrubsAndPebbles">
-  <object id="4" gid="70" x="92" y="102" width="22" height="20"/>
-  <object id="5" gid="72" x="148" y="136" width="22" height="20"/>
-  <object id="6" gid="74" x="220" y="182" width="24" height="22"/>
-  <object id="7" gid="76" x="120" y="154" width="14" height="14"/>
-  <object id="8" gid="79" x="188" y="120" width="12" height="12"/>
-  <object id="9" gid="82" x="164" y="148" width="10" height="10"/>
+ <objectgroup id="3" name="LandmarksAndProps">
+  <object id="4" gid="70" x="246" y="218" width="124" height="92"/>
+  <object id="5" gid="72" x="404" y="136" width="104" height="90"/>
+  <object id="6" gid="71" x="32" y="318" width="112" height="68"/>
+  <object id="7" gid="73" x="150" y="112" width="22" height="20"/>
+  <object id="8" gid="77" x="378" y="274" width="24" height="22"/>
+  <object id="9" gid="79" x="192" y="244" width="14" height="14"/>
  </objectgroup>
 </map>

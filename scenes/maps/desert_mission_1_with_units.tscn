@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/maps/desert_mission_1_clean_albedo.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/textures/maps/desert_mission_1_clean_normal.png" id="3"]
 [ext_resource type="Texture2D" path="res://assets/textures/effects/light_radial.png" id="4"]
-[ext_resource type="Texture2D" path="res://assets/textures/units/blue_tank.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/units/tank_blue.png" id="5"]
 [ext_resource type="Script" path="res://scripts/rts_tank_controller.gd" id="6"]
 [ext_resource type="Texture2D" path="res://assets/textures/units/blue_infantry_squad.png" id="7"]
 [ext_resource type="Texture2D" path="res://assets/textures/units/blue_buggy.png" id="8"]
@@ -116,13 +116,21 @@ z_index = 2
 script = ExtResource("6")
 
 [node name="TankShadow" type="Sprite2D" parent="Units/BlueForces/BlueTank"]
-modulate = Color(0.05, 0.03, 0.02, 0.42)
-position = Vector2(2.5, 3.5)
+modulate = Color(0.08, 0.04, 0.01, 0.28)
+texture_filter = 1
+position = Vector2(2, 2.5)
 texture = ExtResource("5")
+hframes = 8
+vframes = 3
+frame = 6
 
 [node name="TankSprite" type="Sprite2D" parent="Units/BlueForces/BlueTank"]
 z_index = 1
+texture_filter = 1
 texture = ExtResource("5")
+hframes = 8
+vframes = 3
+frame = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Units/BlueForces/BlueTank"]
 shape = SubResource("CircleShape2D_blue_tank")

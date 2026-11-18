@@ -23,6 +23,22 @@ scene_path = "res://scenes/maps/desert_canyon_bend.tscn"
 credit = "OpenAI Codex"
 recorded_at = "18 Nov 2026, 04:19 EET · verified"
 
+[sub_resource type="Resource" id="Build_chatgpt_boulders"]
+script = ExtResource("4")
+title = "ChatGPT AI Boulders"
+summary = "Trellis AI boulders with seamless ChatGPT sandstone PBR/ORM shader."
+scene_path = "res://scenes/maps/desert_canyon_chatgpt_boulder_test.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "18 Nov 2026, 19:37 EET · verified"
+
+[sub_resource type="Resource" id="Build_chatgpt_road"]
+script = ExtResource("4")
+title = "ChatGPT Cobble Road"
+summary = "Top-down 1024px ChatGPT albedo and height at 3.2m scale with ORM cavity AO."
+scene_path = "res://scenes/maps/desert_canyon_chatgpt_road_test.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "18 Nov 2026, 17:20 EET · verified"
+
 [sub_resource type="Resource" id="Build_session_3"]
 script = ExtResource("4")
 title = "Session 3"
@@ -38,6 +54,14 @@ summary = "Compare one sharper sandstone patch at the Session 3 spawn."
 scene_path = "res://scenes/maps/desert_canyon_crisp_road_patch.tscn"
 credit = "OpenAI Codex"
 recorded_at = "18 Nov 2026, 16:05 EET · verified"
+
+[sub_resource type="Resource" id="Build_sett_study"]
+script = ExtResource("4")
+title = "Nine-stone road study"
+summary = "Inspect the patch at your feet. Press 1 for Session 3, 2 for painted normals, or 3 for raised stones."
+scene_path = "res://scenes/maps/desert_canyon_sett_study.tscn"
+credit = "OpenAI Codex"
+recorded_at = "18 Nov 2026, 20:03 EET · road detail study"
 
 [sub_resource type="Resource" id="Build_session_1"]
 script = ExtResource("4")
@@ -103,7 +127,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_session_2"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_session_1"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield"), SubResource("Build_battlefield_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield"), SubResource("Build_battlefield_3d")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

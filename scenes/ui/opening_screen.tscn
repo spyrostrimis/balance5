@@ -1,0 +1,210 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/opening_screen.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/maps/desert_approach_rpg_albedo.png" id="2"]
+[ext_resource type="Theme" path="res://scenes/ui/launcher_theme.tres" id="3"]
+[ext_resource type="Script" path="res://scripts/developer_build.gd" id="4"]
+
+[sub_resource type="Gradient" id="Gradient_shade"]
+offsets = PackedFloat32Array(0, 0.27, 0.53, 0.79, 1)
+colors = PackedColorArray(0.067, 0.052, 0.044, 1, 0.067, 0.052, 0.044, 0.98, 0.067, 0.052, 0.044, 0.78, 0.067, 0.052, 0.044, 0.12, 0.067, 0.052, 0.044, 0.02)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_shade"]
+gradient = SubResource("Gradient_shade")
+width = 1024
+height = 4
+fill_to = Vector2(1, 0)
+
+[sub_resource type="Resource" id="Build_session_2"]
+script = ExtResource("4")
+title = "Session 2"
+summary = "Playable bend with metre-scaled cobbles and native depth of field."
+scene_path = "res://scenes/maps/desert_canyon_bend.tscn"
+credit = "OpenAI Codex"
+recorded_at = "18 Nov 2026, 04:19 EET · verified"
+
+[sub_resource type="Resource" id="Build_session_1"]
+script = ExtResource("4")
+title = "Session 1"
+summary = "Right-hand buttress, real road shadow and crater landmark reveal."
+scene_path = "res://scenes/maps/desert_canyon_buttress_test.tscn"
+credit = "OpenAI Codex"
+recorded_at = "18 Nov 2026, 04:00 EET · verified"
+
+[sub_resource type="Resource" id="Build_d4b"]
+script = ExtResource("4")
+title = "D4b"
+summary = "Left strata-wall baseline with the original screen-height focus."
+scene_path = "res://scenes/maps/desert_canyon_true_3d.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "18 Nov 2026, 03:30 EET · recorded"
+
+[sub_resource type="Resource" id="Build_3d_walk"]
+script = ExtResource("4")
+listed = false
+section = "Earlier commander walks"
+title = "Early 3D Canyon Walk"
+summary = "Walk the original stepped 3D approach to the battlefield."
+scene_path = "res://scenes/maps/desert_canyon_3d_rpg.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "16 Nov 2026, 21:18 EET · recorded"
+
+[sub_resource type="Resource" id="Build_2d_walk"]
+script = ExtResource("4")
+section = "Earlier commander walks"
+title = "2D Parallax Canyon"
+summary = "Walk the painted approach with a parallax camera."
+scene_path = "res://scenes/maps/desert_canyon_playable.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "16 Nov 2026, 20:37 EET · recorded"
+
+[sub_resource type="Resource" id="Build_battlefield"]
+script = ExtResource("4")
+section = "Battlefield previews"
+title = "Desert Mission 1 — Unit Lineup"
+summary = "View the 2D battlefield and the original unit sprites."
+scene_path = "res://scenes/maps/desert_mission_1_with_units.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "16 Nov 2026, 16:00 EET · recorded"
+action = "View"
+
+[sub_resource type="Resource" id="Build_battlefield_3d"]
+script = ExtResource("4")
+section = "Battlefield previews"
+title = "Desert Mission 1 — 3D Terrain"
+summary = "View the early isometric terrain and crystal field."
+scene_path = "res://scenes/maps/desert_mission_1.tscn"
+credit = "Antigravity (Gemini workspace)"
+recorded_at = "16 Nov 2026, 15:10 EET · recorded"
+action = "View"
+
+[node name="OpeningScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3")
+script = ExtResource("1")
+builds = Array[ExtResource("4")]([SubResource("Build_session_2"), SubResource("Build_session_1"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield"), SubResource("Build_battlefield_3d")])
+
+[node name="CanyonArtwork" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ArtworkShade" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_shade")
+expand_mode = 1
+
+[node name="Opening" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_bottom = 1.0
+offset_left = 70.0
+offset_right = 560.0
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Opening"]
+layout_mode = 2
+theme_type_variation = &"DisplayLabel"
+theme_override_font_sizes/font_size = 94
+text = "Balance"
+
+[node name="Lead" type="Label" parent="Opening"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+theme_override_font_sizes/font_size = 21
+text = "Follow the commander into the desert canyon."
+
+[node name="TitleSpacing" type="Control" parent="Opening"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Play" type="Button" parent="Opening"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 54)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Play Session 2"
+
+[node name="DevelopersPage" type="Button" parent="Opening"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 49)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"QuietButton"
+text = "Developers Page"
+
+[node name="Quit" type="Button" parent="Opening"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 42)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"QuietButton"
+text = "Quit"
+
+[node name="Library" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_bottom = 1.0
+offset_left = 70.0
+offset_top = 45.0
+offset_right = 788.0
+offset_bottom = -45.0
+theme_override_constants/separation = 14
+
+[node name="Heading" type="HBoxContainer" parent="Library"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Library/Heading"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DisplayLabel"
+theme_override_font_sizes/font_size = 47
+text = "Developers Page"
+
+[node name="Back" type="Button" parent="Library/Heading"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 40)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"QuietButton"
+text = "Back"
+
+[node name="Notice" type="Label" parent="Library"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Library"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="Catalog" type="VBoxContainer" parent="Library/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 22

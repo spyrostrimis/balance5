@@ -13,9 +13,13 @@ config_version=5
 config/name="Balance"
 config/description="RTS/RPG tribute to Dune II"
 config/version="0.1.0"
-run/main_scene="res://scenes/maps/desert_canyon_true_3d.tscn"
+run/main_scene="res://scenes/ui/opening_screen.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+BuildLauncher="*res://scenes/ui/build_launcher.tscn"
 
 [display]
 

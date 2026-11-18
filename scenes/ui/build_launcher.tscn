@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/build_launcher.gd" id="1"]
+[ext_resource type="Theme" path="res://scenes/ui/launcher_theme.tres" id="2"]
+
+[node name="BuildLauncher" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1")
+
+[node name="ReturnButton" type="Button" parent="."]
+visible = false
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 206.0
+offset_bottom = 48.0
+focus_mode = 0
+theme = ExtResource("2")
+theme_type_variation = &"QuietButton"
+theme_override_font_sizes/font_size = 15
+text = "Esc  ·  Developers Page"
+tooltip_text = "Return to the build list"

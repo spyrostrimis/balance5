@@ -1,6 +1,11 @@
 # Balance5
 
-Balance is a Godot 4 Forward+ RTS/RPG prototype. The playable canyon is `scenes/maps/desert_canyon_true_3d.tscn`. The design reference is `assets/textures/maps/desert_approach_rpg_albedo.png`. Judge the bend at the commander's walking height and again at the exit.
+Balance is a Godot 4 Forward+ RTS/RPG prototype. Running the project opens `scenes/ui/opening_screen.tscn`. The design reference is `assets/textures/maps/desert_approach_rpg_albedo.png`. Judge the bend at the commander's walking height and again at the exit.
+
+## Developers Page
+
+- Edit the opening scene's **Builds** array in the Inspector to list a standalone build. Record its scene path, AI credit and a dated milestone with the time zone. Put the featured build first. Use **View** for static prototypes.
+- Uncheck **Listed** to retire an entry. Missing scenes are skipped. Tests A, B and C1 are retired. The Early 3D Canyon Walk is unlisted because its Forward+ view is severely overexposed. Check new entries by launching them from the page and returning with Esc.
 
 ## Canyon baseline
 
@@ -10,9 +15,9 @@ Balance is a Godot 4 Forward+ RTS/RPG prototype. The playable canyon is `scenes/
 
 ## Working with the level
 
-- Inspect the working tree first. The D4b assembler loads named meshes from `assets/models/canyon_kit_test_d.glb` and packs them into the launch scene. Running `scripts/assemble_cinematic_canyon.gd` rewrites that scene. For a new module, prefer a separate imported GLB instanced in a Godot wrapper that owns the material and simple blocker.
+- Inspect the working tree first. The D4b assembler loads named meshes from `assets/models/canyon_kit_test_d.glb` and packs them into `scenes/maps/desert_canyon_true_3d.tscn`. Running `scripts/assemble_cinematic_canyon.gd` rewrites that scene. For a new module, prefer a separate imported GLB instanced in a Godot wrapper that owns the material and simple blocker.
 - Use metres and a foot-level pivot for new modules or actors. Preserve the rock material's vertex channels: red selects slate, green carries AO, and blue at 1 selects the ochre boulder material. The local art notes document the calibrated D4b colors.
-- For a visual change, render from the actual Forward+ viewport. Inspect start (Z ≈ +6), midway (−3.5) and exit (−14) at 1376×768. Record actual positions, floor contact and exit signal. The existing walk harness targets the launch scene, writes fixed capture filenames and can advance on timeout. Give experiments their own scene target and output names.
+- For a visual change, render from the actual Forward+ viewport. Inspect start (Z ≈ +6), midway (−3.5) and exit (−14) at 1376×768. Record actual positions, floor contact and exit signal. The walk harness defaults to the D4b scene. Give experiments their own scene target and output names.
 
 ## Handoffs
 

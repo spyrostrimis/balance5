@@ -83,6 +83,16 @@ static func _path_cx(z: float) -> float:
 	return sin(z * 0.22) * 0.65
 
 
+static func _find_mesh_recursive(node: Node, target_name: String) -> Mesh:
+	if node is MeshInstance3D and node.name == target_name:
+		return node.mesh
+	for child in node.get_children():
+		var found := _find_mesh_recursive(child, target_name)
+		if found:
+			return found
+	return null
+
+
 func build_and_save_scene() -> void:
 	var root := Node3D.new()
 	root.name = "DesertCanyonDiorama"
@@ -122,9 +132,10 @@ func build_and_save_scene() -> void:
 
 	var sun := DirectionalLight3D.new()
 	sun.name = "DesertSun"
-	sun.rotation_degrees = Vector3(-42.0, -32.0, 0.0)
+	# Upper-right desert afternoon sun matching Img 1 sunbeams and right-wall shadows
+	sun.rotation_degrees = Vector3(-42.0, 38.0, 0.0)
 	sun.light_color = Color(1.0, 0.93, 0.78)
-	sun.light_energy = 1.50
+	sun.light_energy = 1.65
 	sun.shadow_enabled = true
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
 	sun.directional_shadow_max_distance = 60.0
@@ -186,7 +197,7 @@ func build_and_save_scene() -> void:
 			wings_root, root,
 			"LeftWing_%d" % i,
 			"res://assets/textures/diorama_wings/wing_left_main.png",
-			Vector3(cx - 4.35 - exit_flare + jx, 4.25, z),
+			Vector3(cx - 4.85 - exit_flare + jx, 4.35, z),
 			Vector3(-12.0, 16.0, 0.0),
 			Vector2(9.2, 8.8),
 			warm_tint,
@@ -196,7 +207,7 @@ func build_and_save_scene() -> void:
 			wings_root, root,
 			"RightWing_%d" % i,
 			"res://assets/textures/diorama_wings/wing_right_main.png",
-			Vector3(cx + 4.55 + exit_flare - jx * 0.8, 4.25, z),
+			Vector3(cx + 4.95 + exit_flare - jx * 0.8, 4.35, z),
 			Vector3(-12.0, -16.0, 0.0),
 			Vector2(9.2, 8.8),
 			Color(warm_tint.r * 0.96, warm_tint.g * 0.96, warm_tint.b * 0.97),
@@ -226,29 +237,137 @@ func build_and_save_scene() -> void:
 		0.24
 	)
 
-	# ─── 4. Clustered 2.5D Desert Bushes Tucked Along Cliff Verges ───
+	# ─── 3b. Small Test D: Real 3D Blender Roadside Terraces, Boulders & Curbs ───
+	var kit_root_node: Node3D = Node3D.new()
+	kit_root_node.name = "Roadside3DKits"
+	root.add_child(kit_root_node)
+	_own(kit_root_node, root)
+
+	var mat_rock := ShaderMaterial.new()
+	mat_rock.shader = load("res://assets/shaders/hd2d_octopath_rock.gdshader")
+	mat_rock.set_shader_parameter("sandstone_tex", load("res://assets/textures/canyon_pbr/d_sandstone_strata_albedo.png"))
+	mat_rock.set_shader_parameter("sandstone_norm", load("res://assets/textures/canyon_pbr/d_sandstone_strata_normal.png"))
+	mat_rock.set_shader_parameter("basalt_tex", load("res://assets/textures/canyon_pbr/d_basalt_cap_albedo.png"))
+	mat_rock.set_shader_parameter("basalt_norm", load("res://assets/textures/canyon_pbr/d_basalt_cap_normal.png"))
+	mat_rock.set_shader_parameter("boulder_tex", load("res://assets/textures/canyon_pbr/d_boulder_rock_albedo.png"))
+	mat_rock.set_shader_parameter("boulder_norm", load("res://assets/textures/canyon_pbr/d_boulder_rock_normal.png"))
+	mat_rock.set_shader_parameter("haze_color", Color(0.95, 0.78, 0.52))
+	mat_rock.set_shader_parameter("haze_strength", 0.24)
+
+	var kit_scene := load("res://assets/models/canyon_kit_test_d.glb") as PackedScene
+	var kit_inst := kit_scene.instantiate()
+	var m_left_a := _find_mesh_recursive(kit_inst, "TerraceLeftModule")
+	var m_left_b := _find_mesh_recursive(kit_inst, "TerraceLeftModuleB")
+	var m_right_a := _find_mesh_recursive(kit_inst, "TerraceRightModule")
+	var m_right_b := _find_mesh_recursive(kit_inst, "TerraceRightModuleB")
+	var m_boulder := _find_mesh_recursive(kit_inst, "BoulderCluster")
+	var m_curb := _find_mesh_recursive(kit_inst, "CurbStoneStrip")
+	kit_inst.free()
+
+	var kit_z_slices: Array[float] = [10.0, 3.8, -2.4, -8.6]
+	for i in range(kit_z_slices.size()):
+		var kz: float = kit_z_slices[i]
+		var kcx: float = _path_cx(kz)
+		var slope_dx: float = _path_cx(kz + 2.0) - _path_cx(kz - 2.0)
+		var yaw_rad: float = -atan2(slope_dx, 4.0)
+
+		var m_left: Mesh = m_left_a if (i % 2 == 0 or m_left_b == null) else m_left_b
+		var m_right: Mesh = m_right_a if (i % 2 == 0 or m_right_b == null) else m_right_b
+
+		# Left and right 3D chiseled polygonal basalt + red-sandstone terrace modules (A/B alternated)
+		if m_left:
+			var tl := MeshInstance3D.new()
+			tl.name = "TerraceLeft_%d" % i
+			tl.mesh = m_left
+			tl.position = Vector3(kcx - 1.58, 0.0, kz)
+			tl.rotation = Vector3(0.0, yaw_rad, 0.0)
+			tl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			tl.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(tl)
+			_own(tl, root)
+
+		if m_right:
+			var tr := MeshInstance3D.new()
+			tr.name = "TerraceRight_%d" % i
+			tr.mesh = m_right
+			tr.position = Vector3(kcx + 1.58, 0.0, kz)
+			tr.rotation = Vector3(0.0, yaw_rad, 0.0)
+			tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			tr.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(tr)
+			_own(tr, root)
+
+		# 3D Chiseled Flagstone Curbs along both path borders
+		if m_curb:
+			var cl := MeshInstance3D.new()
+			cl.name = "CurbLeft_%d" % i
+			cl.mesh = m_curb
+			cl.position = Vector3(kcx - 1.24, 0.0, kz)
+			cl.rotation = Vector3(0.0, yaw_rad, 0.0)
+			cl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			cl.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(cl)
+			_own(cl, root)
+
+			var cr := MeshInstance3D.new()
+			cr.name = "CurbRight_%d" % i
+			cr.mesh = m_curb
+			cr.position = Vector3(kcx + 1.24, 0.0, kz)
+			cr.rotation = Vector3(0.0, yaw_rad + PI, 0.0)
+			cr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			cr.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(cr)
+			_own(cr, root)
+
+		# Angular faceted golden-ochre Boulder Clusters tucked into cove notches (clear of cx +/- 1.45m)
+		if m_boulder:
+			var bl := MeshInstance3D.new()
+			bl.name = "BoulderLeft_%d" % i
+			bl.mesh = m_boulder
+			var bl_z: float = kz + 1.15
+			bl.position = Vector3(_path_cx(bl_z) - 2.08, 0.0, bl_z)
+			bl.rotation = Vector3(0.0, 0.55 + i * 1.15, 0.0)
+			bl.scale = Vector3.ONE * (0.90 + (i % 2) * 0.12)
+			bl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			bl.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(bl)
+			_own(bl, root)
+
+			var br := MeshInstance3D.new()
+			br.name = "BoulderRight_%d" % i
+			br.mesh = m_boulder
+			var br_z: float = kz - 0.85
+			br.position = Vector3(_path_cx(br_z) + 2.08, 0.0, br_z)
+			br.rotation = Vector3(0.0, 2.35 + i * 0.95, 0.0)
+			br.scale = Vector3.ONE * (0.86 + ((i + 1) % 2) * 0.12)
+			br.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+			br.set_surface_override_material(0, mat_rock)
+			kit_root_node.add_child(br)
+			_own(br, root)
+
+	# ─── 4. Clustered Crisp 2.5D Desert Sage Bushes Tucked in Coves & Tier 1/2 Shelves ───
 	var props_root := Node3D.new()
 	props_root.name = "DioramaProps"
+	props_root.visible = true
 	root.add_child(props_root)
 	_own(props_root, root)
 
 	var prop_defs: Array[Dictionary] = [
-		# Start area & foreground cove
-		{"name": "BushClusterL0", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 6.3, "dx": -1.68, "y": 0.16, "ps": 0.0044, "flip": false},
-		{"name": "BushL0b", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_2.png", "z": 5.3, "dx": -1.52, "y": 0.17, "ps": 0.0040, "flip": true},
-		{"name": "BushR0", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_1.png", "z": 6.0, "dx": 1.56, "y": 0.17, "ps": 0.0040, "flip": true},
-		{"name": "BushClusterR0b", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 4.3, "dx": 1.66, "y": 0.16, "ps": 0.0044, "flip": false},
-		# Mid-canyon corridor
-		{"name": "BushClusterR1", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 1.9, "dx": 1.62, "y": 0.17, "ps": 0.0043, "flip": true},
-		{"name": "BushL1", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_2.png", "z": 0.6, "dx": -1.54, "y": 0.17, "ps": 0.0038, "flip": false},
-		{"name": "BushL1b", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_1.png", "z": -1.7, "dx": -1.68, "y": 0.16, "ps": 0.0040, "flip": true},
-		{"name": "BushClusterL2", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -3.1, "dx": -1.50, "y": 0.17, "ps": 0.0042, "flip": false},
-		{"name": "BushR2", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_1.png", "z": -4.6, "dx": 1.58, "y": 0.17, "ps": 0.0038, "flip": false},
-		# Exit approach cove
-		{"name": "BushClusterR2b", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -7.6, "dx": 1.68, "y": 0.16, "ps": 0.0044, "flip": true},
-		{"name": "BushL3", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_2.png", "z": -8.4, "dx": -1.54, "y": 0.17, "ps": 0.0038, "flip": true},
-		{"name": "BushClusterR3", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -10.8, "dx": 1.62, "y": 0.17, "ps": 0.0043, "flip": true},
-		{"name": "BushL3b", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_1.png", "z": -11.8, "dx": -1.64, "y": 0.16, "ps": 0.0040, "flip": false},
+		{"name": "BushCoveL0", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 9.8, "dx": -1.52, "y": 0.16, "ps": 0.0056, "flip": false},
+		{"name": "BushCoveR0", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": 8.9, "dx": 1.48, "y": 0.22, "ps": 0.0042, "flip": true},
+		{"name": "BushCoveL1", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": 7.4, "dx": -1.48, "y": 0.22, "ps": 0.0040, "flip": false},
+		{"name": "BushCoveR1", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 6.2, "dx": 1.54, "y": 0.17, "ps": 0.0054, "flip": false},
+		{"name": "BushLedgeL0", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 5.5, "dx": -2.18, "y": 0.56, "ps": 0.0050, "flip": true},
+		{"name": "BushLedgeR0", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": 4.3, "dx": 2.15, "y": 0.58, "ps": 0.0038, "flip": false},
+		{"name": "BushCoveL2", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": 2.5, "dx": -1.50, "y": 0.16, "ps": 0.0056, "flip": true},
+		{"name": "BushCoveR2", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": 1.2, "dx": 1.50, "y": 0.22, "ps": 0.0042, "flip": true},
+		{"name": "BushLedgeL1", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": -0.3, "dx": -2.25, "y": 0.60, "ps": 0.0040, "flip": false},
+		{"name": "BushCoveR3", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -1.8, "dx": 1.50, "y": 0.17, "ps": 0.0054, "flip": false},
+		{"name": "BushCoveL3", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -3.9, "dx": -1.50, "y": 0.16, "ps": 0.0056, "flip": false},
+		{"name": "BushLedgeR1", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -4.6, "dx": 2.18, "y": 0.56, "ps": 0.0050, "flip": true},
+		{"name": "BushCoveR4", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": -6.3, "dx": 1.52, "y": 0.22, "ps": 0.0042, "flip": true},
+		{"name": "BushCoveL4", "tex": "res://assets/textures/canyon_pbr/d_sage_bush_2.png", "z": -8.1, "dx": -1.50, "y": 0.22, "ps": 0.0040, "flip": true},
+		{"name": "BushCoveR5", "tex": "res://assets/textures/canyon_pbr/hd2d_bush_cluster.png", "z": -9.8, "dx": 1.52, "y": 0.16, "ps": 0.0054, "flip": false},
 	]
 	for pd in prop_defs:
 		var pz: float = pd["z"]

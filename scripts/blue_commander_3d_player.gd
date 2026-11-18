@@ -22,6 +22,11 @@ static func get_path_center_x(z: float) -> float:
 	return sin(z * 0.22) * 0.65
 
 
+## Route used by the path clamp. Test scenes may override it; D4b scenes keep the curve above.
+func _route_center_x(z: float) -> float:
+	return get_path_center_x(z)
+
+
 func _ready() -> void:
 	var ground_mesh := get_node_or_null(ground_mesh_path) as MeshInstance3D
 	if ground_mesh:
@@ -71,7 +76,7 @@ func _physics_process(delta: float) -> void:
 
 	# 3. Clamp smoothly inside winding cobblestone canyon trail
 	global_position.z = clampf(global_position.z, -14.5, 7.5)
-	var cx: float = get_path_center_x(global_position.z)
+	var cx: float = _route_center_x(global_position.z)
 	global_position.x = clampf(global_position.x, cx - 1.15, cx + 1.15)
 
 	# 4. Update dynamic grounded contact shadow under boots

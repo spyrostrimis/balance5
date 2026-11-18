@@ -19,6 +19,10 @@ uniform float painted_right_shadow_strength : hint_range(0.0, 1.0) = 0.42;
 uniform float cobble_tile_metres = 4.0;
 uniform float cobble_verge_wear : hint_range(0.0, 1.0) = 0.94;
 uniform int compare_mode = 0; // 0 = full road ultra-crisp, 1 = center comparison patch over patch_compare_tex
+// Route centre x = route_amplitude * sin(z * route_frequency + route_phase). Defaults match D4b.
+uniform float route_amplitude = 0.65;
+uniform float route_frequency = 0.22;
+uniform float route_phase = 0.0;
 
 varying vec3 world_pos;
 
@@ -27,7 +31,7 @@ void vertex() {
 }
 
 void fragment() {
-	float path_cx = sin(world_pos.z * 0.22) * 0.65;
+	float path_cx = sin(world_pos.z * route_frequency + route_phase) * route_amplitude;
 	float macro_w = sin(world_pos.x * 1.1 + sin(world_pos.z * 0.7)) * 0.5 + 0.5;
 	vec2 cobble_uv = world_pos.xz / cobble_tile_metres;
 

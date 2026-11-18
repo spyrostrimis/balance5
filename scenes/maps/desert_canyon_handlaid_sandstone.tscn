@@ -1,0 +1,9 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_bend.tscn" id="1_bend"]
+[ext_resource type="ShaderMaterial" path="res://assets/materials/handlaid_sandstone_road.tres" id="2_road"]
+
+[node name="DesertCanyonHandlaidSandstone" instance=ExtResource("1_bend")]
+
+[node name="GroundFloorMesh" parent="." index="3"]
+surface_material_override/0 = ExtResource("2_road")

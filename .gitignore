@@ -21,6 +21,7 @@ tmp/
 
 # Godot builds and binaries
 builds/
+build/
 export/
 bin/
 *.exe

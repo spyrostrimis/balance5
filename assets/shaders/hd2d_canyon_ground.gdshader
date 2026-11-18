@@ -10,6 +10,7 @@ uniform sampler2D desert_sand_norm : hint_normal, filter_linear_mipmap, repeat_e
 uniform vec3 player_pos = vec3(0.0, 0.0, 6.0);
 uniform float painted_right_shadow_strength : hint_range(0.0, 1.0) = 0.28;
 uniform float cobble_tile_metres = 0.0;
+uniform float cobble_verge_wear : hint_range(0.0, 1.0) = 0.0;
 
 varying vec3 world_pos;
 
@@ -51,6 +52,15 @@ void fragment() {
 
 	float dune_t = smoothstep(-12.8, -17.5, world_pos.z);
 	float trail_keep = path_mask * (1.0 - smoothstep(-12.6, -16.0, world_pos.z));
+	if (cobble_verge_wear > 0.0) {
+		float edge = smoothstep(0.76, 1.27, abs(world_pos.x - path_cx));
+		float pockets = 0.56 * sin(world_pos.z * 1.71 + sin(world_pos.x * 2.9 + world_pos.z * 0.37))
+			+ 0.29 * sin(world_pos.z * 4.45 - world_pos.x * 5.2)
+			+ 0.15 * sin(world_pos.z * 8.3 + world_pos.x * 6.3);
+		float sand_wear = cobble_verge_wear * edge * smoothstep(-0.05, 0.72, pockets);
+		trail_keep *= 1.0 - sand_wear;
+		curb_rim *= 1.0 - sand_wear;
+	}
 
 	vec3 canyon_ground = mix(s_col * 0.90, c_col, trail_keep);
 	vec3 curb_tint = c_col * vec3(0.56, 0.52, 0.48);

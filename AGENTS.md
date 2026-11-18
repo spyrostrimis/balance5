@@ -23,4 +23,8 @@ Balance is a Godot 4 Forward+ RTS/RPG prototype. Running the project opens `scen
 
 The detailed rubric, experiment history, art guide, pipeline and `docs/CANYON_BEND_SESSIONS.md` are local to the primary workspace. Git intentionally ignores `docs/`. In a fresh clone or linked worktree, consult the primary copy if available. The scene, scripts and this baseline also travel with the repository once committed.
 
-The next small test is one right-hand buttress. Demonstrate a Blender notch surviving reimport, a real shadow crossing the road, and a fixed landmark revealed during a grounded walk. The larger milestone is the same bend with a seamless metre-scaled road and a depth-of-field comparison. A test report identifies its scene, source asset, captures and measured results so the next chat can continue from that exact state.
+Commit `8e05e40` completed the buttress and playable bend. Use `scenes/maps/desert_canyon_bend.tscn` as the comparison build. It has a reimportable blocker and shadow caster, a 4 m road tile, and native camera DOF (near 10 m, far 16.5 m, amount 0.014). The glint is occluded at spawn and visible by midway.
+
+Session 3 is the road variant at `scenes/maps/desert_canyon_handlaid_sandstone.tscn`. It passed the 4 m scale, wrap seam, forward walk, landmark and shadow checks. Its road master is `assets/textures/source/handlaid_sandstone.kra`. Session 2 remains the featured comparison in the Developers Page. See the Session 3 experiment log for the matched concept crops and normal-map proof.
+
+Next test the right gateway silhouette using the Session 3 road. Test light shafts through that opening in a separate atmosphere pass, then begin the tactical handoff. Record the actual scene, source maps, camera stops and evidence for each pass.

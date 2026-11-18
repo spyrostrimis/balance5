@@ -3,7 +3,7 @@ extends SceneTree
 const LAUNCH_SCENE := "res://scenes/maps/desert_canyon_true_3d.tscn"
 const CAPTURE_SIZE := Vector2i(1376, 768)
 
-enum Stage { SPAWN, WALK_TO_MIDWAY, MIDWAY, WALK_TO_EXIT, EXIT, STRAFE, SHADOW_ON, SHADOW_OFF }
+enum Stage { SPAWN, NORMAL_ON, NORMAL_OFF, WALK_TO_MIDWAY, MIDWAY, WALK_TO_EXIT, EXIT, STRAFE, SHADOW_ON, SHADOW_OFF }
 
 var _stage := Stage.SPAWN
 var _frames: int = 0
@@ -15,6 +15,9 @@ var _capture_dir := "res://render_captures"
 var _prefix := "test_organic_3d"
 var _scene_path := LAUNCH_SCENE
 var _shadow_pair := false
+var _normal_pair := false
+var _road_material: ShaderMaterial
+var _road_normal: Texture2D
 var _bend_probes := false
 var _focus := "scene"
 var _landmark := Vector3.INF
@@ -71,6 +74,8 @@ func _initialize() -> void:
 		match option:
 			"--shadow-pair":
 				_shadow_pair = true
+			"--normal-pair":
+				_normal_pair = true
 			"--bend-probes":
 				_bend_probes = true
 			"--scene", "--capture-dir", "--prefix", "--landmark", "--resolution", "--focus":
@@ -126,6 +131,15 @@ func _initialize() -> void:
 	if _commander == null or _cam == null:
 		_fail("Scene is missing the D4b commander or camera")
 		return
+	if _bend_probes or _normal_pair:
+		var ground := _scene.get_node_or_null("GroundFloorMesh") as MeshInstance3D
+		if ground:
+			_road_material = ground.get_surface_override_material(0) as ShaderMaterial
+		if _road_material:
+			_road_normal = _road_material.get_shader_parameter("cobble_norm") as Texture2D
+		if _road_normal == null:
+			_fail("Scene is missing the cobble normal map")
+			return
 	if _focus != "scene":
 		var overlay := _scene.get_node_or_null("PostProcessing/TiltShiftDof") as ColorRect
 		if overlay == null:
@@ -166,20 +180,14 @@ func _log_buttress() -> void:
 
 
 func _log_bend_setup() -> void:
-	var ground := _scene.get_node("GroundFloorMesh") as MeshInstance3D
-	var material := ground.get_surface_override_material(0) as ShaderMaterial
-	var albedo: Texture2D = material.get_shader_parameter("cobble_tex")
-	var normal: Texture2D = material.get_shader_parameter("cobble_norm")
-	print("TileMetres=%s | Albedo=%s %s levels beyond base | Normal=%s %s levels beyond base" % [
-		material.get_shader_parameter("cobble_tile_metres"), albedo.resource_path,
-		albedo.get_image().get_mipmap_count(), normal.resource_path, normal.get_image().get_mipmap_count()
+	var albedo: Texture2D = _road_material.get_shader_parameter("cobble_tex")
+	print("TileMetres=%s | Albedo=%s %s %s levels beyond base | Normal=%s %s %s levels beyond base" % [
+		_road_material.get_shader_parameter("cobble_tile_metres"), albedo.resource_path,
+		albedo.get_size(), albedo.get_image().get_mipmap_count(), _road_normal.resource_path,
+		_road_normal.get_size(), _road_normal.get_image().get_mipmap_count()
 	])
-	# World-space chord of one authored stone and a separate, exactly 1 m line.
-	var stone_a := Vector3(125.18 / 256.0, 0.0, 4.0 + 765.53 / 256.0)
-	var stone_b := Vector3(208.73 / 256.0, 0.0, 4.0 + 770.65 / 256.0)
-	print("Spawn scale | 1m pixels=%s..%s | %.3fm stone pixels=%s..%s" % [
-		_cam.unproject_position(Vector3(-0.5, 0.0, 7.7)), _cam.unproject_position(Vector3(0.5, 0.0, 7.7)),
-		stone_a.distance_to(stone_b), _cam.unproject_position(stone_a), _cam.unproject_position(stone_b)
+	print("Spawn scale | 1m pixels=%s..%s" % [
+		_cam.unproject_position(Vector3(-0.5, 0.0, 7.7)), _cam.unproject_position(Vector3(0.5, 0.0, 7.7))
 	])
 	var attributes := _cam.attributes as CameraAttributesPractical
 	var overlay := _scene.get_node("PostProcessing/TiltShiftDof") as ColorRect
@@ -203,6 +211,12 @@ func _log_bend_frame() -> void:
 	])
 
 
+func _begin_walk() -> void:
+	_send_key(KEY_W, true)
+	_frames = 0
+	_stage = Stage.WALK_TO_MIDWAY
+
+
 func _process(_delta: float) -> bool:
 	_frames += 1
 	match _stage:
@@ -214,11 +228,32 @@ func _process(_delta: float) -> bool:
 					_log_bend_setup()
 				if not _capture("pos1_start"):
 					return true
-				_send_key(KEY_W, true)
-				_frames = 0
-				_stage = Stage.WALK_TO_MIDWAY
+				if _normal_pair:
+					_commander.set_physics_process(false)
+					_cam.set_process(false)
+					_frames = 0
+					_stage = Stage.NORMAL_ON
+				else:
+					_begin_walk()
 			elif _frames >= 2400:
 				return _fail("Commander did not settle onto the floor at spawn")
+		Stage.NORMAL_ON:
+			if _frames >= 8:
+				if not _capture("normal_on"):
+					return true
+				var flat := Image.create_empty(1, 1, false, Image.FORMAT_RGBF)
+				flat.fill(Color(0.5, 0.5, 1.0))
+				_road_material.set_shader_parameter("cobble_norm", ImageTexture.create_from_image(flat))
+				_frames = 0
+				_stage = Stage.NORMAL_OFF
+		Stage.NORMAL_OFF:
+			if _frames >= 8:
+				if not _capture("normal_off"):
+					return true
+				_road_material.set_shader_parameter("cobble_norm", _road_normal)
+				_commander.set_physics_process(true)
+				_cam.set_process(true)
+				_begin_walk()
 		Stage.WALK_TO_MIDWAY:
 			if _bend_probes and _frames in [65, 69]:
 				var label := "motion" if _frames == 65 else "motion_followup"

@@ -1,0 +1,35 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_bend.tscn" id="1_bend"]
+[ext_resource type="Shader" path="res://assets/shaders/hd2d_canyon_ground_crisp.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/chatgpt_cobble_albedo.png" id="3_cobble"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/chatgpt_cobble_normal.png" id="4_cobble_norm"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/chatgpt_cobble_orm.png" id="5_cobble_orm"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/handlaid_sandstone_albedo.png" id="6_cmp"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/handlaid_sandstone_normal.png" id="7_cmp_norm"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_albedo.png" id="8_sand"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_normal.png" id="9_sand_norm"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_albedo.png" id="10_dune"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/pure_dune_sand_normal.png" id="11_dune_norm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_chatgpt_road"]
+resource_local_to_scene = true
+shader = ExtResource("2_shader")
+shader_parameter/cobble_tex = ExtResource("3_cobble")
+shader_parameter/cobble_norm = ExtResource("4_cobble_norm")
+shader_parameter/cobble_orm = ExtResource("5_cobble_orm")
+shader_parameter/patch_compare_tex = ExtResource("6_cmp")
+shader_parameter/patch_compare_norm = ExtResource("7_cmp_norm")
+shader_parameter/sand_tex = ExtResource("8_sand")
+shader_parameter/sand_norm = ExtResource("9_sand_norm")
+shader_parameter/desert_sand_tex = ExtResource("10_dune")
+shader_parameter/desert_sand_norm = ExtResource("11_dune_norm")
+shader_parameter/painted_right_shadow_strength = 0.42
+shader_parameter/cobble_tile_metres = 3.2
+shader_parameter/cobble_verge_wear = 0.94
+shader_parameter/compare_mode = 0
+
+[node name="DesertCanyonChatGPTRoadTest" instance=ExtResource("1_bend")]
+
+[node name="GroundFloorMesh" parent="." index="3"]
+surface_material_override/0 = SubResource("ShaderMaterial_chatgpt_road")

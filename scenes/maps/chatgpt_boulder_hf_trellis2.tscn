@@ -1,0 +1,22 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://assets/models/ai_boulder_hf_trellis2.glb" id="1_glb"]
+[ext_resource type="ShaderMaterial" path="res://assets/models/chatgpt_boulder_rock.tres" id="2_mat"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_blocker"]
+size = Vector3(1.8, 1.4, 1.8)
+
+[node name="ChatGPTBoulderHFTrellis2" type="Node3D"]
+
+[node name="Rock" parent="." instance=ExtResource("1_glb")]
+
+[node name="ai_boulder_hf_trellis2_mesh" parent="Rock" index="0"]
+material_override = ExtResource("2_mat")
+
+[node name="Blocker" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocker"]
+position = Vector3(0, 0.7, 0)
+shape = SubResource("BoxShape3D_blocker")
+
+[editable path="Rock"]

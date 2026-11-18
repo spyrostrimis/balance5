@@ -1,0 +1,24 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/desert_canyon_chatgpt_road_test.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_hf_trellis2.tscn" id="2_hf"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_trellis3dnet.tscn" id="3_t3d"]
+
+[node name="DesertCanyonChatGPTBoulderTest" instance=ExtResource("1_base")]
+
+[node name="BoulderLeft_1" parent="Roadside3DKits" index="14"]
+visible = false
+
+[node name="BoulderRight_1" parent="Roadside3DKits" index="15"]
+visible = false
+
+[node name="BoulderLeft_2" parent="Roadside3DKits" index="19"]
+visible = false
+
+[node name="ChatGPTBoulder_HF_Trellis2" parent="." instance=ExtResource("2_hf")]
+position = Vector3(-1.25, 0, 4.85)
+scale = Vector3(0.75, 0.75, 0.75)
+
+[node name="ChatGPTBoulder_Trellis3DNet" parent="." instance=ExtResource("3_t3d")]
+position = Vector3(2.05, 0, 4.65)
+scale = Vector3(0.80, 0.80, 0.80)

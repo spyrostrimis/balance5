@@ -28,6 +28,3 @@ bin/
 *.pck
 *.apk
 *.aab
-
-# Internal documentation
-docs/

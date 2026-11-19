@@ -385,3 +385,39 @@ Geometry, route, camera, sun, lens and commander are identical in all three. The
 - Overall: converting existing art mechanically makes the frame crunchier and more coherent, but it does not make it look like Octopath. Octopath's surfaces are designed pixel art: deliberate highlight edges, dark joint lines, clustered shapes and short colour ramps. A palette-reduced photo texture has none of that.
 
 **Conclusion.** The mechanics work and cost nothing: filtering, density, palette and the per-file swap. Filtering and density alone are not the lever. The deciding test is one **hand-authored** pixel set (wall strata, slate top, cobble) at about 48–64 texels per metre, made in Aseprite or with a pixel-art generator. Drop the files into `assets/textures/pixel_ab/d64/` under the same names, then press 3.
+
+### 14a. Authored pixel set tooling (mode 4)
+
+Same day. The A/B scene gained mode **4 = authored set**. It reads `assets/textures/pixel_ab/art/` and its `manifest.json`, and falls back to B64 for roles not authored yet. The pixel shader variants now expose their repeat scales as uniforms whose defaults equal the source shaders. That lets authored art of any size map at its exact density. B64 re-renders identically (spawn and exit max channel difference 0, midway 3).
+
+- `tools/python/pixel_snap.py` turns AI "fake pixel art" into a true grid. It scores each candidate grid by how much excess edge energy its lines capture, assumes square pixels when one axis has long flat runs, and samples the median at each cell centre. It then applies k-means-refined colour reduction or a supplied palette, keys sprite backgrounds, derives normal and ORM maps, writes lossless import stubs and records the size in metres.
+- `tests/test_pixel_snap.py` passes. From synthetic art at 7.37 px per cell (blurred, JPEG, noise) it recovered 64 × 32 cells with 100% of colours within 24 levels. A 9.1 px sprite on green recovered all 293 of 293 opaque cells.
+- End to end: a disguised B64 strata (5× upscale, blur) came back as exactly 188 × 89 cells (2.94 × 1.39 m). Godot accepted the stub import (lossless, mipmaps), and mode 4 rendered within 3–4 levels of B64; the remaining difference is the luminance-derived normal map. The test art was then removed.
+- `docs/PIXEL_TEXTURE_PROMPTS.md` has the workflow, sizes per role at 64 texels per metre, palette ramps, prompts for each role, an acceptance check and troubleshooting.
+
+### 14b. Gemini authored set, and the two procedures side by side (mode 5)
+
+**Gemini round.** The owner generated strata, slate, cobble, sand, dune and boulder with Gemini, and the sage bush with ChatGPT, then snapped them (`art_gemini`). Verdict: **mode 4 looked awful, except the bush.**
+
+- **Correction to the first diagnosis.** Gemini's images were *not* painted: they sit on clean grids of 100 or 200 cells per image (5.12, 5.74 or 10.24 source pixels per cell). A new grid-fit measure shows 99–100% flat cell interiors, against 56% for Antigravity's painted ChatGPT cobble. The snap was faithful.
+- **Real causes.**
+  - *Content:* the strata prompt ("a lit edge on top of each bed and a dark joint underneath") was drawn as bricks and mortar, so the cliffs read as brick buildings, and the cobbles came out as a regular brick-row pavement.
+  - *Scale:* Gemini picks its own grid, so one repeat covered 3.75 m of strata and 3.1 m of slate at 64/m, against the intended 2 m and 1 m.
+  - *Style:* the images are flat cartoon fills.
+- **The bush worked.** It was real pixel art on a 15 px grid with a sprite silhouette, the case pixel art suits best.
+- **Gemini's height maps** line up with their albedos (edge correlation +0.90 to +0.96), except one slate height from another generation (+0.06).
+
+**Changes.**
+- `pixel_snap.py`:
+  - reports the grid fit and warns below 85% ("not pixel art, only a resample");
+  - reports the area one repeat covers against each role's intended area, and warns when the two differ by more than 1.6×;
+  - takes `--height` (snapped on the same grid, with an alignment check) to drive the normal and ORM maps;
+  - accepts named sets (`--set art_*`).
+- New `tools/python/smooth_texture.py` generalises Antigravity's ChatGPT cobble and boulder processing (`build_chatgpt_cobble.py`, `build_chatgpt_sandstone.py`) to every texture role: 1024 px Lanczos, 36 px cosine wrap on both axes, normal map from height (30 mm) plus high-passed luminance (8 mm), and ORM for cobble and boulder. It writes `hr_*` sets and by default reuses the metres of the pixel version of the same source.
+- `make_pixel_shader_variants.py` now also writes `*_smooth.gdshader`, with source filtering and the same scale uniforms.
+- The A/B scene lists every `art*` folder (key 4, press again to cycle) and every `hr*` folder (key 5). `PIXEL_AB_MODE` accepts `ART`, `HR` or a folder name.
+- The prompt pack's strata and cobble prompts now forbid bricks, blocks and mortar. It adds a ChatGPT height-map prompt and Perchance prompts with anti-descriptions. Gemini is retired as a generator.
+
+**Captures** (1376×768, `V2_*`). All walks were grounded and the exit signal fired. B64 is unchanged at spawn (mean channel difference 0.06; midway and exit differ only by the harness's run-to-run camera drift). [A / art_gemini / hr_gemini](../render_captures/pixel_ab/compare_procedures_gemini.jpg) · [Spawn road crop, pixel vs smooth](../render_captures/pixel_ab/crop_procedures_gemini.png). On Gemini's pixel-art cobbles, the smooth procedure keeps the staircase edges (the source is pixel art) but loses the crisp pixel colours to linear filtering. It is a pipeline check, not a verdict: the real comparison is on ChatGPT and Perchance images.
+
+`tests/test_pixel_snap.py` now also checks that a painted image is flagged and that a height ramp drives the normal map. It passes.

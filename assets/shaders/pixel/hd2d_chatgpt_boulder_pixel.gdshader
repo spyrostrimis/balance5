@@ -1,5 +1,5 @@
 // GENERATED from assets/shaders/hd2d_chatgpt_boulder.gdshader by tools/python/make_pixel_shader_variants.py.
-// Nearest-filter samplers for pixel-art textures. Edit the source shader, then regenerate.
+// Nearest-filter samplers and uniform repeat scales for pixel-art textures. Edit the source, then regenerate.
 shader_type spatial;
 render_mode diffuse_burley, specular_schlick_ggx;
 

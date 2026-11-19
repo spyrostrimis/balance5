@@ -1,5 +1,5 @@
 // GENERATED from assets/shaders/hd2d_canyon_ground_crisp.gdshader by tools/python/make_pixel_shader_variants.py.
-// Nearest-filter samplers for pixel-art textures. Edit the source shader, then regenerate.
+// Nearest-filter samplers and uniform repeat scales for pixel-art textures. Edit the source, then regenerate.
 shader_type spatial;
 render_mode diffuse_burley, specular_schlick_ggx;
 
@@ -30,6 +30,11 @@ uniform int route_mode = 0;
 uniform float route_lookup[64];
 uniform float route_lookup_z0 = 0.0;
 uniform float route_lookup_dz = 1.0;
+
+// Repeat scales exposed for authored pixel sets (defaults match the source shader).
+uniform vec2 sand_scale = vec2(0.46, 0.24); // verge sand, repeats per metre (x, z)
+uniform vec2 sand_scale_detail = vec2(0.31, 0.17); // second sand octave
+uniform float desert_scale = 0.24; // open dunes
 
 float route_center(float z) {
 	if (route_mode == 0) {
@@ -83,13 +88,13 @@ void fragment() {
 		c_rough = mix(0.86, crisp_orm.g, in_patch);
 	}
 
-	vec2 sand_uv1 = world_pos.xz * vec2(0.46, 0.24);
-	vec2 sand_uv2 = world_pos.xz * vec2(0.31, 0.17) + vec2(0.43, 0.29);
+	vec2 sand_uv1 = world_pos.xz * sand_scale;
+	vec2 sand_uv2 = world_pos.xz * sand_scale_detail + vec2(0.43, 0.29);
 	vec3 s_col = mix(texture(sand_tex, sand_uv1).rgb, texture(sand_tex, sand_uv2).rgb, macro_w * 0.50);
 	vec3 s_norm = normalize(mix(texture(sand_norm, sand_uv1).rgb, texture(sand_norm, sand_uv2).rgb, macro_w * 0.50));
 
-	vec3 d_col = texture(desert_sand_tex, world_pos.xz * 0.24).rgb;
-	vec3 d_norm = texture(desert_sand_norm, world_pos.xz * 0.24).rgb;
+	vec3 d_col = texture(desert_sand_tex, world_pos.xz * desert_scale).rgb;
+	vec3 d_norm = texture(desert_sand_norm, world_pos.xz * desert_scale).rgb;
 
 	float edge_noise = (c_col.r - 0.5) * 0.22 + sin(world_pos.z * 2.3 + c_col.g * 1.6) * 0.07;
 	float dist = abs(world_pos.x - path_cx) + edge_noise;

@@ -19,7 +19,7 @@ This file is the single source of truth for how the project is built, for every 
 | `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
 | `assets/` | Models, textures, shaders, `materials/` and `environments/` (`.tres`). `assets/source_inputs/` holds the original AI-generated images and GLBs the tools consume (ignored by Godot). |
-| `docs/` | `GAME_DESIGN.md` (the design source of truth), `references/` (the owner's art direction images), and the canyon rubric, experiment log, pipeline, style bible and bend sessions. Evidence images for the logs live in the untracked `render_captures/`. Godot ignores `docs/`. |
+| `docs/` | `GAME_DESIGN.md` (the design source of truth), `references/` (the owner's art direction images), `ROADMAP.md`, `DECISIONS.md`, `PIPELINES.md`, `GLOSSARY.md` (see *Project memory*), and the canyon rubric, experiment log, pipeline, style bible and bend sessions. Evidence images for the logs live in the untracked `render_captures/`. Godot ignores `docs/`. |
 
 `render_captures/`, `tmp/` and `builds/` are ignored and stay local to the primary workspace. Tools resolve paths from the repository root, so nothing depends on `D:/Games/Balance5`.
 
@@ -46,6 +46,18 @@ Canyon v2 reproduces the composition test: a 2 m S-curve, a stone right wall fro
 5. Log verified results in `docs/EXPERIMENT_LOG_AND_LESSONS.md` and the rubric right after the run.
 6. Use metres and foot-level pivots. Preserve the rock vertex channels: red selects slate, green carries AO, blue at 1 selects ochre boulders. Store binary flags only as 0 or 1 because of sRGB.
 7. Keep source art sharp. Use one blur method per capture.
+
+## Project memory (Balance Studio)
+
+The owner is new to game development and works across several agents. These files are the project's shared memory; the owner reads them in **Balance Studio** (`D:\Games\BalanceStudio`). Update them in the same commit as the work:
+
+- `docs/ROADMAP.md`: tick an item when it is verified; add items as work turns up.
+- `docs/DECISIONS.md`: one entry per decision the owner makes or a test settles (date, area, status, why).
+- `docs/PIPELINES.md`: how each kind of asset or task is made. Update when a way of working is proven, changed or retired.
+- `docs/GLOSSARY.md`: plain-language meaning of every technical term you use with the owner. Add missing ones.
+- `docs/GAME_DESIGN.md` stays the source for story and design; only the owner's decisions change it.
+
+Explain results to the owner in plain words and link the terms you introduce.
 
 ## Comparison baselines
 
@@ -78,6 +90,7 @@ The commander script defaults to D4b. With a `route` object assigned it clamps t
 **RPG canyon (secondary)**
 
 1. Review and accept canyon v2 as the RPG baseline. The crater glint now appears only at the exit instead of by midway.
-2. Author dedicated right-wall modules instead of turned left courses. Fix the slate cap material, bush scale and exit vista.
-3. Atmosphere pass: a localized `FogVolume` at a wall opening, measured against v2 with GPU frame time.
-4. RPG fights follow *Streets of Rage 4*: free movement in depth, facing and shooting left/right only. Story beats use Dune II-style storyboard briefings.
+2. Decide the surface style with the HD-2D Pixel A/B (`scenes/maps/canyon_v2_pixel_ab.tscn`, keys 1–5): generate strata and cobble with ChatGPT and Perchance from `docs/PIXEL_TEXTURE_PROMPTS.md` (Gemini is out). Run each image through both procedures, `tools/python/pixel_snap.py` (pixel sets `art_*`, key 4) and `tools/python/smooth_texture.py` (Antigravity's high-resolution procedure, sets `hr_*`, key 5), and compare them with 1 and 3. Pixel sprites for plants already work (ChatGPT bush).
+3. Author dedicated right-wall modules instead of turned left courses. Fix the slate cap material, bush scale and exit vista.
+4. Atmosphere pass: a localized `FogVolume` at a wall opening, measured against v2 with GPU frame time.
+5. RPG fights follow *Streets of Rage 4*: free movement in depth, facing and shooting left/right only. Story beats use Dune II-style storyboard briefings.

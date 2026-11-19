@@ -1,5 +1,5 @@
 // GENERATED from assets/shaders/hd2d_octopath_rock.gdshader by tools/python/make_pixel_shader_variants.py.
-// Nearest-filter samplers for pixel-art textures. Edit the source shader, then regenerate.
+// Nearest-filter samplers and uniform repeat scales for pixel-art textures. Edit the source, then regenerate.
 shader_type spatial;
 render_mode diffuse_burley, specular_schlick_ggx;
 
@@ -12,6 +12,12 @@ uniform sampler2D boulder_norm : hint_normal, filter_nearest_mipmap, repeat_enab
 
 uniform vec3 haze_color : source_color = vec3(0.95, 0.78, 0.52);
 uniform float haze_strength : hint_range(0.0, 1.0) = 0.24;
+
+// Repeat scales exposed for authored pixel sets (defaults match the source shader).
+uniform vec2 strata_scale = vec2(0.34, 0.72); // repeats per metre along / up the wall
+uniform float basalt_scale = 1.05; // slate tops, repeats per metre
+uniform vec2 basalt_side_scale = vec2(1.45, 0.52); // dark slate courses (up, along)
+uniform float boulder_scale = 0.65; // ochre boulder clusters
 
 varying vec3 world_pos;
 varying vec3 world_nrm;
@@ -38,32 +44,32 @@ void fragment() {
 	vec3 w = pow(abs(nrm), vec3(4.0));
 	w /= (w.x + w.y + w.z + 0.0001);
 
-	vec3 sand_col = sample_strata_triplanar(sandstone_tex, world_pos, w, 0.34, 0.72);
-	vec3 sand_nrm = sample_strata_triplanar(sandstone_norm, world_pos, w, 0.34, 0.72);
+	vec3 sand_col = sample_strata_triplanar(sandstone_tex, world_pos, w, strata_scale.x, strata_scale.y);
+	vec3 sand_nrm = sample_strata_triplanar(sandstone_norm, world_pos, w, strata_scale.x, strata_scale.y);
 
 	// Top ledges: rich weathered grey-brown granular stone (kept darker in linear space so sunlight hits Img 1 ledge_tops)
-	vec3 bas_top_raw = sample_triplanar(basalt_tex, world_pos, w, 1.05);
+	vec3 bas_top_raw = sample_triplanar(basalt_tex, world_pos, w, basalt_scale);
 	vec3 bas_top_col = mix(bas_top_raw * 0.52, sand_col * vec3(0.45, 0.42, 0.38), 0.25);
-	vec3 bas_top_nrm = sample_triplanar(basalt_norm, world_pos, w, 1.05);
+	vec3 bas_top_nrm = sample_triplanar(basalt_norm, world_pos, w, basalt_scale);
 
 	// Vertical dark terrace walls: flipped horizontal masonry UVs + linear dark slate-umber matching Img 1 lower steps
-	vec3 mas_zy = texture(basalt_tex, vec2(world_pos.y * 1.45, world_pos.z * 0.52)).rgb;
-	vec3 mas_xy = texture(basalt_tex, vec2(world_pos.y * 1.45, world_pos.x * 0.52)).rgb;
+	vec3 mas_zy = texture(basalt_tex, vec2(world_pos.y * basalt_side_scale.x, world_pos.z * basalt_side_scale.y)).rgb;
+	vec3 mas_xy = texture(basalt_tex, vec2(world_pos.y * basalt_side_scale.x, world_pos.x * basalt_side_scale.y)).rgb;
 	vec3 mas_side = mas_zy * (w.x / (w.x + w.z + 0.0001)) + mas_xy * (w.z / (w.x + w.z + 0.0001));
 	float mas_luma = dot(mas_side, vec3(0.299, 0.587, 0.114));
 	float sand_luma = dot(sand_col, vec3(0.299, 0.587, 0.114));
 	float dark_blend = clamp(mas_luma * 1.35 * 0.65 + sand_luma * 0.55, 0.0, 1.0);
 	vec3 bas_side_col = mix(vec3(0.024, 0.017, 0.013), vec3(0.115, 0.080, 0.055), dark_blend);
 
-	vec3 mas_n_zy = texture(basalt_norm, vec2(world_pos.y * 1.45, world_pos.z * 0.52)).rgb;
-	vec3 mas_n_xy = texture(basalt_norm, vec2(world_pos.y * 1.45, world_pos.x * 0.52)).rgb;
+	vec3 mas_n_zy = texture(basalt_norm, vec2(world_pos.y * basalt_side_scale.x, world_pos.z * basalt_side_scale.y)).rgb;
+	vec3 mas_n_xy = texture(basalt_norm, vec2(world_pos.y * basalt_side_scale.x, world_pos.x * basalt_side_scale.y)).rgb;
 	vec3 bas_side_nrm = mas_n_zy * (w.x / (w.x + w.z + 0.0001)) + mas_n_xy * (w.z / (w.x + w.z + 0.0001));
 
 	vec3 bas_col = mix(bas_side_col, bas_top_col, smoothstep(0.35, 0.75, w.y));
 	vec3 bas_nrm = mix(mix(sand_nrm, bas_side_nrm, 0.55), bas_top_nrm, smoothstep(0.35, 0.75, w.y));
 
-	vec3 bld_col = sample_triplanar(boulder_tex, world_pos, w, 0.65);
-	vec3 bld_nrm = sample_triplanar(boulder_norm, world_pos, w, 0.65);
+	vec3 bld_col = sample_triplanar(boulder_tex, world_pos, w, boulder_scale);
+	vec3 bld_nrm = sample_triplanar(boulder_norm, world_pos, w, boulder_scale);
 
 	// Vertex color: R = 0.0 sandstone / 1.0 cap or lower slate, G = AO, B = 1.0 on BoulderCluster
 	float is_boulder = smoothstep(0.65, 0.90, COLOR.b);

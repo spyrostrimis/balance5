@@ -2,6 +2,8 @@
 extends SceneTree
 
 func _init():
+	if not preload("res://tools/godot/tool_guard.gd").confirm(self, PackedStringArray(["res://scenes/maps/desert_canyon_playable.tscn"])):
+		return
 	print("Generating Enhanced Playable Desert Canyon Scene (Step 1)...")
 	var root = Node2D.new()
 	root.name = "DesertCanyonPlayable"

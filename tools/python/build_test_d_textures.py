@@ -2,10 +2,12 @@ import os
 import cv2
 import numpy as np
 
-RAW_PATH = r"d:\Games\Balance5\assets\textures\canyon_pbr\test_c2_ledges_raw.png"
-SHEET_PATH = r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\desert_stone_sandstone_albedo_sheet_1794942452330.jpg"
-REF_PATH = r"d:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png"
-OUT_DIR = r"d:\Games\Balance5\assets\textures\canyon_pbr"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+RAW_PATH = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\test_c2_ledges_raw.png")
+SHEET_PATH = os.path.join(PROJECT_ROOT, "assets/source_inputs", r"desert_stone_sandstone_albedo_sheet_1794942452330.jpg")
+REF_PATH = os.path.join(PROJECT_ROOT, r"assets\textures\maps\desert_approach_rpg_albedo.png")
+OUT_DIR = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr")
 
 
 def make_seamless_512(patch_bgr: np.ndarray, pad: int = 64) -> np.ndarray:

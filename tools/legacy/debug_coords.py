@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
+import os
 
-ref_path = "C:/Users/PC/.gemini/antigravity/brain/25684232-7f72-4063-b959-1b79d32ac318/.user_uploaded/media_1794834895605_af15c30b.jpg"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+ref_path = os.path.join(PROJECT_ROOT, "assets/source_inputs", "media_1794834895605_af15c30b.jpg")
 img = cv2.imread(ref_path)
 h, w, c = img.shape
 

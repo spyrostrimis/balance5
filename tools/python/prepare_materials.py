@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
 def generate_normal_map(img_bgr, strength=2.0):
     gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255.0
@@ -27,11 +30,11 @@ def make_seamless(img, overlap=32):
     return out
 
 for name in ['tex_sand_albedo', 'tex_rock_albedo', 'tex_path_albedo']:
-    im = cv2.imread(f'd:/Games/Balance5/assets/textures/maps/{name}.png')
+    im = cv2.imread(f'{PROJECT_ROOT}/assets/textures/maps/{name}.png')
     seamless = make_seamless(im)
     normal = generate_normal_map(seamless, strength=2.5)
     norm_name = name.replace('albedo', 'normal')
-    cv2.imwrite(f'd:/Games/Balance5/assets/textures/maps/{name}_seamless.png', seamless)
-    cv2.imwrite(f'd:/Games/Balance5/assets/textures/maps/{norm_name}.png', normal)
+    cv2.imwrite(f'{PROJECT_ROOT}/assets/textures/maps/{name}_seamless.png', seamless)
+    cv2.imwrite(f'{PROJECT_ROOT}/assets/textures/maps/{norm_name}.png', normal)
 
 print('Seamless textures and normal maps generated!')

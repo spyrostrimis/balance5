@@ -2,9 +2,11 @@ import cv2
 import numpy as np
 import os
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
 os.makedirs("assets/textures/units", exist_ok=True)
 
-orig = cv2.imread("C:/Users/PC/.gemini/antigravity/brain/25684232-7f72-4063-b959-1b79d32ac318/.user_uploaded/media_1794834895605_af15c30b.jpg")
+orig = cv2.imread(os.path.join(PROJECT_ROOT, "assets/source_inputs", "media_1794834895605_af15c30b.jpg"))
 clean = cv2.imread("assets/textures/maps/desert_mission_1_clean_albedo.png")
 
 # Difference image

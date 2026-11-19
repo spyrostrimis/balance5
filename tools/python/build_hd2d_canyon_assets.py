@@ -3,8 +3,10 @@ import glob
 import cv2
 import numpy as np
 
-SRC = r'd:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png'
-OUT_DIR = r'd:\Games\Balance5\assets\textures\canyon_pbr'
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+SRC = os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_approach_rpg_albedo.png')
+OUT_DIR = os.path.join(PROJECT_ROOT, r'assets\textures\canyon_pbr')
 os.makedirs(OUT_DIR, exist_ok=True)
 
 # Clean up any temporary debug/check images

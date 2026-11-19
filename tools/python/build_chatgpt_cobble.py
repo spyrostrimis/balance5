@@ -2,8 +2,8 @@
 1024x1024 PBR maps (albedo, normal, ORM) for an isolated Godot comparison test.
 
 Usage:
-  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_chatgpt_cobble.py"
-  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_chatgpt_cobble.py" --make-strips
+  & "C:/Python312/python.exe" "tools/python/build_chatgpt_cobble.py"
+  & "C:/Python312/python.exe" "tools/python/build_chatgpt_cobble.py" --make-strips
 """
 
 import argparse
@@ -12,20 +12,23 @@ from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
 SIZE = 1024
 TILE_METRES = 3.2
 PER_METRE = SIZE / TILE_METRES  # 320 texels / metre
 
-ROOT = Path(r"d:\Games\Balance5")
+ROOT = Path(__file__).resolve().parents[2]
 TEX_DIR = ROOT / "assets" / "textures" / "canyon_pbr"
 CAP_DIR = ROOT / "render_captures" / "chatgpt_road_test"
 
 SRC_ALBEDO = Path(
-    r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\.user_uploaded\media_1795014976304_da5aec03.jpg"
+    os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1795014976304_da5aec03.jpg")
 )
 SRC_HEIGHT = Path(
-    r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\.user_uploaded\media_1795014976270_d8a2de1b.jpg"
+    os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1795014976270_d8a2de1b.jpg")
 )
 
 

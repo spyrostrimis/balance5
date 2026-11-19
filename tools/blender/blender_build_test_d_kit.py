@@ -11,7 +11,7 @@ Vertex Color Channel "Col" (exported as COLOR_0 in GLB):
   B: bevel/sun edge highlight weight
 
 Run:
-  & "C:\\Blender\\blender.exe" -b -P "d:\\Games\\Balance5\\scripts\\blender_build_test_d_kit.py"
+  & "C:\\Blender\\blender.exe" -b -P "scripts\\blender_build_test_d_kit.py"
 """
 import math
 import os
@@ -20,7 +20,9 @@ import bpy
 import bmesh
 from mathutils import Matrix, Vector, noise
 
-OUT_GLB = r"d:\Games\Balance5\assets\models\canyon_kit_test_d.glb"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+OUT_GLB = os.path.join(PROJECT_ROOT, r"assets\models\canyon_kit_test_d.glb")
 
 
 def hash_jitter(seed: int) -> random.Random:

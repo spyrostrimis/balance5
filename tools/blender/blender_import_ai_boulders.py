@@ -4,6 +4,9 @@ from pathlib import Path
 import bmesh
 import bpy
 from mathutils import Vector
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -13,13 +16,13 @@ OUT_DIR = ROOT / "assets" / "models"
 SPECS = [
     {
         "name": "ai_boulder_hf_trellis2",
-        "src": r"C:/Users/PC/.gemini/antigravity/brain/25684232-7f72-4063-b959-1b79d32ac318/.user_uploaded/media_1795020839426_cc5f33df.glb",
+        "src": os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1795020839426_cc5f33df.glb"),
         "target_width": 2.1,
         "decimate_ratio": 0.06,  # ~282k -> ~17k tris
     },
     {
         "name": "ai_boulder_trellis3dnet",
-        "src": r"C:/Users/PC/.gemini/antigravity/brain/25684232-7f72-4063-b959-1b79d32ac318/.user_uploaded/media_1795020844091_0aaf81c0.glb",
+        "src": os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1795020844091_0aaf81c0.glb"),
         "target_width": 2.1,
         "decimate_ratio": 0.65,  # ~17k -> ~11k tris
     },

@@ -2,12 +2,13 @@ import os
 import cv2
 import numpy as np
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
 
 SRC_IMG = (
-    r"C:/Users/PC/.gemini/antigravity/brain/"
-    r"25684232-7f72-4063-b959-1b79d32ac318/.user_uploaded/media_1794834895605_af15c30b.jpg"
+    os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1794834895605_af15c30b.jpg")
 )
-OUT_IMG = r"d:/Games/Balance5/assets/textures/units/blue_tank.png"
+OUT_IMG = os.path.join(PROJECT_ROOT, r"assets/textures/units/blue_tank.png")
 
 
 def rounded_rect_mask(h: int, w: int, x0: int, y0: int, x1: int, y1: int, radius: float) -> np.ndarray:

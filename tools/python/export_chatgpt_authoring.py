@@ -2,7 +2,7 @@
 for Krita (.kra), Aseprite (.aseprite), and Tiled (.tsx + .tmx) inside assets/textures/source/.
 
 Usage:
-  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/export_chatgpt_authoring.py"
+  & "C:/Python312/python.exe" "tools/python/export_chatgpt_authoring.py"
 """
 
 import io
@@ -15,7 +15,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-ROOT = Path(r"d:\Games\Balance5")
+ROOT = Path(__file__).resolve().parents[2]
 TEX_DIR = ROOT / "assets" / "textures" / "canyon_pbr"
 SRC_DIR = ROOT / "assets" / "textures" / "source"
 TILED_DIR = SRC_DIR / "tiled"

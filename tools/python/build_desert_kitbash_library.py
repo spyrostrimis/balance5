@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 
-ROOT = Path(r"d:/Games/Balance5")
+ROOT = Path(__file__).resolve().parents[2]
 SRC_ALBEDO = ROOT / "assets/textures/maps/desert_mission_1_clean_albedo.png"
 KIT_DIR = ROOT / "assets/textures/kitbash"
 TILED_DIR = ROOT / "assets/textures/source/tiled"

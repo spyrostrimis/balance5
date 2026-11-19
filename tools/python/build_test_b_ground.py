@@ -2,9 +2,11 @@ import os
 import cv2
 import numpy as np
 
-ARTIFACT_JPG = r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\test_b_hd2d_ground_raw_1794880450271.jpg"
-RAW_PNG = r"d:\Games\Balance5\assets\textures\canyon_pbr\test_b_hd2d_ground_raw.png"
-OUT_STRIP = r"d:\Games\Balance5\assets\textures\canyon_pbr\test_b_hd2d_ground_strip.png"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+ARTIFACT_JPG = os.path.join(PROJECT_ROOT, "assets/source_inputs", r"test_b_hd2d_ground_raw_1794880450271.jpg")
+RAW_PNG = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\test_b_hd2d_ground_raw.png")
+OUT_STRIP = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\test_b_hd2d_ground_strip.png")
 
 
 def main() -> None:

@@ -1,9 +1,12 @@
 import cv2
 import numpy as np
+import os
 
-src_path = r'C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\desert_canyon_hd2d_1794850108794.jpg'
-dst_albedo = r'd:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png'
-dst_normal = r'd:\Games\Balance5\assets\textures\maps\desert_approach_rpg_normal.png'
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+src_path = os.path.join(PROJECT_ROOT, "assets/source_inputs", r'desert_canyon_hd2d_1794850108794.jpg')
+dst_albedo = os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_approach_rpg_albedo.png')
+dst_normal = os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_approach_rpg_normal.png')
 
 img = cv2.imread(src_path)
 cv2.imwrite(dst_albedo, img)

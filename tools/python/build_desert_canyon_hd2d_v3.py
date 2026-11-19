@@ -15,10 +15,12 @@ import random
 import os
 from mathutils import Vector, Euler
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
 # Reset
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
-OUT_DIR = r"d:\Games\Balance5\render_captures"
+OUT_DIR = os.path.join(PROJECT_ROOT, r"render_captures")
 os.makedirs(OUT_DIR, exist_ok=True)
 RENDER_FILE = os.path.join(OUT_DIR, "desert_approach_rpg_hd2d_v3.png")
 
@@ -350,6 +352,6 @@ bpy.ops.render.render(write_still=True)
 print("Render complete!")
 
 # Save blend
-blend_path = r"d:\Games\Balance5\assets\models\desert_canyon_hd2d.blend"
+blend_path = os.path.join(PROJECT_ROOT, r"assets\models\desert_canyon_hd2d.blend")
 bpy.ops.wm.save_as_mainfile(filepath=blend_path)
 print(f"Blend saved to: {blend_path}")

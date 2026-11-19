@@ -1,10 +1,13 @@
 import cv2
 import numpy as np
+import os
 
-src_path = r'C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\combat_commander_hd2d_sprite_1794851030582.jpg'
-out_sprite = r'd:\Games\Balance5\assets\textures\units\blue_commander_rpg.png'
-out_normal = r'd:\Games\Balance5\assets\textures\units\blue_commander_rpg_normal.png'
-out_shadow = r'd:\Games\Balance5\assets\textures\units\blue_commander_shadow.png'
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+src_path = os.path.join(PROJECT_ROOT, "assets/source_inputs", r'combat_commander_hd2d_sprite_1794851030582.jpg')
+out_sprite = os.path.join(PROJECT_ROOT, r'assets\textures\units\blue_commander_rpg.png')
+out_normal = os.path.join(PROJECT_ROOT, r'assets\textures\units\blue_commander_rpg_normal.png')
+out_shadow = os.path.join(PROJECT_ROOT, r'assets\textures\units\blue_commander_shadow.png')
 
 img = cv2.imread(src_path)
 h, w, _ = img.shape

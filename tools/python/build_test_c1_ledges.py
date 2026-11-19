@@ -2,8 +2,10 @@ import os
 import cv2
 import numpy as np
 
-SRC_PATH = r"d:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png"
-OUT_DIR = r"d:\Games\Balance5\assets\textures\diorama_wings"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+SRC_PATH = os.path.join(PROJECT_ROOT, r"assets\textures\maps\desert_approach_rpg_albedo.png")
+OUT_DIR = os.path.join(PROJECT_ROOT, r"assets\textures\diorama_wings")
 
 
 def make_ledge_alpha(crop_bgr: np.ndarray, side: str) -> np.ndarray:

@@ -2,6 +2,8 @@ extends SceneTree
 
 
 func _init() -> void:
+	if not preload("res://tools/godot/tool_guard.gd").confirm(self, PackedStringArray(["res://scenes/maps/desert_canyon_true_3d.tscn"])):
+		return
 	build_and_save_scene()
 	quit(0)
 

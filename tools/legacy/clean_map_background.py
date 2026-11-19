@@ -3,10 +3,12 @@ import numpy as np
 from PIL import Image
 import os
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
 os.makedirs("assets/textures/maps", exist_ok=True)
 
 # Load reference image
-ref_path = "C:/Users/PC/.gemini/antigravity/brain/25684232-7f72-4063-b959-1b79d32ac318/.user_uploaded/media_1794834895605_af15c30b.jpg"
+ref_path = os.path.join(PROJECT_ROOT, "assets/source_inputs", "media_1794834895605_af15c30b.jpg")
 img = cv2.imread(ref_path)
 h, w, c = img.shape
 print(f"Loaded reference image: {w}x{h}")

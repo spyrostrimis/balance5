@@ -1,8 +1,11 @@
 import cv2
 import numpy as np
+import os
 
-SRC_PATH = r"d:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png"
-OUT_PATH = r"d:\Games\Balance5\assets\textures\canyon_pbr\test_a_painted_ground_strip.png"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+SRC_PATH = os.path.join(PROJECT_ROOT, r"assets\textures\maps\desert_approach_rpg_albedo.png")
+OUT_PATH = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\test_a_painted_ground_strip.png")
 
 
 def main() -> None:

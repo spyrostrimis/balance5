@@ -11,6 +11,9 @@ enum Mode { EXPLORATION, COMBAT_LOCKED }
 ## Walkable Z span and exit threshold. Defaults are the D4b canyon.
 @export var path_z_limits := Vector2(-14.5, 7.5)
 @export var exit_z := -13.5
+## D4b scenes keep the commander on the path with a position clamp. Levels with collision walls
+## (canyon_corridor.gd) turn this off so physics does the containing.
+@export var clamp_to_route := true
 
 @onready var sprite: Sprite3D = $CommanderSprite
 @onready var gauntlet_light: OmniLight3D = $GauntletGlow
@@ -87,11 +90,12 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	# 3. Clamp smoothly inside winding cobblestone canyon trail
-	global_position.z = clampf(global_position.z, path_z_limits.x, path_z_limits.y)
-	var cx: float = _route_center_x(global_position.z)
-	var half_width := _route_half_width()
-	global_position.x = clampf(global_position.x, cx - half_width, cx + half_width)
+	# 3. Clamp smoothly inside winding cobblestone canyon trail (legacy levels without walls)
+	if clamp_to_route:
+		global_position.z = clampf(global_position.z, path_z_limits.x, path_z_limits.y)
+		var cx: float = _route_center_x(global_position.z)
+		var half_width := _route_half_width()
+		global_position.x = clampf(global_position.x, cx - half_width, cx + half_width)
 
 	# 4. Update dynamic grounded contact shadow under boots
 	if _ground_mat:

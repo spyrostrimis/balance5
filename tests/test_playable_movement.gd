@@ -24,7 +24,7 @@ func _init():
 
 	# Save snapshot 1: Initial position
 	var img1 = root.get_viewport().get_texture().get_image()
-	img1.save_png("d:/Games/Balance5/render_captures/test_walk_pos1.png")
+	img1.save_png("res://render_captures/test_walk_pos1.png")
 	print("Snapshot 1 saved (initial position).")
 
 	# 2. Simulate walking forward-up deeper into canyon (W / UP)
@@ -41,7 +41,7 @@ func _init():
 
 	# Save snapshot 2: Deeper in canyon (smaller scale, camera shifted)
 	var img2 = root.get_viewport().get_texture().get_image()
-	img2.save_png("d:/Games/Balance5/render_captures/test_walk_pos2_deeper.png")
+	img2.save_png("res://render_captures/test_walk_pos2_deeper.png")
 	print("Snapshot 2 saved (deeper in canyon).")
 
 	# 3. Simulate walking down-right toward camera (S / D)
@@ -57,7 +57,7 @@ func _init():
 
 	# Save snapshot 3: Near foreground (larger scale, camera shifted down)
 	var img3 = root.get_viewport().get_texture().get_image()
-	img3.save_png("d:/Games/Balance5/render_captures/test_walk_pos3_foreground.png")
+	img3.save_png("res://render_captures/test_walk_pos3_foreground.png")
 	print("Snapshot 3 saved (near foreground).")
 
 	print("ALL MOVEMENT TESTS PASSED!")

@@ -48,7 +48,7 @@ func _init():
 	# Capture final frame at the canyon opening
 	var img = root.get_viewport().get_texture().get_image()
 	if img:
-		var save_path = "d:/Games/Balance5/render_captures/desert_step1_canyon_opening.png"
+		var save_path = "res://render_captures/desert_step1_canyon_opening.png"
 		var err = img.save_png(save_path)
 		if err == OK:
 			print("SUCCESS: Canyon opening snapshot saved to: ", save_path)

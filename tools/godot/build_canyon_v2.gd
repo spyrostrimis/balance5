@@ -38,6 +38,8 @@ const RIGHT_WALL_Z: Array[float] = [11.7, 5.5, -0.7, -6.4]
 
 
 func _init() -> void:
+	if not preload("res://tools/godot/tool_guard.gd").confirm(self, PackedStringArray(["res://scenes/maps/canyon_v2.tscn", "res://scenes/canyon/canyon_v2_layout.tres", "canyon materials, environment and actor scenes"])):
+		return
 	var ok := _build()
 	quit(0 if ok else 1)
 

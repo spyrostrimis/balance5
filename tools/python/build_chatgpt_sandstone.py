@@ -7,20 +7,23 @@ from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
 SIZE = 1024
 TILE_METRES = 1.6  # 1 repeat = 1.6m across boulder height/width (640 texels/m)
 PER_METRE = SIZE / TILE_METRES
 
-ROOT = Path(r"d:\Games\Balance5")
+ROOT = Path(__file__).resolve().parents[2]
 TEX_DIR = ROOT / "assets" / "textures" / "canyon_pbr"
 CAP_DIR = ROOT / "render_captures" / "chatgpt_boulder_test"
 
 SRC_ALBEDO = Path(
-    r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\.user_uploaded\media_1795022926046_7eba23fa.jpg"
+    os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1795022926046_7eba23fa.jpg")
 )
 SRC_HEIGHT = Path(
-    r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\.user_uploaded\media_1795022967542_3a10c6a3.jpg"
+    os.path.join(PROJECT_ROOT, "assets/source_inputs", r"media_1795022967542_3a10c6a3.jpg")
 )
 
 

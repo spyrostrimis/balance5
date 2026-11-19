@@ -1,7 +1,7 @@
 extends SceneTree
 
 const SCENE_PATH := "res://scenes/maps/desert_kitbash_minimap.tscn"
-const CAPTURE_DIR := "d:/Games/Balance5/render_captures"
+const CAPTURE_DIR := "res://render_captures"
 
 
 func _step_seconds(seconds: float, stop_when_idle: Node = null) -> void:

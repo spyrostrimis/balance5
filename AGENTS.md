@@ -14,12 +14,12 @@ This file is the single source of truth for every coding agent (Codex, Claude Co
 | `scenes/ui/` | Opening screen, Developers Page and build launcher. |
 | `scripts/` | Runtime GDScript only. Canyon systems live in `scripts/canyon/`. |
 | `tests/` | Headless and windowed test harnesses, such as the walk captures. |
-| `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). |
+| `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
-| `assets/` | Models, textures, shaders, `materials/` and `environments/` (`.tres`). |
+| `assets/` | Models, textures, shaders, `materials/` and `environments/` (`.tres`). `assets/source_inputs/` holds the original AI-generated images and GLBs the tools consume (ignored by Godot). |
 | `docs/` | Rubric, experiment log, pipeline, style bible and bend sessions. Their evidence images live in the untracked `render_captures/`. |
 
-`render_captures/`, `tmp/` and `builds/` are ignored and stay local to the primary workspace.
+`render_captures/`, `tmp/` and `builds/` are ignored and stay local to the primary workspace. Tools resolve paths from the repository root, so nothing depends on `D:/Games/Balance5`.
 
 ## Canyon v2 (current foundation)
 
@@ -28,6 +28,7 @@ This file is the single source of truth for every coding agent (Codex, Claude Co
 - **Route** (`Path3D`, `scripts/canyon/canyon_route_path.gd`). Edit the curve in the editor. It provides `center_x(z)`, `heading(z)` and `half_width`, and writes a 64-sample lookup into the road shader (`route_mode = 1`). The route must run monotonically along −Z.
 - **Layout** (`scripts/canyon/canyon_layout.gd`). Instances each placement in `scenes/canyon/canyon_v2_layout.tres` relative to the route: `z`, `lateral` offset, `yaw_offset_deg`, `scale`, plus `tint` and `flip_h` for sprites. Generated children are not saved. They rebuild when the route or data changes.
 - **Modules** are small wrappers in `scenes/canyon/modules/` that own a mesh and `assets/materials/canyon_rock.tres`. The kit meshes are saved by the `canyon_kit_test_d.glb` import (`assets/models/canyon_kit/*.res`), so a Blender re-export updates them on reimport. Older wrappers (`right_buttress.tscn`, the ChatGPT boulders) live in `scenes/maps/`.
+- **Corridor** (`scripts/canyon/canyon_corridor.gd`). Builds a continuous collision ribbon along both route edges plus end caps, and a navigation mesh baked from the floor, walls and module blockers (blocker tops removed). Physics contains the commander, so v2 turns off the legacy position clamp. Later units can path with `NavigationServer3D` or `NavigationAgent3D`.
 - **Level script** (`scripts/canyon/canyon_level.gd`) hands the route to the ground material, commander and camera.
 
 To move rocks, edit placements. To bend the canyon, edit the curve. To add a module, make a wrapper scene and reference it from a placement. `tools/godot/build_canyon_v2.gd` was a one-time bootstrap from the composition test, and rerunning it overwrites the v2 files.
@@ -38,7 +39,7 @@ Canyon v2 reproduces the composition test: a 2 m S-curve, a stone right wall fro
 
 1. Before changing geometry, textures, shaders or layout, read `docs/HD2D_CHECKLIST_AND_RUBRIC.md` and `docs/EXPERIMENT_LOG_AND_LESSONS.md`. Never un-tick a verified `[x]` while polishing something else.
 2. Change one hypothesis per test. Give experiments their own scene and capture prefix.
-3. Render from the real Forward+ viewport at 1376×768. Use `tests/test_true_3d_walk.gd` (D4b default) or `tests/test_composition_walk.gd` (adds whole-scene landmark occlusion) with `--scene`, `--capture-dir` and `--prefix`. Inspect start (Z +6), midway (−3.5) and exit (−14). Record positions, floor contact and the exit signal, and look at every PNG before reporting.
+3. Render from the real Forward+ viewport at 1376×768. Use `tests/test_true_3d_walk.gd` (D4b default) or `tests/test_composition_walk.gd` (adds whole-scene landmark occlusion) with `--scene`, `--capture-dir` and `--prefix`. For canyon v2 also run `tests/test_canyon_corridor.gd` headless (walls, end caps, exit signal, obstacle-aware navigation). Inspect start (Z +6), midway (−3.5) and exit (−14). Record positions, floor contact and the exit signal, and look at every PNG before reporting.
 4. Log verified results in `docs/EXPERIMENT_LOG_AND_LESSONS.md` and the rubric right after the run.
 5. Use metres and foot-level pivots. Preserve the rock vertex channels: red selects slate, green carries AO, blue at 1 selects ochre boulders. Store binary flags only as 0 or 1 because of sRGB.
 6. Keep source art sharp. Use one blur method per capture.
@@ -47,12 +48,12 @@ Canyon v2 reproduces the composition test: a 2 m S-curve, a stone right wall fro
 
 | Build | Scene | Fixed values |
 | --- | --- | --- |
-| D4b (`6576387`) | `desert_canyon_true_3d.tscn` | 30° FOV, −13° pitch, offset (0, 3.8, 12.6), route `0.65 · sin(0.22 z)`, clamp ±1.15 m, Z ∈ [−14.5, 7.5], exit at Z ≤ −13.5, screen-height blur. Rerunning `tools/godot/assemble_cinematic_canyon.gd` rewrites this scene and can shift the index-based overrides in its children. Treat it as frozen. |
+| D4b (`6576387`) | `desert_canyon_true_3d.tscn` | 30° FOV, −13° pitch, offset (0, 3.8, 12.6), route `0.65 · sin(0.22 z)`, clamp ±1.15 m, Z ∈ [−14.5, 7.5], exit at Z ≤ −13.5, screen-height blur. Rerunning `tools/godot/assemble_cinematic_canyon.gd` rewrites this scene and can shift the index-based overrides in its children. Treat it as frozen; the assembler now needs `-- --force`. |
 | Bend (`8e05e40`) | `desert_canyon_bend.tscn` | Right buttress, 4 m road, native DOF (near 10 m, far 16.5 m, amount 0.014). Glint occluded at spawn and visible by midway. |
 | Integrated (`246e989`) | `desert_canyon_chatgpt_boulder_test.tscn` | ChatGPT 3.2 m cobbles and Trellis boulders on the bend. Atmosphere layers disabled by the inherited diagnostic control. |
 | Composition test | `desert_canyon_composition_test.tscn` | Runtime re-lay of the integrated scene. C, V and B toggle the original camera, atmosphere and sun. |
 
-The commander script defaults to D4b. With a `route` object assigned it clamps to that route, and its Z limits and exit threshold are exported. The D4b assembler stores module yaw as −heading, the opposite sign to the route. The v2 layout uses the correct sign.
+The commander script defaults to D4b. With a `route` object assigned it clamps to that route, `clamp_to_route = false` hands containment to collision walls, and its Z limits and exit threshold are exported. Both road shaders share the route uniforms (`route_mode` 0 = sine, 1 = lookup). The D4b assembler stores module yaw as −heading, the opposite sign to the route. The v2 layout uses the correct sign.
 
 ## Developers Page
 

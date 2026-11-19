@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" path="res://scenes/actors/blue_commander_3d.tscn" id="9_t2fc6"]
 [ext_resource type="PackedScene" path="res://scenes/actors/canyon_camera.tscn" id="11_r0olc"]
 
+[ext_resource type="Script" path="res://scripts/canyon/canyon_corridor.gd" id="14_corridor"]
+
 [sub_resource type="Curve3D" id="Curve3D_287ag"]
 bake_interval = 0.25
 _data = {
@@ -58,6 +60,9 @@ shape = SubResource("BoxShape3D_26jdi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
 mesh = SubResource("PlaneMesh_y37dp")
 surface_material_override/0 = ExtResource("4_3hj4k")
+
+[node name="Corridor" type="Node3D" parent="."]
+script = ExtResource("14_corridor")
 
 [node name="Layout" type="Node3D" parent="." unique_id=139466030]
 script = ExtResource("5_tfaux")

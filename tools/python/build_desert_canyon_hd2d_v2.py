@@ -10,10 +10,12 @@ import random
 import os
 from mathutils import Vector, noise
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
 # ─── Clean slate ───
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
-OUT_DIR = r"d:\Games\Balance5\render_captures"
+OUT_DIR = os.path.join(PROJECT_ROOT, r"render_captures")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 scene = bpy.context.scene
@@ -377,7 +379,7 @@ print(f"Rendering HD-2D desert canyon v2 to: {render_path}")
 bpy.ops.render.render(write_still=True)
 print("Render complete!")
 
-blend_path = r"d:\Games\Balance5\assets\models\desert_approach_rpg.blend"
+blend_path = os.path.join(PROJECT_ROOT, r"assets\models\desert_approach_rpg.blend")
 os.makedirs(os.path.dirname(blend_path), exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=blend_path)
 print(f"Blend saved: {blend_path}")

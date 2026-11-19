@@ -16,6 +16,26 @@ uniform float cobble_verge_wear : hint_range(0.0, 1.0) = 0.0;
 // World X/Z centre and full width/length. Zero width disables the comparison patch.
 uniform vec4 road_patch_xz = vec4(0.0);
 
+// Route centre: route_mode 0 = route_amplitude * sin(z * route_frequency + route_phase) (D4b defaults),
+// 1 = 64-sample lookup written by scripts/canyon/canyon_route_path.gd. Same contract as the crisp shader.
+uniform float route_amplitude = 0.65;
+uniform float route_frequency = 0.22;
+uniform float route_phase = 0.0;
+uniform int route_mode = 0;
+uniform float route_lookup[64];
+uniform float route_lookup_z0 = 0.0;
+uniform float route_lookup_dz = 1.0;
+
+float route_center(float z) {
+	if (route_mode == 0) {
+		return sin(z * route_frequency + route_phase) * route_amplitude;
+	}
+	float f = clamp((z - route_lookup_z0) / route_lookup_dz, 0.0, 63.0);
+	int i = int(floor(f));
+	int j = min(i + 1, 63);
+	return mix(route_lookup[i], route_lookup[j], f - float(i));
+}
+
 varying vec3 world_pos;
 
 void vertex() {
@@ -23,7 +43,7 @@ void vertex() {
 }
 
 void fragment() {
-	float path_cx = sin(world_pos.z * 0.22) * 0.65;
+	float path_cx = route_center(world_pos.z);
 	float macro_w = sin(world_pos.x * 1.1 + sin(world_pos.z * 0.7)) * 0.5 + 0.5;
 	vec3 c_col;
 	vec3 c_norm;

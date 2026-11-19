@@ -9,10 +9,12 @@ import math
 import os
 from mathutils import Vector, noise
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
 # Clean slate
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
-OUT_GLTF = r"d:\Games\Balance5\assets\models\canyon_environment.glb"
+OUT_GLTF = os.path.join(PROJECT_ROOT, r"assets\models\canyon_environment.glb")
 os.makedirs(os.path.dirname(OUT_GLTF), exist_ok=True)
 
 def clamp_val(val, mi, ma):
@@ -123,7 +125,7 @@ bsdf = nodes.new('ShaderNodeBsdfPrincipled')
 bsdf.inputs['Roughness'].default_value = 0.88
 
 tex_img = nodes.new('ShaderNodeTexImage')
-tex_path = r"d:\Games\Balance5\assets\textures\maps\tex_rock_albedo_seamless.png"
+tex_path = os.path.join(PROJECT_ROOT, r"assets\textures\maps\tex_rock_albedo_seamless.png")
 if os.path.exists(tex_path):
     tex_img.image = bpy.data.images.load(tex_path)
     links.new(tex_img.outputs['Color'], bsdf.inputs['Base Color'])
@@ -174,7 +176,7 @@ pbsdf = pn.new('ShaderNodeBsdfPrincipled')
 pbsdf.inputs['Roughness'].default_value = 0.92
 
 p_tex = pn.new('ShaderNodeTexImage')
-p_tex_path = r"d:\Games\Balance5\assets\textures\maps\tex_path_albedo_seamless.png"
+p_tex_path = os.path.join(PROJECT_ROOT, r"assets\textures\maps\tex_path_albedo_seamless.png")
 if os.path.exists(p_tex_path):
     p_tex.image = bpy.data.images.load(p_tex_path)
     pl.new(p_tex.outputs['Color'], pbsdf.inputs['Base Color'])

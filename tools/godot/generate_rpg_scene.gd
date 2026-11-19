@@ -2,6 +2,8 @@
 extends SceneTree
 
 func _init():
+	if not preload("res://tools/godot/tool_guard.gd").confirm(self, PackedStringArray(["res://scenes/maps/desert_approach_rpg_hd2d.tscn"])):
+		return
 	print("Creating Desert Approach RPG HD-2D Scene...")
 	var root = Node2D.new()
 	root.name = "DesertApproachRPG"

@@ -2,8 +2,8 @@
 and assemble side-by-side comparison strips for desert_canyon_ultra_crisp_test.
 
 Usage:
-  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_ultra_crisp_cobble.py"
-  & "C:/Python312/python.exe" "d:/Games/Balance5/tools/python/build_ultra_crisp_cobble.py" --make-strips
+  & "C:/Python312/python.exe" "tools/python/build_ultra_crisp_cobble.py"
+  & "C:/Python312/python.exe" "tools/python/build_ultra_crisp_cobble.py" --make-strips
 """
 
 import argparse
@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw
 SIZE = 2048
 TILE_METRES = 4.0
 PER_METRE = SIZE / TILE_METRES  # 512 texels / metre
-ROOT = Path(r"d:\Games\Balance5")
+ROOT = Path(__file__).resolve().parents[2]
 TEX_DIR = ROOT / "assets" / "textures" / "canyon_pbr"
 CAP_DIR = ROOT / "render_captures" / "ultra_crisp_test"
 

@@ -2,13 +2,15 @@ import os
 import cv2
 import numpy as np
 
-SRC_PATH = r"d:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png"
-WING_DIR = r"d:\Games\Balance5\assets\textures\diorama_wings"
-BUSH_OUT = r"d:\Games\Balance5\assets\textures\canyon_pbr\hd2d_bush_cluster.png"
-CRATER_SRC = r"d:\Games\Balance5\assets\textures\maps\desert_mission_1_clean_albedo.png"
-CRATER_OUT = r"d:\Games\Balance5\assets\textures\canyon_pbr\orichalcum_crater.png"
-VISTA_SRC = r"d:\Games\Balance5\assets\textures\canyon_pbr\canyon_exit_battlefield_vista.png"
-VISTA_OUT = r"d:\Games\Balance5\assets\textures\canyon_pbr\canyon_vista_seamless.png"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+SRC_PATH = os.path.join(PROJECT_ROOT, r"assets\textures\maps\desert_approach_rpg_albedo.png")
+WING_DIR = os.path.join(PROJECT_ROOT, r"assets\textures\diorama_wings")
+BUSH_OUT = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\hd2d_bush_cluster.png")
+CRATER_SRC = os.path.join(PROJECT_ROOT, r"assets\textures\maps\desert_mission_1_clean_albedo.png")
+CRATER_OUT = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\orichalcum_crater.png")
+VISTA_SRC = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\canyon_exit_battlefield_vista.png")
+VISTA_OUT = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\canyon_vista_seamless.png")
 
 
 def make_rock_wing_alpha(crop_bgr: np.ndarray, side: str, is_gate: bool = False, is_fg: bool = False) -> np.ndarray:

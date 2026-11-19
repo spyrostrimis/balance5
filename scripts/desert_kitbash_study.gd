@@ -1,8 +1,8 @@
 extends Control
 ## Renders and previews two modular 185x102 desert kitbash samples assembled via TileMapLayer + Sprite2D stamps.
 
-const OUT_SAMPLE_1 := "d:/Games/Balance5/assets/textures/maps/desert_kitbash_sample_1.png"
-const OUT_SAMPLE_2 := "d:/Games/Balance5/assets/textures/maps/desert_kitbash_sample_2.png"
+const OUT_SAMPLE_1 := "res://assets/textures/maps/desert_kitbash_sample_1.png"
+const OUT_SAMPLE_2 := "res://assets/textures/maps/desert_kitbash_sample_2.png"
 
 @onready var _vp1: SubViewport = $Sample1Viewport
 @onready var _vp2: SubViewport = $Sample2Viewport

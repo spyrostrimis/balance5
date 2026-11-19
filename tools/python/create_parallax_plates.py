@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
+import os
 
-albedo = cv2.imread(r'd:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png')
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+albedo = cv2.imread(os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_approach_rpg_albedo.png'))
 h, w, _ = albedo.shape
 
 # Build a smooth alpha mask for the foreground cliffs (bottom-left and bottom-right)
@@ -35,6 +38,6 @@ fg_mask = cv2.GaussianBlur(fg_mask, (31, 31), 0)
 # Save foreground RGBA
 fg_rgba = cv2.cvtColor(albedo, cv2.COLOR_BGR2BGRA)
 fg_rgba[:, :, 3] = (fg_mask * 255.0).astype(np.uint8)
-cv2.imwrite(r'd:\Games\Balance5\assets\textures\maps\desert_approach_rpg_foreground.png', fg_rgba)
+cv2.imwrite(os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_approach_rpg_foreground.png'), fg_rgba)
 
 print('Foreground parallax plate created!')

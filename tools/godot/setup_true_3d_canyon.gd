@@ -2,6 +2,8 @@
 extends SceneTree
 
 func _init():
+	if not preload("res://tools/godot/tool_guard.gd").confirm(self, PackedStringArray(["res://scenes/maps/desert_canyon_true_3d.tscn"])):
+		return
 	print("Assembling AAA True 3D Canyon Scene with Triplanar Textures and Gateway Arch...")
 	var root = Node3D.new()
 	root.name = "DesertCanyonTrue3D"

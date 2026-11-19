@@ -23,7 +23,7 @@ func _init():
 
 	# Snapshot 1: Start of canyon trail
 	var img1 = root.get_viewport().get_texture().get_image()
-	img1.save_png("d:/Games/Balance5/render_captures/test_3d_pos1_start.png")
+	img1.save_png("res://render_captures/test_3d_pos1_start.png")
 	print("Snapshot 1 saved: Start of canyon trail.")
 
 	# 2. Walk forward down the canyon towards Z = 0
@@ -38,7 +38,7 @@ func _init():
 
 	print("Midway pos: ", player.global_position, " Cam pos: ", cam.global_position)
 	var img2 = root.get_viewport().get_texture().get_image()
-	img2.save_png("d:/Games/Balance5/render_captures/test_3d_pos2_midway.png")
+	img2.save_png("res://render_captures/test_3d_pos2_midway.png")
 	print("Snapshot 2 saved: Midway through canyon.")
 
 	# 3. Walk all the way to the canyon exit opening (Z ~ -19)
@@ -53,7 +53,7 @@ func _init():
 
 	print("At Canyon Exit! Player pos: ", player.global_position, " Cam pos: ", cam.global_position)
 	var img3 = root.get_viewport().get_texture().get_image()
-	img3.save_png("d:/Games/Balance5/render_captures/test_3d_pos3_exit.png")
+	img3.save_png("res://render_captures/test_3d_pos3_exit.png")
 	print("Snapshot 3 saved: At the sunlit canyon exit archway.")
 
 	print("ALL TRUE 3D WALKING TESTS COMPLETED!")

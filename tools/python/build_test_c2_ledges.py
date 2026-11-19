@@ -2,9 +2,11 @@ import os
 import cv2
 import numpy as np
 
-ARTIFACT_JPG = r"C:\Users\PC\.gemini\antigravity\brain\25684232-7f72-4063-b959-1b79d32ac318\desert_canyon_ledges_diorama_v2_1794882244795.jpg"
-RAW_PNG = r"d:\Games\Balance5\assets\textures\canyon_pbr\test_c2_ledges_raw.png"
-OUT_DIR = r"d:\Games\Balance5\assets\textures\diorama_wings"
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+ARTIFACT_JPG = os.path.join(PROJECT_ROOT, "assets/source_inputs", r"desert_canyon_ledges_diorama_v2_1794882244795.jpg")
+RAW_PNG = os.path.join(PROJECT_ROOT, r"assets\textures\canyon_pbr\test_c2_ledges_raw.png")
+OUT_DIR = os.path.join(PROJECT_ROOT, r"assets\textures\diorama_wings")
 
 
 def make_ledge_alpha(crop_bgr: np.ndarray, side: str) -> np.ndarray:

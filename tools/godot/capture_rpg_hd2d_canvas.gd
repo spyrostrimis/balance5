@@ -20,8 +20,8 @@ func _init():
 
 	var img = root.get_viewport().get_texture().get_image()
 	if img:
-		DirAccess.make_dir_absolute("d:/Games/Balance5/render_captures")
-		var save_path = "d:/Games/Balance5/render_captures/desert_step3_rpg_hd2d_canvas.png"
+		DirAccess.make_dir_absolute("res://render_captures")
+		var save_path = "res://render_captures/desert_step3_rpg_hd2d_canvas.png"
 		var err = img.save_png(save_path)
 		if err == OK:
 			print("SUCCESS: HD-2D RPG render capture saved to: ", save_path)

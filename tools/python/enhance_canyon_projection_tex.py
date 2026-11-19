@@ -1,8 +1,11 @@
 import cv2
 import numpy as np
+import os
 
-src_path = r'd:\Games\Balance5\assets\textures\maps\desert_approach_rpg_albedo.png'
-dst_path = r'd:\Games\Balance5\assets\textures\maps\desert_canyon_projected_albedo.png'
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+src_path = os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_approach_rpg_albedo.png')
+dst_path = os.path.join(PROJECT_ROOT, r'assets\textures\maps\desert_canyon_projected_albedo.png')
 
 img = cv2.imread(src_path).astype(np.float32)
 h, w, _ = img.shape

@@ -4,7 +4,7 @@ Read [AGENTS.md](AGENTS.md) first. It is the single source of truth for project 
 
 The detailed guides are in `docs/`:
 
-- [`docs/HD2D_CHECKLIST_AND_RUBRIC.md`](docs/HD2D_CHECKLIST_AND_RUBRIC.md) — the reference checkboxes and per-test regression matrix. Never un-tick a verified `[x]`.
+- [`docs/HD2D_CHECKLIST_AND_RUBRIC.md`](docs/HD2D_CHECKLIST_AND_RUBRIC.md) — the reference goals, the tunable composition parameters and the per-test matrix. A `[x]` guards a goal against accidental regression. It is not a lock.
 - [`docs/EXPERIMENT_LOG_AND_LESSONS.md`](docs/EXPERIMENT_LOG_AND_LESSONS.md) — proven dead ends, proven winners and the chronological experiment log.
 - [`docs/PIPELINE_AND_TOOLS.md`](docs/PIPELINE_AND_TOOLS.md) — tool pipeline and exact commands.
 - [`docs/REFERENCE_AND_STYLE_BIBLE.md`](docs/REFERENCE_AND_STYLE_BIBLE.md) — reference comparison and sampled palettes.

@@ -1,5 +1,7 @@
 # Playable canyon bend
 
+> **Historical briefs.** These prompts fixed values such as the 30°/−13° camera, the original sun and the D4b route so each session's A/B stayed comparable. Those were constraints of those sessions, not standing rules. Current composition values and how to change them are in the rubric's [tunable parameters](HD2D_CHECKLIST_AND_RUBRIC.md) table and in `AGENTS.md`.
+
 D4b at `6576387` establishes the left wall. Sessions 1 and 2 shipped in `8e05e40`, followed by the Session 3 hand-laid road in `3093d36`. The briefs below are historical. The current integrated control is [ChatGPT AI Boulders](../scenes/maps/desert_canyon_chatgpt_boulder_test.tscn) at `246e989`. [Review and capture evidence](EXPERIMENT_LOG_AND_LESSONS.md#integrated-canyon-review)
 
 ## Session 3 — Make the road read as hand-laid sandstone

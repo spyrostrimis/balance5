@@ -2,13 +2,27 @@
 
 **Target Reference:** `assets/textures/maps/desert_approach_rpg_albedo.png` (**Img 1 / Picture 1**) + *Octopath Traveler* 3D diorama camera/terrain structure.
 
-> **Regression Rule:** Any requirement marked `[x]` is a locked standard. Never discard `[x]` structure, lighting, or isolation while chasing an `[ ]` item on another row.
+> **Goals, not parameters.** A `[x]` records that a build met a visual goal from Img 1. It protects against *accidental* regressions while working on something else. It is not a lock. Any value in it can change on purpose (camera, sun, route, blur method, reveal timing) when the change serves Img 1 better. To make that change, name it in the test, capture matched before/after views and update the item. The numbers in "Verified in" lines are records of what passed, not requirements.
+
+### Tunable composition parameters
+
+Judge these against Img 1. Baselines exist for A/B comparison only.
+
+| Parameter | D4b / bend baseline | Canyon v2 now | Notes |
+| --- | --- | --- | --- |
+| Camera pitch, offset, FOV | −13°, (0, 3.8, 12.6), 30° | −21°, (0, 5.5, 11.9), 30° | −13° shows the horizon in the top fifth. The ultra-crisp test found −17.5° crisper, and −21° hides the sky as Img 1 does. Retune when the route or walls change. |
+| Camera follow | X × 0.35, no yaw | 60% route centre, 45% yaw to the road 9 m ahead | |
+| Sun direction | Behind-right, (−42°, 38°) | Ahead-right (backlit), (−42°, 145°) | Backlight gives the right-wall shadow across the road. |
+| Route curve | `0.65 · sin(0.22 z)` | 2 m S-curve, editable `Path3D` | |
+| Air | Exponential fog 0.0075, rock haze 0.24 | Fog off, rock haze 0.10 | Fog washed the steeper view to beige. |
+| Focus | Screen-height canvas blur | Native DOF 10 / 16.5 m, 0.014 | One method per capture. |
+| Landmark reveal | Glint visible by midway | Glint revealed at the exit | A pacing choice, not a requirement. |
 
 ---
 
 ## 1. The 8 Core Reference Checkboxes
 
-The D-series locks below describe their recorded builds. For the current integrated walking control use [ChatGPT AI Boulders](../scenes/maps/desert_canyon_chatgpt_boulder_test.tscn). [Commit review, comparisons and walk evidence](EXPERIMENT_LOG_AND_LESSONS.md#integrated-canyon-review)
+The D-series records below describe their recorded builds. For the current integrated walking control use [ChatGPT AI Boulders](../scenes/maps/desert_canyon_chatgpt_boulder_test.tscn). [Commit review, comparisons and walk evidence](EXPERIMENT_LOG_AND_LESSONS.md#integrated-canyon-review)
 
 1. **`[x]` Structure — Blocky Stepped Sedimentary Terraces:**
    - Flat horizontal stone tops, near-vertical striated rock faces (`85°–90°`), stepped courses with crisp, subtle `0.025–0.035m` edge bevels.
@@ -26,12 +40,12 @@ The D-series locks below describe their recorded builds. For the current integra
    - Step tops and lower dark stepped courses use weathered grey-brown / warm slate (`vec3(0.024,0.017,0.013)` to `vec3(0.115,0.080,0.055)` linear on dark walls; softened granular slate tops) — not near-black coal or chalky white limestone.
    - *Verified in Strata Wall (D4b):* Fixed linear-space brightness bug cleanly; dark lower terraces frame the golden path and terracotta cliffs with strong HD-2D contrast.
 6. **`[x]` (Left) / `[ ]` (Right) Blur Discipline — Camera Filter Only (No Blurry Cutout Wings):**
-   - Retire painted wing cutouts as 3D geometry replaces them. Keep source art sharp. Record the focus method with each capture. D4b uses `TiltShiftDof` on a canvas layer. The bend test may compare native camera DOF in its own scene.
+   - Retire painted wing cutouts as 3D geometry replaces them. Keep source art sharp. Record the focus method with each capture. D4b used `TiltShiftDof` on a canvas layer. Since the bend, the native camera DOF is preferred. Canyon v2 has no painted cards on either side.
    - *Verified in Strata Wall (D4):* `LeftWing_*` and `GatewayWingLeft` removed cleanly with zero blurry floating blobs on the left side.
 7. **`[x]` Boulders & Curbs — Isolated Golden Boulders + Clustered Flagstones:**
    - Faceted warm-ochre boulders encoded with binary vertex color `COLOR.b = 1.0` (`COLOR.r = 0.0`) so zero dark cap texture leaks onto boulder crowns, placed in coves clear of the Hero (`|dx| >= 1.5m`), alongside flat clustered curb stones with sandy breaks.
-8. **`[x]` Bushes & Sun Lighting — 2.5D Sagebushes + Upper-Right `DesertSun`:**
-   - The sagebushes are unshaded alpha-cut sprites with side-specific tint. `DesertSun` at `Vector3(-42.0, 38.0, 0.0)` lights the geometry. Verify a new wall's shadow using matched casts-on/off captures.
+8. **`[x]` Bushes & Sun Lighting — 2.5D Sagebushes + One Real `DesertSun`:**
+   - The sagebushes are unshaded alpha-cut sprites with side-specific tint. One directional `DesertSun` casts real shadows across the road and walls. Its direction is a tunable composition parameter (see the table above). Verify a new wall's shadow using matched casts-on/off captures.
 
 ---
 

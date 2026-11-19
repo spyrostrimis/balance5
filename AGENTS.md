@@ -37,14 +37,17 @@ Canyon v2 reproduces the composition test: a 2 m S-curve, a stone right wall fro
 
 ## Working rules
 
-1. Before changing geometry, textures, shaders or layout, read `docs/HD2D_CHECKLIST_AND_RUBRIC.md` and `docs/EXPERIMENT_LOG_AND_LESSONS.md`. Never un-tick a verified `[x]` while polishing something else.
-2. Change one hypothesis per test. Give experiments their own scene and capture prefix.
-3. Render from the real Forward+ viewport at 1376×768. Use `tests/test_true_3d_walk.gd` (D4b default) or `tests/test_composition_walk.gd` (adds whole-scene landmark occlusion) with `--scene`, `--capture-dir` and `--prefix`. For canyon v2 also run `tests/test_canyon_corridor.gd` headless (walls, end caps, exit signal, obstacle-aware navigation). Inspect start (Z +6), midway (−3.5) and exit (−14). Record positions, floor contact and the exit signal, and look at every PNG before reporting.
-4. Log verified results in `docs/EXPERIMENT_LOG_AND_LESSONS.md` and the rubric right after the run.
-5. Use metres and foot-level pivots. Preserve the rock vertex channels: red selects slate, green carries AO, blue at 1 selects ochre boulders. Store binary flags only as 0 or 1 because of sRGB.
-6. Keep source art sharp. Use one blur method per capture.
+1. Before changing geometry, textures, shaders or layout, read `docs/HD2D_CHECKLIST_AND_RUBRIC.md` and `docs/EXPERIMENT_LOG_AND_LESSONS.md`. A `[x]` guards a visual goal against *accidental* regression. It is not a lock.
+2. Nothing is hard-locked. Camera pitch, offset and follow, sun direction, route curve, fog, focus method and landmark timing are tunable composition parameters (table in the rubric). Change one deliberately when it serves Img 1 better: name the change, capture matched before/after views, and update the rubric and log.
+3. Test one hypothesis at a time. A deliberate group (such as the composition test) counts as one when each part keeps a toggle for A/B. Give experiments their own scene and capture prefix.
+4. Render from the real Forward+ viewport at 1376×768. Use `tests/test_true_3d_walk.gd` (D4b default) or `tests/test_composition_walk.gd` (adds whole-scene landmark occlusion) with `--scene`, `--capture-dir` and `--prefix`. For canyon v2 also run `tests/test_canyon_corridor.gd` headless (walls, end caps, exit signal, obstacle-aware navigation). Inspect start (Z +6), midway (−3.5) and exit (−14). Record positions, floor contact and the exit signal, and look at every PNG before reporting.
+5. Log verified results in `docs/EXPERIMENT_LOG_AND_LESSONS.md` and the rubric right after the run.
+6. Use metres and foot-level pivots. Preserve the rock vertex channels: red selects slate, green carries AO, blue at 1 selects ochre boulders. Store binary flags only as 0 or 1 because of sRGB.
+7. Keep source art sharp. Use one blur method per capture.
 
 ## Comparison baselines
+
+These builds are reference points for A/B captures, not constraints on new work.
 
 | Build | Scene | Fixed values |
 | --- | --- | --- |

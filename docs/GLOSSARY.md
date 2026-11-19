@@ -84,6 +84,26 @@ Area: 3D
 The file format we use to move 3D models from Blender into Godot (the binary form of **glTF**). When you re-export a `.glb`, Godot re-imports it and every scene that uses it updates.
 *Also:* glTF, .glb
 
+### Displacement
+Area: Rendering
+Moving the actual surface points of a mesh up or down by a height map, so bumps are real geometry: they have true edges, hide what is behind them and cast shadows. A normal map only fakes the light. It needs many small triangles, which costs GPU time.
+*Also:* vertex displacement, raised stones, relief
+
+### Photogrammetry
+Area: 3D
+Making a 3D model from many photos of a real object. Scans look realistic, which is why they clash with a painted style unless we give them our own material.
+*Also:* photo scan, scan
+
+### Low-poly
+Area: 3D
+A model built from few, large, flat triangles, so it looks faceted. Cheap to draw and easy to restyle with our own textures.
+*Also:* low poly
+
+### Triangle winding
+Area: 3D
+The order in which a triangle's three corners are listed. It decides which side is the front. Godot draws only fronts by default, so a mesh listed the wrong way round is invisible from above.
+*Also:* winding order, face direction
+
 ### Blender
 Area: Tools
 Free 3D modelling program. We build rock modules, buttresses and clean up AI-made boulders in it, then export `.glb` files. Agents usually drive it with Python scripts in `tools/blender/`.
@@ -500,8 +520,75 @@ Building scenes by combining a library of reusable parts, like Lego. Our RTS des
 
 ### Tiles
 Area: Art
-Small square images laid on a grid to build a map. **Tiled** is a free map editor for this; **Godot TileMap** does the same inside Godot. Planned for RTS maps so maps, fog and pathfinding scale.
+Small square images laid on a grid to build a map. **Tiled** is a free map editor for this; **Godot TileMap** does the same inside Godot. RTS maps use 32 px tiles so maps, fog and pathfinding scale.
 *Also:* tilemap, Tiled, tileset, TileMap
+
+### TileMapLayer
+Area: RTS
+The Godot node that holds a painted grid of tiles. Select it in the editor and paint with the tile brush. Its **tile set** says which pictures exist and what each one means.
+*In Balance:* the `Ground` node in `scenes/maps/rts_test_map.tscn`, using `scenes/rts/rts_placeholder_tiles.tres`.
+*Also:* tile set, TileSet
+
+### Custom data
+Area: RTS
+Extra information stored on each tile in a tile set, like a label on the back of a Lego brick. Our tiles carry a **walkable** yes/no flag, so painting a rock tile automatically blocks units.
+*Also:* walkable flag, custom data layer
+
+### Grid
+Area: RTS
+The map seen as a chessboard of equal squares (tiles). Each square is walkable or blocked, and each unit stands on exactly one. Dune II worked this way.
+*Also:* tile grid, cell
+
+### Pathfinding
+Area: RTS
+Working out the route a unit walks to reach a click, going around rocks instead of through them.
+*Also:* routing, path
+
+### A*
+Area: RTS
+("A-star") The classic pathfinding method: it searches from the start towards the goal, always trying the most promising square first, and returns the shortest route. Godot's **AStarGrid2D** does A* on a grid for us.
+*Also:* A-star, AStarGrid2D
+
+### Tile claim
+Area: RTS
+A unit's reservation of the tile it stands on and the one it is stepping into. A tile has one claim at most, which is why units queue or walk around each other instead of overlapping. F1 in the RTS test map shows claims as white squares.
+*Also:* occupancy, reserved tile
+
+### Unit stats
+Area: RTS
+A small file (`.tres`, a **Resource**) holding one unit type's numbers: health, attack, armour, range, cooldown, guard range, speed and picture. Change the numbers in the Inspector and every unit of that type changes.
+*In Balance:* `scenes/rts/units/blue_troop.tres` and its three siblings.
+*Also:* UnitStats, unit data
+
+### Armour
+Area: RTS
+Taken off every hit a unit receives. A hit of 12 against armour 4 does 8 damage; a hit always does at least 1.
+
+### Cooldown
+Area: RTS
+The waiting time between two attacks of the same unit, in seconds.
+
+### Guard range
+Area: RTS
+How close an enemy must come before an idle unit goes after it, in tiles. Units always shoot enemies already within their attack range.
+
+### Drag box
+Area: RTS
+Holding the left mouse button and dragging draws a rectangle; every friendly unit inside it is selected when you let go.
+*Also:* box select, rubber band
+
+### Camera2D
+Area: RTS
+Godot's camera for 2D scenes. It shows a window onto the flat map and can scroll and zoom; it cannot tilt.
+
+### Y-sort
+Area: RTS
+Drawing things lower on the screen in front of things higher up, so a unit walking below a cliff covers it and one above it is hidden behind it.
+
+### Placeholder art
+Area: Art
+Simple stand-in graphics (coloured discs, flat tiles) used to test how something plays before the real art exists. They are swapped out later without changing the code.
+*Also:* placeholder
 
 ### Aseprite
 Area: Tools

@@ -10,12 +10,14 @@ The first playable vertical slice: four troops plus a field commander per side f
 
 ### Units and control
 - [x] A Blue tank that drives on the desert map with obstacle collision
-- [ ] Choose the battlefield foundation: grid or navmesh, and the tile size
-- [ ] Click to select a unit, drag a box to select several
-- [ ] Right-click to move; units path around rocks without overlapping
-- [ ] Attack: units fire at enemies in range and take damage
-- [ ] Four Blue troops and the Blue Commander on the map
-- [ ] Four Red troops and the Red Commander on the map
+- [x] Choose the battlefield foundation: grid or navmesh, and the tile size (32 px grid, A*)
+- [x] Click to select a unit, drag a box to select several (RTS test map)
+- [x] Right-click to move; units path around rocks without overlapping
+- [x] Attack: units fire at enemies in range and take damage
+- [x] Four Blue troops and the Blue Commander on the map (placeholder discs)
+- [x] Four Red troops and the Red Commander on the map (placeholder discs)
+- [ ] Real unit sprites replace the placeholder discs
+- [ ] First balance pass on unit numbers (Red's melee troops currently beat Blue)
 
 ### Mission rules
 - [ ] Control area around the central Orichalcum rock with a hold timer
@@ -32,6 +34,7 @@ The first playable vertical slice: four troops plus a field commander per side f
 
 ### Maps
 - [x] Modular desert kitbash library and a playable mini-map
+- [ ] Desert tileset with height drawn in: cliff walls, curving road edges, shaded dunes (light from the top-left)
 - [ ] Mission 1 desert map (Red's version) built from tiles
 - [ ] Mission 1 tropical forest map (Blue's version) from the same layout
 - [ ] Fog of war
@@ -44,7 +47,10 @@ The HD-2D walking sequence. If it fails, the RTS alone is the game.
 - [x] Pixel A/B scene to compare surface styles (keys 1–5)
 - [ ] Review and accept canyon v2 as the RPG baseline
 - [x] Compare ChatGPT and Perchance sets through both procedures (ChatGPT ahead, §14c)
-- [ ] Decide the surface style; test raised 3D cobbles against flat textures
+- [x] Test raised 3D cobbles along the whole road (A/B key R; reads as raised, about 0.7 ms GPU, §14d)
+- [x] Try free packs in the canyon (craftpix mountains fit with our rock material; photo scans clash, §14d)
+- [ ] Decide the surface style (flat vs raised cobbles, pixel vs smooth)
+- [ ] If raised stones are kept: strip only where the camera sees, coarser far away, commander follows the stones
 - [ ] Dedicated right-wall modules instead of turned left courses
 - [ ] Fix the slate cap material, bush scale and exit vista
 - [ ] Atmosphere: a local FogVolume with light shafts at a wall opening, measured for GPU cost

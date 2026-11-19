@@ -10,6 +10,30 @@ Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | 
 Why, in one to three sentences. Where the evidence is.
 ```
 
+### 2026-11-20 · RTS is 2D top-down; height is drawn into the art
+Area: RTS · Status: Decided
+The battlefield is a flat 2D map seen from above, like Dune II. Rocks, cliffs and dunes get their height from the art (lit tops, visible front walls, cast shadows), with the light from the top-left for every tile and sprite. 2D keeps selection, pathfinding and the HUD simple; the 3D canyon stays separate.
+
+### 2026-11-20 · 32 px tile grid with A* pathfinding, one unit per tile
+Area: RTS · Status: Decided
+Each 32 px tile is walkable or blocked (a "walkable" flag on the tile), and Godot's AStarGrid2D finds routes around rocks. A unit claims its tile, so units never stack. A grid fits the tiles, fog of war, the control area and the minimap better than a navmesh. Evidence: `tests/test_rts_test_map.gd`.
+
+### 2026-11-20 · RTS unit numbers live in UnitStats files
+Area: RTS · Status: Decided
+Each unit type is a `.tres` file in `scenes/rts/units/` (health, attack, armour, range, cooldown, guard range, speed, sprite) that the owner can edit in the Inspector. Damage per hit is attack minus armour, at least 1. All numbers are placeholders until balancing.
+
+### 2026-11-20 · First RTS test uses placeholder discs and tiles
+Area: RTS · Status: Decided
+The owner chose plain team-coloured discs and flat placeholder tiles over the kitbash art for step 1, so the test is about controls, not looks. Real sprites plug in through each unit file's sprite field.
+
+### 2026-11-20 · Idle units engage enemies within guard range
+Area: RTS · Status: Trying
+Without it, Red troops stood still while their neighbour was shot. Idle units shoot what is in range, chase enemies within their guard range (4–6 tiles), and hit back at whoever shoots them. A later Hold command will turn chasing off.
+
+### 2026-11-20 · Pack models wear our canyon material
+Area: Art · Status: Trying
+Free-pack shapes (craftpix low-poly mountains) fit the canyon once they use `canyon_rock.tres`; photo-scan textures look realistic and clash with the painted style. Packs without a found licence stay local and uncommitted. Evidence: experiment log §14d.
+
 ### 2026-11-20 · ChatGPT over Perchance for surface textures
 Area: Art · Status: Trying
 ChatGPT's strata is the first wall that reads as layered rock without bricks, and its cobble reads as a road; Perchance is not on a pixel grid and its strata looks lumpy and purple. The owner still finds every cobble version flat, so the next test is raised (3D) stones. Evidence: experiment log §14c.

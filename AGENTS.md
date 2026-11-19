@@ -12,9 +12,10 @@ This file is the single source of truth for how the project is built, for every 
 | --- | --- |
 | `scenes/maps/` | Playable levels and studies. `canyon_v2.tscn` is the flat, route-driven canyon. The `desert_canyon_*` scenes are the earlier inherited test chain, kept for comparisons. |
 | `scenes/canyon/` | Canyon module wrappers (`modules/`) and layout data (`canyon_v2_layout.tres`). |
-| `scenes/actors/` | Reusable actors: `blue_commander_3d.tscn`, `canyon_camera.tscn`. |
+| `scenes/actors/` | Reusable actors: `blue_commander_3d.tscn`, `canyon_camera.tscn`, `rts_unit.tscn`. |
+| `scenes/rts/` | RTS data: unit stat files (`units/*.tres`) and the placeholder tile set. |
 | `scenes/ui/` | Opening screen, Developers Page and build launcher. |
-| `scripts/` | Runtime GDScript only. Canyon systems live in `scripts/canyon/`. |
+| `scripts/` | Runtime GDScript only. Canyon systems live in `scripts/canyon/`, RTS systems in `scripts/rts/`. |
 | `tests/` | Headless and windowed test harnesses, such as the walk captures. |
 | `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
@@ -82,7 +83,7 @@ The commander script defaults to D4b. With a `route` object assigned it clamps t
 
 **RTS (priority)** — Mission 1, *The First Claim* (`docs/GAME_DESIGN.md` §5), as a playable vertical slice:
 
-1. Select units (click and drag-box), move and attack with four troops plus the field commander per side, on a navigable grid or navmesh.
+1. ~~Select, move and attack with four troops plus the commander per side.~~ Done on `scenes/maps/rts_test_map.tscn` (2D, 32 px grid, AStarGrid2D, one unit per tile, placeholder discs). Run `tests/test_rts_test_map.gd` headless and `tests/capture_rts_test_map.gd` windowed after RTS changes.
 2. A commander active ability (Blue: Mend / healing first), the control-point hold timer around the central Orichalcum rock, and win/lose on hold or elimination.
 3. A simple Red AI opponent, and the HUD from `docs/references/rts_mission1_hud_goal.webp` (top bar, minimap, unit card, Move/Attack/Hold/Mend, objective panel).
 4. Both settings from one layout: Red's desert and Blue's tropical forest (`docs/references/rts_mission1_*.webp`). Build maps from tiles (the kitbash/Tiled work), not a single painted image, so maps, fog and pathfinding scale.

@@ -55,10 +55,17 @@ scene_path = "res://scenes/maps/desert_canyon_crisp_road_patch.tscn"
 credit = "OpenAI Codex"
 milestone_utc = "2026-11-18 14:05"
 
+[sub_resource type="Resource" id="Build_packs"]
+script = ExtResource("4")
+title = "Free packs in the canyon"
+summary = "Local study from 20 Nov 2026. Canyon v2 with craftpix low-poly mountains and a photo-scanned rock (local only). P = packs on/off; all HD-2D Pixel A/B keys work (4/5 sets, R raised stones)."
+scene_path = "res://scenes/maps/canyon_v2_packs.tscn"
+credit = "Claude Code"
+
 [sub_resource type="Resource" id="Build_pixel_ab"]
 script = ExtResource("4")
 title = "HD-2D Pixel A/B"
-summary = "Local study from 19 Nov 2026. Canyon v2 surfaces: 1 = realistic, 2/3 = derived pixel art at 32/64 texels per metre, 4 = authored pixel sets, 5 = authored smooth sets (press again to cycle; docs/PIXEL_TEXTURE_PROMPTS.md)."
+summary = "Local study from 19 Nov 2026. Canyon v2 surfaces: 1 = realistic, 2/3 = derived pixel art at 32/64 texels per metre, 4 = authored pixel sets, 5 = authored smooth sets (press again to cycle; docs/PIXEL_TEXTURE_PROMPTS.md). R = raised road stones."
 scene_path = "res://scenes/maps/canyon_v2_pixel_ab.tscn"
 credit = "Claude Code"
 
@@ -117,6 +124,15 @@ summary = "Walk the painted approach with a parallax camera."
 scene_path = "res://scenes/maps/desert_canyon_playable.tscn"
 credit = "Antigravity (Gemini workspace)"
 milestone_utc = "2026-11-16 18:37"
+
+[sub_resource type="Resource" id="Build_rts_test_map"]
+script = ExtResource("4")
+section = "Desert RTS builds"
+title = "RTS Test Map — Select, Move, Attack"
+summary = "Placeholder tiles and discs: select Blue with click or drag box, right-click to move along A* routes or attack Red."
+scene_path = "res://scenes/maps/rts_test_map.tscn"
+credit = "Claude Code (Opus 5.5)"
+milestone_utc = ""
 
 [sub_resource type="Resource" id="Build_kitbash_minimap"]
 script = ExtResource("4")
@@ -187,7 +203,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

@@ -35,6 +35,10 @@ uniform float route_lookup_dz = 1.0;
 uniform vec2 sand_scale = vec2(0.46, 0.24); // verge sand, repeats per metre (x, z)
 uniform vec2 sand_scale_detail = vec2(0.31, 0.17); // second sand octave
 uniform float desert_scale = 0.24; // open dunes
+uniform sampler2D cobble_height : hint_default_black, filter_linear_mipmap, repeat_enable; // relief_height.py
+uniform float relief_depth = 0.0; // metres a stone top rises above its joints; 0 = flat (source behaviour)
+uniform float relief_side_shade : hint_range(0.0, 1.0) = 0.55; // darken stone sides like the painted joints
+varying float relief_side;
 
 float route_center(float z) {
 	if (route_mode == 0) {
@@ -48,8 +52,41 @@ float route_center(float z) {
 
 varying vec3 world_pos;
 
+float relief_at(vec2 xz) {
+	float path_cx = route_center(xz.y);
+	vec2 uv = xz / cobble_tile_metres;
+	float h = textureLod(cobble_height, uv, 0.0).r;
+	vec3 c_col = textureLod(cobble_tex, uv, 0.0).rgb * mix(0.40, 1.06, textureLod(cobble_orm, uv, 0.0).r);
+	float edge_noise = (c_col.r - 0.5) * 0.22 + sin(xz.y * 2.3 + c_col.g * 1.6) * 0.07;
+	float dist = abs(xz.x - path_cx) + edge_noise;
+	float keep = (1.0 - smoothstep(1.10, 1.38, dist)) * (1.0 - smoothstep(-12.6, -16.0, xz.y));
+	if (cobble_verge_wear > 0.0) {
+		float edge = smoothstep(0.76, 1.27, abs(xz.x - path_cx));
+		float pockets = 0.56 * sin(xz.y * 1.71 + sin(xz.x * 2.9 + xz.y * 0.37))
+			+ 0.29 * sin(xz.y * 4.45 - xz.x * 5.2)
+			+ 0.15 * sin(xz.y * 8.3 + xz.x * 6.3);
+		keep *= 1.0 - cobble_verge_wear * edge * smoothstep(-0.05, 0.72, pockets);
+	}
+	return h * keep * relief_depth;
+}
+
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	relief_side = 0.0;
+	if (relief_depth > 0.0) {
+		// The relief mesh sits at the origin, so local and world axes agree.
+		float e = 0.01;
+		float h = relief_at(world_pos.xz);
+		float dx = (relief_at(world_pos.xz + vec2(e, 0.0)) - relief_at(world_pos.xz - vec2(e, 0.0))) / (2.0 * e);
+		float dz = (relief_at(world_pos.xz + vec2(0.0, e)) - relief_at(world_pos.xz - vec2(0.0, e))) / (2.0 * e);
+		VERTEX.y += h;
+		world_pos.y += h;
+		NORMAL = normalize(vec3(-dx, 1.0, -dz));
+		// Steep sides take the joint's place on screen, so they carry its darkness (dirt and occlusion).
+		relief_side = clamp(length(vec2(dx, dz)) * 0.9, 0.0, 1.0);
+		TANGENT = normalize(vec3(1.0, dx, 0.0));
+		BINORMAL = normalize(cross(NORMAL, TANGENT));
+	}
 }
 
 void fragment() {
@@ -139,7 +176,7 @@ void fragment() {
 	base_col = mix(base_col, vec3(0.91, 0.72, 0.48), horizon_mist);
 
 	vec3 canyon_norm = mix(s_norm, c_norm, trail_keep);
-	ALBEDO = base_col;
+	ALBEDO = base_col * (1.0 - relief_side_shade * relief_side);
 	NORMAL_MAP = mix(canyon_norm, d_norm, dune_t);
 	NORMAL_MAP_DEPTH = mix(1.40, 2.15, trail_keep);
 	ROUGHNESS = mix(mix(0.88, c_rough, trail_keep), 0.94, dune_t);

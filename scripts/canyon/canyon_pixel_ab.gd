@@ -9,6 +9,10 @@ extends "res://scripts/canyon/canyon_level.gd"
 ##              the source filtering, same mapping. Missing roles fall back to A.
 ## Press 4 or 5 again to cycle through the sets of that kind. PIXEL_AB_MODE=A|B32|B64|ART|HR|<set folder>
 ## sets the starting mode for capture runs (ART and HR pick the first set of that kind).
+##   R      raised stones: a dense road mesh lifts every cobble by the set's chatgpt_cobble_height.png
+##          (tools/python/relief_height.py), so stones get real shoulders and cast real shadows.
+##          Only sets with that file. PIXEL_AB_RELIEF=1 turns it on for capture runs,
+##          PIXEL_AB_RELIEF_DEPTH sets the stone height in metres.
 
 const BASE_MODES: Array[String] = ["A", "B32", "B64"]
 const SETS_ROOT := "res://assets/textures/pixel_ab/"
@@ -19,6 +23,15 @@ const SHADER_VARIANTS := {
 }
 
 @export var mode := "B64"
+@export var relief := false
+## Height of a stone top above its joints, in metres (6 cm read as raised but unwalkable, §14d; real cobbles sit 1-3 cm proud).
+@export var relief_depth := 0.02
+## Road relief mesh: spacing between vertices and the stretch it covers.
+@export var relief_spacing := 0.015
+@export var relief_z_range := Vector2(-16.0, 10.0)
+@export var relief_half_width := 1.45
+
+const RELIEF_HEIGHT := "chatgpt_cobble_height.png"
 
 ## Each entry: {node, kind, original}, where kind is "surface", "override" or "sprite".
 var _slots: Array[Dictionary] = []
@@ -28,12 +41,17 @@ var _hr_sets: Array[String] = []
 ## Set folder -> {texture file name: manifest entry}
 var _manifests := {}
 var _label: Label
+var _relief_mesh: MeshInstance3D
+var _floor_slot := {}
 
 
 func _ready() -> void:
 	super()
 	_discover_sets()
 	_collect(self)
+	relief = OS.get_environment("PIXEL_AB_RELIEF") == "1" or relief
+	if not OS.get_environment("PIXEL_AB_RELIEF_DEPTH").is_empty():
+		relief_depth = OS.get_environment("PIXEL_AB_RELIEF_DEPTH").to_float()
 	set_mode(_resolve(OS.get_environment("PIXEL_AB_MODE"), mode))
 	_label = Label.new()
 	_label.position = Vector2(16, 690)
@@ -57,7 +75,9 @@ func set_mode(value: String) -> void:
 				(node as GeometryInstance3D).material_override = _material_for(slot["original"], value)
 			"sprite":
 				_apply_sprite(node as Sprite3D, slot["original"], value)
-	print("PixelAB mode=%s slots=%d authored=%d" % [value, _slots.size(), _manifests.get(value, {}).size()])
+	_update_relief()
+	print("PixelAB mode=%s slots=%d authored=%d relief=%s" % [value, _slots.size(), _manifests.get(value, {}).size(),
+		("%.3f m" % relief_depth) if _relief_mesh and _relief_mesh.visible else "off"])
 	_update_label()
 
 
@@ -71,6 +91,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			_cycle(_art_sets)
 		KEY_5:
 			_cycle(_hr_sets)
+		KEY_R:
+			relief = not relief
+			set_mode(mode)
 		_:
 			return
 	get_viewport().set_input_as_handled()
@@ -97,8 +120,11 @@ func _resolve(requested: String, fallback: String) -> String:
 
 func _update_label() -> void:
 	if _label:
-		_label.text = "Mode %s   ·   1 A realistic   2 B32   3 B64   4 pixel sets %s   5 smooth sets %s" % [
-			mode, _art_sets if _art_sets.size() else "(none)", _hr_sets if _hr_sets.size() else "(none)"]
+		var relief_text := "off"
+		if relief:
+			relief_text = ("%.1f cm" % (relief_depth * 100.0)) if _relief_height(mode) else "no height in this set"
+		_label.text = "Mode %s   ·   1 A realistic   2 B32   3 B64   4 pixel sets %s   5 smooth sets %s   R raised stones: %s" % [
+			mode, _art_sets if _art_sets.size() else "(none)", _hr_sets if _hr_sets.size() else "(none)", relief_text]
 
 
 func _discover_sets() -> void:
@@ -144,6 +170,8 @@ func _collect(node: Node) -> void:
 		var override := mesh.get_surface_override_material(0) as ShaderMaterial
 		if override and SHADER_VARIANTS.has(override.shader.resource_path):
 			_slots.append({"node": mesh, "kind": "surface", "original": override})
+			if override.shader.resource_path.ends_with("hd2d_canyon_ground_crisp.gdshader") and _floor_slot.is_empty():
+				_floor_slot = _slots.back()
 		var whole := mesh.material_override as ShaderMaterial
 		if whole and SHADER_VARIANTS.has(whole.shader.resource_path):
 			_slots.append({"node": mesh, "kind": "override", "original": whole})
@@ -243,3 +271,81 @@ func _apply_sprite(sprite: Sprite3D, original: Dictionary, set_name: String) -> 
 		# Derived sprites keep the original world size.
 		sprite.pixel_size = original["pixel_size"] * float(source.get_width()) / float(replacement.get_width())
 	sprite.texture_filter = original["filter"] if smooth else BaseMaterial3D.TEXTURE_FILTER_NEAREST
+
+
+func _relief_height(set_name: String) -> Texture2D:
+	if not (set_name.begins_with("art") or set_name.begins_with("hr")):
+		return null
+	var path := SETS_ROOT + "%s/%s" % [set_name, RELIEF_HEIGHT]
+	return load(path) if ResourceLoader.exists(path) else null
+
+
+## The floor is one flat quad, so the raised stones need their own dense strip along the route. It uses the
+## floor's material for the current set with relief_depth set, so colour and mapping match exactly.
+func _update_relief() -> void:
+	var height := _relief_height(mode)
+	if not relief or height == null or _floor_slot.is_empty():
+		if _relief_mesh:
+			_relief_mesh.visible = false
+		return
+	if _relief_mesh == null:
+		_relief_mesh = MeshInstance3D.new()
+		_relief_mesh.name = "RoadRelief"
+		_relief_mesh.mesh = _build_relief_strip(get_node(route_path))
+		add_child(_relief_mesh)
+	var key := [_floor_slot["original"].get_instance_id(), mode, "relief"]
+	if not _material_cache.has(key):
+		var material := _material_for(_floor_slot["original"], mode).duplicate() as ShaderMaterial
+		material.set_shader_parameter("cobble_height", height)
+		material.set_shader_parameter("relief_depth", relief_depth)
+		_material_cache[key] = material
+	_relief_mesh.material_override = _material_cache[key]
+	_relief_mesh.visible = true
+
+
+func _build_relief_strip(route: Node) -> ArrayMesh:
+	var columns := int(ceil(relief_half_width * 2.0 / relief_spacing)) + 1
+	var rows := int(ceil((relief_z_range.y - relief_z_range.x) / relief_spacing)) + 1
+	var vertices := PackedVector3Array()
+	vertices.resize(rows * columns)
+	var normals := PackedVector3Array()
+	normals.resize(rows * columns)
+	normals.fill(Vector3.UP)
+	var tangents := PackedFloat32Array()
+	tangents.resize(rows * columns * 4)
+	for r in rows:
+		var z := relief_z_range.y - r * relief_spacing
+		var x0: float = route.center_x(z) - relief_half_width
+		for c in columns:
+			var i := r * columns + c
+			# 2 mm above the floor so the joints never fight it for depth; the stones rise from there.
+			vertices[i] = Vector3(x0 + c * relief_spacing, 0.002, z)
+			tangents[i * 4] = 1.0
+			tangents[i * 4 + 3] = 1.0
+	var indices := PackedInt32Array()
+	indices.resize((rows - 1) * (columns - 1) * 6)
+	var k := 0
+	for r in rows - 1:
+		for c in columns - 1:
+			var a := r * columns + c
+			var b := a + columns
+			# Clockwise seen from above: Godot's front face.
+			indices[k] = a
+			indices[k + 1] = b
+			indices[k + 2] = a + 1
+			indices[k + 3] = a + 1
+			indices[k + 4] = b
+			indices[k + 5] = b + 1
+			k += 6
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_TANGENT] = tangents
+	arrays[Mesh.ARRAY_INDEX] = indices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	# The shader lifts vertices by up to relief_depth; widen the bounds so culling keeps the raised parts.
+	mesh.custom_aabb = AABB(Vector3(-50.0, -0.1, relief_z_range.x - 1.0), Vector3(100.0, 0.4, relief_z_range.y - relief_z_range.x + 2.0))
+	print("PixelAB relief strip: %d x %d vertices, %d triangles" % [columns, rows, indices.size() / 3])
+	return mesh

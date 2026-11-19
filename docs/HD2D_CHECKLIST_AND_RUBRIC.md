@@ -126,6 +126,8 @@ Play `res://scenes/maps/desert_canyon_crisp_road_patch.tscn` for this experiment
 
 [Study results and sources](EXPERIMENT_LOG_AND_LESSONS.md#nine-stone-road-study-at-spawn)
 
+- [x] Raise every road stone, not a patch: height-map displacement on a dense strip (A/B key R) makes the stones read as raised at play distance (6 cm is too high to look walkable; default 2 cm) for about 0.6-0.8 ms of GPU. Joints hide behind the stones at -21 degrees. [Section 14d](EXPERIMENT_LOG_AND_LESSONS.md#14d-raised-stones-along-the-whole-road-and-two-free-packs-2026-11-20)
+
 ### Integrated road and boulders
 
 - [x] Verify the exported image-authored road at 3.2 m per repeat and compare the native and shared-material Trellis boulders at spawn. Both play from their own cards.

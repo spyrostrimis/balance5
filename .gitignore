@@ -31,3 +31,6 @@ bin/
 
 # Python caches
 __pycache__/
+
+# Downloaded pack models without a confirmed licence: local tests only
+assets/models/packs_local/

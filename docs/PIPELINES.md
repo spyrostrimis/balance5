@@ -108,6 +108,31 @@ Turn a generated image of a rock into a 3D boulder that matches the canyon.
 ### Done when
 - The boulder reads as the same rock as the walls, has no holes or dark baked blobs, and stays under about 20,000 triangles.
 
+## Raised road stones from a cobble texture
+Area: Art · Status: Trying · Tools: Python, Godot
+Lift every stone of a cobble set so it has real edges and casts real shadows.
+
+### Steps
+1. Make the cobble set as usual (ChatGPT texture plus height, both procedures).
+2. Build its displacement height: `C:/Python312/python.exe tools/python/relief_height.py "C:\path\cobble.png" --height "C:\path\cobble_height.png" --sets art_gpt hr_gpt`. Check `tmp/relief_height/cobble_height_check.jpg`: white stones should sit exactly on the painted stones.
+3. In the HD-2D Pixel A/B scene, pick the set (4 or 5) and press **R**. Capture with `PIXEL_AB_RELIEF=1` (and `PIXEL_AB_RELIEF_DEPTH=0.06`).
+4. Measure the cost with `tests/test_relief_cost.gd`.
+
+### Done when
+- The stones look raised at spawn and midway, no floor shows through, and the GPU cost is logged.
+
+## Free pack model into the canyon
+Area: 3D · Status: Trying · Tools: Blender, Godot
+Use a downloaded model (FBX or OBJ) as a wall piece, landmark or boulder.
+
+### Steps
+1. Check the licence first. No licence found → keep it in `assets/models/packs_local/` (ignored by git) for tests only.
+2. Convert: `C:/Blender/blender.exe -b --factory-startup --disable-autoexec --python tools/blender/convert_pack_model.py -- in.fbx out.glb --height 9` (add `--keep-material` to keep a photo texture).
+3. Place it in `scripts/canyon/canyon_packs_test.gd` (z, offset from the road, yaw, scale) with `canyon_rock.tres`, and capture `scenes/maps/canyon_v2_packs.tscn` with packs on and off.
+
+### Done when
+- It reads as the same rock as the walls in a matched capture, and its licence is recorded next to it.
+
 ## Add a build to the Developers Page
 Area: Workflow · Status: In use · Tools: Godot
 Make a new scene playable from the in-game menu so you can try it.
@@ -143,14 +168,30 @@ Area: RTS · Status: Planned · Tools: Tiled, Aseprite, Godot TileMap
 Build Mission 1's battlefield from reusable tiles rather than one painted picture, so maps, fog of war and pathfinding scale. The desert kitbash library is the starting point; Blue's forest uses the same layout.
 
 ### Steps
-1. Agree the grid size (pixels per tile and tiles per map) and record it in DECISIONS.md.
-2. Build or generate the tile set: sand, dunes, rock, road, Orichalcum outcrop (start from `assets/textures/kitbash/` and the Tiled pack in `assets/textures/source/tiled/`).
-3. Lay out the Mission 1 map in Tiled or a Godot TileMap following `docs/references/rts_mission1_desert_red.webp`.
-4. Mark blocked tiles so pathfinding knows where units can go.
+1. Grid size is decided: 32 px tiles (DECISIONS.md, 2026-11-20). The test map is 48 × 30 tiles.
+2. Build or generate the tile set: sand, dunes, rock, road, Orichalcum outcrop (start from `assets/textures/kitbash/` and the Tiled pack in `assets/textures/source/tiled/`). Draw height in with the light from the top-left: lit tops, visible front walls of cliffs, shadows falling down-right.
+3. Lay out the Mission 1 map in a Godot `TileMapLayer` following `docs/references/rts_mission1_desert_red.webp`. `scenes/maps/rts_test_map.tscn` shows the node layout.
+4. Give every tile the `walkable` custom data flag (on for sand and road, off for rock). The `RtsGrid` node reads it, so pathfinding updates when you repaint. Press F1 in game to see blocked tiles.
 5. Make the forest version from the same layout with forest tiles.
 
 ### Done when
 - Units can path across the map around rocks, the map matches the reference layout, and the forest version shares it.
+
+## RTS unit type
+Area: RTS · Status: In use · Tools: Godot
+Add a new kind of unit, or change an existing one's numbers.
+
+### Steps
+1. In Godot's FileSystem, duplicate a file in `scenes/rts/units/` (for example `blue_troop.tres`) and rename it.
+2. Open it in the Inspector and set name, faction, kind, health, attack, armour, range, cooldown, guard range and speed. Leave **Sprite** empty for the placeholder disc, or pick a picture.
+3. To put one on a map: drag `scenes/actors/rts_unit.tscn` under the map's `Units` node, move it onto a walkable tile, and drag the `.tres` file into its **Stats** slot.
+4. Run `tests/test_rts_test_map.gd` headless, then play the map from the Developers Page.
+
+### Done when
+- The unit selects, moves and fights with its new numbers, and the test still passes.
+
+### Ask an agent
+> Add an RTS unit type called X for faction Y with these numbers (…). Follow PIPELINES.md → RTS unit type, place two on `rts_test_map`, and rerun the RTS test.
 
 ## Unit or character sprite
 Area: Art · Status: Planned · Tools: ChatGPT, Aseprite, Python

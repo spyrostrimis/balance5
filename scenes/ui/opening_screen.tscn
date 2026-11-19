@@ -55,6 +55,13 @@ scene_path = "res://scenes/maps/desert_canyon_crisp_road_patch.tscn"
 credit = "OpenAI Codex"
 milestone_utc = "2026-11-18 14:05"
 
+[sub_resource type="Resource" id="Build_pixel_ab"]
+script = ExtResource("4")
+title = "HD-2D Pixel A/B"
+summary = "Local study from 19 Nov 2026. Canyon v2 with realistic or pixel-art surfaces. Keys 1 = A realistic, 2 = B 32 texels/m, 3 = B 64 texels/m."
+scene_path = "res://scenes/maps/canyon_v2_pixel_ab.tscn"
+credit = "Claude Code"
+
 [sub_resource type="Resource" id="Build_canyon_v2"]
 script = ExtResource("4")
 title = "Canyon v2"
@@ -180,7 +187,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

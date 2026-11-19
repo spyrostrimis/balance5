@@ -363,3 +363,25 @@ Reproduce: `COMPOSITION_CAMERA=original|composition`, `COMPOSITION_ATMOSPHERE=of
 - **Stale worktree.** `D:/Games/Balance5-road-detail-study` (detached at `3093d36`) was removed with `git worktree remove`. Its one unique source, `assets/textures/source/sett_study_v2.kra`, is now committed. Its 218 evidence files that were missing from or differed in the primary checkout were copied to `render_captures/_archive/road_detail_study_worktree/` first.
 
 Still deliberate: the D4b inheritance chain keeps its index-based overrides and the assembler keeps its −heading yaw, because both are frozen baselines behind the guard. Rigid 6.5 m modules still show small chord errors on the 2 m curve.
+
+## 14. HD-2D pixel A/B — surface treatment on canyon v2
+
+19 November 2026, Claude Code. Play **Developers Page → HD-2D Pixel A/B** (`scenes/maps/canyon_v2_pixel_ab.tscn`, local study). Keys **1/2/3** switch live between:
+
+- **A** — the current realistic materials.
+- **B32** — pixel-art surfaces at 32 texels per metre.
+- **B64** — pixel-art surfaces at 64 texels per metre.
+
+Geometry, route, camera, sun, lens and commander are identical in all three. The test asks whether Octopath-style pixel surfaces, rather than higher-fidelity realistic assets, are the way to close the gap to the RPG goal.
+
+**How B is made.** `tools/python/build_pixel_textures.py` area-downsamples every canyon texture to the chosen texels per metre, using each shader's metres-per-repeat. It quantizes colour maps, without dithering, to one shared 48-colour palette sampled from the canyon goal and the source art. It gives the bushes hard alpha. Output goes to `assets/textures/pixel_ab/d32|d64/`, imported lossless with mipmaps. `tools/python/make_pixel_shader_variants.py` generates `assets/shaders/pixel/*_pixel.gdshader`, which are the rock, ground and AI-boulder shaders with nearest-mipmap samplers. `scripts/canyon/canyon_pixel_ab.gd` swaps all 44 material and sprite slots at runtime, matching any texture by filename. The commander keeps her art but switches to nearest filtering in B.
+
+**Captures** (1376×768 Forward+, `PIXEL_AB_MODE=A|B32|B64`). All three walks stayed grounded with the exit signal; positions match section 13. [Full frames](../render_captures/pixel_ab/compare_ab.jpg) · [Spawn crops](../render_captures/pixel_ab/crop_spawn.png) · [Midway crops](../render_captures/pixel_ab/crop_midway.png)
+
+**Reading.**
+- Road: B reads as pixel cobbles and sits better with the pixel-art commander than A. B64 is closest to her pixel scale, while B32 is chunkier.
+- Walls: strata change little between A and B. The slate tops stay flat grey in every mode, which is a material problem, not a filtering one.
+- Bushes: B32 is too coarse next to the commander; B64 holds up.
+- Overall: converting existing art mechanically makes the frame crunchier and more coherent, but it does not make it look like Octopath. Octopath's surfaces are designed pixel art: deliberate highlight edges, dark joint lines, clustered shapes and short colour ramps. A palette-reduced photo texture has none of that.
+
+**Conclusion.** The mechanics work and cost nothing: filtering, density, palette and the per-file swap. Filtering and density alone are not the lever. The deciding test is one **hand-authored** pixel set (wall strata, slate top, cobble) at about 48–64 texels per metre, made in Aseprite or with a pixel-art generator. Drop the files into `assets/textures/pixel_ab/d64/` under the same names, then press 3.

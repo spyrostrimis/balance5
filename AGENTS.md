@@ -1,8 +1,10 @@
 # Balance5
 
-Balance is a Godot 4.7 Forward+ RTS/RPG prototype. Running the project opens `scenes/ui/opening_screen.tscn`. The RPG design reference is `assets/textures/maps/desert_approach_rpg_albedo.png`. Judge the canyon at the commander's walking height and again at the exit.
+Balance is a **real-time strategy game in tribute to Dune II (1992)**, built in Godot 4.7.2 Forward+. Its gameplay, graphics and HUD follow Dune II; its tone is warm fantasy (closer to *The Lord of the Rings* and *Star Wars*). **The RTS is the priority.** The RPG canyon, HD-2D walking sequences and 3D work are secondary: if they fail, the RTS alone is the game. Read [`docs/GAME_DESIGN.md`](docs/GAME_DESIGN.md) for the story, factions, Mission 1, pillars and art direction before designing anything, and [`README.md`](README.md) for the one-page overview.
 
-This file is the single source of truth for every coding agent (Codex, Claude Code, Gemini). `GEMINI.md` and `CLAUDE.md` only point here.
+Running the project opens `scenes/ui/opening_screen.tscn`. Art references live in `docs/references/`. The RPG canyon reference is `assets/textures/maps/desert_approach_rpg_albedo.png`; judge the canyon at the commander's walking height and again at the exit.
+
+This file is the single source of truth for how the project is built, for every coding agent (Codex, Claude Code, Antigravity/Gemini); `docs/GAME_DESIGN.md` is the source of truth for what the game is. `GEMINI.md` and `CLAUDE.md` only point here.
 
 ## Repository layout
 
@@ -17,7 +19,7 @@ This file is the single source of truth for every coding agent (Codex, Claude Co
 | `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
 | `assets/` | Models, textures, shaders, `materials/` and `environments/` (`.tres`). `assets/source_inputs/` holds the original AI-generated images and GLBs the tools consume (ignored by Godot). |
-| `docs/` | Rubric, experiment log, pipeline, style bible and bend sessions. Their evidence images live in the untracked `render_captures/`. |
+| `docs/` | `GAME_DESIGN.md` (the design source of truth), `references/` (the owner's art direction images), and the canyon rubric, experiment log, pipeline, style bible and bend sessions. Evidence images for the logs live in the untracked `render_captures/`. Godot ignores `docs/`. |
 
 `render_captures/`, `tmp/` and `builds/` are ignored and stay local to the primary workspace. Tools resolve paths from the repository root, so nothing depends on `D:/Games/Balance5`.
 
@@ -66,7 +68,16 @@ The commander script defaults to D4b. With a `route` object assigned it clamps t
 
 ## Next steps
 
+**RTS (priority)** — Mission 1, *The First Claim* (`docs/GAME_DESIGN.md` §5), as a playable vertical slice:
+
+1. Select units (click and drag-box), move and attack with four troops plus the field commander per side, on a navigable grid or navmesh.
+2. A commander active ability (Blue: Mend / healing first), the control-point hold timer around the central Orichalcum rock, and win/lose on hold or elimination.
+3. A simple Red AI opponent, and the HUD from `docs/references/rts_mission1_hud_goal.webp` (top bar, minimap, unit card, Move/Attack/Hold/Mend, objective panel).
+4. Both settings from one layout: Red's desert and Blue's tropical forest (`docs/references/rts_mission1_*.webp`). Build maps from tiles (the kitbash/Tiled work), not a single painted image, so maps, fog and pathfinding scale.
+
+**RPG canyon (secondary)**
+
 1. Review and accept canyon v2 as the RPG baseline. The crater glint now appears only at the exit instead of by midway.
 2. Author dedicated right-wall modules instead of turned left courses. Fix the slate cap material, bush scale and exit vista.
 3. Atmosphere pass: a localized `FogVolume` at a wall opening, measured against v2 with GPU frame time.
-4. A single-unit tactical handoff at the crater.
+4. RPG fights follow *Streets of Rage 4*: free movement in depth, facing and shooting left/right only. Story beats use Dune II-style storyboard briefings.

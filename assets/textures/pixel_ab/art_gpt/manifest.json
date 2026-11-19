@@ -1,0 +1,48 @@
+{
+  "textures": {
+    "chatgpt_cobble_albedo.png": {
+      "role": "cobble",
+      "cells": [
+        156,
+        156
+      ],
+      "density": 64.0,
+      "metres": [
+        2.4375,
+        2.4375
+      ],
+      "procedure": "pixel_snap",
+      "source": "cobble_GPT.png",
+      "height": "cobble_height_GPT.png",
+      "drawn_pixel": [
+        8.04,
+        8.04
+      ],
+      "grid_fit": 0.96,
+      "colors": 24,
+      "updated": "2026-11-19 22:26 UTC"
+    },
+    "d_sandstone_strata_albedo.png": {
+      "role": "strata",
+      "cells": [
+        238,
+        163
+      ],
+      "density": 64.0,
+      "metres": [
+        3.7188,
+        2.5469
+      ],
+      "procedure": "pixel_snap",
+      "source": "strata_GPT.png",
+      "height": "strata_height_GPT.png",
+      "drawn_pixel": [
+        6.46,
+        6.3
+      ],
+      "grid_fit": 0.95,
+      "colors": 24,
+      "updated": "2026-11-19 22:44 UTC"
+    }
+  }
+}

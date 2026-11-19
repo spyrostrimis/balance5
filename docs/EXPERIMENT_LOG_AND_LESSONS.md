@@ -421,3 +421,17 @@ Same day. The A/B scene gained mode **4 = authored set**. It reads `assets/textu
 **Captures** (1376×768, `V2_*`). All walks were grounded and the exit signal fired. B64 is unchanged at spawn (mean channel difference 0.06; midway and exit differ only by the harness's run-to-run camera drift). [A / art_gemini / hr_gemini](../render_captures/pixel_ab/compare_procedures_gemini.jpg) · [Spawn road crop, pixel vs smooth](../render_captures/pixel_ab/crop_procedures_gemini.png). On Gemini's pixel-art cobbles, the smooth procedure keeps the staircase edges (the source is pixel art) but loses the crisp pixel colours to linear filtering. It is a pipeline check, not a verdict: the real comparison is on ChatGPT and Perchance images.
 
 `tests/test_pixel_snap.py` now also checks that a painted image is flagged and that a height ramp drives the normal map. It passes.
+
+## 14c. ChatGPT vs Perchance strata and cobble, both procedures (2026-11-20)
+
+**Sources.** ChatGPT: strata 1536×1024 and cobble 1254² with height edits. Perchance: strata 768×512 and cobble 768², no height. Same prompts as `docs/PIXEL_TEXTURE_PROMPTS.md`.
+
+**Tool readings.**
+- ChatGPT: grid fit 95% (strata) and 96% (cobble), so it is real pixel art. One repeat covers 3.72 × 2.55 m (strata) and 2.44 m (cobble). Height alignment is +0.64 (strata) and +0.48 (cobble); the cobble height is a re-drawn layout, not a true edit, so its relief only roughly matches the stones.
+- Perchance: grid fit 41% (strata) and 63% (cobble), so it is not on a clean grid. Its detected cells (17 × 26 px and 18 × 8 px) are wrong, so both sets map far too small (0.69 × 0.31 m strata, 0.67 × 1.47 m cobble). The pixel version breaks the cobble into stretched blocks, and the smooth version, which inherits the same metres, tiles the strata as a fine repeating pattern.
+
+**Captures** (1376×768, `V2_A`, `V2_art_gpt`, `V2_hr_gpt`, `V2_art_perchance`, `V2_hr_perchance`; all grounded, exit signal fired). [Sheet](../render_captures/pixel_ab/compare_gpt_perchance.jpg) · [Spawn crops](../render_captures/pixel_ab/crop_gpt_perchance.png).
+
+**Result.** ChatGPT's strata is the first authored wall that reads as wavy layered rock with no bricks, and its cobble reads as a road. At play distance the pixel and smooth procedures differ only slightly: pixel_snap keeps crisp texels and flatter colour; smooth is softer and gets a little more relief from the height map. Perchance is not usable as is. It needs `--metres` set by hand (role size) to be judged fairly, and pixel_snap should not trust a grid below 85% fit.
+
+**Fix and re-run (same day).** When the grid fit is below 85%, `pixel_snap.py` now ignores the detected cell (it is noise) for texture roles and uses square cells that make one repeat cover the role's intended width. This is a plain downsample to 64/m. Perchance now maps at 2 × 1.33 m (strata) and 3 × 3 m (cobble), and `smooth_texture.py` inherits those metres. Recaptured `V2_art_perchance` and `V2_hr_perchance` (grounded, exit signal fired; sheet and crops above updated). At a fair scale, Perchance's cobble works as a road, with darker, heavier gaps than ChatGPT's. Its strata reads as broken lumpy rock rather than horizontal beds and is darker and more purple. ChatGPT stays the better source for both roles; pixel_snap vs smooth is still a small difference at play distance. The self-test still passes.

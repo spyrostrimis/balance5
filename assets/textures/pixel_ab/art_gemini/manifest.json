@@ -1,0 +1,137 @@
+{
+  "textures": {
+    "d_sandstone_strata_albedo.png": {
+      "role": "strata",
+      "cells": [
+        240,
+        133
+      ],
+      "density": 64.0,
+      "metres": [
+        3.75,
+        2.0781
+      ],
+      "source": "strata_1795102360163.jpg",
+      "drawn_pixel": [
+        5.74,
+        5.74
+      ],
+      "colors": 24,
+      "updated": "2026-11-19 18:30 UTC"
+    },
+    "d_basalt_cap_albedo.png": {
+      "role": "slate",
+      "cells": [
+        200,
+        200
+      ],
+      "density": 64.0,
+      "metres": [
+        3.125,
+        3.125
+      ],
+      "source": "slate_1795102461715.jpg",
+      "drawn_pixel": [
+        5.12,
+        5.12
+      ],
+      "colors": 24,
+      "updated": "2026-11-19 18:31 UTC"
+    },
+    "hd2d_sand_albedo.png": {
+      "role": "sand",
+      "cells": [
+        200,
+        200
+      ],
+      "density": 64.0,
+      "metres": [
+        3.125,
+        3.125
+      ],
+      "source": "sand_1795102604928.jpg",
+      "drawn_pixel": [
+        5.12,
+        5.12
+      ],
+      "colors": 24,
+      "updated": "2026-11-19 18:32 UTC"
+    },
+    "pure_dune_sand_albedo.png": {
+      "role": "dune",
+      "cells": [
+        100,
+        100
+      ],
+      "density": 64.0,
+      "metres": [
+        1.5625,
+        1.5625
+      ],
+      "source": "dune_1795102672500.jpg",
+      "drawn_pixel": [
+        10.24,
+        10.24
+      ],
+      "colors": 24,
+      "updated": "2026-11-19 18:32 UTC"
+    },
+    "chatgpt_cobble_albedo.png": {
+      "role": "cobble",
+      "cells": [
+        100,
+        100
+      ],
+      "density": 64.0,
+      "metres": [
+        1.5625,
+        1.5625
+      ],
+      "source": "cobble_1795102530105.jpg",
+      "drawn_pixel": [
+        10.24,
+        10.24
+      ],
+      "colors": 24,
+      "updated": "2026-11-19 18:33 UTC"
+    },
+    "d_boulder_rock_albedo.png": {
+      "role": "boulder",
+      "cells": [
+        100,
+        100
+      ],
+      "density": 64.0,
+      "metres": [
+        1.5625,
+        1.5625
+      ],
+      "source": "boulder_1795102756367.jpg",
+      "drawn_pixel": [
+        10.24,
+        10.24
+      ],
+      "colors": 24,
+      "updated": "2026-11-19 18:33 UTC"
+    },
+    "d_sage_bush_2.png": {
+      "role": "bush_sage",
+      "cells": [
+        65,
+        43
+      ],
+      "density": 64.0,
+      "metres": [
+        1.0156,
+        0.6719
+      ],
+      "source": "bush_sage_GPT.png",
+      "drawn_pixel": [
+        14.68,
+        16.28
+      ],
+      "colors": 13,
+      "updated": "2026-11-19 18:36 UTC"
+    }
+  }
+}

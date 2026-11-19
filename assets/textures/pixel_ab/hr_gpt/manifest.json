@@ -1,0 +1,34 @@
+{
+  "textures": {
+    "chatgpt_cobble_albedo.png": {
+      "role": "cobble",
+      "procedure": "smooth",
+      "source": "cobble_GPT.png",
+      "height": "cobble_height_GPT.png",
+      "pixels": [
+        1024,
+        1024
+      ],
+      "metres": [
+        2.4375,
+        2.4375
+      ],
+      "updated": "2026-11-19 22:30 UTC"
+    },
+    "d_sandstone_strata_albedo.png": {
+      "role": "strata",
+      "procedure": "smooth",
+      "source": "strata_GPT.png",
+      "height": "strata_height_GPT.png",
+      "pixels": [
+        1024,
+        683
+      ],
+      "metres": [
+        3.7188,
+        2.5469
+      ],
+      "updated": "2026-11-19 22:44 UTC"
+    }
+  }
+}

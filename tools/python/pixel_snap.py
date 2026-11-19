@@ -278,6 +278,14 @@ def main() -> None:
     if fit < 0.85:
         print("WARNING: this image is not pixel art on a regular grid (below 85%). The snap below is only a "
               "resample and will look smeared. Regenerate as pixel art, or use tools/python/smooth_texture.py.")
+        if kind == "texture" and not args.cell:
+            # The detected cell is noise, so the size it implies is meaningless. Use square cells that make one
+            # repeat cover the role's intended width instead (a plain downsample to --density).
+            cell_x = cell_y = source.width / (coverage[0] * args.density)
+            phase_x = phase_y = 0.0
+            cells = sample_cells(rgba, cell_x, phase_x, cell_y, phase_y)
+            print(f"Using the role's size instead: square cells of {cell_x:.2f} px -> "
+                  f"{cells.shape[1]} x {cells.shape[0]} cells.")
     if kind == "texture":
         span = (cells.shape[1] / args.density, cells.shape[0] / args.density)
         print(f"At {args.density:g}/m one repeat covers {span[0]:.2f} x {span[1]:.2f} m "

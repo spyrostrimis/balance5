@@ -1,0 +1,34 @@
+{
+  "textures": {
+    "chatgpt_cobble_albedo.png": {
+      "role": "cobble",
+      "procedure": "smooth",
+      "source": "cobble_perch.jfif",
+      "height": null,
+      "pixels": [
+        1024,
+        1024
+      ],
+      "metres": [
+        3.0,
+        3.0
+      ],
+      "updated": "2026-11-19 23:04 UTC"
+    },
+    "d_sandstone_strata_albedo.png": {
+      "role": "strata",
+      "procedure": "smooth",
+      "source": "strata_perch.jfif",
+      "height": null,
+      "pixels": [
+        1024,
+        683
+      ],
+      "metres": [
+        2.0,
+        1.3281
+      ],
+      "updated": "2026-11-19 23:04 UTC"
+    }
+  }
+}

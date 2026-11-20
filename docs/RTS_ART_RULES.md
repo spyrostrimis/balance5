@@ -45,6 +45,12 @@ The **art does not have to follow the tile grid**. Pathfinding uses 32 px tiles;
 - **Shapes, walls, shadows, outlines and the palette**: our tools (`tools/python/make_rts_style_test.py`). They are exact, repeatable and follow the rules above.
 - **Surface detail** (sand grain, rock tops, flagstones, dune patterns): **detailed painted textures** from an image generator, reduced to art pixels and mapped onto the palette by our tools. Do not ask generators for "pixel art": in the canyon tests, AI pixel art looked fake, and painted sources made pixel-sized by us looked real (`docs/EXPERIMENT_LOG_AND_LESSONS.md` §15).
 - **Units**: drawn or generated per unit, 8 directions, outlined, on the shared palette (later step).
+- **Hand tools.** Scripts make and measure the pieces, because every test must be exactly repeatable. Hand tools come in where a person's eye works better:
+  - **Tiled** or Godot's tile painter, to lay out the real Mission 1 map from the pieces (the kitbash example in `assets/textures/source/tiled/` already does this).
+  - **Krita**, to paint fixes onto a texture or a whole map.
+  - **Aseprite**, to clean up unit sprites pixel by pixel.
+
+  The tools can export layers in formats these programs open (`.ora`, `.tmx`).
 
 ## 6. Style test 1 (2026-11-20): what the rules give with procedural surfaces only
 
@@ -128,6 +134,35 @@ The average brightness and saturation were already equal. "Vibrant" came from **
 4. **The NE cliff:** reads as one large flat mass where the reference has more ledges and an oasis.
 
 These are tuning, not method.
+
+## 6d. Style test 4 (2026-11-20): orderly dunes
+
+**T** cycles tests 1–4. Captures: `render_captures/rts_style/style_test.png`, `t4_side_by_side.png`, `t4_cmp_*.png`.
+
+**What the owner saw.** Test 3 looked messy, with things thrown around, while the reference feels peaceful and orderly. Around the centre the reference has no dunes; they fill fields towards the four edges.
+
+**Why test 3 looked messy (looking, not just measuring):**
+- Measured averaged over the whole image, test 3's ripples were as aligned as the reference's (0.90 against 0.83), with similar overall variation. The numbers missed where the ripples are and how crisp they are.
+- Close up, test 3's ripples were soft, smeared swells under round relief blotches. The reference's crests are crisp, evenly spaced, gently waving rows.
+- The scatter was big, dark and evenly sprinkled. The reference's is small and sparse.
+
+**Lesson:** measurements check a look; they do not replace looking at close-ups side by side.
+
+**What changed in test 4:**
+- **Placement:** calm sand in a band about 45–105 art px round the road and plaza; dune fields towards the edges, with a few calm gaps.
+- **Ripples:** tool-made, 17 px apart. A broad lit face rises to a sharp crest, a sharp dark shadow below it fades out, then plain sand.
+- **Rows:** long and following one wind (about −10°, turning slowly across the map). They wave gently along their length, about every 80 px, with neighbouring rows waving together. A first try without the wave looked combed; a first try with thin crests was too faint.
+- **Swells:** stretched along the wind instead of round blotches.
+- **Scatter:** kitbash pebbles at 45%, shrubs at 50%, about half as many, gathered near rocks and the road.
+- **Rocks:** tops 15% lighter; `crystals2` larger (78 px), plus small crystals round it.
+
+**Verdict:**
+- **Order and placement** now follow the reference.
+- **It is a little too graphic:**
+  - Crest edges are slightly stair-stepped and the rows too continuous; they read a little like map contour lines.
+  - Large-scale light variation fell (3.0 against the reference's 8.0, test 3 had 5.5).
+- **The reference sits between tests 3 and 4:** test 4's order and placement, test 3's softer, more varied ripples. Next (test 5): `dunes2.png` turned to the wind, used only inside test 4's fields, with test 4's crisp shadows.
+- **Still open:** NE cliff ledges.
 
 ## 7. Texture prompts (ChatGPT, one image each, 1024×1024 unless noted)
 

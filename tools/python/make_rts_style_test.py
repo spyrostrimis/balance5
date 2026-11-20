@@ -4,7 +4,7 @@
 
 Follows docs/RTS_ART_RULES.md: art pixels (1 art px = 2 reference px = 2 screen px at 1080p),
 32 art px tiles, the 48-colour desert palette, light from the top-left.
-Test 1 makes every surface procedurally. Tests 2 and 3 (style_test/t2/, t3/) take the painted
+Test 1 makes every surface procedurally. Tests 2-4 (style_test/t2/ to t4/) take the painted
 textures in assets/source_inputs/rts/, shrinks and colour-matches them, and adds the tool fixes
 listed in the art rules §6b. The scene's T key switches between them. Writes to
 assets/textures/rts/style_test/:
@@ -710,11 +710,14 @@ def place_crystals_painted(rgb: np.ndarray, alpha: np.ndarray, rock: np.ndarray)
 def place_crystals2(rgb: np.ndarray, alpha: np.ndarray, rock: np.ndarray) -> None:
     """Test 3: the owner's crystals2.png (fewer, bigger crystals) shrunk to 66 px; only the bright
     crystals are kept, sitting on the tool-made slab pile, with a warm glow."""
+    place_crystals2_sized(rgb, alpha, rock, 66)
+
+
+def place_crystals2_sized(rgb: np.ndarray, alpha: np.ndarray, rock: np.ndarray, width: int) -> None:
     src = np.array(Image.open(SRC / "crystals2.png").convert("RGB")).astype(np.float32)
     a = np.clip((src.max(2) - 22) / 50, 0, 1)
     ys, xs = np.nonzero(a > 0.05)
     src = src[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
-    width = 66
     size = (width, round(src.shape[0] * width / src.shape[1]))
     col = cv2.resize(src, size, interpolation=cv2.INTER_AREA)
     bright = col.max(2) > 175
@@ -913,13 +916,147 @@ def make_test3() -> None:
     save("t3/scatter.png", sc_rgb, sc_a)
 
 
+# --- style test 4: orderly dunes -----------------------------------------------------------------
+# Test 3 matched the reference's numbers but looked messy: its ripples were soft smeared swells
+# under blotchy relief, and the scatter was big, dark and everywhere. The reference's crests are
+# crisp lines at an even spacing, in long parallel rows that follow one wind, with calm sand
+# between the rows' fields, and small, sparse scatter.
+
+WIND = -0.17          # radians: crests run slightly up to the right, as in the reference
+RIPPLE_GAP = 17.0     # art px between crests
+
+
+def wind_coords(warp_amp: float = 8.0) -> tuple[np.ndarray, np.ndarray]:
+    warp = warp_amp * (fbm(320, 160) - 0.5) * 2  # long, gentle bends only
+    across = YY * np.cos(WIND) - XX * np.sin(WIND) + warp
+    along = XX * np.cos(WIND) + YY * np.sin(WIND)
+    return across, along
+
+
+def make_sand4() -> np.ndarray:
+    """Grainy flat sand with broad swells stretched along the wind (not round blotches), and
+    slow drifts between redder and yellower sand."""
+    tex = match_colour(seamless(load_source("sand.png", SHRINK["sand.png"])), "sand")
+    rgb = tile(tex)
+    across, along = wind_coords()
+    swell = (stretched_noise(along, across, 220, 70) - 0.5) * 2 * 22.0
+    p = np.clip(lambert(swell) * 3.0, -1, 1)
+    rgb = lerp(rgb, CREST_HI, np.clip(p, 0, 1) * 0.45)
+    rgb = lerp(rgb, TROUGH * 0.92, np.clip(-p, 0, 1) * 0.5)
+    hue = (stretched_noise(along, across, 260, 120) - 0.5) * 2
+    rgb = lerp(rgb, np.array([236, 118, 30], np.float32), np.clip(-hue, 0, 1) * 0.3)
+    rgb = lerp(rgb, np.array([246, 170, 56], np.float32), np.clip(hue, 0, 1) * 0.3)
+    return rgb
+
+
+def distance_to_road() -> np.ndarray:
+    """Art px from the road's centre line or the plaza round the Orichalcum rock."""
+    dist = np.full((H, W), 1e9, np.float32)
+    pts = np.array(ROAD_LINE, np.float32)
+    for a, b in zip(pts[:-1], pts[1:]):
+        ab = b - a
+        t = np.clip(((XX - a[0]) * ab[0] + (YY - a[1]) * ab[1]) / (ab @ ab), 0, 1)
+        dist = np.minimum(dist, np.hypot(XX - a[0] - t * ab[0], YY - a[1] - t * ab[1]))
+    cx, cy, rx, ry = PLAZA
+    plaza = np.maximum(np.hypot((XX - cx) / rx, (YY - cy) / ry) - 1, 0) * min(rx, ry)
+    return np.minimum(dist, plaza)
+
+
+def make_dunes4(sand: np.ndarray) -> np.ndarray:
+    """Dunes where the reference has them: big fields towards the edges, calm sand in a wide band
+    round the road and plaza. Inside a field the ripples are strong and crisp, an even 15 px apart,
+    in long rows following one wind that turns only slowly across the map."""
+    angle = WIND + 0.3 * (fbm(400, 200) - 0.5)
+    along = XX * np.cos(angle) + YY * np.sin(angle)
+    across0 = YY * np.cos(angle) - XX * np.sin(angle)
+    # Crests wave gently along their length (about every 80 px), and neighbouring rows wave
+    # together, so the field stays orderly instead of straight like a comb.
+    wave = (stretched_noise(along, across0, 42, 170) - 0.5) * 2 * 7.0
+    across = across0 + 8.0 * (fbm(320, 160) - 0.5) * 2 + wave
+    phase = across / RIPPLE_GAP
+    s = phase - np.floor(phase)
+    row = np.floor(phase)
+    calm = distance_to_road()
+    fields = smoothstep(45, 105, calm + 40 * (fbm(120, 60) - 0.5))       # calm round road and plaza
+    fields *= smoothstep(0.25, 0.4, stretched_noise(along, across, 320, 120))  # a few calm gaps elsewhere
+    rows = smoothstep(0.22, 0.36, stretched_noise(along, row * 3.1 + 7, 80, 1))  # rows end now and then
+    amp = fields * rows
+    # One ripple: a broad lit face rising to a sharp crest, a sharp dark shadow below it that
+    # fades out, then plain sand until the next lit face.
+    lit = np.clip((s - 0.15) / 0.49, 0, 1) ** 1.4 * (s < 0.64)
+    shadow = np.where((s >= 0.64) & (s < 0.95), 1 - (s - 0.64) / 0.42, 0)
+    rgb = lerp(sand, CREST_HI, (lit * amp * 0.85).astype(np.float32))
+    return lerp(rgb, TROUGH * 0.85, (shadow * amp * 0.85).astype(np.float32))
+
+
+def make_scatter4(blocked: np.ndarray, near: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Kitbash pebbles, specks and shrubs, smaller and sparser, gathered near rocks and the road
+    (debris collects there) instead of spread evenly over open sand."""
+    rgba = np.zeros((H, W, 4), np.float32)
+    closeness = np.exp(-cv2.distanceTransform((~near).astype(np.uint8), cv2.DIST_L2, 3) / 40.0)
+    kinds = ([(f"pebble_{i}.png", 0.45, 6) for i in range(6)] + [(f"speck_{i}.png", 0.8, 12) for i in range(6)]
+             + [(f"shrub_{i}.png", 0.5, 4) for i in range(6)])
+    for name, scale, count in kinds:
+        spr = kitbash_sprite(name, scale)
+        h, w = spr.shape[:2]
+        placed = tries = 0
+        while placed < count and tries < count * 40:
+            tries += 1
+            x, y = int(rng.integers(0, W - w)), int(rng.integers(0, H - h))
+            if blocked[y:y + h, x:x + w].any() or rng.random() > 0.15 + 0.85 * closeness[y + h // 2, x + w // 2]:
+                continue
+            a = spr[..., 3:4] / 255
+            dst = rgba[y:y + h, x:x + w]
+            dst[..., :3] = spr[..., :3] * a + dst[..., :3] * (1 - a)
+            dst[..., 3:4] = np.maximum(dst[..., 3:4], a)
+            placed += 1
+    alpha = np.where(rgba[..., 3] > 0.5, 1.0, rgba[..., 3])
+    return rgba[..., :3], alpha
+
+
+def place_crystals4(rgb: np.ndarray, alpha: np.ndarray, rock: np.ndarray) -> None:
+    """crystals2 a little larger, plus small tool crystals around it so the field looks fuller."""
+    place_crystals2_sized(rgb, alpha, rock, 78)
+    cx, cy, rx, ry = ROCK_CORE
+    ring = rock & (dist_inside(rock) > 3)
+    ys, xs = np.nonzero(ring)
+    d = np.hypot((xs - cx) / rx, (ys - cy) / ry)
+    weight = np.exp(-((d - 0.55) / 0.2) ** 2)
+    light, mid, dark = np.array([255, 246, 190.]), np.array([255, 196, 60.]), np.array([196, 104, 20.])
+    for i in rng.choice(len(ys), 22, replace=False, p=weight / weight.sum()):
+        x, y = xs[i], ys[i]
+        for dy, dx, c in ((-2, 0, light), (-1, -1, light), (-1, 0, mid), (-1, 1, dark), (0, 0, mid), (1, 0, dark)):
+            rgb[y + dy, x + dx] = c
+            alpha[y + dy, x + dx] = 1.0
+
+
+def make_test4() -> None:
+    (OUT / "t4").mkdir(exist_ok=True)
+    sand = make_sand4()
+    save("t4/sand.png", sand)
+    save("t4/sand_dunes.png", make_dunes4(sand))
+    rock = match_colour(seamless(load_source("rock_top.png", SHRINK["rock_top.png"])), "rock") * 1.15  # lighter tops
+    rock_h = seamless(load_source("rock_top_height.png", SHRINK["rock_top.png"], gray=True))
+    ox, oy = int(rng.integers(0, rock.shape[1])), int(rng.integers(0, rock.shape[0]))
+    wall = match_colour(load_source("cliff_wall2.png", SHRINK["cliff_wall.png"]), "wall")
+    cracks = rock_h < cv2.GaussianBlur(rock_h, (0, 0), 3) - 14
+    tex = {"rock": tile(rock, ox, oy), "rock_h": tile(rock_h, ox, oy), "rock_cracks": tile(cracks, ox, oy), "wall": wall}
+    rocks_rgb, rocks_a, feet = make_rocks2(tex, soft=True, crystals=place_crystals4)
+    road_rgb, road_a = make_road2(feet)
+    save("t4/road.png", road_rgb, road_a)
+    save("t4/rocks.png", rocks_rgb, rocks_a)
+    road = road_a > 0
+    sc_rgb, sc_a = make_scatter4(feet | road, feet | road)
+    save("t4/scatter.png", sc_rgb, sc_a)
+
+
 # --- scene --------------------------------------------------------------------------------------
 
 LAYERS = ["sand.png", "sand_dunes.png", "road.png", "rocks.png", "scatter.png"]
 
 
 def write_scene() -> None:
-    tex = LAYERS + [f"t2/{t}" for t in LAYERS] + [f"t3/{t}" for t in LAYERS] + ["reference_half.png"]
+    tex = LAYERS + [f"t{n}/{t}" for n in (2, 3, 4) for t in LAYERS] + ["reference_half.png"]
     tex += sorted({u[0] for u in UNITS})
     lines = ["[gd_scene format=3]", "",
              '[ext_resource type="Script" path="res://scripts/rts/rts_style_test.gd" id="script"]']
@@ -942,7 +1079,8 @@ def write_scene() -> None:
             lines.append(f"position = Vector2({pos[0]}, {pos[1]})")
         lines.append("")
 
-    for group, prefix, visible in (("Test1", "", False), ("Test2", "t2/", False), ("Test3", "t3/", True)):
+    for group, prefix, visible in (("Test1", "", False), ("Test2", "t2/", False), ("Test3", "t3/", False),
+                                   ("Test4", "t4/", True)):
         lines += [f'[node name="{group}" type="Node2D" parent="."]'] + ([] if visible else ["visible = false"]) + [""]
         for node, t in zip(("Sand", "Dunes", "Road", "Rocks", "Scatter"), LAYERS):
             sprite(node, prefix + t, group)
@@ -977,6 +1115,7 @@ def main() -> None:
     make_units()
     make_test2()
     make_test3()
+    make_test4()
     ref = Image.open(ROOT / "docs" / "references" / "rts_mission1_desert_red.webp").convert("RGB")
     ref.resize((ref.width // 2, ref.height // 2), Image.BOX).save(OUT / "reference_half.png")
     write_scene()

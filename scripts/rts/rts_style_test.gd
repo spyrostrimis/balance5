@@ -1,13 +1,13 @@
 extends Node2D
 ## RTS style test: one screen with every art layer, to judge the look against the reference.
 ## Built by tools/python/make_rts_style_test.py. Keys toggle layers so each one's effect shows:
-##   T cycles test 1 (procedural) / 2 (painted textures) / 3 (sand relief, kitbash scatter)   1 dunes   2 road   3 rocks   4 scatter
+##   T cycles test 1 (procedural) / 2 (painted textures) / 3 (sand relief, kitbash scatter) / 4 (orderly dunes)   1 dunes   2 road   3 rocks   4 scatter
 ##   5 units   R reference (same scale)   G 32 px tile grid
 ##   Z art pixel = 2 screen pixels at 1080p (zoom 4/3) vs 1 (zoom 2/3)
 
 const GRID_COLOR := Color(0, 0, 0, 0.18)
-const TESTS := ["Test1", "Test2", "Test3"]
-const TEST_NAMES := ["1 procedural", "2 painted", "3 sand relief"]
+const TESTS := ["Test1", "Test2", "Test3", "Test4"]
+const TEST_NAMES := ["1 procedural", "2 painted", "3 sand relief", "4 orderly dunes"]
 
 var _show_grid := false
 
@@ -82,5 +82,5 @@ func _update_help() -> void:
 	var test: String = TEST_NAMES[_current_test()]
 	var on := func(path: String) -> String: return "on" if (get_node(path) as CanvasItem).visible else "off"
 	_help.text = "T test %s · 1 dunes %s · 2 road %s · 3 rocks %s · 4 scatter %s · 5 units %s · R reference %s · G grid · Z zoom %.2f · Esc back" % [
-		test, on.call("Test3/Dunes"), on.call("Test3/Road"), on.call("Test3/Rocks"), on.call("Test3/Scatter"),
+		test, on.call("Test4/Dunes"), on.call("Test4/Road"), on.call("Test4/Rocks"), on.call("Test4/Scatter"),
 		on.call("Units"), on.call("Reference"), _camera.zoom.x]

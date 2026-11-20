@@ -18,6 +18,14 @@ Measured from the Mission 1 reference: soldiers about 11 art pixels tall, a squa
 Area: Art · Status: Trying
 Clustered from the reference by `tools/python/rts_palette.py`. The reference redrawn with only these colours loses nothing visible. Every layer is mapped onto it last, so pieces from different sources belong to one picture.
 
+### 2026-11-20 · Dunes in fields towards the edges, calm sand round the road
+Area: Art · Status: Trying
+The owner noticed the reference has no dunes round the centre: calm sand in a wide band round the road and plaza, orderly ripple fields towards the edges, all following one wind. Test 4 does this and reads as peaceful instead of messy. Evidence: `docs/RTS_ART_RULES.md` §6d.
+
+### 2026-11-20 · Look at close-ups, not only numbers
+Area: Workflow · Status: Decided
+Test 3 matched the reference's averaged numbers but still looked messy; close-ups showed soft smeared ripples and big scattered debris. Measurements now back up a side-by-side look, never replace it.
+
 ### 2026-11-20 · Judge RTS art by variation, not averages
 Area: Art · Status: Decided
 The reference sand looked more vibrant, but its average brightness and saturation equalled ours; it changes light 2–4× more over 5–30 px and its colour wanders more. Test 3 adds rolling relief and colour drift and uses the owner's dense ripple texture (dunes2) as the ground. Style tests now measure variation by size. Evidence: `docs/RTS_ART_RULES.md` §6c.

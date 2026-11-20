@@ -596,6 +596,39 @@ Area: Art
 Simple stand-in graphics (coloured discs, flat tiles) used to test how something plays before the real art exists. They are swapped out later without changing the code.
 *Also:* placeholder
 
+### Art pixel
+Area: Art
+One pixel of the artwork as drawn, before the game enlarges it. In the RTS, one art pixel shows as 2×2 screen pixels at 1920×1080, which gives the chunky pixel-art look.
+*In Balance:* `docs/RTS_ART_RULES.md` §1.
+
+### Style test
+Area: Art
+One screen that contains every kind of art (ground, rocks, road, scatter, units) at the real scale, used to judge the overall look against the reference before making all the art.
+*In Balance:* `scenes/maps/rts_style_test.tscn`; **R** lays the reference on top.
+
+### Procedural
+Area: Art
+Made by a program from rules and random numbers instead of drawn by hand. Good for exact, repeatable things (shapes, shadows, outlines); weaker for rich surfaces, which tend to look machine-made.
+*Also:* procedurally generated
+
+### Colour matching
+Area: Art
+Shifting a texture's colours so its average colour and contrast equal a target, here the same material in the reference. It makes textures from different sources look like one picture before the palette is applied.
+*Also:* colour transfer, color matching
+
+### Front wall
+Area: Art
+The side of a cliff or rock that faces the viewer (south), drawn below its top surface. It is what makes a flat top-down map show height.
+*Also:* south face, cliff face
+
+### Outline
+Area: Art
+A one-pixel dark line around a sprite or rock so it separates from the ground. All RTS rocks and units have one.
+
+### Squad
+Area: RTS
+A small group of soldiers that moves and fights as one unit. In the Mission 1 reference a squad of four fills one 32 px tile.
+
 ### Aseprite
 Area: Tools
 A pixel-art editor for sprites, animations and tiles. *View → Tiled Mode* shows a texture repeating so you can fix seams.

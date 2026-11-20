@@ -10,6 +10,22 @@ Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | 
 Why, in one to three sentences. Where the evidence is.
 ```
 
+### 2026-11-20 · RTS art scale: 1 art pixel = 2 screen pixels at 1080p
+Area: Art · Status: Trying
+Measured from the Mission 1 reference: soldiers about 11 art pixels tall, a squad of four or a tank per 32 px tile, the camera at zoom 4/3 in our 1280×720 viewport (960×540 art pixels on screen). The style test matched the reference's sizes one to one. Details: `docs/RTS_ART_RULES.md` §1.
+
+### 2026-11-20 · One 48-colour desert palette for all RTS art
+Area: Art · Status: Trying
+Clustered from the reference by `tools/python/rts_palette.py`. The reference redrawn with only these colours loses nothing visible. Every layer is mapped onto it last, so pieces from different sources belong to one picture.
+
+### 2026-11-20 · Style test 2 confirms the hybrid RTS art method
+Area: Art · Status: Trying
+With the owner's ChatGPT textures, colour-matched to the reference and shrunk to art scale, sand, road and rock tops came close to the reference; cliffs show walls; the Orichalcum rock reads as a raised pile. Large dune fields and crystals stay tool-made: the painted dunes and crystal images lose their shape when shrunk. Remaining gaps are tuning. Evidence: `docs/RTS_ART_RULES.md` §6b, `render_captures/rts_style/t2_*`.
+
+### 2026-11-20 · RTS art: our tools make shapes, painted textures make surfaces
+Area: Art · Status: Trying
+Style test 1 (procedural only) got scale, palette, height (front walls, down-right shadows) and unit contrast right, but its dunes, rock tops and road look machine-made. Next: painted textures from ChatGPT for the surfaces, shaped, shaded and palette-mapped by our tools. Evidence: `docs/RTS_ART_RULES.md` §6, `render_captures/rts_style/`.
+
 ### 2026-11-20 · Feature the newest build or study
 Area: Workflow · Status: Decided
 The opening button follows the newest available build or study by build date. The Developers Page starts in date order and allows local title and description edits and a saved drag order.

@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts/rts_style_test.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/sand.png" id="t0"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/sand_dunes.png" id="t1"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/road.png" id="t2"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/rocks.png" id="t3"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/scatter.png" id="t4"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/sand.png" id="t5"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/sand_dunes.png" id="t6"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/road.png" id="t7"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/rocks.png" id="t8"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/scatter.png" id="t9"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/reference_half.png" id="t10"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_commander.png" id="t11"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_squad.png" id="t12"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_tank.png" id="t13"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_commander.png" id="t14"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_squad.png" id="t15"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_tank.png" id="t16"]
+
+[node name="RtsStyleTest" type="Node2D"]
+texture_filter = 1
+script = ExtResource("script")
+
+[node name="Test1" type="Node2D" parent="."]
+visible = false
+
+[node name="Sand" type="Sprite2D" parent="Test1"]
+texture = ExtResource("t0")
+centered = false
+
+[node name="Dunes" type="Sprite2D" parent="Test1"]
+texture = ExtResource("t1")
+centered = false
+
+[node name="Road" type="Sprite2D" parent="Test1"]
+texture = ExtResource("t2")
+centered = false
+
+[node name="Rocks" type="Sprite2D" parent="Test1"]
+texture = ExtResource("t3")
+centered = false
+
+[node name="Scatter" type="Sprite2D" parent="Test1"]
+texture = ExtResource("t4")
+centered = false
+
+[node name="Test2" type="Node2D" parent="."]
+
+[node name="Sand" type="Sprite2D" parent="Test2"]
+texture = ExtResource("t5")
+centered = false
+
+[node name="Dunes" type="Sprite2D" parent="Test2"]
+texture = ExtResource("t6")
+centered = false
+
+[node name="Road" type="Sprite2D" parent="Test2"]
+texture = ExtResource("t7")
+centered = false
+
+[node name="Rocks" type="Sprite2D" parent="Test2"]
+texture = ExtResource("t8")
+centered = false
+
+[node name="Scatter" type="Sprite2D" parent="Test2"]
+texture = ExtResource("t9")
+centered = false
+
+[node name="Units" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Unit1" type="Sprite2D" parent="Units"]
+texture = ExtResource("t13")
+position = Vector2(106, 132)
+
+[node name="Unit2" type="Sprite2D" parent="Units"]
+texture = ExtResource("t12")
+position = Vector2(166, 158)
+
+[node name="Unit3" type="Sprite2D" parent="Units"]
+texture = ExtResource("t11")
+position = Vector2(196, 150)
+
+[node name="Unit4" type="Sprite2D" parent="Units"]
+texture = ExtResource("t15")
+position = Vector2(452, 330)
+
+[node name="Unit5" type="Sprite2D" parent="Units"]
+texture = ExtResource("t14")
+position = Vector2(478, 318)
+
+[node name="Unit6" type="Sprite2D" parent="Units"]
+texture = ExtResource("t16")
+position = Vector2(528, 362)
+
+[node name="Unit7" type="Sprite2D" parent="Units"]
+texture = ExtResource("t15")
+position = Vector2(602, 172)
+
+[node name="Reference" type="Sprite2D" parent="."]
+z_index = 10
+visible = false
+texture = ExtResource("t10")
+centered = false
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(480, 270)
+zoom = Vector2(1.3333, 1.3333)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Help" type="Label" parent="HUD"]
+offset_left = 10.0
+offset_top = 6.0
+offset_right = 1270.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 14

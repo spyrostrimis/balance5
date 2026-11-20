@@ -181,6 +181,24 @@ Build Mission 1's battlefield from reusable tiles rather than one painted pictur
 ### Done when
 - Units can path across the map around rocks, the map matches the reference layout, and the forest version shares it.
 
+## RTS art style test
+Area: Art · Status: In use · Tools: Python, Godot, ChatGPT
+Judge a change to the RTS look on one screen that has every layer, next to the reference at the same scale. Rules: `docs/RTS_ART_RULES.md`.
+
+### Steps
+1. (Once per map type) Extract the palette: `C:/Python312/python.exe tools/python/rts_palette.py`. Check `render_captures/rts_style/reference_palette_check.png` looks like the reference.
+2. Change one layer at a time: a new painted texture, a tool setting or a shape in `tools/python/make_rts_style_test.py`. Painted inputs go in `assets/source_inputs/rts/` under the names in the art rules §7; the `SHRINK` and `TARGETS` tables in the tool set how much each is shrunk and which reference colours it is matched to.
+3. Regenerate: `C:/Python312/python.exe tools/python/make_rts_style_test.py`, then `Godot --path . --headless --import`.
+4. Capture: `Godot --path . --script res://tests/capture_rts_style_test.gd` writes `render_captures/rts_style/style_test.png` and `style_reference.png`.
+5. Or look in game: Developers Page → RTS Style Test. **T** switches test 1 / test 2, keys 1–5 toggle layers, **R** lays the reference on top, **G** shows the 32 px tiles.
+6. Write the verdict (right, gaps largest first) in the art rules §6, and a decision if a rule changes.
+
+### Done when
+- Both captures were looked at, the gaps are listed, and the next change targets the largest gap.
+
+### Ask an agent
+> Run the RTS art style test pipeline with these new textures (paths …) for the sand / dunes / rock top / cliff wall / road, compare against the reference and list the remaining gaps.
+
 ## RTS unit type
 Area: RTS · Status: In use · Tools: Godot
 Add a new kind of unit, or change an existing one's numbers.

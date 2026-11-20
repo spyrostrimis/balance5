@@ -20,7 +20,7 @@ This file is the single source of truth for how the project is built, for every 
 | `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
 | `assets/` | Models, textures, shaders, `materials/` and `environments/` (`.tres`). `assets/source_inputs/` holds the original AI-generated images and GLBs the tools consume (ignored by Godot). |
-| `docs/` | `GAME_DESIGN.md` (the design source of truth), `references/` (the owner's art direction images), `ROADMAP.md`, `DECISIONS.md`, `PIPELINES.md`, `GLOSSARY.md` (see *Project memory*), and the canyon rubric, experiment log, pipeline, style bible and bend sessions. Evidence images for the logs live in the untracked `render_captures/`. Godot ignores `docs/`. |
+| `docs/` | `GAME_DESIGN.md` (the design source of truth), `references/` (the owner's art direction images), `ROADMAP.md`, `DECISIONS.md`, `PIPELINES.md`, `GLOSSARY.md` (see *Project memory*), `RTS_ART_RULES.md` (RTS scale, palette, light and art method; read it before making RTS art), and the canyon rubric, experiment log, pipeline, style bible and bend sessions. Evidence images for the logs live in the untracked `render_captures/`. Godot ignores `docs/`. |
 
 `render_captures/`, `tmp/` and `builds/` are ignored and stay local to the primary workspace. Tools resolve paths from the repository root, so nothing depends on `D:/Games/Balance5`.
 

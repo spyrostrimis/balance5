@@ -164,6 +164,29 @@ These are tuning, not method.
 - **The reference sits between tests 3 and 4:** test 4's order and placement, test 3's softer, more varied ripples. Next (test 5): `dunes2.png` turned to the wind, used only inside test 4's fields, with test 4's crisp shadows.
 - **Still open:** NE cliff ledges.
 
+## 6e. Style test 5 (2026-11-20): soft, orderly dunes and cliff ledges — environment look settled
+
+**T** cycles tests 1–5. Captures: `render_captures/rts_style/style_test.png`, `t5_side_by_side.png`, `t5_cmp_*.png`.
+
+**What changed:**
+- **Ripples:** the owner's `dunes2.png` (shrink 2.4), read along the wind, so its soft natural ripples turn with the wind and neighbouring rows wave together. Only its light and shade are used, on top of test 4's sand, swells and colour drift.
+- **Placement:** inside test 4's fields only. Calm sand stays within about 40–90 art px of the road and plaza; dune fields cover most of the rest. A first pass with a stricter mask left only two small fields.
+- **Cliffs:** big cliffs (wall 11 px or more) get a raised inner terrace 7 px higher, with its own wall and a shadow cast down-right onto the lower level.
+
+**Verdict:**
+- Test 5 combines test 4's calm centre and orderly wind with test 3's softer, more natural ripples, and is the closest to the reference.
+- Its ripples are a little bolder than the reference's.
+- **The owner is confident the reference's environment look is achievable** and will refine maps by hand later. The style tests stop here; next is how the units look moving on this map.
+
+**Recipe to keep (used by test 5):**
+- **Sand:** `sand.png` grain, swells stretched along the wind, colour drift.
+- **Ripples:** `dunes2.png` along the wind, in fields away from the road.
+- **Road:** `road.png` with cracks from its height map.
+- **Rocks:** `rock_top.png` ×1.15 with cracks from its height map; walls from `cliff_wall2.png`; soft lit and dark edges; terraces on big cliffs.
+- **Orichalcum rock:** a stepped slab pile with `crystals2.png`.
+- **Scatter:** kitbash pebbles, specks and shrubs, gathered near rocks and the road.
+- **Finally:** the 48-colour palette.
+
 ## 7. Texture prompts (ChatGPT, one image each, 1024×1024 unless noted)
 
 Rewritten after the close-up comparison (§6): each prompt names what the reference has and style test 1 lacked.

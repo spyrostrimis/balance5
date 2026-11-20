@@ -621,6 +621,11 @@ Area: Art
 How much the light changes across small, medium and large distances in a picture (for example 1–2, 5–12 and 12–30 pixels). Two pictures can have the same average colour but very different variation; more variation reads as livelier and more "vibrant".
 *Also:* band-pass, frequency bands
 
+### Stamp
+Area: Art
+A big ready-made piece placed whole on a map, such as a cliff formation, a dune field, a tree or the Orichalcum rock, as opposed to small tiles painted cell by cell. In Godot a stamp is a small scene you drag into the map; it can carry the tiles it blocks for pathfinding.
+*Also:* prefab, map piece, object
+
 ### Colour matching
 Area: Art
 Shifting a texture's colours so its average colour and contrast equal a target, here the same material in the reference. It makes textures from different sources look like one picture before the palette is applied.

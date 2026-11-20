@@ -18,6 +18,10 @@ Measured from the Mission 1 reference: soldiers about 11 art pixels tall, a squa
 Area: Art · Status: Trying
 Clustered from the reference by `tools/python/rts_palette.py`. The reference redrawn with only these colours loses nothing visible. Every layer is mapped onto it last, so pieces from different sources belong to one picture.
 
+### 2026-11-20 · The RTS environment look is achievable; move on to units
+Area: Art · Status: Decided
+After style test 5 the owner is confident the Mission 1 reference's environment can be matched closely, and will move, add and remove pieces by hand later. The style tests stop; the recipe is in `docs/RTS_ART_RULES.md` §6e. Next: how units look moving on the map.
+
 ### 2026-11-20 · Dunes in fields towards the edges, calm sand round the road
 Area: Art · Status: Trying
 The owner noticed the reference has no dunes round the centre: calm sand in a wide band round the road and plaza, orderly ripple fields towards the edges, all following one wind. Test 4 does this and reads as peaceful instead of messy. Evidence: `docs/RTS_ART_RULES.md` §6d.

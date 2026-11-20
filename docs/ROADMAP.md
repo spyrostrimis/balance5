@@ -38,7 +38,9 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Style test 2: painted sand, dune, rock-top, cliff-wall and road textures (art rules §6b)
 - [x] Style test 3: sand that rises and falls everywhere, soft rock edges, crystals2, kitbash scatter (art rules §6c)
 - [x] Style test 4: orderly dunes in fields towards the edges, calm round road and plaza, sparser scatter, lighter rock tops (art rules §6d)
-- [ ] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; softer crest edges; NE cliff ledges
+- [x] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; cliff ledges (art rules §6e). Environment look settled
+- [ ] Units on the style-test map: how soldiers, commanders and vehicles look as they move (scale, facing, shadows, contrast)
+- [ ] Big map pieces (whole cliff formations, dune fields, the Orichalcum rock) as placeable scenes with their blocked tiles, for laying out maps by hand
 - [ ] Decide: is a troop a squad of four soldiers?
 - [ ] Desert tileset with height drawn in: cliff walls, curving road edges, shaded dunes (light from the top-left)
 - [ ] Mission 1 desert map (Red's version) built from tiles

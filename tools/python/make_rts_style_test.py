@@ -4,7 +4,7 @@
 
 Follows docs/RTS_ART_RULES.md: art pixels (1 art px = 2 reference px = 2 screen px at 1080p),
 32 art px tiles, the 48-colour desert palette, light from the top-left.
-Test 1 makes every surface procedurally. Tests 2-4 (style_test/t2/ to t4/) take the painted
+Test 1 makes every surface procedurally. Tests 2-5 (style_test/t2/ to t5/) take the painted
 textures in assets/source_inputs/rts/, shrinks and colour-matches them, and adds the tool fixes
 listed in the art rules §6b. The scene's T key switches between them. Writes to
 assets/textures/rts/style_test/:
@@ -1050,13 +1050,104 @@ def make_test4() -> None:
     save("t4/scatter.png", sc_rgb, sc_a)
 
 
+# --- style test 5: test 4's order with test 3's softer ripples, and cliff ledges -------------------
+# The reference sits between tests 3 and 4: test 4's calm centre and wind-following fields, but
+# softer, more varied ripples like the owner's dunes2.png. Here dunes2 is sampled along the wind
+# (so its rows turn with it and wave together) and shown only inside test 4's fields.
+
+def dune_fields(along: np.ndarray, across: np.ndarray) -> np.ndarray:
+    calm = distance_to_road()
+    fields = smoothstep(38, 90, calm + 40 * (fbm(120, 60) - 0.5))
+    return fields * smoothstep(0.12, 0.3, stretched_noise(along, across, 320, 120))
+
+
+def make_dunes5(sand: np.ndarray) -> np.ndarray:
+    angle = WIND + 0.3 * (fbm(400, 200) - 0.5)
+    along = XX * np.cos(angle) + YY * np.sin(angle)
+    across0 = YY * np.cos(angle) - XX * np.sin(angle)
+    wave = (stretched_noise(along, across0, 42, 170) - 0.5) * 2 * 6.0
+    across = across0 + 8.0 * (fbm(320, 160) - 0.5) * 2 + wave
+    flat = load_source("dunes2.png", 2.4)
+    mu, sd = flat.reshape(-1, 3).mean(0), flat.reshape(-1, 3).std(0) + 1e-3
+    mean_t, std_t = (np.array(v, np.float32) for v in SAND_RIPPLED)
+    rip = seamless((flat - mu) * np.clip(std_t / sd, 0.3, 3) + mean_t)
+    th, tw = rip.shape[:2]
+    oy, ox = float(rng.integers(0, th)), float(rng.integers(0, tw))
+    mx = np.mod(along + ox, tw).astype(np.float32)
+    my = np.mod(across + oy, th).astype(np.float32)
+    ripples = cv2.remap(rip.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
+    # Keep the sand's own colour and swells; take only the ripples' light and shade.
+    lum = ripples.mean(2)
+    rel = lum - cv2.GaussianBlur(lum, (0, 0), 10)
+    amp = dune_fields(along, across0)
+    p = np.clip(rel / 26.0, -1, 1) * amp
+    rgb = lerp(sand, CREST_HI, np.clip(p, 0, 1) * 0.9)
+    return lerp(rgb, TROUGH * 0.85, np.clip(-p, 0, 1) * 0.95)
+
+
+def add_ledges(top: np.ndarray, rgb: np.ndarray, alpha: np.ndarray, tex: dict, rise: int = 7) -> None:
+    """A higher terrace on a big cliff: an inner plateau raised by `rise` px with its own wall,
+    casting a shadow down-right onto the lower level."""
+    inner = (dist_inside(top) + 14 * (fbm(40, 20) - 0.5) * 2) > 26
+    inner = cv2.morphologyEx(inner.astype(np.uint8), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8)).astype(bool)
+    if inner.sum() < 400:
+        return
+    upper = shift(inner, 0, -rise)
+    lower_rgb = rgb.copy()
+    foot = render_rock2(upper, rise, rgb, alpha, tex, soft=True)
+    shade = cv2.GaussianBlur(shift(foot, 5, 4).astype(np.float32), (0, 0), 1.4) * 0.45
+    on_lower = top & ~foot & (shade > 0.03)
+    rgb[on_lower] = lower_rgb[on_lower] * (1 - shade[on_lower, None])
+
+
+def make_rocks5(tex: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    rgb = np.zeros((H, W, 3), np.float32)
+    alpha = np.zeros((H, W), np.float32)
+    feet = np.zeros((H, W), bool)
+    for parts, wall_h in CLIFFS:
+        wall_h += 2
+        top = blob(parts)
+        jag = (noise(5) - 0.5) > 0.32
+        top &= ~(jag & (dist_inside(top) < 3))
+        feet |= render_rock2(top, wall_h, rgb, alpha, tex, soft=True)
+        if wall_h >= 11:
+            add_ledges(top, rgb, alpha, tex)
+    cx, cy, rx, ry = ROCK_CORE
+    top = blob([ROCK_CORE, (cx - 30, cy + 8, 26, 22), (cx + 28, cy - 6, 26, 24)], 0.45)
+    rock = render_stepped_rock(top, rgb, alpha, tex, soft=True)
+    place_crystals4(rgb, alpha, rock)
+    feet |= rock
+    rubble(rock, tex["rock"], rgb, alpha, 0.05)
+    return rgb, alpha, feet
+
+
+def make_test5() -> None:
+    (OUT / "t5").mkdir(exist_ok=True)
+    sand = make_sand4()
+    save("t5/sand.png", sand)
+    save("t5/sand_dunes.png", make_dunes5(sand))
+    rock = match_colour(seamless(load_source("rock_top.png", SHRINK["rock_top.png"])), "rock") * 1.15
+    rock_h = seamless(load_source("rock_top_height.png", SHRINK["rock_top.png"], gray=True))
+    ox, oy = int(rng.integers(0, rock.shape[1])), int(rng.integers(0, rock.shape[0]))
+    wall = match_colour(load_source("cliff_wall2.png", SHRINK["cliff_wall.png"]), "wall")
+    cracks = rock_h < cv2.GaussianBlur(rock_h, (0, 0), 3) - 14
+    tex = {"rock": tile(rock, ox, oy), "rock_h": tile(rock_h, ox, oy), "rock_cracks": tile(cracks, ox, oy), "wall": wall}
+    rocks_rgb, rocks_a, feet = make_rocks5(tex)
+    road_rgb, road_a = make_road2(feet)
+    save("t5/road.png", road_rgb, road_a)
+    save("t5/rocks.png", rocks_rgb, rocks_a)
+    road = road_a > 0
+    sc_rgb, sc_a = make_scatter4(feet | road, feet | road)
+    save("t5/scatter.png", sc_rgb, sc_a)
+
+
 # --- scene --------------------------------------------------------------------------------------
 
 LAYERS = ["sand.png", "sand_dunes.png", "road.png", "rocks.png", "scatter.png"]
 
 
 def write_scene() -> None:
-    tex = LAYERS + [f"t{n}/{t}" for n in (2, 3, 4) for t in LAYERS] + ["reference_half.png"]
+    tex = LAYERS + [f"t{n}/{t}" for n in (2, 3, 4, 5) for t in LAYERS] + ["reference_half.png"]
     tex += sorted({u[0] for u in UNITS})
     lines = ["[gd_scene format=3]", "",
              '[ext_resource type="Script" path="res://scripts/rts/rts_style_test.gd" id="script"]']
@@ -1080,7 +1171,7 @@ def write_scene() -> None:
         lines.append("")
 
     for group, prefix, visible in (("Test1", "", False), ("Test2", "t2/", False), ("Test3", "t3/", False),
-                                   ("Test4", "t4/", True)):
+                                   ("Test4", "t4/", False), ("Test5", "t5/", True)):
         lines += [f'[node name="{group}" type="Node2D" parent="."]'] + ([] if visible else ["visible = false"]) + [""]
         for node, t in zip(("Sand", "Dunes", "Road", "Rocks", "Scatter"), LAYERS):
             sprite(node, prefix + t, group)
@@ -1116,6 +1207,7 @@ def main() -> None:
     make_test2()
     make_test3()
     make_test4()
+    make_test5()
     ref = Image.open(ROOT / "docs" / "references" / "rts_mission1_desert_red.webp").convert("RGB")
     ref.resize((ref.width // 2, ref.height // 2), Image.BOX).save(OUT / "reference_half.png")
     write_scene()

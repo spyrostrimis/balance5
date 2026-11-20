@@ -11,13 +11,18 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/road.png" id="t7"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/rocks.png" id="t8"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t2/scatter.png" id="t9"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/reference_half.png" id="t10"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_commander.png" id="t11"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_squad.png" id="t12"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_tank.png" id="t13"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_commander.png" id="t14"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_squad.png" id="t15"]
-[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_tank.png" id="t16"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t3/sand.png" id="t10"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t3/sand_dunes.png" id="t11"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t3/road.png" id="t12"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t3/rocks.png" id="t13"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t3/scatter.png" id="t14"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/reference_half.png" id="t15"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_commander.png" id="t16"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_squad.png" id="t17"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_blue_tank.png" id="t18"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_commander.png" id="t19"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_squad.png" id="t20"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/unit_red_tank.png" id="t21"]
 
 [node name="RtsStyleTest" type="Node2D"]
 texture_filter = 1
@@ -47,6 +52,7 @@ texture = ExtResource("t4")
 centered = false
 
 [node name="Test2" type="Node2D" parent="."]
+visible = false
 
 [node name="Sand" type="Sprite2D" parent="Test2"]
 texture = ExtResource("t5")
@@ -68,41 +74,63 @@ centered = false
 texture = ExtResource("t9")
 centered = false
 
+[node name="Test3" type="Node2D" parent="."]
+
+[node name="Sand" type="Sprite2D" parent="Test3"]
+texture = ExtResource("t10")
+centered = false
+
+[node name="Dunes" type="Sprite2D" parent="Test3"]
+texture = ExtResource("t11")
+centered = false
+
+[node name="Road" type="Sprite2D" parent="Test3"]
+texture = ExtResource("t12")
+centered = false
+
+[node name="Rocks" type="Sprite2D" parent="Test3"]
+texture = ExtResource("t13")
+centered = false
+
+[node name="Scatter" type="Sprite2D" parent="Test3"]
+texture = ExtResource("t14")
+centered = false
+
 [node name="Units" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="Unit1" type="Sprite2D" parent="Units"]
-texture = ExtResource("t13")
+texture = ExtResource("t18")
 position = Vector2(106, 132)
 
 [node name="Unit2" type="Sprite2D" parent="Units"]
-texture = ExtResource("t12")
+texture = ExtResource("t17")
 position = Vector2(166, 158)
 
 [node name="Unit3" type="Sprite2D" parent="Units"]
-texture = ExtResource("t11")
+texture = ExtResource("t16")
 position = Vector2(196, 150)
 
 [node name="Unit4" type="Sprite2D" parent="Units"]
-texture = ExtResource("t15")
+texture = ExtResource("t20")
 position = Vector2(452, 330)
 
 [node name="Unit5" type="Sprite2D" parent="Units"]
-texture = ExtResource("t14")
+texture = ExtResource("t19")
 position = Vector2(478, 318)
 
 [node name="Unit6" type="Sprite2D" parent="Units"]
-texture = ExtResource("t16")
+texture = ExtResource("t21")
 position = Vector2(528, 362)
 
 [node name="Unit7" type="Sprite2D" parent="Units"]
-texture = ExtResource("t15")
+texture = ExtResource("t20")
 position = Vector2(602, 172)
 
 [node name="Reference" type="Sprite2D" parent="."]
 z_index = 10
 visible = false
-texture = ExtResource("t10")
+texture = ExtResource("t15")
 centered = false
 
 [node name="Camera" type="Camera2D" parent="."]

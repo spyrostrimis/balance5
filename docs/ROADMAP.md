@@ -36,7 +36,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Modular desert kitbash library and a playable mini-map
 - [x] RTS art rules (scale, 48-colour palette, light) and style test 1 with every layer (`docs/RTS_ART_RULES.md`)
 - [x] Style test 2: painted sand, dune, rock-top, cliff-wall and road textures (art rules §6b)
-- [ ] Style test 3: shorter, deeper dune rows; softer rock edges; brighter crystals; more scatter
+- [x] Style test 3: sand that rises and falls everywhere, soft rock edges, crystals2, kitbash scatter (art rules §6c)
+- [ ] Style test 4: more large-scale sand variation and grain, lighter rock tops, more crystals, cliff ledges
 - [ ] Decide: is a troop a squad of four soldiers?
 - [ ] Desert tileset with height drawn in: cliff walls, curving road edges, shaded dunes (light from the top-left)
 - [ ] Mission 1 desert map (Red's version) built from tiles

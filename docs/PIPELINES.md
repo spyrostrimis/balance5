@@ -191,7 +191,8 @@ Judge a change to the RTS look on one screen that has every layer, next to the r
 3. Regenerate: `C:/Python312/python.exe tools/python/make_rts_style_test.py`, then `Godot --path . --headless --import`.
 4. Capture: `Godot --path . --script res://tests/capture_rts_style_test.gd` writes `render_captures/rts_style/style_test.png` and `style_reference.png`.
 5. Or look in game: Developers Page → RTS Style Test. **T** switches test 1 / test 2, keys 1–5 toggle layers, **R** lays the reference on top, **G** shows the 32 px tiles.
-6. Write the verdict (right, gaps largest first) in the art rules §6, and a decision if a rule changes.
+6. Measure the sand against the reference (light variation at 1–2, 2–5, 5–12 and 12–30 px, and colour variety; art rules §6c) as well as looking.
+7. Write the verdict (right, gaps largest first) in the art rules §6, and a decision if a rule changes.
 
 ### Done when
 - Both captures were looked at, the gaps are listed, and the next change targets the largest gap.

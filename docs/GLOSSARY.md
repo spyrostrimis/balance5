@@ -611,6 +611,16 @@ Area: Art
 Made by a program from rules and random numbers instead of drawn by hand. Good for exact, repeatable things (shapes, shadows, outlines); weaker for rich surfaces, which tend to look machine-made.
 *Also:* procedurally generated
 
+### Relief
+Area: Art
+The rises and dips of a surface. On a flat top-down map, relief is shown only by light: slopes facing the light are brighter, slopes facing away are darker. The reference sand has relief everywhere, not only in its dunes.
+*Also:* rolling relief, undulation
+
+### Variation by size
+Area: Art
+How much the light changes across small, medium and large distances in a picture (for example 1–2, 5–12 and 12–30 pixels). Two pictures can have the same average colour but very different variation; more variation reads as livelier and more "vibrant".
+*Also:* band-pass, frequency bands
+
 ### Colour matching
 Area: Art
 Shifting a texture's colours so its average colour and contrast equal a target, here the same material in the reference. It makes textures from different sources look like one picture before the palette is applied.

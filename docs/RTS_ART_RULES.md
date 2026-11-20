@@ -98,11 +98,42 @@ Same scene; **T** switches between test 1 and test 2. Inputs: the owner's eight 
 
 **Verdict:** the hybrid method works. Painted textures give the surfaces; our tools give shape, light and the palette. The remaining gaps are tuning, not method.
 
+## 6c. Style test 3 (2026-11-20): the sand's constant rise and fall
+
+**T** now cycles tests 1, 2 and 3. Captures: `render_captures/rts_style/style_test.png`, `t3_side_by_side.png`, `t3_cmp_*.png`.
+
+**What the owner saw, measured.** In the reference, sand looks like it constantly rises and dips, with ever-changing colour, and seems more vibrant. Measured on the sand of each image at art scale:
+
+| | Brightness | Saturation | Light change at 1–2 px | 2–5 px | 5–12 px | 12–30 px | Colour variety |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Reference | 223 | 202 | 8.4 | 9.4 | 7.3 | 8.0 | 2.0 |
+| Test 2 | 223 | 207 | 7.9 | 6.5 | 3.1 | 1.9 | 1.4 |
+| Test 3 | 223 | 206 | 5.6 | 8.4 | 6.6 | 5.5 | 1.7 |
+
+The average brightness and saturation were already equal. "Vibrant" came from **variation**: the reference changes light 2–4 times more over medium and large distances, and its colour wanders more. Lesson: compare variation, not averages.
+
+**What changed in test 3:**
+- **Ground:** the owner's `dunes2.png`, a dense ripple field (shrink 2.3, ripples ≈ 15 art px apart), contrast-matched to the whole reference sand. It is bent by smooth offsets so the rows curve and repeats hide. `sand.png`'s fine grain is mixed back in.
+- **Rolling relief** over the whole desert, lit from the top-left, plus slow drifts between redder and yellower sand.
+- **Dune fields:** a few bigger ones with deeper shadows, kept near the ground ripples' direction (crossing them looked crosshatched).
+- **Cliff walls:** `cliff_wall2.png`, with warm brown columns.
+- **Crystals:** `crystals2.png`, with fewer and bigger crystals. Shrunk to 66 px, its crystals survive; only the bright ones are kept, with a glow.
+- **Rock edges:** soft. A lit rim faces the top-left and a darkened (not black) edge faces down-right, replacing the black outline.
+- **Scatter:** pebbles, specks and shrubs from the Desert Kitbash Mini-Map (`assets/textures/kitbash/`). Pebbles are at 60% (at full size they read as dark cannonballs), shrubs at 75%.
+
+**Remaining gaps:**
+1. **Large-scale variation:** 5.5 against 8.0. Fine grain: 5.6 against 8.4.
+2. **Rock tops:** slightly too dark and even.
+3. **The Orichalcum rock:** fewer crystals than the reference.
+4. **The NE cliff:** reads as one large flat mass where the reference has more ledges and an oasis.
+
+These are tuning, not method.
+
 ## 7. Texture prompts (ChatGPT, one image each, 1024×1024 unless noted)
 
 Rewritten after the close-up comparison (§6): each prompt names what the reference has and style test 1 lacked.
 
-**Where to save.** `assets/source_inputs/rts/` (Godot ignores this folder; Git keeps the originals), with these exact names: `sand.png`, `dunes.png`, `rock_top.png` + `rock_top_height.png`, `cliff_wall.png`, `road.png` + `road_height.png`, `crystals.png`. Download the full-size image, not a screenshot. Seams and exact size do not matter; the tools fix both.
+**Where to save.** `assets/source_inputs/rts/` (Godot ignores this folder; Git keeps the originals), with these exact names: `sand.png`, `dunes.png`, `rock_top.png` + `rock_top_height.png`, `cliff_wall.png`, `road.png` + `road_height.png`, `crystals.png`. Second versions keep the name with a 2 (`dunes2.png`, `cliff_wall2.png`, `crystals2.png`); test 3 uses those. Download the full-size image, not a screenshot. Seams and exact size do not matter; the tools fix both.
 
 **Start every chat with:** "I need game textures for a top-down 2D strategy game. Every image: seen from directly above (no perspective, no horizon), detailed digital painting with fine grain in every pixel, NOT pixel art, no outlines, no text, no vignette, warm light from the top-left, square 1024x1024."
 

@@ -1,12 +1,13 @@
 extends Node2D
 ## RTS style test: one screen with every art layer, to judge the look against the reference.
 ## Built by tools/python/make_rts_style_test.py. Keys toggle layers so each one's effect shows:
-##   T test 1 (procedural) / test 2 (painted textures)   1 dunes   2 road   3 rocks   4 scatter
+##   T cycles test 1 (procedural) / 2 (painted textures) / 3 (sand relief, kitbash scatter)   1 dunes   2 road   3 rocks   4 scatter
 ##   5 units   R reference (same scale)   G 32 px tile grid
 ##   Z art pixel = 2 screen pixels at 1080p (zoom 4/3) vs 1 (zoom 2/3)
 
 const GRID_COLOR := Color(0, 0, 0, 0.18)
-const TESTS := ["Test1", "Test2"]
+const TESTS := ["Test1", "Test2", "Test3"]
+const TEST_NAMES := ["1 procedural", "2 painted", "3 sand relief"]
 
 var _show_grid := false
 
@@ -24,9 +25,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		return
 	match key.keycode:
 		KEY_T:
-			for test in TESTS:
-				var group := get_node(test) as CanvasItem
-				group.visible = not group.visible
+			var next := (_current_test() + 1) % TESTS.size()
+			for i in TESTS.size():
+				(get_node(TESTS[i]) as CanvasItem).visible = i == next
 		KEY_1:
 			_toggle_layer("Dunes")
 		KEY_2:
@@ -57,6 +58,13 @@ func _toggle_layer(layer: String) -> void:
 		_toggle(get_node("%s/%s" % [test, layer]))
 
 
+func _current_test() -> int:
+	for i in TESTS.size():
+		if (get_node(TESTS[i]) as CanvasItem).visible:
+			return i
+	return 0
+
+
 func _toggle(node: CanvasItem) -> void:
 	node.visible = not node.visible
 
@@ -71,8 +79,8 @@ func _draw() -> void:
 
 
 func _update_help() -> void:
-	var test := "2 painted" if ($Test2 as CanvasItem).visible else "1 procedural"
+	var test: String = TEST_NAMES[_current_test()]
 	var on := func(path: String) -> String: return "on" if (get_node(path) as CanvasItem).visible else "off"
 	_help.text = "T test %s · 1 dunes %s · 2 road %s · 3 rocks %s · 4 scatter %s · 5 units %s · R reference %s · G grid · Z zoom %.2f · Esc back" % [
-		test, on.call("Test2/Dunes"), on.call("Test2/Road"), on.call("Test2/Rocks"), on.call("Test2/Scatter"),
+		test, on.call("Test3/Dunes"), on.call("Test3/Road"), on.call("Test3/Rocks"), on.call("Test3/Scatter"),
 		on.call("Units"), on.call("Reference"), _camera.zoom.x]

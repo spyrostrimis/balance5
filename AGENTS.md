@@ -75,7 +75,8 @@ The commander script defaults to D4b. With a `route` object assigned it clamps t
 
 ## Developers Page
 
-- Add a standalone scene to the opening scene's **Builds** array with its title, scene path, AI credit and **Milestone UTC** (`YYYY-MM-DD HH:MM`). For a published playable build choose **Play**. The main button selects the newest dated, listed, available Play entry regardless of array order. Use **View** for static previews. A local study can be played from its card with the milestone blank until publication.
+- Append a standalone scene to the opening scene's **Builds** array with its title, description, scene path, section and AI credit. Choose **Play** for playable scenes and **View** for static previews. The opening button selects the newest listed, available build or study. **Built UTC** (`YYYY-MM-DD HH:MM[:SS]`) records a build date explicitly. When it and **Milestone UTC** are blank, Godot uses the scene file's last saved time, which the Windows export captures. Keep **Milestone UTC** for publication dates.
+- The Developers Page defaults to **Newest first**. Drag a card within its section or drag a section heading to switch to **Manual order**. Use **Edit** on a card to update its title and description. The game saves these preferences on this computer.
 - The Windows Desktop preset produces `builds/Balance.exe`. Re-export after changing the catalog.
 - Uncheck **Listed** to retire an entry. Missing scenes are skipped. Check new entries by launching them from the page and returning with Esc.
 

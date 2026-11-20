@@ -63,6 +63,7 @@ The HD-2D walking sequence. If it fails, the RTS alone is the game.
 
 ## Story and presentation
 
+- [x] Feature the newest build on the opening screen and add date sorting, drag order and text editing to the Developers Page
 - [x] Game design document: world, characters, factions, Mission 1 (`docs/GAME_DESIGN.md`)
 - [ ] Name the main characters, planets and factions
 - [ ] Decide who the Red Commander is

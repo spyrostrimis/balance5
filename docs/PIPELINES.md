@@ -142,14 +142,15 @@ Make a new scene playable from the in-game menu so you can try it.
 
 ### Steps
 1. Open `scenes/ui/opening_screen.tscn` and select the root node.
-2. In the Inspector, add an entry to the **Builds** array: title, scene path, AI credit, section.
+2. In the Inspector, append an entry to the **Builds** array with its title, description, scene path, AI credit and section.
 3. Choose **Play** for playable scenes, **View** for static previews.
-4. Leave **Milestone UTC** blank for a local study. Fill it (`YYYY-MM-DD HH:MM`) to publish; the newest dated Play entry becomes the main Play button.
+4. The opening button features the newest available entry, including local studies. The scene file's last saved time supplies the date when both date fields are blank. Set **Built UTC** (`YYYY-MM-DD HH:MM[:SS]`) to record a fixed build time and use **Milestone UTC** to record publication. For older entries with only a milestone, the catalog uses that date.
 5. Launch it from the page and return with Esc.
 6. Re-export (*Project → Export → Windows Desktop*) to update `builds/Balance.exe`.
 
 ### Done when
 - The card launches, Esc returns, and Studio → Builds lists it after **Refresh**.
+- In the game, use **Newest first** or **Oldest first** for date order. Drag a card within its section or drag a section heading to save a manual order. Choose **Edit** on a card to save a title and description on this computer. Shared edits go in the **Builds** array.
 
 ## Capture and compare a scene
 Area: Testing · Status: In use · Tools: Godot, Balance Studio

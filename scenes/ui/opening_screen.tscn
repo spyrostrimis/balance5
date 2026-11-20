@@ -61,6 +61,7 @@ title = "Free packs in the canyon"
 summary = "Local study from 20 Nov 2026. Canyon v2 with craftpix low-poly mountains and a photo-scanned rock (local only). P = packs on/off; all HD-2D Pixel A/B keys work (4/5 sets, R raised stones)."
 scene_path = "res://scenes/maps/canyon_v2_packs.tscn"
 credit = "Claude Code"
+built_utc = "2026-11-19 23:57:20"
 
 [sub_resource type="Resource" id="Build_pixel_ab"]
 script = ExtResource("4")
@@ -68,6 +69,7 @@ title = "HD-2D Pixel A/B"
 summary = "Local study from 19 Nov 2026. Canyon v2 surfaces: 1 = realistic, 2/3 = derived pixel art at 32/64 texels per metre, 4 = authored pixel sets, 5 = authored smooth sets (press again to cycle; docs/PIXEL_TEXTURE_PROMPTS.md). R = raised road stones."
 scene_path = "res://scenes/maps/canyon_v2_pixel_ab.tscn"
 credit = "Claude Code"
+built_utc = "2026-11-19 19:15:02"
 
 [sub_resource type="Resource" id="Build_canyon_v2"]
 script = ExtResource("4")
@@ -75,6 +77,7 @@ title = "Canyon v2"
 summary = "Local study from 19 Nov 2026. The composition test rebuilt as a flat scene: an editable Path3D route places every module from layout data."
 scene_path = "res://scenes/maps/canyon_v2.tscn"
 credit = "Claude Code"
+built_utc = "2026-11-19 00:04:48"
 
 [sub_resource type="Resource" id="Build_composition"]
 script = ExtResource("4")
@@ -82,6 +85,7 @@ title = "Composition test"
 summary = "Local study from 19 Nov 2026. S-curve route, stone right wall, −21° camera and backlit sun. C original camera · V atmosphere · B sun."
 scene_path = "res://scenes/maps/desert_canyon_composition_test.tscn"
 credit = "Claude Code"
+built_utc = "2026-11-18 23:45:18"
 
 [sub_resource type="Resource" id="Build_sett_study"]
 script = ExtResource("4")
@@ -89,6 +93,7 @@ title = "Nine-stone road study"
 summary = "Local study from 18 Nov 2026, 20:03 EET. Press 1 for Session 3, 2 for painted normals, or 3 for raised stones."
 scene_path = "res://scenes/maps/desert_canyon_sett_study.tscn"
 credit = "OpenAI Codex"
+built_utc = "2026-11-18 18:03"
 
 [sub_resource type="Resource" id="Build_session_1"]
 script = ExtResource("4")
@@ -132,7 +137,7 @@ title = "RTS Test Map — Select, Move, Attack"
 summary = "Placeholder tiles and discs: select Blue with click or drag box, right-click to move along A* routes or attack Red."
 scene_path = "res://scenes/maps/rts_test_map.tscn"
 credit = "Claude Code (Opus 5.5)"
-milestone_utc = ""
+built_utc = "2026-11-19 23:57:20"
 
 [sub_resource type="Resource" id="Build_kitbash_minimap"]
 script = ExtResource("4")
@@ -259,6 +264,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 54)
 layout_mode = 2
 size_flags_horizontal = 0
+text_overrun_behavior = 3
 text = "Play"
 
 [node name="DevelopersPage" type="Button" parent="Opening"]
@@ -313,7 +319,16 @@ visible = false
 layout_mode = 2
 autowrap_mode = 3
 
+[node name="SortOrder" type="OptionButton" parent="Library"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(154, 34)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"QuietButton"
+tooltip_text = "Sort builds and sections by date, or use your saved drag order"
+
 [node name="Scroll" type="ScrollContainer" parent="Library"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -324,3 +339,35 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 22
+
+[node name="EditBuild" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Edit build"
+size = Vector2i(480, 310)
+visible = false
+theme = ExtResource("3")
+ok_button_text = "Save"
+
+[node name="Fields" type="VBoxContainer" parent="EditBuild"]
+offset_right = 454.0
+offset_bottom = 255.0
+theme_override_constants/separation = 7
+
+[node name="TitleLabel" type="Label" parent="EditBuild/Fields"]
+layout_mode = 2
+text = "Title"
+
+[node name="EditTitle" type="LineEdit" parent="EditBuild/Fields"]
+unique_name_in_owner = true
+layout_mode = 2
+max_length = 100
+
+[node name="SummaryLabel" type="Label" parent="EditBuild/Fields"]
+layout_mode = 2
+text = "Description"
+
+[node name="EditSummary" type="TextEdit" parent="EditBuild/Fields"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+wrap_mode = 1

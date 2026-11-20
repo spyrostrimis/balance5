@@ -507,8 +507,13 @@ The in-game menu listing every playable build and study. Open it from the openin
 
 ### Milestone UTC
 Area: Project
-The publication date and time on a Developers Page entry (`YYYY-MM-DD HH:MM`). The newest dated, listed **Play** entry becomes the main Play button.
+The publication date and time on a Developers Page entry (`YYYY-MM-DD HH:MM`). Older entries use it as their build date when they have no separate build date.
 *Also:* milestone
+
+### Build date
+Area: Project
+The date and time the Developers Page uses to sort builds and choose the opening button. A build can use its recorded **Built UTC** time, its publication date, or the last time its scene file was saved. UTC is the same time reference on every computer.
+*Also:* Built UTC
 
 ### Play and View
 Area: Project

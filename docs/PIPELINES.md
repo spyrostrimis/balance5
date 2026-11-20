@@ -35,7 +35,10 @@ Turn a generated image into a game texture for one surface role (cliff strata, s
 ### Steps
 1. **Generate** the image with ChatGPT or Perchance using the prompt for its role in `docs/PIXEL_TEXTURE_PROMPTS.md`. For ChatGPT, also ask for the matching height map. (Gemini is out: it draws brickwork.)
 2. **Save** the image somewhere on disk and note its path.
-3. **Run pixel snap** (or ask an agent to):
+3. **Preferred: the painted recipe.** Ask for a detailed *painted* texture (not pixel art), then:
+   `C:/Python312/python.exe tools/python/pixel_snap.py cobble "C:\path\image.png" --painted --height "C:\path\height.png" --set art_look`
+   It shrinks the image to 64 texels per metre at the role's size and uses the shared goal palette, like B64.
+4. **Only for images drawn as real pixel art: run pixel snap** (or ask an agent to):
    `C:/Python312/python.exe tools/python/pixel_snap.py strata "C:\path\image.png" --height "C:\path\height.png" --set art_gpt`
 4. **Run the smooth procedure** on the same image:
    `C:/Python312/python.exe tools/python/smooth_texture.py strata "C:\path\image.png" --height "C:\path\height.png" --set hr_gpt`

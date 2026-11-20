@@ -450,3 +450,18 @@ Same day. The A/B scene gained mode **4 = authored set**. It reads `assets/textu
 - craftpix low-poly desert mountains (licence `craftpix.net/file-licenses`, link kept in `assets/models/packs/craftpix_desert/`): a 14 m mesa and a bluff beyond the exit and a pinnacle group behind the right wall, all wearing `canyon_rock.tres`. They take the strata and slate caps naturally and add a distant mesa silhouette at the exit, but the canyon walls hide most of them at walking height. Better uses: the RTS map and RPG horizons.
 - Grand Canyon rock photo scan (1,000 triangles, no licence found; kept in the git-ignored `assets/models/packs_local/`): with its own photo texture it is grey-white and realistic, and it clashes with the painted canyon. With the canyon rock material it fits. Photo textures from packs need repainting or our material.
 [Packs off / on](../render_captures/packs/compare_packs.jpg) · [Scan at spawn](../render_captures/packs/crop_scans.png)
+
+## 15. RPG canyon Phase 0: lock the look (2026-11-20)
+
+**Why B64 beat the authored sets.** B64 (`tools/python/build_pixel_textures.py`) starts from detailed painted art (Anti's ChatGPT road: many small stones, varied colours, chips, sand grains), area-averages it to 64 texels per metre, and maps every surface onto one 48-colour palette taken from the RPG goal image. The authored `art_gpt` set starts from an image the AI drew as cartoon pixel art (outlines, flat fills) with its own 24 colours. The detail and the shared palette are what make B64 read as real; the cartoon source is what reads as fake. **Rule from now on: ask the generator for a detailed painted texture, and make the pixels ourselves.**
+
+**Tool.** `pixel_snap.py --painted` is that recipe for any image: area-average to `--density` at the role's size (or `--metres`), optional cosine wrap (`--wrap`), goal palette (`palette_preview.png`) by default, normal and ORM from `--height`. `relief_height.py` now drops dark specks smaller than 80 px (pits inside a stone are not joints). Self-test passes.
+
+**Candidates** (`scenes/maps/canyon_v2_packs.tscn`, packs on, captures `render_captures/phase0/P0_*`, all grounded with the exit signal):
+- `P0_B64`: B64 as it was, flat road.
+- `P0_A15`, `P0_A25`: look A = set `art_look_a` (Anti's road through `--painted`, 3.2 m, with its height) raised 1.5 and 2.5 cm; every other surface falls back to B64.
+- `P0_B20`: look B = set `art_look_b`, the same road raised 2 cm plus the ChatGPT strata (`art_gpt`'s) on the walls.
+
+[All looks](../render_captures/phase0/phase0_looks.jpg) · [Road crops at spawn](../render_captures/phase0/phase0_road_crops.png)
+
+**Reading.** At 1.5 to 2.5 cm the small stones get real edges and look walkable, not stepping stones. The road turns darker and browner than flat B64, because the side shading (`relief_side_shade` 0.55) covers a large share of these small stones; this is tunable. The ChatGPT strata gives warmer, livelier walls than B64's grainy derived strata. The photo-textured scan still stands out grey-white in every look. The owner chooses.

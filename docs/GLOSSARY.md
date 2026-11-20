@@ -251,7 +251,8 @@ A sharper way to sample textures seen at a slant, like a road stretching away. 4
 ### Palette
 Area: Art
 The fixed list of colours an image may use. A **colour ramp** is a short run of shades of one material from darkest to lightest. Pixel art keeps palettes small (4–7 colours per material).
-*Also:* colour ramp, color ramp, ramp
+*In Balance:* the **goal palette** (`assets/textures/pixel_ab/palette_preview.png`) is 48 colours taken from the RPG goal image; B64 and `pixel_snap.py --painted` map every surface onto it, so they all belong to the same picture.
+*Also:* colour ramp, color ramp, ramp, goal palette
 
 ### Pixel art
 Area: Art

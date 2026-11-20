@@ -35,6 +35,8 @@ def main() -> None:
     parser.add_argument("--sets", nargs="+", required=True, help="set folders to write into (art* and/or hr*)")
     parser.add_argument("--joint", type=float, default=0.42,
                         help="joint darkness threshold, as a fraction of the stone brightness (default 0.42)")
+    parser.add_argument("--speck", type=int, default=80,
+                        help="dark blobs smaller than this many pixels are pits, not joints (default 80)")
     parser.add_argument("--seam", type=int, default=36, help="cross-fade width for hr* sets (default 36, as smooth_texture)")
     args = parser.parse_args()
 
@@ -55,6 +57,12 @@ def main() -> None:
     local = cv2.dilate(cv2.GaussianBlur(lum_p, (0, 0), 2.0), np.ones((25, 25), np.uint8))[pad:-pad, pad:-pad]
     darkness = 1.0 - lum / np.maximum(local, 1e-3)
     joint = np.clip((darkness - args.joint * 0.6) / (args.joint * 0.8), 0.0, 1.0)
+    # Small dark specks inside a stone (pits, grain) are not joints: drop isolated blobs.
+    blobs = (joint > 0.5).astype(np.uint8)
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(blobs, connectivity=8)
+    small = np.zeros(count, bool)
+    small[1:] = stats[1:, cv2.CC_STAT_AREA] < args.speck
+    joint[small[labels]] = 0.0
     stone = (1.0 - joint) * np.clip((base - 0.10) / 0.25, 0.0, 1.0)
 
     # Distance from the edge of each stone gives steep shoulders and a flat-ish top.

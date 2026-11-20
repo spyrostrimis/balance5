@@ -41,6 +41,11 @@ The first playable vertical slice: four troops plus a field commander per side f
 
 ## Next — RPG canyon (secondary)
 
+Plan agreed 2026-11-20: Phase 0 lock the look → 1 build `scenes/rpg/canyon_01.tscn` → 2 make it playable (walk, landmark, optional fight, briefing, hand-off to Mission 1) → 3 atmosphere and sound → 4 ship as a Play build.
+
+- [x] Phase 0: why B64 looked best (painted source + shared palette) and `pixel_snap.py --painted`
+- [ ] Phase 0: owner picks the look (B64 flat, look A raised, or look B with ChatGPT strata), §15
+
 The HD-2D walking sequence. If it fails, the RTS alone is the game.
 
 - [x] Flat, route-driven canyon v2 with collision corridor and navmesh

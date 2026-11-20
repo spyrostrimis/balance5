@@ -30,6 +30,10 @@ The owner chose plain team-coloured discs and flat placeholder tiles over the ki
 Area: RTS · Status: Trying
 Without it, Red troops stood still while their neighbour was shot. Idle units shoot what is in range, chase enemies within their guard range (4–6 tiles), and hit back at whoever shoots them. A later Hold command will turn chasing off.
 
+### 2026-11-20 · Painted sources, pixels made by us
+Area: Art · Status: Trying
+B64 looked more real than every AI "pixel art" set because it starts from a detailed painted image and makes the pixels itself (64 texels per metre, one palette from the goal image). From now on, generators make detailed painted textures, and `pixel_snap.py --painted` makes the pixels. Evidence: experiment log §15.
+
 ### 2026-11-20 · Pack models wear our canyon material
 Area: Art · Status: Trying
 Free-pack shapes (craftpix low-poly mountains) fit the canyon once they use `canyon_rock.tres`; photo-scan textures look realistic and clash with the painted style. Packs without a found licence stay local and uncommitted. Evidence: experiment log §14d.

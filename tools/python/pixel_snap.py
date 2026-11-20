@@ -20,6 +20,12 @@ Examples (from the project root):
   C:/Python312/python.exe tools/python/pixel_snap.py strata  in.png --cell 7.5     (override detection)
   C:/Python312/python.exe tools/python/pixel_snap.py cobble  in.png --height in_height.png --set art_gpt
 
+--painted is the B64 recipe for detailed painted images (not drawn as pixel art), which looked best in the
+canyon: area-average the image down to --density texels per metre at the role's size (or --metres), then
+map it onto the shared 48-colour goal palette (palette_preview.png, from the RPG goal image) so every
+surface shares one set of colours. Grid detection is skipped.
+  C:/Python312/python.exe tools/python/pixel_snap.py cobble painted.png --painted --height h.png --metres 3.2 3.2 --set art_look
+
 Each --set folder (art, art_gpt, art_perchance, ...) is one selectable set in the A/B scene: press 4 again
 to cycle through them. tools/python/smooth_texture.py processes the same image the high-resolution way
 (sets named hr*, key 5) for a procedure-against-procedure comparison.
@@ -37,6 +43,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SETS = ROOT / "assets" / "textures" / "pixel_ab"
 PREVIEWS = ROOT / "tmp" / "pixel_snap"
+# The shared palette of the derived B64 set: 48 colours from the RPG goal image and the canyon art
+# (tools/python/build_pixel_textures.py).
+GOAL_PALETTE = SETS / "palette_preview.png"
 
 # role -> (game file name, kind, extra maps, intended coverage in metres)
 ROLES = {
@@ -244,6 +253,13 @@ def main() -> None:
     parser.add_argument("--set", default="art",
                         help="output folder under assets/textures/pixel_ab, starting with 'art' (default art)")
     parser.add_argument("--dry-run", action="store_true", help="only report the detected grid")
+    parser.add_argument("--painted", action="store_true",
+                        help="B64 recipe for detailed painted images: area-average to --density at the role's size, "
+                             "goal palette (no grid detection)")
+    parser.add_argument("--metres", type=float, nargs=2, metavar=("ALONG", "UP"),
+                        help="--painted: area one repeat of the image covers (default: the role's size)")
+    parser.add_argument("--wrap", type=int, default=0,
+                        help="--painted: cosine cross-fade width in source pixels to make a non-tiling image tile")
     args = parser.parse_args()
     if not args.set.startswith("art"):
         parser.error("--set must start with 'art' (the A/B scene lists pixel sets by that prefix)")
@@ -252,6 +268,9 @@ def main() -> None:
     source = Image.open(args.image).convert("RGBA")
     rgba = np.asarray(source)
     rgb = rgba[:, :, :3].astype(float)
+    if args.painted:
+        painted(args, source, file_name, kind, extras, coverage)
+        return
     if args.cell:
         cell_x = cell_y = args.cell
         phase_x = detect_grid(edge_profile(rgb, 1), args.cell, args.cell)[1]
@@ -348,6 +367,53 @@ def main() -> None:
         tile.resize((w * 3 * max(1, scale // 2), h * 3 * max(1, scale // 2)), Image.NEAREST).save(PREVIEWS / f"{args.role}_3x3.png")
     print(f"Wrote {out_dir / file_name} ({w}x{h} texels = {metres[0]} x {metres[1]} m at {args.density:g}/m)"
           f" and previews in {PREVIEWS}.\nOpen the A/B scene and press 4 (again to cycle sets) until it shows '{args.set}'.")
+
+
+def painted(args, source: Image.Image, file_name: str, kind: str, extras: list, coverage) -> None:
+    """The B64 recipe: area-average to the game density, then the shared goal palette."""
+    if kind != "texture":
+        raise SystemExit("--painted is for texture roles; sprites need a keyed background (drop --painted)")
+    metres = [float(m) for m in (args.metres or coverage)]
+    size = (max(1, round(metres[0] * args.density)), max(1, round(metres[1] * args.density)))
+    albedo = np.asarray(source.convert("RGB")).astype(np.float32)
+    height = None
+    if args.height:
+        height = np.asarray(Image.open(args.height).convert("L").resize(source.size, Image.LANCZOS)).astype(np.float32)
+    if args.wrap:
+        from smooth_texture import cosine_wrap  # local import: smooth_texture imports this module
+        arrays = [albedo] + ([height] if height is not None else [])
+        arrays = cosine_wrap(cosine_wrap(arrays, args.wrap, 0), args.wrap, 1)
+        albedo, height = arrays[0], (arrays[1] if height is not None else None)
+    to_img = lambda a, mode: Image.fromarray(np.clip(np.rint(a), 0, 255).astype(np.uint8), mode)  # noqa: E731
+    small = np.asarray(to_img(albedo, "RGB").resize(size, Image.BOX))
+    rgba = np.dstack([small, np.full(small.shape[:2], 255, np.uint8)])
+    palette = args.palette or GOAL_PALETTE
+    cells = quantize(rgba, args.colors, palette)
+    relief = (np.asarray(to_img(height, "L").resize(size, Image.BOX)).astype(float) / 255.0
+              if height is not None else luminance(cells))
+    metres = [round(size[0] / args.density, 4), round(size[1] / args.density, 4)]
+    out_dir = SETS / args.set
+    save_png(np.ascontiguousarray(cells[:, :, :3]), out_dir / file_name, "RGB")
+    if "normal" in extras:
+        save_png(normal_map(relief, args.normal_strength), out_dir / file_name.replace("_albedo", "_normal"), "RGB")
+    if "orm" in extras:
+        save_png(orm_map(relief), out_dir / file_name.replace("_albedo", "_orm"), "RGB")
+    print(f"{args.image.name}: {source.width}x{source.height} px -> {size[0]}x{size[1]} texels = "
+          f"{metres[0]} x {metres[1]} m at {args.density:g}/m, palette {Path(palette).name}. "
+          f"Seam ratio X {seam_ratio(cells, 1):.2f}, Y {seam_ratio(cells, 0):.2f}.")
+    manifest_path = out_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    manifest.setdefault("textures", {})[file_name] = {
+        "role": args.role, "cells": list(size), "density": args.density, "metres": metres,
+        "procedure": "painted", "source": args.image.name, "height": args.height.name if args.height else None,
+        "palette": Path(palette).name, "colors": len(np.unique(cells[:, :, :3].reshape(-1, 3), axis=0)),
+        "updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
+    PREVIEWS.mkdir(parents=True, exist_ok=True)
+    tile = np.tile(cells[:, :, :3], (3, 3, 1))
+    scale = max(1, 768 // tile.shape[1])
+    Image.fromarray(tile).resize((tile.shape[1] * scale, tile.shape[0] * scale), Image.NEAREST).save(PREVIEWS / f"{args.role}_3x3.png")
 
 
 if __name__ == "__main__":

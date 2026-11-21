@@ -136,7 +136,7 @@ milestone_utc = "2026-11-18 14:05"
 [sub_resource type="Resource" id="Build_kit3d"]
 script = ExtResource("4")
 title = "3D Kit Canyon"
-summary = "Option 2 study from 21 Nov 2026: canyon v2 with real 3D curb blocks wearing ChatGPT pixel textures. K = curbs on/off; 3 = B64 look, 4 = art_gpt look; P = packs."
+summary = "Option 2 study from 21 Nov 2026: canyon v2 with real 3D curb blocks wearing ChatGPT pixel textures. K = curbs on/off; W = new sandstone cliffs or old walls; 3 = B64 look, 4 = art_gpt look; P = packs."
 scene_path = "res://scenes/maps/canyon_v3_kit.tscn"
 section = "Canyon builds"
 credit = "ChatGPT Images and Claude Code"

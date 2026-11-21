@@ -173,6 +173,19 @@ Turn a flat drawing of a stone's faces into a real 3D block with pixel textures,
 ### Done when
 - The curbs follow the whole road, sit in the sand without gaps, match the road's colours, and the commander still walks start to exit.
 
+## 3D cliffs from ChatGPT block and masonry sheets
+Area: 3D · Status: Trying · Tools: ChatGPT, Python, Blender, Godot
+Build stepped canyon walls from rounded sandstone blocks whose 3D shapes come from their drawn outlines.
+
+### Steps
+1. **ChatGPT:** sheet A, six blocks (tops above, fronts below, plain dark purple background); sheet B, a dry-stone wall tile and a paved terrace tile side by side. Attach the cliffs image of the 2D kit as the style. Save as `assets/source_inputs/cliff_blocks_gpt.webp` and `cliff_masonry_gpt.webp`.
+2. **Python:** `C:/Python312/python.exe tools/python/build_cliff_atlas.py` writes the atlas, tiles, normal maps and block outlines to `assets/textures/cliffs/`. Check `tmp/cliff_atlas_preview.png`.
+3. **Blender:** `C:/Blender/blender.exe -b --factory-startup --disable-autoexec --python tools/blender/build_cliff_blocks.py` writes `assets/models/cliffs/cliff_blocks.glb`.
+4. **Godot:** `scripts/canyon/canyon_cliffs.gd` builds both walls along the route (row count, setback, rise and plateau are settings on the node). Open `scenes/maps/canyon_v3_kit.tscn`, press W to compare with the old walls, capture both.
+
+### Done when
+- Both walls follow the whole road, no gaps show through to the sky or the floor, and the commander still walks start to exit.
+
 ## Free pack model into the canyon
 Area: 3D · Status: Trying · Tools: Blender, Godot
 Use a downloaded model (FBX or OBJ) as a wall piece, landmark or boulder.

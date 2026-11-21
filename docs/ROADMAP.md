@@ -69,7 +69,10 @@ Plan agreed 2026-11-20: Phase 0 lock the look → 1 build `scenes/rpg/canyon_01.
 - [x] 3D kit step 1: real curb blocks along the road (`canyon_v3_kit.tscn`, key K, §17)
 - [ ] 3D kit step 2: road surface (smaller stones, darker sand strip by the curbs)
 - [ ] 3D kit step 3: bushes and grass as pixel sprites at the wall foot and between curbs and cliffs
-- [ ] 3D kit step 4: stepped cliff modules in Blender (rounded sandstone blocks, dry-stone courses)
+- [x] 3D kit step 4, first pass: stepped sandstone cliffs from ChatGPT block outlines (key W, §18)
+- [x] 3D kit step 4, second pass: darker, purple shade, fewer larger blocks, strata faces, rubble (§18b)
+- [x] Cliffs moved out to 2.7 m: an open sand strip between curbs and cliffs (§18c)
+- [ ] Cliffs: owner verdict; possible third pass (taller faces, sand terraces)
 - [ ] Compare the 3D kit canyon with the 2D canyons and decide the RPG direction
 
 The HD-2D walking sequence. If it fails, the RTS alone is the game.

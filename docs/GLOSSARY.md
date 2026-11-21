@@ -130,6 +130,11 @@ Area: 3D
 The three directions in 3D. In Godot, **X** is left–right, **Y** is up, **Z** is towards/away from the camera. The canyon walk goes along **−Z** (from Z +6 at the start to Z −14 at the exit). Blender uses Z for up, which the export converts.
 *Also:* −Z, world axes
 
+### Course (of stone)
+Area: 3D
+One horizontal row of stones or blocks in a wall. Our 3D cliffs stack several courses, each set back and higher than the one below, like steps.
+*Also:* row, stone course
+
 ### Texture atlas
 Area: Textures
 One image holding many small textures side by side (here, the tops, sides and ends of six curb stones). Each block's faces point at their own rectangle in it, so one material serves every block.

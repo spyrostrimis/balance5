@@ -1,0 +1,73 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rpg_2d/canyon_session_b_display.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rpg_2d/canyon_session_b.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/session_b/bend_ground.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/session_b/near_wall.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/session_b/commander_explore.png" id="5"]
+
+[sub_resource type="CircleShape2D" id="Boots"]
+radius = 7.0
+
+[node name="CanyonSessionB" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.055, 0.039, 0.056, 1)
+script = ExtResource("1")
+
+[node name="Picture" type="TextureRect" parent="."]
+texture_filter = 1
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Canvas" type="SubViewport" parent="."]
+disable_3d = true
+canvas_item_default_texture_filter = 0
+gui_disable_input = true
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="Canvas"]
+script = ExtResource("2")
+
+[node name="Ground" type="Sprite2D" parent="Canvas/World"]
+texture = ExtResource("3")
+centered = false
+
+[node name="Edges" type="StaticBody2D" parent="Canvas/World"]
+
+[node name="RoadRim" type="CollisionPolygon2D" parent="Canvas/World/Edges"]
+build_mode = 1
+polygon = PackedVector2Array(403, 1250, 408, 1190, 415, 1146, 423, 1103, 433, 1060, 444, 1018, 458, 976, 474, 935, 494, 896, 518, 859, 545, 824, 576, 794, 611, 767, 648, 744, 687, 724, 727, 705, 768, 689, 810, 676, 852, 662, 893, 648, 944, 631, 979, 613, 1010, 626, 1061, 603, 1106, 611, 1160, 613, 1224, 618, 1288, 623, 1315, 662, 1277, 680, 1242, 706, 1202, 724, 1160, 737, 1117, 747, 1075, 758, 1033, 770, 990, 783, 948, 793, 905, 803, 862, 813, 819, 822, 777, 835, 737, 853, 699, 875, 667, 904, 642, 941, 625, 981, 613, 1023, 602, 1066, 594, 1109, 586, 1152, 580, 1196, 576, 1240, 575, 1250)
+
+[node name="Commander" type="CharacterBody2D" parent="Canvas/World"]
+position = Vector2(500, 1140)
+motion_mode = 1
+collision_layer = 2
+
+[node name="Boots" type="CollisionShape2D" parent="Canvas/World/Commander"]
+shape = SubResource("Boots")
+
+[node name="Art" type="Node2D" parent="Canvas/World/Commander"]
+
+[node name="ContactShadow" type="Polygon2D" parent="Canvas/World/Commander/Art"]
+color = Color(0.19, 0.12, 0.17, 0.43)
+polygon = PackedVector2Array(-18, -2, -13, -6, 8, -7, 16, -4, 18, 1, 12, 4, -10, 4, -18, 2)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/World/Commander/Art"]
+texture = ExtResource("5")
+offset = Vector2(0, -44)
+hframes = 4
+vframes = 3
+
+[node name="NearWall" type="Sprite2D" parent="Canvas/World"]
+position = Vector2(655, 468)
+texture = ExtResource("4")
+centered = false
+
+[node name="Camera" type="Camera2D" parent="Canvas/World"]
+process_callback = 0

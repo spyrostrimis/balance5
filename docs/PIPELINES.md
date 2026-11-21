@@ -77,6 +77,25 @@ Through the Bend proved the shared ground coordinates for the road, boots, roots
 
 [Through the Bend notes and commands](PIXEL_CANYON_FOLLOW_STUDY.md)
 
+## Draw a connected scrolling 2D junction
+Area: Canyon · Status: Trying · Tools: Python with Pillow and NumPy, Godot, FFmpeg
+
+1. Draw the path, curb, cliff faces, bases and stair contacts at the same angle and art pixel size. Keep the rock silhouette that crosses in front of the player on a registered foreground layer.
+2. Reuse the exploration sprite and move the whole view by pixels. Keep the road edges on the same map as the curb.
+3. Run the same route uphill and downhill. Stop with the character partly covered and check that the same stair is visible on the way back. Compare the overlook at native size with the original painting.
+
+[Session B source and reproduction commands](PIXEL_CANYON_SESSION_B.md)
+
+## Fit a painting to a playable 2D bend
+Area: Canyon · Status: Trying · Tools: ChatGPT Images, Krita, Godot, FFmpeg
+
+1. Export the existing map without the character. Mark the road edges, near wall, stairs, deck and arch feet on a separate copy. Send that guide and the two style paintings with every candidate.
+2. Review at the same camera positions with the gameplay sprite at native size. Check the road and wall outlines separately from how the paintings look.
+3. Fit the chosen painting to the map points. Keep the near wall and the ground behind it on aligned Krita layers. Export the opaque ground and the transparent foreground at the original pixel scale.
+4. Run the existing round trip on the painted scene. Check the reversal by the wall, the stair on both passes and the in-game overlook beside the original painting.
+
+[Painted Bend source, captures and fit](PIXEL_CANYON_SESSION_B_PAINTED.md)
+
 ## 3D rock module (Blender to Godot)
 Area: 3D · Status: In use · Tools: Blender, Godot
 Make a reusable rock piece for the canyon and place it along the route.

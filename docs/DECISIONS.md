@@ -10,6 +10,14 @@ Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | 
 Why, in one to three sentences. Where the evidence is.
 ```
 
+### 2026-11-21 · Keep Painted Bend as an art study
+Area: Canyon · Status: Trying
+The warm-and-cool candidate made the overlook the most inviting of the three paintings. Fitting it preserved the walk and gave the arch a clear reveal. The original Arch Overlook remains the quality target for crisp stonework and the sweep of the road. [Painted Bend evidence](PIXEL_CANYON_SESSION_B_PAINTED.md)
+
+### 2026-11-21 · Try a connected elevated 2D canyon
+Area: Canyon · Status: Trying
+A single fixed-scale map allowed the commander to pass behind the near wall, emerge beside the terrace, cross the road and retrace the same landmarks. The owner can judge the higher viewpoint and simpler valley beside the original painting. [Session B comparison](PIXEL_CANYON_SESSION_B.md)
+
 ### 2026-11-21 · Reject foreground cutouts for the full moving canyon
 Area: Canyon · Status: Decided
 The owner found that the cliffs and ruins move like detached pieces. The review confirmed that each cutout has one depth, and the road, cliff and valley never meet as one surface. Keep Through the Bend as a playable comparison. The choice of a replacement method remains open. [Findings and options](PIXEL_CANYON_FOLLOW_STUDY.md#why-the-environment-failed)

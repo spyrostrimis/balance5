@@ -1,5 +1,17 @@
 # Experiment Log & Hard-Won Lessons
 
+## Pixel Canyon · Painted Bend · 2026-11-21
+
+Tried a full ChatGPT painting on Session B's existing map. Compared three candidates at the live camera stops and chose the warm-and-cool light pass. Its pale arch and stair edges read clearly against the violet canyon. The raw candidates moved the near wall away from its place over the road. Fitting the ground and near wall as separate Krita layers restored the original foreground overlap. The 19.2-second Forward+ round trip matched Session B's boot positions, camera centres and wall coverage at the marked stops. The overlook is the strongest view. The near wall at the bend still dominates the frame, and fitting the rock softened its finer marks. Keep the original painting as the quality target. [Paintings, walk and verdict](PIXEL_CANYON_SESSION_B_PAINTED.md)
+
+At the same bend stop, a separate live camera comparison placed the commander's boots at the centre and then toward the lower left. The lower-left framing brought both arch openings into view earlier. The same rock still covered her boots in all three frames. This gives us a way to tune the reveal by scrolling the painting. The viewing angle is already drawn into the stair treads, arch faces and cliff tops. [Three framings at one ground point](../render_captures/painted_bend_review/framing_comparison.jpg) · [Independent round trip](../render_captures/painted_bend_review/round_trip.mp4)
+
+## Pixel Canyon · Session B · 2026-11-21
+
+The elevated 2D map kept the curb, cliff, stair and railing in one drawing as the camera followed the commander. A pixel crop around the marked step matched on both passes. Her sprite was 63% covered by the near wall on the way up and 61% on the way back at the matched stop, and fully visible at the overlook. The first arch span entered the frame during the wall approach. Both spans appeared without a scale change. The matched capture shows the trade-off clearly. An elevated view shows more of the terrace plan and less distance into the valley. Broad cliff tops and quieter colours give the draft a simpler look than the reference. [Session B frames and measurements](PIXEL_CANYON_SESSION_B.md)
+
+An independent 576-frame Forward+ run reproduced the round trip and matching stair crop. Tracking wall coverage every physics tick found a peak of 95.9% along the scripted path. During the 116-pixel sideways crossing at the overlook, the camera stayed at its right map limit. An additional walk from the road up the drawn staircase hit the road boundary before reaching the terrace deck. For visual review, watch the commander between the marked stops and try walking to the landmark. [Fresh round trip](../render_captures/session_b_owner_review/round_trip.mp4)
+
 ## Pixel Canyon III · Through the Bend · 2026-11-21
 
 Recorded the rough route in Forward+ with exact follow and 8 art pixels of leeway. The 8-pixel band held the view still on the first steps of a reversal and kept the standing commander within 121–129 art pixels. At the original (511, 325) boot point she is 125 pixels tall. Used leeway as the draft default and kept both modes playable.

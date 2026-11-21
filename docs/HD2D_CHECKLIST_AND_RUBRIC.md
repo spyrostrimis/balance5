@@ -1,5 +1,25 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## Pixel Canyon · Painted Bend · 2026-11-21
+
+- [x] Compared three ChatGPT paintings at matched 960×540 camera positions with the gameplay sprite.
+- [x] Fitted the curbs and stairs to the playable bend and used the original near-wall outline. Verified the stop, reversal, full twin-arch reveal, sideways crossing and return in Forward+.
+- [x] Inspected the in-game overlook beside Arch Overlook at the same display size.
+- [x] Compared three live framings at the same bend stop. Moving the commander toward the lower left reveals the twin arch earlier while preserving the wall overlap.
+- [ ] Match the original painting's fine stone detail and clear visual lead to the arch. The fitted foreground at the bend is softer and takes up much of the view.
+
+[Painted Bend study and evidence](PIXEL_CANYON_SESSION_B_PAINTED.md)
+
+## Pixel Canyon · Session B · 2026-11-21
+
+- [x] Walks both ways around one 2D bend with fixed-size cobbles and commander. The near wall masks her in both directions and the camera reveals both spans.
+- [x] The curb leads up to the attached terrace steps. The marked stair and its surroundings match pixel for pixel on the return.
+- [x] Recorded 19.2 seconds in a 1376×768 Forward+ window with a stop, a reversal and a sideways crossing.
+- [ ] Owner reviews the elevated view and the simpler cliff tops and valley beside the original painting.
+- [ ] Keep the commander readable throughout the bend. The wall covered up to 95.9% of her opaque sprite pixels between the marked stops in a follow-up run.
+
+[Session B results](PIXEL_CANYON_SESSION_B.md)
+
 ## Pixel Canyon III · Through the Bend · 2026-11-21
 
 - [x] Recorded the same rough route with exact follow and 8-pixel leeway. Matched stops and a reversal inside the bend in both runs.

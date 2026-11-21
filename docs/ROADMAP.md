@@ -52,6 +52,9 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Two-room 2D Pixel Canyon art study with matched 1080p reference, walk and foreground crossing, horizontal shot, and two-way room transition. [Study and recording](PIXEL_CANYON_STUDY.md)
 - [x] Compare the first room with the original scale, calibrated depth and a small uphill camera follow. [Playable comparison and captures](PIXEL_CANYON_CAMERA_STUDY.md)
 - [x] Verify the two-way walk, scout fight and follow camera on one road. The moving cutout scenery failed visual review. [Through the Bend findings](PIXEL_CANYON_FOLLOW_STUDY.md)
+- [x] Verify Session B's connected 2D bend, near-wall overlap, fixed-size arch reveal and return past the same step. [Recorded comparison](PIXEL_CANYON_SESSION_B.md)
+- [x] Compare three ChatGPT paintings on Session B and verify a fitted, playable art pass. [Painted Bend](PIXEL_CANYON_SESSION_B_PAINTED.md)
+- [ ] Review the Painted Bend overlook beside the original painting before choosing a visual master for future canyon maps.
 - [ ] Choose how to build one connected bend and overlook that hold together while the camera travels both ways. [Methods to compare](PIXEL_CANYON_FOLLOW_STUDY.md#options-for-the-next-comparison)
 - [ ] Choose the first room's scale and framing after reviewing the camera and depth study.
 - [ ] Review the 2D study's motion and adjoining view before choosing an RPG art workflow.

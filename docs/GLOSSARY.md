@@ -22,6 +22,10 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Visual master
+Area: Art
+The agreed image or playable view that future maps use as their standard for colour, light and detail. The [Painted Bend study](PIXEL_CANYON_SESSION_B_PAINTED.md) compares a live view with the original Arch Overlook painting before choosing that standard.
+
 ### Game engine
 Area: Basics
 The program that runs a game and gives you tools to build it: drawing, physics, sound, input. We use **Godot**. Unity and Unreal are other engines.
@@ -761,6 +765,11 @@ Illustrated story panels between missions, as in Dune II's mentat briefings: a c
 Area: Art
 The small band in which the commander can step uphill or downhill before the view moves with her. In Through the Bend it extends 8 art pixels either side of her starting boot height. Exact follow sets it to zero.
 *In Balance:* [Through the Bend](PIXEL_CANYON_FOLLOW_STUDY.md).
+
+### Foreground occlusion
+Area: Art
+Something nearer the viewer covers part of something farther away. In Session B the top and face of the near wall cover the commander's sprite as she walks behind it.
+*In Balance:* [Session B](PIXEL_CANYON_SESSION_B.md).
 
 ### Ground coordinates
 Area: Tech

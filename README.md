@@ -26,6 +26,8 @@ The opening screen leads to the **Developers Page**, which lists every playable 
 
 The experimental **Pixel Canyon** builds are listed under Canyon builds. [Two-Room Study](docs/PIXEL_CANYON_STUDY.md) introduces the painted rooms and combat test. [Camera and Depth](docs/PIXEL_CANYON_CAMERA_STUDY.md) compares three ways to frame the first room. [Through the Bend](docs/PIXEL_CANYON_FOLLOW_STUDY.md) proves a continuous two-way walk and records why the moving cutout scenery failed.
 
+[Session B](docs/PIXEL_CANYON_SESSION_B.md) tests a fixed-angle bend with a foreground wall. [Painted Bend](docs/PIXEL_CANYON_SESSION_B_PAINTED.md) compares three paintings and puts the selected art on the same playable route.
+
 ## Status
 
 Early prototype. RTS Mission 1 (*The First Claim*) has a drivable tank on the desert map and a modular kitbash mini-map. The RPG canyon approach has a route-driven 3D scene (`scenes/maps/canyon_v2.tscn`).

@@ -34,6 +34,15 @@ const FACTION_COLORS := {
 @export_group("Look")
 ## Optional picture. Empty means the placeholder disc is drawn.
 @export var sprite: Texture2D
+## 1 = one picture, mirrored when moving left; 8 = a sheet with one column per facing
+## (S, SW, W, NW, N, NE, E, SE), like the Balance4 tank.
+@export_enum("1:1", "8:8") var sprite_directions: int = 1
+## Rows of animation frames in the sheet (played while moving).
+@export_range(1, 8) var sprite_frames := 1
+## Vehicles leave tracks and dust; infantry leaves footprints and bobs as it walks.
+@export var vehicle := false
+## Draw scale of the sprite.
+@export var sprite_scale := 1.0
 
 
 func color() -> Color:

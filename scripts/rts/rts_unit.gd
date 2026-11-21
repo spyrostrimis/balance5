@@ -31,6 +31,8 @@ var cell := Vector2i.ZERO
 var order := Order.NONE
 var goal := Vector2i.ZERO
 var target: RtsUnit
+## Peaceful units neither shoot on their own nor hit back (used by the units test's patrol).
+var peaceful := false
 var selected := false:
 	set(value):
 		selected = value
@@ -47,12 +49,19 @@ var _facing := Vector2.RIGHT
 var _shot_timer := 0.0
 var _shot_to := Vector2.ZERO
 var _flash := 0.0
+var _anim_time := 0.0
+var _mark_distance := 0.0
+var _dust_timer := 0.0
 
 
 func setup(p_grid: RtsGrid) -> void:
 	grid = p_grid
 	health = stats.max_health
 	cell = grid.cell_of(position)
+	if not grid.is_free(cell, self):
+		var spots := grid.free_cells_near(cell, 1)
+		if not spots.is_empty():
+			cell = spots[0]
 	position = grid.center_of(cell)
 	if not grid.claim(cell, self):
 		push_warning("%s starts on a blocked or taken tile %s" % [name, cell])
@@ -136,7 +145,8 @@ func tick(delta: float) -> void:
 		Order.ATTACK:
 			_tick_attack(delta)
 		Order.NONE:
-			_tick_idle()
+			if not peaceful:
+				_tick_idle()
 
 
 func _tick_move(delta: float) -> void:
@@ -230,6 +240,7 @@ func _advance(delta: float) -> void:
 	var step := stats.move_speed * float(grid.tile_size.x) * delta
 	if offset.length() > 0.01:
 		_facing = offset.normalized()
+	_leave_marks(minf(step, offset.length()), delta)
 	if offset.length() <= step:
 		position = to
 		grid.release(cell, self)
@@ -238,6 +249,27 @@ func _advance(delta: float) -> void:
 	else:
 		position += offset.normalized() * step
 	queue_redraw()
+
+
+## Tracks or footprints every few pixels, dust behind vehicles (see RtsLook).
+func _leave_marks(moved: float, delta: float) -> void:
+	_anim_time += delta
+	if stats.sprite == null or RtsLook.instance == null:
+		return
+	_mark_distance += moved
+	var gap := 3.0 if stats.vehicle else 5.0
+	if _mark_distance >= gap:
+		_mark_distance = 0.0
+		if stats.vehicle:
+			RtsLook.instance.add_track(position, _facing.angle())
+		else:
+			var side := _facing.orthogonal() * (2.0 if int(_anim_time * 8.0) % 2 == 0 else -2.0)
+			RtsLook.instance.add_footprints(position + Vector2(0, 4) + side)
+	if stats.vehicle:
+		_dust_timer -= delta
+		if _dust_timer <= 0.0:
+			_dust_timer = 0.07
+			RtsLook.instance.add_dust(position - _facing * 10.0 + Vector2(0, 3), -_facing)
 
 
 # --- Combat --------------------------------------------------------------------------------
@@ -263,7 +295,7 @@ func take_damage(amount: int, attacker: RtsUnit) -> void:
 		_die()
 		return
 	# Hit back: an idle unit goes after whoever shot it.
-	if order == Order.NONE and not _stepping and is_instance_valid(attacker) and attacker.alive:
+	if not peaceful and order == Order.NONE and not _stepping and is_instance_valid(attacker) and attacker.alive:
 		command_attack(attacker)
 
 
@@ -288,16 +320,17 @@ func _draw() -> void:
 	if stats == null:
 		return
 	var r := radius()
-	# Shadow, offset down-right (light from the top-left).
-	draw_set_transform(Vector2(2.5, 3.5), 0.0, Vector2(1.0, 0.6))
-	draw_circle(Vector2.ZERO, r, Color(0, 0, 0, 0.3))
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	if stats.sprite != null:
+		_draw_sprite_unit(r)
+	else:
+		# Shadow, offset down-right (light from the top-left).
+		draw_set_transform(Vector2(2.5, 3.5), 0.0, Vector2(1.0, 0.6))
+		draw_circle(Vector2.ZERO, r, Color(0, 0, 0, 0.3))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if selected:
 		_draw_brackets(r + 4.0)
 	var body := stats.color().lerp(Color.WHITE, 0.7 if _flash > 0.0 else 0.0)
-	if stats.sprite != null:
-		draw_texture(stats.sprite, -stats.sprite.get_size() * 0.5, Color.WHITE.lerp(Color(2, 2, 2), 1.0 if _flash > 0.0 else 0.0))
-	else:
+	if stats.sprite == null:
 		draw_circle(Vector2.ZERO, r, OUTLINE)
 		draw_circle(Vector2.ZERO, r - 1.5, body)
 		draw_circle(Vector2(-r * 0.3, -r * 0.3), r * 0.35, body.lightened(0.25))  # top-left highlight
@@ -320,6 +353,36 @@ func _draw() -> void:
 		else:
 			draw_line(hit + Vector2(-5, -5), hit + Vector2(5, 5), Color.WHITE, 2.0)
 			draw_line(hit + Vector2(-5, 5), hit + Vector2(5, -5), Color.WHITE, 2.0)
+
+
+## A unit drawn from its sprite, grounded on the map: soft shadow down-right and a dark contact
+## line at its base, lit like the ground under it, facing where it moves, bobbing as it walks.
+func _draw_sprite_unit(r: float) -> void:
+	var tex := stats.sprite
+	var cols := 8 if stats.sprite_directions == 8 else 1
+	var frame_size := Vector2(tex.get_width() / float(cols), tex.get_height() / float(stats.sprite_frames))
+	var size := frame_size * stats.sprite_scale
+	var moving := is_moving()
+	var foot := Vector2(0, size.y * 0.32)
+	if RtsLook.shadows:
+		var spread := size.x * (0.5 if stats.vehicle else 0.42)
+		draw_set_transform(foot + Vector2(3, 2), 0.0, Vector2(1.0, 0.45))
+		draw_circle(Vector2.ZERO, spread, Color(0.16, 0.06, 0.0, 0.28))
+		draw_set_transform(foot + Vector2(1, 1), 0.0, Vector2(1.0, 0.35))
+		draw_circle(Vector2.ZERO, spread * 0.7, Color(0.1, 0.03, 0.0, 0.32))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	var col := 0
+	if cols == 8:
+		col = posmod(roundi(atan2(-_facing.x, _facing.y) / (PI / 4.0)), 8)
+	var row := int(_anim_time * 10.0) % stats.sprite_frames if moving else 0
+	var src := Rect2(Vector2(col * frame_size.x, row * frame_size.y), frame_size)
+	var bob := -1.0 if (moving and not stats.vehicle and int(_anim_time * 7.0) % 2 == 0) else 0.0
+	var light := RtsLook.light_at(position)
+	var tint := Color(light, light, light).lerp(Color(2, 2, 2), 1.0 if _flash > 0.0 else 0.0)
+	var flip := cols == 1 and _facing.x < -0.2
+	draw_set_transform(Vector2(0, bob), 0.0, Vector2(-1.0 if flip else 1.0, 1.0))
+	draw_texture_rect_region(tex, Rect2(-size * 0.5, size), src, tint)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 func _draw_brackets(half: float) -> void:

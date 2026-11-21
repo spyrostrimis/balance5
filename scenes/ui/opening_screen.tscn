@@ -51,6 +51,36 @@ credit = "OpenAI Codex"
 built_utc = "2026-11-21 01:18"
 action = "Play"
 
+[sub_resource type="Resource" id="Build_rpg_2d_canyon_study"]
+script = ExtResource("4")
+section = "Canyon builds"
+title = "2D Parallel-Projection Canyon · Approach 1 vs 2"
+summary = "100% 2D parallel-projection canyon study (960x540, 192 colors, Laigter normals, locked follow camera, constant hero scale). Press Tab or M to toggle Approach 1 (Continuous Uncut 2D Artwork) vs Approach 2 (Modular Stitched 2D Kit), 1/2/V for 960x540 vs 640x360."
+scene_path = "res://scenes/rpg_2d/canyon_orthographic_study.tscn"
+credit = "ChatGPT Images and Antigravity (Gemini 4)"
+built_utc = "2026-11-21 16:10:00"
+action = "Play"
+
+[sub_resource type="Resource" id="Build_rpg_2d_approach2_modular"]
+script = ExtResource("4")
+section = "Canyon builds"
+title = "2D Parallel-Projection Canyon · Approach 2 Modular"
+summary = "Assembled from ChatGPT modular sand/road strips, 6 stepped dry-stone and terracotta cliff chunks, ruined archways, boulders and olive bushes with Y-sort depth occlusion and Laigter normal maps. Tab/M switches to Approach 1."
+scene_path = "res://scenes/rpg_2d/canyon_approach2_modular.tscn"
+credit = "ChatGPT Images and Antigravity (Gemini 4)"
+built_utc = "2026-11-21 16:10:05"
+action = "Play"
+
+[sub_resource type="Resource" id="Build_img9_perspective_follow"]
+script = ExtResource("4")
+section = "Canyon builds"
+title = "Image 9 · 2.5D Perspective Follow Proof"
+summary = "Standalone 2.5D perspective follow-camera proof-of-concept sliced directly from Image 9 (192-color palette). WASD/Arrows walk uphill/downhill, L toggles 8px leeway, 1/2/V toggles 960x540 vs 640x360, F2 shows Image 9 reference."
+scene_path = "res://scenes/rpg_2d/img9_perspective_follow_proof.tscn"
+credit = "Antigravity (Gemini 4)"
+built_utc = "2026-11-21 12:31"
+action = "Play"
+
 [sub_resource type="Resource" id="Build_canyon_session_b"]
 script = ExtResource("4")
 section = "Canyon builds"
@@ -178,6 +208,15 @@ scene_path = "res://scenes/maps/desert_canyon_playable.tscn"
 credit = "Antigravity (Gemini workspace)"
 milestone_utc = "2026-11-16 18:37"
 
+[sub_resource type="Resource" id="Build_rts_units_test"]
+script = ExtResource("4")
+section = "Desert RTS builds"
+title = "RTS Units Test — Units on the Map"
+summary = "Stand-in squads, commanders and tanks on the style test 5 map. P patrol, K shadows, L ground light, M tracks, N dust; select and right-click to move."
+scene_path = "res://scenes/maps/rts_units_test.tscn"
+credit = "Claude Code (Opus 5.5)"
+built_utc = "2026-11-20 15:33:52"
+
 [sub_resource type="Resource" id="Build_rts_style_test"]
 script = ExtResource("4")
 section = "Desert RTS builds"
@@ -266,7 +305,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera"), SubResource("Build_pixel_canyon_follow"), SubResource("Build_canyon_session_b"), SubResource("Build_canyon_session_b_painted")])
+builds = Array[ExtResource("4")]([SubResource("Build_rts_units_test"), SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera"), SubResource("Build_rpg_2d_canyon_study"), SubResource("Build_rpg_2d_approach2_modular"), SubResource("Build_pixel_canyon_follow"), SubResource("Build_img9_perspective_follow"), SubResource("Build_canyon_session_b"), SubResource("Build_canyon_session_b_painted")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

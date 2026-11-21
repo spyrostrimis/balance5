@@ -26,6 +26,14 @@ The owner found that the cliffs and ruins move like detached pieces. The review 
 Area: Canyon · Status: Trying
 The rough round trips showed that a short delay on reversal leaves time to read the commander's first step. The default lets her boots move from Y 317 to 333 and her standing height stays within 121–129 art pixels. Exact follow stays on key 1 for review. [Through the Bend comparisons](PIXEL_CANYON_FOLLOW_STUDY.md)
 
+### 2026-11-21 · Parallel-Projection 2D Canyon: Approach 1 (Uncut) vs Approach 2 (Modular Stitched)
+Area: Canyon · Status: Trying
+Cropping Image 9's horizon sky (`tmp/chatgpt_refs/Ref2_Style_Palette_Image9_NoHorizon.png`) and pairing it with a *Sea of Stars* parallel-projection reference (`Ref1_Camera_Projection_SeaOfStars.jpg`) allowed ChatGPT to generate true constant-scale parallel-projection 2D canyon art with no vanishing point. Both workflows are now playable at 960×540 (with 640×360 live toggle, 192 colours, Laigter normal maps, and constant hero size under a locked following camera) and switchable live with Tab/M in `scenes/rpg_2d/canyon_orthographic_study.tscn`: Approach 1 (`canyon_approach1_uncut.tscn`) stitches two uncut vertical canyon plates across an 81-px overlap into a 1967-px tall canvas, while Approach 2 (`canyon_approach2_modular.tscn`) quilts the modular sand/road sheet and layers 6 modular cliff/staircase chunks, ruined archways, boulders, and olive bushes as Y-sorted sprites. Evidence: `docs/EXPERIMENT_LOG_AND_LESSONS.md` §16, `render_captures/rpg_2d/a1_*.png`, `render_captures/rpg_2d/a2_*.png`.
+
+### 2026-11-21 · Standalone 2D Pixel-Art RPG Canyon Study (Option C)
+Area: Canyon · Status: Trying
+Built an independent 100% 2D orthographic tile-and-stamp RPG canyon (`scenes/rpg_2d/canyon_orthographic_study.tscn`) at 960×540 with a live toggle to 640×360, locked to a 192-colour palette sampled from the owner's stepped canyon target, with Laigter 2D normal maps and Tiled `.tsx`/`.tmx` sources. Explore Mode uses 8-way directional movement and facing; Combat Mode switches to Streets of Rage 4 style (free depth movement, facing and horizontal shooting strictly Left/Right). Evidence: `tests/test_rpg_2d_canyon_logic.gd`, `render_captures/rpg_2d/`, `docs/EXPERIMENT_LOG_AND_LESSONS.md` §16.
+
 ### 2026-11-20 · RTS art scale: 1 art pixel = 2 screen pixels at 1080p
 Area: Art · Status: Trying
 Measured from the Mission 1 reference: soldiers about 11 art pixels tall, a squad of four or a tank per 32 px tile, the camera at zoom 4/3 in our 1280×720 viewport (960×540 art pixels on screen). The style test matched the reference's sizes one to one. Details: `docs/RTS_ART_RULES.md` §1.
@@ -33,6 +41,14 @@ Measured from the Mission 1 reference: soldiers about 11 art pixels tall, a squa
 ### 2026-11-20 · One 48-colour desert palette for all RTS art
 Area: Art · Status: Trying
 Clustered from the reference by `tools/python/rts_palette.py`. The reference redrawn with only these colours loses nothing visible. Every layer is mapped onto it last, so pieces from different sources belong to one picture.
+
+### 2026-11-20 · Units never enter cliffs or big rocks; bases sit on low pads
+Area: RTS · Status: Decided
+Soldiers and vehicles cannot move onto cliffs, mesas or the Orichalcum rock; those tiles are blocked. Buildings will stand on low rocky or concrete pads, like the road, which units can cross.
+
+### 2026-11-20 · Ground units with shadow, contact patch, tracks and dust
+Area: Art · Status: Trying
+Without them units look like floating stickers; with a soft down-right shadow, a dark contact patch, tank tracks, footprints and dust they sit on the sand. The flat painted dunes do not make units look like they fly. The most unnatural thing left is grid movement (straight lines, sharp corners). Evidence: `docs/RTS_ART_RULES.md` §8, `render_captures/rts_units/`.
 
 ### 2026-11-20 · The RTS environment look is achievable; move on to units
 Area: Art · Status: Decided

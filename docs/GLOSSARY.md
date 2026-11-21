@@ -653,6 +653,20 @@ Area: Art
 A big ready-made piece placed whole on a map, such as a cliff formation, a dune field, a tree or the Orichalcum rock, as opposed to small tiles painted cell by cell. In Godot a stamp is a small scene you drag into the map; it can carry the tiles it blocks for pathfinding.
 *Also:* prefab, map piece, object
 
+### Contact shadow
+Area: Art
+A small, dark shadow right where a unit touches the ground, under its softer main shadow. It is the strongest single cue that something stands on the ground instead of hovering.
+*Also:* contact patch
+
+### Ground light
+Area: Art
+Making a unit slightly brighter or darker depending on how lit the ground under it is, for example darker in a cliff's shadow. It helps units belong to the picture.
+
+### Path smoothing
+Area: RTS
+Turning a grid route (straight lines with 90° and 45° corners) into a natural one: walking straight at any angle wherever nothing blocks the way, and curving round corners. Vehicles also turn gradually instead of on the spot.
+*Also:* any-angle paths, string pulling
+
 ### Colour matching
 Area: Art
 Shifting a texture's colours so its average colour and contrast equal a target, here the same material in the reference. It makes textures from different sources look like one picture before the palette is applied.
@@ -761,6 +775,33 @@ Area: Game
 Illustrated story panels between missions, as in Dune II's mentat briefings: a character portrait beside a framed picture, with text.
 *Also:* briefing, storyboard, mentat
 
+
+### Laigter
+Area: Art
+A free tool that automatically turns 2D pixel-art sprites and tiles into **normal maps** so in-game lights (like sunlight or muzzle flashes) highlight stone edges and armour in real time.
+
+### CanvasTexture
+Area: Tech
+A Godot 2D texture wrapper that bundles a painted colour image together with its **normal map** (from Laigter) so 2D sprites and tiles catch real-time 2D lights.
+
+### SubViewport
+Area: Tech
+An offscreen mini-screen inside Godot. We draw the 2D canyon at an exact pixel size (such as 960×540 or 640×360) inside a `SubViewport`, then stretch it onto your monitor with crisp pixel edges.
+*Also:* ViewportTexture
+
+### Pixel snapping
+Area: Tech
+Rounding camera and sprite positions to whole pixels so pixel-art edges never shimmer or wobble when moving.
+
+### Parallax2D
+Area: Art
+A Godot 2D layer that scrolls slower than the foreground (like distant canyon mesas behind an exit gap) to create a sense of depth without 3D models.
+
+### Orthographic projection
+Area: Art
+A flat-camera view with no perspective shrinking—characters and tiles stay the exact same pixel size at the top and bottom of the screen, like *Sea of Stars* or *Chrono Trigger*.
+*Also:* orthographic
+
 ### Camera leeway
 Area: Art
 The small band in which the commander can step uphill or downhill before the view moves with her. In Through the Bend it extends 8 art pixels either side of her starting boot height. Exact follow sets it to zero.
@@ -775,3 +816,14 @@ Something nearer the viewer covers part of something farther away. In Session B 
 Area: Tech
 The distance uphill and the sideways position across the road. The same pair locates a cobble, the commander's boots or a shot lane even when the camera moves.
 *In Balance:* [Through the Bend](PIXEL_CANYON_FOLLOW_STUDY.md).
+
+### Y-sorting
+Area: 2D
+Drawing 2D sprites in order of their vertical screen position (from top to bottom) based on where their feet or base touch the ground. When the commander stands slightly higher on screen than a boulder's base, the boulder is drawn after her and covers her boots; when she steps below its base, she is drawn in front of it.
+*Also:* Y-sort, YSortWorld
+
+### Minimum-error seam cut
+Area: Textures
+Joining two overlapping textures along a wavy path where their colours already match most closely, instead of cutting along a straight line. We use it to stitch the uncut canyon plates and the S-curve cobblestone road without visible joins.
+*Also:* graph-cut seam, dynamic-programming seam
+

@@ -289,6 +289,25 @@ Illustrated story panels between missions, in the manner of Dune II's mentat bri
 
 [Editable art, capture commands and test](PIXEL_CANYON_STUDY.md)
 
+## 2D Parallel-Projection Canyon — Approach 1 (Uncut) & Approach 2 (Modular Kit)
+Area: Art · Status: Trying · Tools: ChatGPT, Python, Laigter, Krita, Aseprite, Godot 2D
+Build a constant-scale scrolling 2D RPG canyon (960×540 with 640×360 toggle, 192-colour palette, Laigter normal maps, locked follow camera) using either a continuous uncut 2D canvas (Approach 1) or modular cliff/road/prop sheets stitched and Y-sorted in Godot 2D (Approach 2).
+
+### Steps
+1. **Prompt ChatGPT with horizon-cropped references** (`tmp/chatgpt_refs/Ref1_Camera_Projection_SeaOfStars.jpg` for parallel 3/4 camera angle + `Ref2_Style_Palette_Image9_NoHorizon.png` for material palette without vanishing point). Save uncut plates or `#3A003A`-background modular sheets into `assets/source_inputs/rpg_2d/`.
+2. **Stitch, slice, quantize to 192 colours, and generate Laigter normal maps**:
+   `C:/Python312/python.exe tools/python/build_rpg_2d_canyon_assets.py`
+   Uses dynamic-programming minimum-error graph cuts (`dp_horizontal_seam`, `dp_vertical_seam`) for seamless canvas/road stitching, exterior perimeter flood-fill for `#3A003A` magenta cutouts without eroding interior rock crevices, and `C:\Laigter\laigter.exe --no-gui --normal -d` for normal maps.
+3. **Import and build the three Godot scenes**:
+   `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --headless --path . --import`
+   `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://tools/godot/build_rpg_2d_canyon_scene.gd`
+   Produces `canyon_orthographic_study.tscn` (`Tab`/`M` live A/B toggle), `canyon_approach1_uncut.tscn`, and `canyon_approach2_modular.tscn`.
+4. **Verify logic & Forward+ captures**:
+   Run `tests/test_rpg_2d_canyon_logic.gd` headless and `tests/capture_rpg_2d_canyon.gd` windowed (`1376×768`), then inspect `render_captures/rpg_2d/a1_*.png` and `a2_*.png`.
+
+### Done when
+- Both approaches scroll smoothly with zero seams, constant hero size, clean Y-sort depth occlusion behind boulders/bushes/archways, 192-colour palette compliance, and passing headless/windowed tests.
+
 ## Record a decision or a new term
 Area: Workflow · Status: In use · Tools: Balance Studio, any agent
 Keep the project's memory in the repository instead of in chat histories.

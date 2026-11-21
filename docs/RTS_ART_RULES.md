@@ -204,6 +204,33 @@ Rewritten after the close-up comparison (§6): each prompt names what the refere
 
 **Throw an image away and regenerate if** it shows perspective or a horizon, objects that were not asked for, cartoon outlines, a pixel-art look, text or a frame, or one side much darker than the other. Two or three tries per image is normal; keep the best.
 
+## 8. Units on the map (2026-11-20): do they look grounded?
+
+**Scene:** `scenes/maps/rts_units_test.tscn` (Developers Page → RTS Units Test), built by `tools/python/make_rts_units_test.py` on the style test 5 map. It has stand-in squads and commanders, and the Balance4 tank (8 facings, plus a Red copy).
+
+**Controls:**
+- **P:** units patrol peacefully.
+- **K:** shadows. **L:** ground light. **M:** tracks and footprints. **N:** dust.
+- **F1:** shows blocked tiles.
+
+Cliffs, mesas and the Orichalcum rock are blocked (`assets/textures/rts/units_test/walk_mask.png`, one pixel per tile). Captures: `render_captures/rts_units/*_on.png` / `*_off.png` (the same moment), and `zoom_*_off_vs_on.png`.
+
+**Grounding cues (each on its own key):**
+- **Shadow:** a soft shadow down-right, matching the rocks' light, plus a darker contact patch right at the base.
+- **Ground light:** each unit is lit or shaded by the sand under it (`ground_light.png`, 128 = average), including the shadows cast by rocks.
+- **Marks:** tank tracks every 3 px, fading over 8 s; footprints every 5 px, fading over 5 s.
+- **Dust:** small puffs behind moving vehicles.
+
+**Findings:**
+- **With all cues off, units look like stickers floating over the sand.** Nothing ties them to the ground. With shadow and contact patch they sit on it; tracks and dust make vehicles look heavy and moving through sand. Shadow and tracks matter most. Ground light is subtle at this size.
+- **The dunes do not make units look like they fly.** Seen from straight above, the ground's relief is only light and shade, and a unit crossing a ripple keeps the same height on screen, as in the reference. Grounding cues are what matter, not following the ripples.
+- **The most unnatural thing now is movement, not drawing.**
+  - Units walk the 32 px grid, so routes are straight lines with sharp 90° and 45° corners, and a tank turns on the spot. The tracks make this obvious: L-shaped, ruler-straight lines.
+  - Next: smooth routes (go straight at any angle where nothing blocks the way), let vehicles turn gradually, and curve the tracks.
+- **The stand-in sprites slide.** The squad picture has no walking frames and only mirrors left/right; the tank has 8 facings and track frames.
+  - Real units need 8 facings and walk frames (art rules §1 sizes).
+  - Footprints at 1 px are barely visible; real soldiers can leave a pair per step.
+
 ## Open questions
 
 - **Is a "troop" a squad of four soldiers?** The reference card ("Squad 4 of 4") suggests so, and four soldiers fill one tile. The RTS test map still treats a troop as one disc.

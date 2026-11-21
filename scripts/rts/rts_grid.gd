@@ -11,6 +11,10 @@ const CLAIM_COLOR := Color(1, 1, 1, 0.55)
 const GRID_COLOR := Color(0, 0, 0, 0.12)
 
 @export var ground_path: NodePath = ^"../Ground"
+## Instead of a Ground tile layer: a small picture with one pixel per tile, white = blocked
+## (cliffs, big rocks), black = walkable. Used by painted maps such as the units test.
+@export var blocked_cells: Texture2D
+@export var cell_pixels := Vector2i(32, 32)
 
 var show_debug := false:
 	set(value):
@@ -30,9 +34,14 @@ func _ready() -> void:
 
 
 func setup() -> void:
-	ground = get_node(ground_path) as TileMapLayer
-	tile_size = ground.tile_set.tile_size
-	region = ground.get_used_rect()
+	var mask: Image = blocked_cells.get_image() if blocked_cells != null else null
+	if mask != null:
+		tile_size = cell_pixels
+		region = Rect2i(Vector2i.ZERO, mask.get_size())
+	else:
+		ground = get_node(ground_path) as TileMapLayer
+		tile_size = ground.tile_set.tile_size
+		region = ground.get_used_rect()
 	_astar.region = region
 	_astar.cell_size = Vector2(tile_size)
 	# Diagonal steps are allowed, but never squeezing between two blocked corners.
@@ -43,8 +52,12 @@ func setup() -> void:
 	for y in range(region.position.y, region.end.y):
 		for x in range(region.position.x, region.end.x):
 			var cell := Vector2i(x, y)
-			var data := ground.get_cell_tile_data(cell)
-			var walkable := data != null and bool(data.get_custom_data(WALKABLE_DATA))
+			var walkable: bool
+			if mask != null:
+				walkable = mask.get_pixelv(cell).r < 0.5
+			else:
+				var data := ground.get_cell_tile_data(cell)
+				walkable = data != null and bool(data.get_custom_data(WALKABLE_DATA))
 			_astar.set_point_solid(cell, not walkable)
 	_claims.clear()
 

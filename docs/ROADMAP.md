@@ -39,7 +39,9 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Style test 3: sand that rises and falls everywhere, soft rock edges, crystals2, kitbash scatter (art rules §6c)
 - [x] Style test 4: orderly dunes in fields towards the edges, calm round road and plaza, sparser scatter, lighter rock tops (art rules §6d)
 - [x] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; cliff ledges (art rules §6e). Environment look settled
-- [ ] Units on the style-test map: how soldiers, commanders and vehicles look as they move (scale, facing, shadows, contrast)
+- [x] Units on the style-test map: shadows, ground light, tracks, footprints and dust, each switchable (art rules §8)
+- [ ] Smooth unit movement: any-angle routes, vehicles turn gradually, curved tracks
+- [ ] Real unit sprites: 8 facings and walk frames for squads, commanders and vehicles
 - [ ] Big map pieces (whole cliff formations, dune fields, the Orichalcum rock) as placeable scenes with their blocked tiles, for laying out maps by hand
 - [ ] Decide: is a troop a squad of four soldiers?
 - [ ] Desert tileset with height drawn in: cliff walls, curving road edges, shaded dunes (light from the top-left)
@@ -49,6 +51,7 @@ The first playable vertical slice: four troops plus a field commander per side f
 
 ## Next — RPG canyon (secondary)
 
+- [x] Parallel-projection 2D RPG canyon A/B study comparing Approach 1 (Continuous Uncut 2D Artwork) and Approach 2 (Modular Stitched 2D Kit) with locked follow camera, constant hero scale, 192 colours, Laigter normals, and 960×540 / 640×360 toggle (`scenes/rpg_2d/canyon_orthographic_study.tscn`)
 - [x] Two-room 2D Pixel Canyon art study with matched 1080p reference, walk and foreground crossing, horizontal shot, and two-way room transition. [Study and recording](PIXEL_CANYON_STUDY.md)
 - [x] Compare the first room with the original scale, calibrated depth and a small uphill camera follow. [Playable comparison and captures](PIXEL_CANYON_CAMERA_STUDY.md)
 - [x] Verify the two-way walk, scout fight and follow camera on one road. The moving cutout scenery failed visual review. [Through the Bend findings](PIXEL_CANYON_FOLLOW_STUDY.md)

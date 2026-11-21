@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/rpg_2d/img9_perspective_follow.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+bg_color = Color(0.08, 0.06, 0.05, 0.78)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.76, 0.56, 0.34, 0.65)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Img9PerspectiveFollowProof" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Letterbox" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.075, 0.059, 0.051, 1)
+
+[node name="WorldViewport" type="SubViewport" parent="."]
+disable_3d = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="SceneRoot" type="Node2D" parent="WorldViewport"]
+
+[node name="HorizonBackdrop" type="Sprite2D" parent="WorldViewport/SceneRoot"]
+z_index = -10
+centered = false
+
+[node name="GroundSurface" type="ColorRect" parent="WorldViewport/SceneRoot"]
+z_index = -5
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+
+[node name="DepthLayer" type="Node2D" parent="WorldViewport/SceneRoot"]
+
+[node name="Commander" type="Node2D" parent="WorldViewport/SceneRoot/DepthLayer"]
+
+[node name="ContactShadow" type="Sprite2D" parent="WorldViewport/SceneRoot/DepthLayer/Commander"]
+
+[node name="BodySprite" type="Sprite2D" parent="WorldViewport/SceneRoot/DepthLayer/Commander"]
+centered = false
+
+[node name="ReferenceOverlay" type="Sprite2D" parent="WorldViewport/SceneRoot"]
+visible = false
+z_index = 4000
+centered = false
+
+[node name="ViewportDisplay" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="HUD"]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 860.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Margin" type="MarginContainer" parent="HUD/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="StatusLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.92, 0.80, 1)
+theme_override_font_sizes/font_size = 13
+text = "IMAGE 9 · 2.5D PERSPECTIVE FOLLOW"
+
+[node name="ControlsLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.74, 0.62, 1)
+theme_override_font_sizes/font_size = 11
+text = "WASD/Arrows: Walk  |  L: 8px Leeway  |  1/2/V: 960x540 <-> 640x360  |  F2: Image 9 Ref  |  H: HUD  |  Esc: Back"

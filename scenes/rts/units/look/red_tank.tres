@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UnitStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/rts/unit_stats.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units/tank_red_sheet.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Red Tank"
+faction = 1
+kind = 0
+max_health = 200
+attack = 20
+armour = 8
+attack_range = 3
+attack_cooldown = 1.6
+guard_range = 6
+move_speed = 2.0
+sprite = ExtResource("2")
+sprite_directions = 8
+sprite_frames = 3
+vehicle = true
+sprite_scale = 0.85

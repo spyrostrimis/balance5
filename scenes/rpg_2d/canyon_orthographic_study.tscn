@@ -1,0 +1,1158 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rpg_2d/canyon_2d_study.gd" id="1_prdcs"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach1_uncut_canvas.png" id="2_5kngu"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach1_uncut_canvas_n.png" id="3_kxbui"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach2_ground_road_canvas.png" id="4_oyvj2"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach2_ground_road_canvas_n.png" id="5_wafea"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_00.png" id="6_yi2e2"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_00_n.png" id="7_i0byt"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_01.png" id="8_227pm"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_01_n.png" id="9_fqh20"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_02.png" id="10_eal5g"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_02_n.png" id="11_41x1i"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_03.png" id="12_5t7l6"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_03_n.png" id="13_m67bs"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_04.png" id="14_mdx02"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_04_n.png" id="15_eeucf"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_05.png" id="16_0fgh5"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_05_n.png" id="17_cor4j"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_06.png" id="18_ghyp6"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_06_n.png" id="19_cbk42"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_07.png" id="20_quurq"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/a1_cutout_07_n.png" id="21_74rlp"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_left_large.png" id="22_7xuom"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_left_large_n.png" id="23_oty8o"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_stair_ruin.png" id="24_rkvrg"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_stair_ruin_n.png" id="25_parvj"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_outcrop_wide.png" id="26_ls1ge"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_outcrop_wide_n.png" id="27_7fuji"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_corner_mid.png" id="28_t3tlt"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_corner_mid_n.png" id="29_kncj0"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_right_large.png" id="30_finth"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_right_large_n.png" id="31_v2n57"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_buttress_right.png" id="32_k3lus"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/cliff_buttress_right_n.png" id="33_0ffsi"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/ruined_archway.png" id="34_1134o"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/ruined_archway_n.png" id="35_vfjlg"]
+[ext_resource type="Shader" path="res://assets/shaders/rpg_2d/bush_sway_2d.gdshader" id="36_pj5kq"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_large_a.png" id="37_0cnoi"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_large_a_n.png" id="38_hyqof"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_large_a.png" id="39_6fl5f"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_large_a_n.png" id="40_6hlh5"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_med_a.png" id="41_ev61s"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_med_a_n.png" id="42_qn0jn"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_large_b.png" id="43_es2tw"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_large_b_n.png" id="44_xmwym"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_med_a.png" id="45_8ntj4"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_med_a_n.png" id="46_tydfd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/grass_tuft_large.png" id="47_qd6bc"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/grass_tuft_large_n.png" id="48_e7gvy"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_large_b.png" id="49_xx1nf"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_large_b_n.png" id="50_ifjb8"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_med_b.png" id="51_p34ji"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/bush_med_b_n.png" id="52_q0rgj"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/grass_tuft_med.png" id="53_ps7u4"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/grass_tuft_med_n.png" id="54_hafwc"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_med_b.png" id="55_e2edo"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/boulder_med_b_n.png" id="56_8rpgm"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/grass_tuft_small.png" id="57_ou4ln"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/modular/grass_tuft_small_n.png" id="58_ysa1d"]
+[ext_resource type="Script" path="res://scripts/rpg_2d/hero_2d_controller.gd" id="59_np2rm"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/sprites/contact_shadow.png" id="60_6jrjd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/sprites/blue_commander_sheet.png" id="61_x064w"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/sprites/blue_commander_sheet_n.png" id="62_w014m"]
+[ext_resource type="Script" path="res://scripts/rpg_2d/pixel_camera_2d.gd" id="63_waofa"]
+[ext_resource type="Shader" path="res://assets/shaders/rpg_2d/god_rays_2d.gdshader" id="64_pxgqw"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_jl8bf"]
+diffuse_texture = ExtResource("2_5kngu")
+normal_texture = ExtResource("3_kxbui")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xqoyo"]
+diffuse_texture = ExtResource("4_oyvj2")
+normal_texture = ExtResource("5_wafea")
+texture_filter = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2bcbc"]
+size = Vector2(960, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kd0tr"]
+size = Vector2(960, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aaim1"]
+size = Vector2(960, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48gy7"]
+size = Vector2(960, 24)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_b3xaw"]
+diffuse_texture = ExtResource("6_yi2e2")
+normal_texture = ExtResource("7_i0byt")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_krjqj"]
+diffuse_texture = ExtResource("8_227pm")
+normal_texture = ExtResource("9_fqh20")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5cqdb"]
+diffuse_texture = ExtResource("10_eal5g")
+normal_texture = ExtResource("11_41x1i")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_3dfwc"]
+diffuse_texture = ExtResource("12_5t7l6")
+normal_texture = ExtResource("13_m67bs")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8c2kv"]
+diffuse_texture = ExtResource("14_mdx02")
+normal_texture = ExtResource("15_eeucf")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g5xl4"]
+diffuse_texture = ExtResource("16_0fgh5")
+normal_texture = ExtResource("17_cor4j")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_81urs"]
+diffuse_texture = ExtResource("18_ghyp6")
+normal_texture = ExtResource("19_cbk42")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_txrpi"]
+diffuse_texture = ExtResource("20_quurq")
+normal_texture = ExtResource("21_74rlp")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_d4j0a"]
+diffuse_texture = ExtResource("22_7xuom")
+normal_texture = ExtResource("23_oty8o")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_371to"]
+diffuse_texture = ExtResource("24_rkvrg")
+normal_texture = ExtResource("25_parvj")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cu3uy"]
+diffuse_texture = ExtResource("26_ls1ge")
+normal_texture = ExtResource("27_7fuji")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_1hmg3"]
+diffuse_texture = ExtResource("28_t3tlt")
+normal_texture = ExtResource("29_kncj0")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_soa2t"]
+diffuse_texture = ExtResource("30_finth")
+normal_texture = ExtResource("31_v2n57")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_jm1ni"]
+diffuse_texture = ExtResource("32_k3lus")
+normal_texture = ExtResource("33_0ffsi")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_12axr"]
+diffuse_texture = ExtResource("34_1134o")
+normal_texture = ExtResource("35_vfjlg")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j1ngq"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 22.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_l4t2j"]
+diffuse_texture = ExtResource("37_0cnoi")
+normal_texture = ExtResource("38_hyqof")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_nnr00"]
+diffuse_texture = ExtResource("39_6fl5f")
+normal_texture = ExtResource("40_6hlh5")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5h1w0"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 24.3
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_eksme"]
+diffuse_texture = ExtResource("41_ev61s")
+normal_texture = ExtResource("42_qn0jn")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0h1n4"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 25.2
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_txqbm"]
+diffuse_texture = ExtResource("43_es2tw")
+normal_texture = ExtResource("44_xmwym")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_tn5d3"]
+diffuse_texture = ExtResource("45_8ntj4")
+normal_texture = ExtResource("46_tydfd")
+texture_filter = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_odxj8"]
+diffuse_texture = ExtResource("47_qd6bc")
+normal_texture = ExtResource("48_e7gvy")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_edjr1"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 27.900000000000002
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xgfhn"]
+diffuse_texture = ExtResource("49_xx1nf")
+normal_texture = ExtResource("50_ifjb8")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_scrpl"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 29.7
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_yci54"]
+diffuse_texture = ExtResource("51_p34ji")
+normal_texture = ExtResource("52_q0rgj")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v3cn0"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 31.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gfx4b"]
+diffuse_texture = ExtResource("53_ps7u4")
+normal_texture = ExtResource("54_hafwc")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rk4ib"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 33.300000000000004
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bwhjd"]
+diffuse_texture = ExtResource("55_e2edo")
+normal_texture = ExtResource("56_8rpgm")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n0gml"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 35.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k12uy"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 36.9
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tojkt"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 38.7
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ycqru"]
+diffuse_texture = ExtResource("57_ou4ln")
+normal_texture = ExtResource("58_ysa1d")
+texture_filter = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3184d"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 41.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x6lrp"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 43.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ruwks"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 44.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_612r0"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 46.800000000000004
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8evw"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 48.6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yl7r5"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 49.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cdk1g"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 52.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r3h3s"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 54.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0t6lo"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 54.9
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0rstn"]
+shader = ExtResource("36_pj5kq")
+shader_parameter/sway_px = 1.0
+shader_parameter/speed = null
+shader_parameter/phase_offset = 56.7
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gfhwb"]
+diffuse_texture = ExtResource("61_x064w")
+normal_texture = ExtResource("62_w014m")
+texture_filter = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2j3uw"]
+size = Vector2(22, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d84h2"]
+shader = ExtResource("64_pxgqw")
+shader_parameter/ray_color = null
+shader_parameter/intensity = null
+shader_parameter/angle_slope = null
+shader_parameter/speed = null
+shader_parameter/pixel_steps = null
+
+[sub_resource type="Image" id="Image_kmpvo"]
+data = {
+"data": PackedByteArray(255, 237, 183, 216, 255, 237, 183, 216, 255, 237, 183, 216, 255, 237, 183, 216),
+"format": "RGBA8",
+"height": 2,
+"mipmaps": false,
+"width": 2
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_jp5sa"]
+image = SubResource("Image_kmpvo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f2j4g"]
+emission_shape = 3
+emission_box_extents = Vector3(420, 220, 1)
+direction = Vector3(-0.7, 0.7, 0)
+spread = 20.0
+initial_velocity_min = 6.0
+initial_velocity_max = 16.0
+gravity = Vector3(0, 0, 0)
+scale_max = 1.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vfw6"]
+bg_color = Color(0.08, 0.05, 0.05, 0.76)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.56, 0.34, 0.65)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Canyon2DStudy" type="Control" unique_id=946230489]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_prdcs")
+
+[node name="BackdropFill" type="ColorRect" parent="." unique_id=2102851163]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.08, 0.05, 0.04, 1)
+
+[node name="WorldViewport" type="SubViewport" parent="." unique_id=655744488]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="CanyonWorld" type="Node2D" parent="WorldViewport" unique_id=2051457829]
+texture_filter = 1
+
+[node name="Approach1Ground" type="Sprite2D" parent="WorldViewport/CanyonWorld" unique_id=1580787611]
+texture_filter = 1
+texture = SubResource("CanvasTexture_jl8bf")
+centered = false
+
+[node name="Approach2Ground" type="Sprite2D" parent="WorldViewport/CanyonWorld" unique_id=1341319260]
+visible = false
+texture_filter = 1
+texture = SubResource("CanvasTexture_xqoyo")
+centered = false
+
+[node name="Approach1Collider" type="StaticBody2D" parent="WorldViewport/CanyonWorld" unique_id=1790133621]
+collision_mask = 0
+
+[node name="LeftCanyonWall" type="CollisionPolygon2D" parent="WorldViewport/CanyonWorld/Approach1Collider" unique_id=1486659973]
+polygon = PackedVector2Array(0, 0, 221, 0, 285, 100, 285, 200, 285, 300, 266, 400, 285, 500, 285, 600, 285, 700, 271, 800, 285, 900, 285, 1000, 285, 1100, 276, 1200, 285, 1300, 285, 1400, 285, 1500, 256, 1600, 285, 1700, 285, 1800, 285, 1900, 285, 1967, 0, 1967)
+
+[node name="RightCanyonWall" type="CollisionPolygon2D" parent="WorldViewport/CanyonWorld/Approach1Collider" unique_id=741661877]
+polygon = PackedVector2Array(960, 0, 675, 0, 675, 100, 675, 200, 675, 300, 675, 400, 675, 500, 675, 600, 675, 700, 675, 800, 675, 900, 675, 1000, 675, 1100, 675, 1200, 675, 1300, 707, 1400, 675, 1500, 675, 1600, 675, 1700, 675, 1800, 675, 1900, 675, 1967, 960, 1967)
+
+[node name="NorthEndCap" type="CollisionShape2D" parent="WorldViewport/CanyonWorld/Approach1Collider" unique_id=1138932528]
+position = Vector2(480, 64)
+shape = SubResource("RectangleShape2D_2bcbc")
+
+[node name="SouthEndCap" type="CollisionShape2D" parent="WorldViewport/CanyonWorld/Approach1Collider" unique_id=605602017]
+position = Vector2(480, 1931)
+shape = SubResource("RectangleShape2D_kd0tr")
+
+[node name="Approach2Collider" type="StaticBody2D" parent="WorldViewport/CanyonWorld" unique_id=108901775]
+collision_layer = 0
+collision_mask = 0
+
+[node name="LeftCanyonWall" type="CollisionPolygon2D" parent="WorldViewport/CanyonWorld/Approach2Collider" unique_id=411859004]
+polygon = PackedVector2Array(0, 0, 285, 0, 285, 100, 285, 200, 285, 300, 285, 400, 285, 500, 285, 600, 285, 700, 285, 800, 285, 900, 285, 1000, 285, 1100, 285, 1200, 285, 1300, 285, 1400, 285, 1500, 285, 1600, 285, 1700, 285, 1800, 285, 1900, 285, 1967, 0, 1967)
+
+[node name="RightCanyonWall" type="CollisionPolygon2D" parent="WorldViewport/CanyonWorld/Approach2Collider" unique_id=287547181]
+polygon = PackedVector2Array(960, 0, 675, 0, 675, 100, 675, 200, 675, 300, 675, 400, 675, 500, 675, 600, 675, 700, 675, 800, 675, 900, 675, 1000, 675, 1100, 675, 1200, 675, 1300, 675, 1400, 675, 1500, 675, 1600, 675, 1700, 675, 1800, 675, 1900, 675, 1967, 960, 1967)
+
+[node name="NorthEndCap" type="CollisionShape2D" parent="WorldViewport/CanyonWorld/Approach2Collider" unique_id=917444440]
+position = Vector2(480, 64)
+shape = SubResource("RectangleShape2D_aaim1")
+
+[node name="SouthEndCap" type="CollisionShape2D" parent="WorldViewport/CanyonWorld/Approach2Collider" unique_id=222537100]
+position = Vector2(480, 1931)
+shape = SubResource("RectangleShape2D_48gy7")
+
+[node name="YSortWorld" type="Node2D" parent="WorldViewport/CanyonWorld" unique_id=352002190]
+z_index = 4
+y_sort_enabled = true
+
+[node name="A1Cutout_00" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=647839083]
+texture_filter = 1
+position = Vector2(411.5, 297)
+texture = SubResource("CanvasTexture_b3xaw")
+offset = Vector2(0, -32)
+metadata/approach = 1
+
+[node name="A1Cutout_01" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1457824832]
+texture_filter = 1
+position = Vector2(370, 570)
+texture = SubResource("CanvasTexture_krjqj")
+offset = Vector2(0, -33.5)
+metadata/approach = 1
+
+[node name="A1Cutout_02" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1999750206]
+texture_filter = 1
+position = Vector2(546.5, 837)
+texture = SubResource("CanvasTexture_5cqdb")
+offset = Vector2(0, -32)
+metadata/approach = 1
+
+[node name="A1Cutout_03" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=180284085]
+texture_filter = 1
+position = Vector2(611.5, 1177)
+texture = SubResource("CanvasTexture_3dfwc")
+offset = Vector2(0, -37)
+metadata/approach = 1
+
+[node name="A1Cutout_04" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=443399370]
+texture_filter = 1
+position = Vector2(418.5, 1357)
+texture = SubResource("CanvasTexture_8c2kv")
+offset = Vector2(0, -37)
+metadata/approach = 1
+
+[node name="A1Cutout_05" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1138164968]
+texture_filter = 1
+position = Vector2(577.5, 1607)
+texture = SubResource("CanvasTexture_g5xl4")
+offset = Vector2(0, -37)
+metadata/approach = 1
+
+[node name="A1Cutout_06" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=937352152]
+texture_filter = 1
+position = Vector2(326.5, 1757)
+texture = SubResource("CanvasTexture_81urs")
+offset = Vector2(0, -37)
+metadata/approach = 1
+
+[node name="A1Cutout_07" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=7920086]
+texture_filter = 1
+position = Vector2(347.5, 1874)
+texture = SubResource("CanvasTexture_txrpi")
+offset = Vector2(0, -40.5)
+metadata/approach = 1
+
+[node name="A2_cliff_00" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1736921906]
+visible = false
+texture_filter = 1
+position = Vector2(190, 210)
+texture = SubResource("CanvasTexture_d4j0a")
+offset = Vector2(0, -152.5)
+metadata/approach = 2
+
+[node name="A2_cliff_01" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1266191812]
+visible = false
+texture_filter = 1
+position = Vector2(172, 395)
+texture = SubResource("CanvasTexture_371to")
+offset = Vector2(0, -110)
+metadata/approach = 2
+
+[node name="A2_cliff_02" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=772352673]
+visible = false
+texture_filter = 1
+position = Vector2(202, 580)
+texture = SubResource("CanvasTexture_cu3uy")
+offset = Vector2(0, -117.5)
+metadata/approach = 2
+
+[node name="A2_cliff_03" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=941233696]
+visible = false
+texture_filter = 1
+position = Vector2(184, 760)
+texture = SubResource("CanvasTexture_d4j0a")
+offset = Vector2(0, -152.5)
+metadata/approach = 2
+
+[node name="A2_cliff_04" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1396421987]
+visible = false
+texture_filter = 1
+position = Vector2(188, 935)
+texture = SubResource("CanvasTexture_1hmg3")
+offset = Vector2(0, -113.5)
+metadata/approach = 2
+
+[node name="A2_cliff_05" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1219093075]
+visible = false
+texture_filter = 1
+position = Vector2(170, 1115)
+texture = SubResource("CanvasTexture_371to")
+offset = Vector2(0, -110)
+metadata/approach = 2
+
+[node name="A2_cliff_06" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=779158729]
+visible = false
+texture_filter = 1
+position = Vector2(204, 1300)
+texture = SubResource("CanvasTexture_cu3uy")
+offset = Vector2(0, -117.5)
+metadata/approach = 2
+
+[node name="A2_cliff_07" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=2009315980]
+visible = false
+texture_filter = 1
+position = Vector2(186, 1485)
+texture = SubResource("CanvasTexture_d4j0a")
+offset = Vector2(0, -152.5)
+metadata/approach = 2
+
+[node name="A2_cliff_08" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=577432282]
+visible = false
+texture_filter = 1
+position = Vector2(174, 1670)
+texture = SubResource("CanvasTexture_371to")
+offset = Vector2(0, -110)
+metadata/approach = 2
+
+[node name="A2_cliff_09" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=787950529]
+visible = false
+texture_filter = 1
+position = Vector2(200, 1855)
+texture = SubResource("CanvasTexture_cu3uy")
+offset = Vector2(0, -117.5)
+metadata/approach = 2
+
+[node name="A2_cliff_10" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1379159796]
+visible = false
+texture_filter = 1
+position = Vector2(185, 2020)
+texture = SubResource("CanvasTexture_d4j0a")
+offset = Vector2(0, -152.5)
+metadata/approach = 2
+
+[node name="A2_cliff_11" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=804115994]
+visible = false
+texture_filter = 1
+position = Vector2(782, 220)
+texture = SubResource("CanvasTexture_soa2t")
+offset = Vector2(0, -155.5)
+metadata/approach = 2
+
+[node name="A2_cliff_12" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1778987901]
+visible = false
+texture_filter = 1
+position = Vector2(766, 390)
+texture = SubResource("CanvasTexture_jm1ni")
+offset = Vector2(0, -137.5)
+metadata/approach = 2
+
+[node name="A2_cliff_13" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=781758615]
+visible = false
+texture_filter = 1
+position = Vector2(786, 570)
+texture = SubResource("CanvasTexture_soa2t")
+offset = Vector2(0, -155.5)
+metadata/approach = 2
+
+[node name="A2_cliff_14" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=517239013]
+visible = false
+texture_filter = 1
+position = Vector2(770, 745)
+texture = SubResource("CanvasTexture_jm1ni")
+offset = Vector2(0, -137.5)
+metadata/approach = 2
+
+[node name="A2_cliff_15" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=19507704]
+visible = false
+texture_filter = 1
+position = Vector2(780, 925)
+texture = SubResource("CanvasTexture_soa2t")
+offset = Vector2(0, -155.5)
+metadata/approach = 2
+
+[node name="A2_cliff_16" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1268233677]
+visible = false
+texture_filter = 1
+position = Vector2(764, 1105)
+texture = SubResource("CanvasTexture_jm1ni")
+offset = Vector2(0, -137.5)
+metadata/approach = 2
+
+[node name="A2_cliff_17" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1699146545]
+visible = false
+texture_filter = 1
+position = Vector2(785, 1290)
+texture = SubResource("CanvasTexture_soa2t")
+offset = Vector2(0, -155.5)
+metadata/approach = 2
+
+[node name="A2_cliff_18" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1022691481]
+visible = false
+texture_filter = 1
+position = Vector2(768, 1465)
+texture = SubResource("CanvasTexture_jm1ni")
+offset = Vector2(0, -137.5)
+metadata/approach = 2
+
+[node name="A2_cliff_19" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1310406280]
+visible = false
+texture_filter = 1
+position = Vector2(782, 1650)
+texture = SubResource("CanvasTexture_soa2t")
+offset = Vector2(0, -155.5)
+metadata/approach = 2
+
+[node name="A2_cliff_20" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1487430989]
+visible = false
+texture_filter = 1
+position = Vector2(766, 1830)
+texture = SubResource("CanvasTexture_jm1ni")
+offset = Vector2(0, -137.5)
+metadata/approach = 2
+
+[node name="A2_cliff_21" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=81468673]
+visible = false
+texture_filter = 1
+position = Vector2(784, 2010)
+texture = SubResource("CanvasTexture_soa2t")
+offset = Vector2(0, -155.5)
+metadata/approach = 2
+
+[node name="A2_arch_22" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1607454269]
+visible = false
+texture_filter = 1
+position = Vector2(285, 265)
+texture = SubResource("CanvasTexture_12axr")
+offset = Vector2(0, -73)
+metadata/approach = 2
+
+[node name="A2_arch_23" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1279982189]
+visible = false
+texture_filter = 1
+position = Vector2(285, 985)
+texture = SubResource("CanvasTexture_12axr")
+offset = Vector2(0, -73)
+metadata/approach = 2
+
+[node name="A2_arch_24" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=833872339]
+visible = false
+texture_filter = 1
+position = Vector2(285, 1535)
+texture = SubResource("CanvasTexture_12axr")
+offset = Vector2(0, -73)
+metadata/approach = 2
+
+[node name="A2_bush_25" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=97167546]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_j1ngq")
+position = Vector2(356, 185)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_boulder_26" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=2082340797]
+visible = false
+texture_filter = 1
+position = Vector2(336, 325)
+texture = SubResource("CanvasTexture_nnr00")
+offset = Vector2(0, -35)
+metadata/approach = 2
+
+[node name="A2_bush_27" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1607253131]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_5h1w0")
+position = Vector2(315, 385)
+texture = SubResource("CanvasTexture_eksme")
+offset = Vector2(0, -24.5)
+metadata/approach = 2
+
+[node name="A2_bush_28" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1208492099]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_0h1n4")
+position = Vector2(332, 475)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_boulder_29" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=406725057]
+visible = false
+texture_filter = 1
+position = Vector2(370, 550)
+texture = SubResource("CanvasTexture_tn5d3")
+offset = Vector2(0, -22)
+metadata/approach = 2
+
+[node name="A2_grass_30" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=674829514]
+visible = false
+texture_filter = 1
+position = Vector2(325, 610)
+texture = SubResource("CanvasTexture_odxj8")
+offset = Vector2(0, -17)
+metadata/approach = 2
+
+[node name="A2_bush_31" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=388386282]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_edjr1")
+position = Vector2(345, 700)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_boulder_32" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1465253721]
+visible = false
+texture_filter = 1
+position = Vector2(322, 815)
+texture = SubResource("CanvasTexture_xgfhn")
+offset = Vector2(0, -29)
+metadata/approach = 2
+
+[node name="A2_bush_33" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=125078607]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_scrpl")
+position = Vector2(355, 905)
+texture = SubResource("CanvasTexture_yci54")
+offset = Vector2(0, -24)
+metadata/approach = 2
+
+[node name="A2_boulder_34" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1244611875]
+visible = false
+texture_filter = 1
+position = Vector2(335, 1045)
+texture = SubResource("CanvasTexture_nnr00")
+offset = Vector2(0, -35)
+metadata/approach = 2
+
+[node name="A2_bush_35" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1696145810]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_v3cn0")
+position = Vector2(318, 1140)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_grass_36" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=719461151]
+visible = false
+texture_filter = 1
+position = Vector2(348, 1215)
+texture = SubResource("CanvasTexture_gfx4b")
+offset = Vector2(0, -25.5)
+metadata/approach = 2
+
+[node name="A2_bush_37" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=375805178]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_rk4ib")
+position = Vector2(358, 1320)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_boulder_38" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=357363114]
+visible = false
+texture_filter = 1
+position = Vector2(338, 1410)
+texture = SubResource("CanvasTexture_bwhjd")
+offset = Vector2(0, -17.5)
+metadata/approach = 2
+
+[node name="A2_bush_39" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1840977491]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_n0gml")
+position = Vector2(316, 1490)
+texture = SubResource("CanvasTexture_eksme")
+offset = Vector2(0, -24.5)
+metadata/approach = 2
+
+[node name="A2_boulder_40" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=449780022]
+visible = false
+texture_filter = 1
+position = Vector2(342, 1605)
+texture = SubResource("CanvasTexture_nnr00")
+offset = Vector2(0, -35)
+metadata/approach = 2
+
+[node name="A2_bush_41" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1403896684]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_k12uy")
+position = Vector2(334, 1715)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_boulder_42" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=171486156]
+visible = false
+texture_filter = 1
+position = Vector2(318, 1805)
+texture = SubResource("CanvasTexture_tn5d3")
+offset = Vector2(0, -22)
+metadata/approach = 2
+
+[node name="A2_bush_43" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=137790893]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_tojkt")
+position = Vector2(335, 1895)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_grass_44" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=607329453]
+visible = false
+texture_filter = 1
+position = Vector2(355, 1935)
+texture = SubResource("CanvasTexture_ycqru")
+offset = Vector2(0, -25.5)
+metadata/approach = 2
+
+[node name="A2_boulder_45" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1131239760]
+visible = false
+texture_filter = 1
+position = Vector2(638, 175)
+texture = SubResource("CanvasTexture_xgfhn")
+offset = Vector2(0, -29)
+metadata/approach = 2
+
+[node name="A2_bush_46" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=205306543]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_3184d")
+position = Vector2(614, 275)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_boulder_47" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1173572663]
+visible = false
+texture_filter = 1
+position = Vector2(628, 365)
+texture = SubResource("CanvasTexture_bwhjd")
+offset = Vector2(0, -17.5)
+metadata/approach = 2
+
+[node name="A2_bush_48" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1865493734]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_x6lrp")
+position = Vector2(616, 435)
+texture = SubResource("CanvasTexture_yci54")
+offset = Vector2(0, -24)
+metadata/approach = 2
+
+[node name="A2_bush_49" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1615981822]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_ruwks")
+position = Vector2(628, 525)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_grass_50" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1919345359]
+visible = false
+texture_filter = 1
+position = Vector2(596, 595)
+texture = SubResource("CanvasTexture_gfx4b")
+offset = Vector2(0, -25.5)
+metadata/approach = 2
+
+[node name="A2_boulder_51" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1715050854]
+visible = false
+texture_filter = 1
+position = Vector2(632, 685)
+texture = SubResource("CanvasTexture_nnr00")
+offset = Vector2(0, -35)
+metadata/approach = 2
+
+[node name="A2_bush_52" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=780935403]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_612r0")
+position = Vector2(605, 785)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_boulder_53" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=41470655]
+visible = false
+texture_filter = 1
+position = Vector2(626, 880)
+texture = SubResource("CanvasTexture_tn5d3")
+offset = Vector2(0, -22)
+metadata/approach = 2
+
+[node name="A2_bush_54" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1655792848]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_h8evw")
+position = Vector2(618, 965)
+texture = SubResource("CanvasTexture_eksme")
+offset = Vector2(0, -24.5)
+metadata/approach = 2
+
+[node name="A2_bush_55" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1318717580]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_yl7r5")
+position = Vector2(628, 1065)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_boulder_56" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1966688250]
+visible = false
+texture_filter = 1
+position = Vector2(602, 1165)
+texture = SubResource("CanvasTexture_xgfhn")
+offset = Vector2(0, -29)
+metadata/approach = 2
+
+[node name="A2_grass_57" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1589526955]
+visible = false
+texture_filter = 1
+position = Vector2(615, 1245)
+texture = SubResource("CanvasTexture_odxj8")
+offset = Vector2(0, -17)
+metadata/approach = 2
+
+[node name="A2_bush_58" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1691798083]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_cdk1g")
+position = Vector2(635, 1345)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_boulder_59" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=869698082]
+visible = false
+texture_filter = 1
+position = Vector2(614, 1435)
+texture = SubResource("CanvasTexture_bwhjd")
+offset = Vector2(0, -17.5)
+metadata/approach = 2
+
+[node name="A2_bush_60" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1915036219]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_r3h3s")
+position = Vector2(595, 1515)
+texture = SubResource("CanvasTexture_yci54")
+offset = Vector2(0, -24)
+metadata/approach = 2
+
+[node name="A2_bush_61" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1771883693]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_0t6lo")
+position = Vector2(632, 1625)
+texture = SubResource("CanvasTexture_l4t2j")
+offset = Vector2(0, -38.5)
+metadata/approach = 2
+
+[node name="A2_boulder_62" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=733275597]
+visible = false
+texture_filter = 1
+position = Vector2(618, 1735)
+texture = SubResource("CanvasTexture_nnr00")
+offset = Vector2(0, -35)
+metadata/approach = 2
+
+[node name="A2_bush_63" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=639956347]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_0rstn")
+position = Vector2(596, 1825)
+texture = SubResource("CanvasTexture_txqbm")
+offset = Vector2(0, -37)
+metadata/approach = 2
+
+[node name="A2_boulder_64" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1015072497]
+visible = false
+texture_filter = 1
+position = Vector2(616, 1905)
+texture = SubResource("CanvasTexture_tn5d3")
+offset = Vector2(0, -22)
+metadata/approach = 2
+
+[node name="Hero2D" type="CharacterBody2D" parent="WorldViewport/CanyonWorld/YSortWorld" unique_id=1242671382]
+position = Vector2(452, 1720)
+collision_layer = 2
+script = ExtResource("59_np2rm")
+
+[node name="Shadow" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld/Hero2D" unique_id=1002474948]
+texture_filter = 1
+position = Vector2(0, -2)
+texture = ExtResource("60_6jrjd")
+
+[node name="Sprite" type="Sprite2D" parent="WorldViewport/CanyonWorld/YSortWorld/Hero2D" unique_id=2106811941]
+texture_filter = 1
+texture = SubResource("CanvasTexture_gfhwb")
+offset = Vector2(0, -54)
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldViewport/CanyonWorld/YSortWorld/Hero2D" unique_id=1880639148]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_2j3uw")
+
+[node name="MuzzleRight" type="Marker2D" parent="WorldViewport/CanyonWorld/YSortWorld/Hero2D" unique_id=479077413]
+position = Vector2(28, -55)
+
+[node name="PixelCamera" type="Camera2D" parent="WorldViewport/CanyonWorld" unique_id=2084509457]
+position = Vector2(452, 1720)
+script = ExtResource("63_waofa")
+target_path = NodePath("../YSortWorld/Hero2D")
+map_bounds = Rect2(0, 0, 960, 1967)
+
+[node name="AmbientModulate" type="CanvasModulate" parent="WorldViewport/CanyonWorld" unique_id=934785942]
+color = Color(0.95, 0.92, 0.9, 1)
+
+[node name="SunLight2D" type="DirectionalLight2D" parent="WorldViewport/CanyonWorld" unique_id=1044248029]
+rotation = 0.6632251
+color = Color(1, 0.9, 0.74, 1)
+energy = 0.18
+height = 0.45
+
+[node name="AtmosphereLayer" type="CanvasLayer" parent="WorldViewport" unique_id=436620529]
+layer = 5
+
+[node name="GodRaysRect" type="ColorRect" parent="WorldViewport/AtmosphereLayer" unique_id=80776709]
+material = SubResource("ShaderMaterial_d84h2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="DustParticles" type="GPUParticles2D" parent="WorldViewport/AtmosphereLayer" unique_id=1393518797]
+texture_filter = 1
+position = Vector2(560, 210)
+amount = 32
+texture = SubResource("ImageTexture_jp5sa")
+lifetime = 4.2
+process_material = SubResource("ParticleProcessMaterial_f2j4g")
+
+[node name="ViewportDisplay" type="TextureRect" parent="." unique_id=727095656]
+texture_filter = 1
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2109918062]
+layer = 10
+
+[node name="Panel" type="PanelContainer" parent="HUD" unique_id=1113479232]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 10.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3vfw6")
+
+[node name="Margin" type="MarginContainer" parent="HUD/Panel" unique_id=946841734]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Panel/Margin" unique_id=1693218808]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="StatusLabel" type="Label" parent="HUD/Panel/Margin/VBox" unique_id=1830618002]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.94, 0.84, 1)
+
+[node name="PromptLabel" type="Label" parent="HUD/Panel/Margin/VBox" unique_id=1072471399]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.92, 0.86, 0.78, 0.92)

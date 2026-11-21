@@ -1,0 +1,226 @@
+{
+  "left_mid_drystone_wall": {
+    "rect": [
+      4,
+      4,
+      497,
+      375
+    ],
+    "pivot": [
+      358,
+      362
+    ],
+    "anchor_img9": [
+      248,
+      362
+    ]
+  },
+  "right_mid_drystone_wall": {
+    "rect": [
+      507,
+      4,
+      431,
+      371
+    ],
+    "pivot": [
+      60,
+      292
+    ],
+    "anchor_img9": [
+      700,
+      318
+    ]
+  },
+  "left_fg_terraced_ledge": {
+    "rect": [
+      944,
+      4,
+      441,
+      303
+    ],
+    "pivot": [
+      261,
+      219
+    ],
+    "anchor_img9": [
+      165,
+      495
+    ]
+  },
+  "right_fg_shaded_step": {
+    "rect": [
+      1391,
+      4,
+      299,
+      289
+    ],
+    "pivot": [
+      54,
+      202
+    ],
+    "anchor_img9": [
+      812,
+      492
+    ]
+  },
+  "left_upper_terracotta_cliff": {
+    "rect": [
+      1696,
+      4,
+      201,
+      159
+    ],
+    "pivot": [
+      124,
+      146
+    ],
+    "anchor_img9": [
+      420,
+      146
+    ]
+  },
+  "right_upper_sunlit_cliff": {
+    "rect": [
+      4,
+      385,
+      543,
+      157
+    ],
+    "pivot": [
+      114,
+      144
+    ],
+    "anchor_img9": [
+      642,
+      144
+    ]
+  },
+  "bush_left_fg": {
+    "rect": [
+      553,
+      385,
+      107,
+      88
+    ],
+    "pivot": [
+      52,
+      76
+    ],
+    "anchor_img9": [
+      304,
+      420
+    ]
+  },
+  "boulder_left_sunlit": {
+    "rect": [
+      666,
+      385,
+      107,
+      81
+    ],
+    "pivot": [
+      52,
+      70
+    ],
+    "anchor_img9": [
+      288,
+      356
+    ]
+  },
+  "bush_right_mid": {
+    "rect": [
+      779,
+      385,
+      85,
+      75
+    ],
+    "pivot": [
+      42,
+      64
+    ],
+    "anchor_img9": [
+      642,
+      314
+    ]
+  },
+  "boulder_bend_left": {
+    "rect": [
+      870,
+      385,
+      95,
+      73
+    ],
+    "pivot": [
+      44,
+      66
+    ],
+    "anchor_img9": [
+      392,
+      194
+    ]
+  },
+  "curb_right_a": {
+    "rect": [
+      971,
+      385,
+      45,
+      47
+    ],
+    "pivot": [
+      22,
+      34
+    ],
+    "anchor_img9": [
+      670,
+      432
+    ]
+  },
+  "curb_left_b": {
+    "rect": [
+      1022,
+      385,
+      51,
+      43
+    ],
+    "pivot": [
+      28,
+      32
+    ],
+    "anchor_img9": [
+      456,
+      488
+    ]
+  },
+  "curb_left_a": {
+    "rect": [
+      1079,
+      385,
+      43,
+      35
+    ],
+    "pivot": [
+      22,
+      26
+    ],
+    "anchor_img9": [
+      490,
+      434
+    ]
+  },
+  "curb_mid_a": {
+    "rect": [
+      1128,
+      385,
+      45,
+      33
+    ],
+    "pivot": [
+      24,
+      22
+    ],
+    "anchor_img9": [
+      404,
+      326
+    ]
+  }
+}

@@ -1,5 +1,17 @@
 # Experiment Log & Hard-Won Lessons
 
+## Pixel Canyon camera and depth · 2026-11-21
+
+A uses the current stepped sprite sizes. B uses four cobble-calibrated marks with smooth changes between them and a fixed view. C adds a whole-pixel uphill follow from boot Y 300, capped at 24 art pixels. The upper-road and gate silhouettes fit the paving and curb better in B. The boots and rifle stayed distinct at 1080p. C brings the figure lower in the frame and shows more sky, with the bend still visible.
+
+The three Forward+ runs reuse the same route, with stops and a reversal added for review. Each crossed both sides of the shrub, registered a miss and hit, and passed the bend in both directions. Camera offset was 0 on the first overlook frame and 19 on the first frame back at the bend. B and C match across their overlapping pictures when the offset is removed. At the 24-pixel limit the extension covers every new row. Switching away to F2 and back restores pixel-identical views. [Four matched views, 1080p recordings and working art](PIXEL_CANYON_CAMERA_STUDY.md)
+
+## Standalone 2D Pixel Canyon · 2026-11-21
+
+This study starts with the supplied 960×540 reference and uses a dedicated 2D canvas. The untouched capture and 1080p preview have zero differing RGB pixels. The repair changes 7,785 pixels around the figure and cast shadow. Matching the outlines of the borrowed stones to the road joints took the most manual work.
+
+Verified the reference stance at (511, 325), the shrub crossing at y377 and y425, a clear miss from y384 and a hit from y354. The return from Arch Overlook leaves the encounter cleared. Tested in the actual Forward+ window and recorded 27.2 seconds of gameplay. The second room's pale twin arch and upper-right light carry through, with a wider vista and brighter foreground cobbles. [Art, review and playback](PIXEL_CANYON_STUDY.md)
+
 > Always check **Section 1 (Proven Dead Ends)** before proposing a rendering technique, shader trick, or mesh generator.
 
 ## Integrated canyon review

@@ -60,6 +60,16 @@ In D:\Games\Balance5, read AGENTS.md and docs/PIXEL_TEXTURE_PROMPTS.md. I genera
 - `assets/textures/pixel_ab/art_*`, `assets/textures/pixel_ab/hr_*`
 - `scenes/maps/canyon_v2_pixel_ab.tscn`
 
+## Compare scale and camera in a painted 2D room
+Area: Canyon · Status: In use · Tools: Godot, Krita, FFmpeg
+
+1. Put the comparison in its own playable scene. Keep the boots, road, foreground draw order and shot lanes in room coordinates. Keep controls and the reference painting in screen space.
+2. Measure several ordinary paving stones across the road at each stop. Draft heights from the width ratios and judge the figures against the curb and masonry. Reuse the same local scale for travel speed, muzzle and shadow.
+3. Extend the layered painting by the camera's maximum travel. Put the original rows at their original room coordinates and use their exact pixels at spawn.
+4. Run the same input route in each mode. Capture the exact standing marks and record at game speed, with chapters at matched boot positions. Check the top edge at the travel limit, F2 restoration, stops, reversals and both room transitions.
+
+[Pixel Canyon study, source and reproduction steps](PIXEL_CANYON_CAMERA_STUDY.md)
+
 ## 3D rock module (Blender to Godot)
 Area: 3D · Status: In use · Tools: Blender, Godot
 Make a reusable rock piece for the canyon and place it along the route.
@@ -242,6 +252,16 @@ Illustrated story panels between missions, in the manner of Dune II's mentat bri
 
 ### Done when
 - The briefing plays before Mission 1 and the text fits the story in `docs/GAME_DESIGN.md`.
+
+## Fixed-screen 2D RPG room
+
+1. Check the untouched 960×540 master in the study's viewport against the supplied 2× preview. Keep the original file.
+2. Use a layered art file for the master, cobble repair and any foreground cutout. Export the ground plate with no actor painted into it. Export a foreground cutout at the original full-canvas coordinates.
+3. In Godot, trace the walkable edge in the room's collision polygon and add a separate blocker for the roots or base of the foreground object. Place its drawing point at the roots so that the commander's feet determine whether it draws in front.
+4. Keep the commander's cells at 128×144 with pivot (64, 135). Export the tagged animation in seven columns and keep the walk cel spacing tied to the planted boot's travel.
+5. Capture the reference position, a shrub crossing and a depth test before reviewing a new room. Use the same light and road scale, with one recognizable landmark across the transition.
+
+[Editable art, capture commands and test](PIXEL_CANYON_STUDY.md)
 
 ## Record a decision or a new term
 Area: Workflow · Status: In use · Tools: Balance Studio, any agent

@@ -1,5 +1,25 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## Pixel Canyon camera and depth · 2026-11-21
+
+- [x] Captured A, B and C at four matched boot points. A preserves the original standing composition and the calibrated commander stays 125 art pixels tall there.
+- [x] Inspected the boots, rifle and face at the bend. Walked both sides of the shrub and fired a miss and a hit in each mode.
+- [x] C holds through the nearby fight, retraces on reversals and fills the frame at 24 art pixels of travel. F2 restores the live view and the room switch uses the new room's framing on its first frame.
+- [ ] Owner chooses the first-room framing and approves the draft heights.
+
+[Matched stills and recordings](PIXEL_CANYON_CAMERA_STUDY.md)
+
+## Standalone 2D Pixel Canyon · 2026-11-21
+
+- [x] Untouched 960×540 art matched the supplied 1920×1080 preview exactly in the game.
+- [x] Inspected the empty cobbles at 1× and 2×. Verified original position and foreground overlap from behind and in front.
+- [x] Ran the horizontal miss, hit and two-way transition in Godot. Recorded the real game at 30 fps.
+- [ ] Owner reviews the walk and the adjoining view for the RPG art decision.
+
+[Art findings and evidence](PIXEL_CANYON_STUDY.md)
+
+---
+
 **Target Reference:** `assets/textures/maps/desert_approach_rpg_albedo.png` (**Img 1 / Picture 1**) + *Octopath Traveler* 3D diorama camera/terrain structure.
 
 > **Goals, not parameters.** A `[x]` records that a build met a visual goal from Img 1. It protects against *accidental* regressions while working on something else. It is not a lock. Any value in it can change on purpose (camera, sun, route, blur method, reveal timing) when the change serves Img 1 better. To make that change, name it in the test, capture matched before/after views and update the item. The numbers in "Verified in" lines are records of what passed, not requirements.

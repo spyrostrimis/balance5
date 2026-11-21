@@ -24,6 +24,8 @@ Open the folder in **Godot 4.7.2** and press Play, or run:
 
 The opening screen leads to the **Developers Page**, which lists every playable build and study. Esc returns to it.
 
+The two experimental **Pixel Canyon** builds are listed under Canyon builds. See [Two-Room Study](docs/PIXEL_CANYON_STUDY.md) for the painted rooms and combat test, and [Camera and Depth](docs/PIXEL_CANYON_CAMERA_STUDY.md) for the three ways to frame the first room.
+
 ## Status
 
 Early prototype. RTS Mission 1 (*The First Claim*) has a drivable tank on the desert map and a modular kitbash mini-map. The RPG canyon approach has a route-driven 3D scene (`scenes/maps/canyon_v2.tscn`).

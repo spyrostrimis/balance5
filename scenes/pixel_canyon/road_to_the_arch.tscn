@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/pixel_canyon/road_to_the_arch.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/pixel_canyon/shrub.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/pixel_canyon/sentry.png" id="3"]
+
+[sub_resource type="RectangleShape2D" id="Gate_bend"]
+size = Vector2(42, 11)
+
+[node name="RoadToTheArch" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("1")
+centered = false
+
+[node name="Foreground" type="Sprite2D" parent="."]
+position = Vector2(414, 406)
+texture = ExtResource("2")
+centered = false
+offset = Vector2(-414, -406)
+
+[node name="Sentry" type="Sprite2D" parent="."]
+position = Vector2(593, 354)
+texture = ExtResource("3")
+centered = false
+offset = Vector2(-64, -135)
+flip_h = true
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(511, 325)
+
+[node name="FromOverlook" type="Marker2D" parent="."]
+position = Vector2(569, 184)
+
+[node name="Road" type="StaticBody2D" parent="."]
+
+[node name="Edge" type="CollisionPolygon2D" parent="Road"]
+build_mode = 1
+polygon = PackedVector2Array(414, 540, 468, 477, 486, 452, 470, 434, 438, 437, 388, 446, 371, 430, 373, 392, 384, 366, 409, 356, 394, 339, 362, 310, 347, 287, 361, 269, 391, 250, 416, 235, 446, 219, 466, 201, 498, 181, 523, 168, 554, 150, 593, 144, 612, 150, 604, 167, 592, 180, 608, 198, 603, 217, 555, 243, 536, 259, 532, 280, 523, 296, 553, 310, 588, 322, 620, 338, 652, 355, 676, 382, 681, 420, 671, 463, 650, 504, 624, 540)
+
+[node name="ShrubRoots" type="CollisionPolygon2D" parent="Road"]
+polygon = PackedVector2Array(387, 402, 399, 397, 418, 395, 435, 400, 447, 406, 438, 415, 401, 416, 389, 411)
+
+[node name="Gate" type="Area2D" parent="."]
+position = Vector2(580, 152)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Gate"]
+shape = SubResource("Gate_bend")

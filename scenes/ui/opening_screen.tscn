@@ -23,6 +23,24 @@ scene_path = "res://scenes/maps/desert_canyon_bend.tscn"
 credit = "OpenAI Codex"
 milestone_utc = "2026-11-18 02:19"
 
+[sub_resource type="Resource" id="Build_pixel_canyon_study"]
+script = ExtResource("4")
+section = "Canyon builds"
+title = "Pixel Canyon · Two-Room Study"
+summary = "Walk the cobbled road as the Blue Commander, line up a horizontal shot, and explore the ruined arch beyond the bend."
+scene_path = "res://scenes/pixel_canyon/pixel_canyon.tscn"
+credit = "OpenAI Codex"
+built_utc = "2026-11-21 00:11"
+
+[sub_resource type="Resource" id="Build_pixel_canyon_camera"]
+script = ExtResource("4")
+section = "Canyon builds"
+title = "Pixel Canyon · Camera and Depth"
+summary = "Press 1, 2 or 3 to compare the original walk, depth calibrated to the cobbles, and a gentle uphill camera follow."
+scene_path = "res://scenes/pixel_canyon/pixel_canyon_camera.tscn"
+credit = "OpenAI Codex"
+built_utc = "2026-11-21 00:38"
+
 [sub_resource type="Resource" id="Build_chatgpt_boulders"]
 script = ExtResource("4")
 title = "ChatGPT AI Boulders"
@@ -218,7 +236,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

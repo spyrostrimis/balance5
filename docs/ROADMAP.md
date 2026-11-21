@@ -49,6 +49,11 @@ The first playable vertical slice: four troops plus a field commander per side f
 
 ## Next — RPG canyon (secondary)
 
+- [x] Two-room 2D Pixel Canyon art study with matched 1080p reference, walk and foreground crossing, horizontal shot, and two-way room transition. [Study and recording](PIXEL_CANYON_STUDY.md)
+- [x] Compare the first room with the original scale, calibrated depth and a small uphill camera follow. [Playable comparison and captures](PIXEL_CANYON_CAMERA_STUDY.md)
+- [ ] Choose the first room's scale and framing after reviewing the camera and depth study.
+- [ ] Review the 2D study's motion and adjoining view before choosing an RPG art workflow.
+
 Plan agreed 2026-11-20: Phase 0 lock the look → 1 build `scenes/rpg/canyon_01.tscn` → 2 make it playable (walk, landmark, optional fight, briefing, hand-off to Mission 1) → 3 atmosphere and sound → 4 ship as a Play build.
 
 - [x] Phase 0: why B64 looked best (painted source + shared palette) and `pixel_snap.py --painted`

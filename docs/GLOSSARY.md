@@ -601,6 +601,29 @@ Area: Art
 One pixel of the artwork as drawn, before the game enlarges it. In the RTS, one art pixel shows as 2×2 screen pixels at 1920×1080, which gives the chunky pixel-art look.
 *In Balance:* `docs/RTS_ART_RULES.md` §1.
 
+### Nearest-neighbour scaling
+Area: Art
+Enlarging artwork by copying the closest pixel's exact colour. At 2× every original pixel becomes a square of four equal screen pixels.
+*In Balance:* [Pixel Canyon study](PIXEL_CANYON_STUDY.md).
+
+### Room coordinates and screen space
+Area: Canyon
+Room coordinates measure a fixed point in the painting, such as where a boot touches the road. Screen space measures a position in the visible frame, such as where the controls are displayed. The camera moves the road on screen while the road keeps its room coordinates.
+*In Balance:* [Camera and depth study](PIXEL_CANYON_CAMERA_STUDY.md).
+
+### OpenRaster
+Area: Art
+An editable image file with separate layers, saved with the `.ora` extension. Krita can open it.
+*In Balance:* [Layered canyon extension](PIXEL_CANYON_CAMERA_STUDY.md#extension-and-source).
+
+### Animation cel
+Area: Art
+One drawing on one layer at a point in the animation. The commander's legs, body and scarf each have their own cels in Aseprite.
+
+### Depth lane
+Area: RPG
+A narrow band across the road. The game compares where two characters' boots stand to decide if a left or right shot can connect.
+
 ### Style test
 Area: Art
 One screen that contains every kind of art (ground, rocks, road, scatter, units) at the real scale, used to judge the overall look against the reference before making all the art.

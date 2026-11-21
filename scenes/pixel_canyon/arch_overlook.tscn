@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/pixel_canyon/arch_overlook.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/pixel_canyon/arch.png" id="2"]
+
+[sub_resource type="RectangleShape2D" id="Gate_down"]
+size = Vector2(398, 14)
+
+[node name="ArchOverlook" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("1")
+centered = false
+
+[node name="Foreground" type="Sprite2D" parent="."]
+position = Vector2(667, 150)
+texture = ExtResource("2")
+centered = false
+offset = Vector2(-667, -150)
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(476, 478)
+
+[node name="Road" type="StaticBody2D" parent="."]
+
+[node name="Edge" type="CollisionPolygon2D" parent="Road"]
+build_mode = 1
+polygon = PackedVector2Array(273, 540, 294, 494, 325, 451, 350, 420, 368, 382, 404, 336, 431, 300, 466, 259, 481, 234, 516, 210, 548, 187, 595, 162, 646, 151, 696, 132, 709, 116, 734, 108, 746, 116, 745, 136, 756, 152, 721, 166, 690, 177, 664, 190, 636, 212, 613, 232, 601, 257, 615, 307, 624, 345, 649, 387, 669, 421, 691, 457, 711, 496, 687, 540)
+
+[node name="Gate" type="Area2D" parent="."]
+position = Vector2(484, 526)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Gate"]
+shape = SubResource("Gate_down")

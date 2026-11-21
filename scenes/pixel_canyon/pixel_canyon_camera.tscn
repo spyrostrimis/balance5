@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/pixel_canyon/pixel_canyon.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/pixel_canyon/road_to_the_arch_top.png" id="2"]
+
+[node name="PixelCanyonCamera" instance=ExtResource("1")]
+
+[node name="World" parent="Canvas" index="0"]
+top_extension = ExtResource("2")
+
+[node name="StudyCamera" type="Camera2D" parent="Canvas/World" index="4"]
+position = Vector2(480, 270)
+
+[editable path="Canvas/World"]

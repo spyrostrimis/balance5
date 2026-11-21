@@ -65,7 +65,12 @@ The first playable vertical slice: four troops plus a field commander per side f
 Plan agreed 2026-11-20: Phase 0 lock the look → 1 build `scenes/rpg/canyon_01.tscn` → 2 make it playable (walk, landmark, optional fight, briefing, hand-off to Mission 1) → 3 atmosphere and sound → 4 ship as a Play build.
 
 - [x] Phase 0: why B64 looked best (painted source + shared palette) and `pixel_snap.py --painted`
-- [ ] Phase 0: owner picks the look (B64 flat, look A raised, or look B with ChatGPT strata), §15
+- [x] Phase 0: owner prefers B64 and art_gpt, without raised stones (2026-11-21)
+- [x] 3D kit step 1: real curb blocks along the road (`canyon_v3_kit.tscn`, key K, §17)
+- [ ] 3D kit step 2: road surface (smaller stones, darker sand strip by the curbs)
+- [ ] 3D kit step 3: bushes and grass as pixel sprites at the wall foot and between curbs and cliffs
+- [ ] 3D kit step 4: stepped cliff modules in Blender (rounded sandstone blocks, dry-stone courses)
+- [ ] Compare the 3D kit canyon with the 2D canyons and decide the RPG direction
 
 The HD-2D walking sequence. If it fails, the RTS alone is the game.
 

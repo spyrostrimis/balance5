@@ -102,6 +102,10 @@ The owner chose plain team-coloured discs and flat placeholder tiles over the ki
 Area: RTS · Status: Trying
 Without it, Red troops stood still while their neighbour was shot. Idle units shoot what is in range, chase enemies within their guard range (4–6 tiles), and hit back at whoever shoots them. A later Hold command will turn chasing off.
 
+### 2026-11-21 · 3D canyon: real modelled pieces with pixel textures
+Area: Canyon · Status: Decided
+To compare against the 2D canyons, the 3D version gets real modelled curbs and cliffs wearing pixel textures (B64 or art_gpt colours); only plants are flat sprites. Projected paintings and flat cutouts break when the camera turns. The boulders and the white scan rock stay. Evidence: experiment log §17.
+
 ### 2026-11-20 · Painted sources, pixels made by us
 Area: Art · Status: Trying
 B64 looked more real than every AI "pixel art" set because it starts from a detailed painted image and makes the pixels itself (64 texels per metre, one palette from the goal image). From now on, generators make detailed painted textures, and `pixel_snap.py --painted` makes the pixels. Evidence: experiment log §15.

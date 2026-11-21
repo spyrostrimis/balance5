@@ -130,6 +130,16 @@ Area: 3D
 The three directions in 3D. In Godot, **X** is left–right, **Y** is up, **Z** is towards/away from the camera. The canyon walk goes along **−Z** (from Z +6 at the start to Z −14 at the exit). Blender uses Z for up, which the export converts.
 *Also:* −Z, world axes
 
+### Texture atlas
+Area: Textures
+One image holding many small textures side by side (here, the tops, sides and ends of six curb stones). Each block's faces point at their own rectangle in it, so one material serves every block.
+*Also:* atlas, sprite sheet (for 2D)
+
+### Bevel
+Area: 3D
+A small slanted or rounded strip cut along a hard edge of a 3D model. Real stones never have razor edges; a bevel catches a line of light and makes a block read as solid.
+*Also:* chamfer, rounded edge
+
 ### UV mapping
 Area: 3D
 Instructions stored in a mesh saying which part of a texture lands on which triangle, like unfolding a cardboard box flat to paint it. Our rock shader mostly ignores UVs and uses **triplanar mapping** instead.

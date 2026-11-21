@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/canyon_v2.tscn" id="1_v2"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_kit_test.gd" id="2_kit"]
+
+[node name="CanyonV3Kit" instance=ExtResource("1_v2")]
+script = ExtResource("2_kit")

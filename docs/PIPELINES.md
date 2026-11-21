@@ -160,6 +160,19 @@ Lift every stone of a cobble set so it has real edges and casts real shadows.
 ### Done when
 - The stones look raised at spawn and midway, no floor shows through, and the GPU cost is logged.
 
+## 3D kit piece from a ChatGPT face sheet (curb blocks)
+Area: 3D · Status: Trying · Tools: ChatGPT, Python, Blender, Godot
+Turn a flat drawing of a stone's faces into a real 3D block with pixel textures, and lay many of them along the road.
+
+### Steps
+1. **ChatGPT:** one sheet, top views in one row and side views in the row below, flat and front-on, on a plain dark purple background. Attach a style image (for curbs, the straight road with curbs from the Approach 2 kit). Save it in `assets/source_inputs/`.
+2. **Python:** `C:/Python312/python.exe tools/python/build_curb_atlas.py assets/source_inputs/curb_faces_gpt.webp` cuts each face, resamples it to 64 texels per metre at the block's size, and writes two atlases (`gpt` and `goal` colours) plus normal maps and the face layout to `assets/textures/curbs/`. Check `tmp/curb_atlas_preview.png`.
+3. **Blender:** `C:/Blender/blender.exe -b --factory-startup --disable-autoexec --python tools/blender/build_curb_blocks.py` builds the bevelled blocks with UVs on the atlas and exports `assets/models/curbs/curb_blocks.glb`.
+4. **Godot:** `scripts/canyon/canyon_curbs.gd` lays the blocks along both road edges with colliders. Open `scenes/maps/canyon_v3_kit.tscn` (K toggles the curbs) and capture with and without.
+
+### Done when
+- The curbs follow the whole road, sit in the sand without gaps, match the road's colours, and the commander still walks start to exit.
+
 ## Free pack model into the canyon
 Area: 3D · Status: Trying · Tools: Blender, Godot
 Use a downloaded model (FBX or OBJ) as a wall piece, landmark or boulder.

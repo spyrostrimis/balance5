@@ -1,5 +1,15 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## Pixel Canyon III · Through the Bend · 2026-11-21
+
+- [x] Recorded the same rough route with exact follow and 8-pixel leeway. Matched stops and a reversal inside the bend in both runs.
+- [x] Captured the painted round trip at the native 960×540 size in a 1376×768 window, including both directions around the bend.
+- [x] Verified the 317–333 boot band, immediate camera stops, the scout block and lane checks, and both road edges. The scout stays cleared on the return.
+- [x] Verified the separate Play card and Esc return with the exported Windows package.
+- [ ] The rock walls connect visibly to the ground and continue around the bend. The overlook terrace sits on its cliff in both directions. The cutout pass failed this check.
+
+[Through the Bend captures and measurements](PIXEL_CANYON_FOLLOW_STUDY.md)
+
 ## Pixel Canyon camera and depth · 2026-11-21
 
 - [x] Captured A, B and C at four matched boot points. A preserves the original standing composition and the calibrated commander stays 125 art pixels tall there.

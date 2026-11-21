@@ -10,6 +10,14 @@ Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | 
 Why, in one to three sentences. Where the evidence is.
 ```
 
+### 2026-11-21 · Reject foreground cutouts for the full moving canyon
+Area: Canyon · Status: Decided
+The owner found that the cliffs and ruins move like detached pieces. The review confirmed that each cutout has one depth, and the road, cliff and valley never meet as one surface. Keep Through the Bend as a playable comparison. The choice of a replacement method remains open. [Findings and options](PIXEL_CANYON_FOLLOW_STUDY.md#why-the-environment-failed)
+
+### 2026-11-21 · Give the Through the Bend camera 8 art pixels of leeway
+Area: Canyon · Status: Trying
+The rough round trips showed that a short delay on reversal leaves time to read the commander's first step. The default lets her boots move from Y 317 to 333 and her standing height stays within 121–129 art pixels. Exact follow stays on key 1 for review. [Through the Bend comparisons](PIXEL_CANYON_FOLLOW_STUDY.md)
+
 ### 2026-11-20 · RTS art scale: 1 art pixel = 2 screen pixels at 1080p
 Area: Art · Status: Trying
 Measured from the Mission 1 reference: soldiers about 11 art pixels tall, a squad of four or a tank per 32 px tile, the camera at zoom 4/3 in our 1280×720 viewport (960×540 art pixels on screen). The style test matched the reference's sizes one to one. Details: `docs/RTS_ART_RULES.md` §1.

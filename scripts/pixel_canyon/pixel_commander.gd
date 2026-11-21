@@ -7,12 +7,14 @@ const BOOT_TRAVEL_PER_CEL := 3.0
 const WALK_CELS := 30
 const WALK_SPEED := 75.0
 const REFERENCE_HEIGHT := 125.0
+const RIFLE_MUZZLE := Vector2(46.0, -81.0)
 ## (Boot Y, standing art height above the boots), ordered from far to near.
 const DEPTH_MARKS := [Vector2(165, 65), Vector2(217, 89), Vector2(325, 125), Vector2(425, 146)]
 
 var facing := 1
 var perspective := 1.0
 var calibrated_depth := false
+var _projected_scale := 0.0
 var _stride := 0.0
 var _firing := 0.0
 
@@ -32,9 +34,7 @@ func place(ground_point: Vector2) -> void:
 
 
 func walk(direction: Vector2, delta: float) -> void:
-	if _firing > 0.0:
-		_firing = maxf(_firing - delta, 0.0)
-		_pose(32 if _firing > 0.09 else (31 if _firing > 0.0 else 0))
+	if advance_fire_pose(delta):
 		return
 	if direction.x != 0.0:
 		facing = 1 if direction.x > 0.0 else -1
@@ -42,8 +42,20 @@ func walk(direction: Vector2, delta: float) -> void:
 	velocity = direction * Vector2(1.0, 0.59) * WALK_SPEED * perspective
 	move_and_slide()
 	var travel := (get_position_delta() / Vector2(1.0, 0.59)).length()
+	animate_stride(travel / perspective)
+
+
+func advance_fire_pose(delta: float) -> bool:
+	if _firing <= 0.0:
+		return false
+	_firing = maxf(_firing - delta, 0.0)
+	_pose(32 if _firing > 0.09 else (31 if _firing > 0.0 else 0))
+	return true
+
+
+func animate_stride(travel: float) -> void:
 	if travel > 0.01:
-		_stride = fposmod(_stride + travel / perspective, BOOT_TRAVEL_PER_CEL * WALK_CELS)
+		_stride = fposmod(_stride + travel, BOOT_TRAVEL_PER_CEL * WALK_CELS)
 		_pose(1 + floori(_stride / BOOT_TRAVEL_PER_CEL))
 	else:
 		_stride = 0.0
@@ -53,7 +65,7 @@ func walk(direction: Vector2, delta: float) -> void:
 func fire() -> Vector2:
 	_firing = 0.18
 	_pose(32)
-	return position + Vector2(46.0 * facing, -81.0) * perspective
+	return position + RIFLE_MUZZLE * Vector2(facing, 1.0) * perspective
 
 
 static func size_at(ground_y: float) -> float:
@@ -83,8 +95,17 @@ func set_calibrated_depth(enabled: bool) -> void:
 	_pose(sprite.frame)
 
 
+func set_projection(boots: Vector2, art_scale: float) -> void:
+	position = boots
+	_projected_scale = art_scale
+	_pose(sprite.frame)
+
+
 func _pose(index: int) -> void:
-	perspective = calibrated_size_at(position.y) if calibrated_depth else size_at(position.y)
+	if _projected_scale > 0.0:
+		perspective = _projected_scale
+	else:
+		perspective = calibrated_size_at(position.y) if calibrated_depth else size_at(position.y)
 	sprite.frame = index
 	sprite.flip_h = facing < 0
 	sprite.scale = Vector2.ONE * perspective

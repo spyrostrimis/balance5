@@ -756,3 +756,13 @@ The unit that mines Orichalcum: drives as a truck, transforms into a humanoid ro
 Area: Game
 Illustrated story panels between missions, as in Dune II's mentat briefings: a character portrait beside a framed picture, with text.
 *Also:* briefing, storyboard, mentat
+
+### Camera leeway
+Area: Art
+The small band in which the commander can step uphill or downhill before the view moves with her. In Through the Bend it extends 8 art pixels either side of her starting boot height. Exact follow sets it to zero.
+*In Balance:* [Through the Bend](PIXEL_CANYON_FOLLOW_STUDY.md).
+
+### Ground coordinates
+Area: Tech
+The distance uphill and the sideways position across the road. The same pair locates a cobble, the commander's boots or a shot lane even when the camera moves.
+*In Balance:* [Through the Bend](PIXEL_CANYON_FOLLOW_STUDY.md).

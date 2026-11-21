@@ -1,5 +1,11 @@
 # Experiment Log & Hard-Won Lessons
 
+## Pixel Canyon III · Through the Bend · 2026-11-21
+
+Recorded the rough route in Forward+ with exact follow and 8 art pixels of leeway. The 8-pixel band held the view still on the first steps of a reversal and kept the standing commander within 121–129 art pixels. At the original (511, 325) boot point she is 125 pixels tall. Used leeway as the draft default and kept both modes playable.
+
+The 48.2-second round trip passed the route, shot, reversal and exported catalog checks. The painted environment failed owner review. The fore- and midground cutouts scale as flat images from a single anchor. Their bases break away from the road verge, the right ruin reads as one sliding surface, and the left overlook terrace looks suspended over the valley. Moving the ruin improved character visibility and left the continuity problem intact. The result repeats the limits seen in C1/C2, even with sharp source art. Keep the playable control and its camera measurements. A new method must show one connected wall, shelf and overlook in both directions before full-route art. [Visual findings and options](PIXEL_CANYON_FOLLOW_STUDY.md#why-the-environment-failed)
+
 ## Pixel Canyon camera and depth · 2026-11-21
 
 A uses the current stepped sprite sizes. B uses four cobble-calibrated marks with smooth changes between them and a fixed view. C adds a whole-pixel uphill follow from boot Y 300, capped at 24 art pixels. The upper-road and gate silhouettes fit the paving and curb better in B. The boots and rifle stayed distinct at 1080p. C brings the figure lower in the frame and shows more sky, with the bend still visible.

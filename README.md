@@ -24,7 +24,7 @@ Open the folder in **Godot 4.7.2** and press Play, or run:
 
 The opening screen leads to the **Developers Page**, which lists every playable build and study. Esc returns to it.
 
-The two experimental **Pixel Canyon** builds are listed under Canyon builds. See [Two-Room Study](docs/PIXEL_CANYON_STUDY.md) for the painted rooms and combat test, and [Camera and Depth](docs/PIXEL_CANYON_CAMERA_STUDY.md) for the three ways to frame the first room.
+The experimental **Pixel Canyon** builds are listed under Canyon builds. [Two-Room Study](docs/PIXEL_CANYON_STUDY.md) introduces the painted rooms and combat test. [Camera and Depth](docs/PIXEL_CANYON_CAMERA_STUDY.md) compares three ways to frame the first room. [Through the Bend](docs/PIXEL_CANYON_FOLLOW_STUDY.md) proves a continuous two-way walk and records why the moving cutout scenery failed.
 
 ## Status
 

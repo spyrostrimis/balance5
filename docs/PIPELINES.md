@@ -70,6 +70,13 @@ Area: Canyon · Status: In use · Tools: Godot, Krita, FFmpeg
 
 [Pixel Canyon study, source and reproduction steps](PIXEL_CANYON_CAMERA_STUDY.md)
 
+## Project a continuous 2D road with foreground cutouts
+Area: Canyon · Status: Retired · Tools: Godot, Python with Pillow and NumPy, FFmpeg
+
+Through the Bend proved the shared ground coordinates for the road, boots, roots and shots, with exact follow and follow with leeway. It also showed that large scenery cut from fixed-view paintings separates visibly from the ground as the camera goes past. Judge wall-to-ground contact, consistent lighting, and newly visible cliff faces in a short moving test before authoring a full route again.
+
+[Through the Bend notes and commands](PIXEL_CANYON_FOLLOW_STUDY.md)
+
 ## 3D rock module (Blender to Godot)
 Area: 3D · Status: In use · Tools: Blender, Godot
 Make a reusable rock piece for the canyon and place it along the route.

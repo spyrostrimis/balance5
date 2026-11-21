@@ -39,11 +39,16 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			world.show_controls()
 		KEY_F2:
 			world.set_reference(not world.showing_reference)
-		KEY_1, KEY_2, KEY_3:
-			if world.top_extension:
-				world.set_comparison(event.keycode - KEY_1)
 		KEY_F11:
 			if _window.mode == Window.MODE_FULLSCREEN or _window.mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
 				_window.mode = Window.MODE_WINDOWED
 			else:
 				_window.mode = Window.MODE_FULLSCREEN
+		_:
+			_handle_study_key(event.keycode)
+
+
+func _handle_study_key(key: Key) -> void:
+	var world = $Canvas/World
+	if key in [KEY_1, KEY_2, KEY_3] and world.top_extension:
+		world.set_comparison(key - KEY_1)

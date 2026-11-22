@@ -10,6 +10,10 @@ Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | 
 Why, in one to three sentences. Where the evidence is.
 ```
 
+### 2026-11-22 · Build 3D Kit Canyon · v2 with uniform 64 texels/m, <=32-colour palettes, organic non-intersecting cliffs and AA
+Area: Canyon · Status: Trying
+Created the standalone playable study `scenes/maps/canyon_v3_kit_v2.tscn` (`3D Kit Canyon · v2`) removing all debug toggles/HUD labels while combining `img1` cobbles, `art_gemini` sand/dunes, and `art_road_goal` organic sandstone cliffs. Every object uses its own <=32-colour palette, cyclic seamless tiling at exact `64.0 texels/m` without node scaling, flush flat-base meshes seated onto levelled organic cliff pads with zero overlaps, and `4× MSAA` + sharp-pixel edge anti-aliasing. Evidence: `tests/test_canyon_v3_kit_v2.gd`, `docs/EXPERIMENT_LOG_AND_LESSONS.md` §23, `render_captures/kit_v2/`.
+
 ### 2026-11-22 · Build 3D Canyon · Way 1B Free 3D Modules for the 2D vs 3D evaluation
 Area: Canyon · Status: Trying
 Following the 61-asset audit (`docs/CANYON_ASSET_CATALOG.md` and `Canyon Asset Catalog.html`), the owner chose Way 1B to test a full photogrammetry-and-kit 3D canyon bend (`scenes/maps/canyon_way1b_free_3d.tscn`) against the 2D builds while keeping the Blue Commander, the two ChatGPT Trellis boulders, and the pale Grand Canyon rock. Harmonizing the scans' luminance ramps (`way1b_scan_rock.gdshader`, toggleable with key `G`) unified disparate photo scans (lunar grey `Moon Rock 04`, ironstone `Namaqualand Stones 01`, mossy `Rock Face 01`, and `Namaqualand Cliff 01/02`) into one warm terracotta, slate-terrace, and sun-bleached cobblestone canyon with verified spawn landmark occlusion and midway reveal. Evidence: `docs/CANYON_WAY1B_FREE_3D.md`, `docs/EXPERIMENT_LOG_AND_LESSONS.md` §22, `render_captures/way1b_free_3d/`.

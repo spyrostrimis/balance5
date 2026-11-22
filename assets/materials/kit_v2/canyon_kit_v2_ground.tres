@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/canyon_kit_v2_ground.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/cobble_albedo.png" id="2_calb"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/cobble_normal.png" id="3_cnrm"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/cobble_orm.png" id="4_corm"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/sand_albedo.png" id="5_salb"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/sand_normal.png" id="6_snrm"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/dune_albedo.png" id="7_dalb"]
+[ext_resource type="Texture2D" path="res://assets/textures/kit_v2/dune_normal.png" id="8_dnrm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/cobble_tex = ExtResource("2_calb")
+shader_parameter/cobble_norm = ExtResource("3_cnrm")
+shader_parameter/cobble_orm = ExtResource("4_corm")
+shader_parameter/cobble_tile_m = Vector2(2.5, 2.5)
+shader_parameter/sand_tex = ExtResource("5_salb")
+shader_parameter/sand_norm = ExtResource("6_snrm")
+shader_parameter/sand_tile_m = Vector2(3.125, 2.6875)
+shader_parameter/dune_tex = ExtResource("7_dalb")
+shader_parameter/dune_norm = ExtResource("8_dnrm")
+shader_parameter/dune_tile_m = Vector2(1.5625, 1.4375)
+shader_parameter/cobble_verge_wear = 0.85
+shader_parameter/cliff_ao_range = Vector2(2.5, 3.6)
+shader_parameter/curb_dust = 0.24
+shader_parameter/curb_dust_range = Vector2(1.56, 2.15)

@@ -77,7 +77,8 @@ Plan agreed 2026-11-20: Phase 0 lock the look → 1 build `scenes/rpg/canyon_01.
 - [ ] Cliffs: owner verdict; possible third pass (taller faces, sand terraces)
 - [x] Audit and catalog all 61 downloaded 3D canyon assets with visual contact sheets, ratings and cleanup guide ([CANYON_ASSET_CATALOG.md](CANYON_ASSET_CATALOG.md))
 - [x] Build and verify **3D Canyon · Way 1B Free 3D Modules** (`scenes/maps/canyon_way1b_free_3d.tscn`, §22) combining Namaqualand cliffs, Rock Face 01/02, Rock 07 & Boulder 03 curbs, Namaqualand Stones 01 & Moon Rock 04 3D cobbles, Cheiridopsis Succulents, Sand Rocks Small 01, Mountain 009 Arch and Canyon River Terrain with the kept Trellis boulders and white Grand Canyon rock ([Study](CANYON_WAY1B_FREE_3D.md))
-- [ ] Compare the 3D canyon studies (Way 1B Free 3D Modules, Sculpted Bend, 3D Kit Canyon) with the 2D canyons and decide the RPG direction
+- [x] Build and verify **3D Kit Canyon · v2** (`scenes/maps/canyon_v3_kit_v2.tscn`, §23): clean option-free playable study with `img1` cobbles, `art_gemini` sand, `art_road_goal` organic cliffs, `<= 32` colours per object, uniform `64 texels/m` unscaled seamless tiling, flush non-intersecting rocks, and `4× MSAA` + sharp-pixel anti-aliasing
+- [ ] Compare the 3D canyon studies (Way 1B Free 3D Modules, Sculpted Bend, 3D Kit Canyon · v2) with the 2D canyons and decide the RPG direction
 
 The HD-2D walking sequence. If it fails, the RTS alone is the game.
 

@@ -1,0 +1,259 @@
+{
+  "density": 64.0,
+  "updated": "2026-11-22 13:22 UTC",
+  "cobble": {
+    "albedo": "cobble_albedo.png",
+    "normal": "cobble_normal.png",
+    "orm": "cobble_orm.png",
+    "cells": [
+      160,
+      160
+    ],
+    "tile_m": [
+      2.5,
+      2.5
+    ],
+    "colors": 28,
+    "seam_x": 1.025,
+    "seam_y": 1.079
+  },
+  "sand": {
+    "albedo": "sand_albedo.png",
+    "normal": "sand_normal.png",
+    "cells": [
+      200,
+      172
+    ],
+    "tile_m": [
+      3.125,
+      2.6875
+    ],
+    "colors": 24,
+    "seam_x": 1.117,
+    "seam_y": 0.849
+  },
+  "dune": {
+    "albedo": "dune_albedo.png",
+    "normal": "dune_normal.png",
+    "cells": [
+      100,
+      92
+    ],
+    "tile_m": [
+      1.5625,
+      1.4375
+    ],
+    "colors": 24,
+    "seam_x": 0.992,
+    "seam_y": 0.956
+  },
+  "cliff_strata": {
+    "albedo": "cliff_strata_albedo.png",
+    "normal": "cliff_strata_normal.png",
+    "cells": [
+      188,
+      89
+    ],
+    "tile_m": [
+      2.9375,
+      1.390625
+    ],
+    "colors": 21,
+    "seam_x": 0.888,
+    "seam_y": 1.199
+  },
+  "cliff_ledge": {
+    "albedo": "cliff_ledge_albedo.png",
+    "normal": "cliff_ledge_normal.png",
+    "cells": [
+      128,
+      128
+    ],
+    "tile_m": [
+      2.0,
+      2.0
+    ],
+    "colors": 8,
+    "seam_x": 1.022,
+    "seam_y": 0.693
+  },
+  "cliff_rock_side": {
+    "albedo": "cliff_rock_side_albedo.png",
+    "normal": "cliff_rock_side_normal.png",
+    "cells": [
+      128,
+      128
+    ],
+    "tile_m": [
+      2.0,
+      2.0
+    ],
+    "colors": 8,
+    "seam_x": 1.028,
+    "seam_y": 0.459
+  },
+  "cliff_rock_top": {
+    "albedo": "cliff_rock_top_albedo.png",
+    "normal": "cliff_rock_top_normal.png",
+    "cells": [
+      110,
+      118
+    ],
+    "tile_m": [
+      1.71875,
+      1.84375
+    ],
+    "colors": 10,
+    "seam_x": 0.902,
+    "seam_y": 0.53
+  },
+  "curb_stone": {
+    "albedo": "curb_stone_albedo.png",
+    "normal": "curb_stone_normal.png",
+    "cells": [
+      118,
+      118
+    ],
+    "tile_m": [
+      1.84375,
+      1.84375
+    ],
+    "colors": 13,
+    "seam_x": 1.001,
+    "seam_y": 0.303
+  },
+  "road_boulder": {
+    "albedo": "road_boulder_albedo.png",
+    "normal": "road_boulder_normal.png",
+    "orm": "road_boulder_orm.png",
+    "cells": [
+      106,
+      106
+    ],
+    "tile_m": [
+      1.65625,
+      1.65625
+    ],
+    "colors": 15,
+    "seam_x": 1.095,
+    "seam_y": 1.02
+  },
+  "sprites": {
+    "bush_large_a": {
+      "albedo": "bush_large_a_v2.png",
+      "kind": "bush",
+      "cells": [
+        67,
+        53
+      ],
+      "metres": [
+        1.046875,
+        0.828125
+      ],
+      "colors": 24
+    },
+    "bush_large_b": {
+      "albedo": "bush_large_b_v2.png",
+      "kind": "bush",
+      "cells": [
+        64,
+        53
+      ],
+      "metres": [
+        1.0,
+        0.828125
+      ],
+      "colors": 24
+    },
+    "bush_med_a": {
+      "albedo": "bush_med_a_v2.png",
+      "kind": "bush",
+      "cells": [
+        46,
+        34
+      ],
+      "metres": [
+        0.71875,
+        0.53125
+      ],
+      "colors": 24
+    },
+    "bush_med_b": {
+      "albedo": "bush_med_b_v2.png",
+      "kind": "bush",
+      "cells": [
+        44,
+        34
+      ],
+      "metres": [
+        0.6875,
+        0.53125
+      ],
+      "colors": 24
+    },
+    "grass_large": {
+      "albedo": "grass_large_v2.png",
+      "kind": "grass",
+      "cells": [
+        35,
+        23
+      ],
+      "metres": [
+        0.546875,
+        0.359375
+      ],
+      "colors": 14
+    },
+    "grass_med": {
+      "albedo": "grass_med_v2.png",
+      "kind": "grass",
+      "cells": [
+        27,
+        18
+      ],
+      "metres": [
+        0.421875,
+        0.28125
+      ],
+      "colors": 18
+    },
+    "grass_small": {
+      "albedo": "grass_small_v2.png",
+      "kind": "grass",
+      "cells": [
+        20,
+        12
+      ],
+      "metres": [
+        0.3125,
+        0.1875
+      ],
+      "colors": 13
+    }
+  },
+  "blue_commander": {
+    "albedo": "blue_commander_v2.png",
+    "cells": [
+      40,
+      82
+    ],
+    "metres": [
+      0.625,
+      1.28125
+    ],
+    "pixel_size": 0.015625,
+    "colors": 29
+  },
+  "orichalcum_crater": {
+    "albedo": "orichalcum_crater_v2.png",
+    "cells": [
+      384,
+      256
+    ],
+    "metres": [
+      6.0,
+      4.0
+    ],
+    "colors": 23
+  }
+}

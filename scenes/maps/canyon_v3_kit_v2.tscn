@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/canyon/canyon_kit_v2.gd" id="1_kitv2"]
+[ext_resource type="Environment" path="res://assets/environments/canyon_clear_air.tres" id="2_env"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_route_path.gd" id="3_route"]
+[ext_resource type="Material" path="res://assets/materials/kit_v2/canyon_kit_v2_ground.tres" id="4_gmat"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_corridor.gd" id="5_corr"]
+[ext_resource type="Material" path="res://assets/materials/kit_v2/orichalcum_crater_v2.tres" id="6_cmat"]
+[ext_resource type="PackedScene" path="res://scenes/actors/blue_commander_3d.tscn" id="7_cmd"]
+[ext_resource type="PackedScene" path="res://scenes/actors/canyon_camera.tscn" id="8_cam"]
+
+[sub_resource type="Curve3D" id="Curve3D_kitv2"]
+bake_interval = 0.25
+_data = {
+"points": PackedVector3Array(-0.40091908, 0, 1.3333334, 0.40091908, 0, -1.3333334, -1.4601167, 0, 18, -0.58555424, 0, 1.3333334, 0.58555424, 0, -1.3333334, 0.12310743, 0, 14, -0.345254, 0, 1.3333334, 0.345254, 0, -1.3333334, 1.6169928, 0, 10, 0.14559627, 0, 1.3333334, -0.14559627, 0, -1.3333334, 1.9374301, 0, 6, 0.53078765, 0, 1.3333334, -0.53078765, 0, -1.3333334, 0.85187894, 0, 2, 0.53078765, 0, 1.3333334, -0.53078765, 0, -1.3333334, -0.85187894, 0, -2, 0.14559627, 0, 1.3333334, -0.14559627, 0, -1.3333334, -1.9374301, 0, -6, -0.345254, 0, 1.3333334, 0.345254, 0, -1.3333334, -1.6169928, 0, -10, -0.58555424, 0, 1.3333334, 0.58555424, 0, -1.3333334, -0.12310743, 0, -14, -0.40091908, 0, 1.3333334, 0.40091908, 0, -1.3333334, 1.4601167, 0, -18, 0.074662104, 0, 1.3333334, -0.074662104, 0, -1.3333334, 1.9837375, 0, -22, 0.49606118, 0, 1.3333334, -0.49606118, 0, -1.3333334, 1.0677645, 0, -26, 0.55746984, 0, 1.3333334, -0.55746984, 0, -1.3333334, -0.6230827, 0, -30),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(120, 1, 140)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(120, 140)
+
+[sub_resource type="QuadMesh" id="QuadMesh_crater"]
+size = Vector2(6, 4)
+
+[node name="CanyonV3KitV2" type="Node3D"]
+script = ExtResource("1_kitv2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="DesertSun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.81915206, -0.38379756, 0.42625037, 0, 0.7431448, 0.6691306, -0.57357645, 0.5481197, -0.6087486, 0, 0, 0)
+light_color = Color(1, 0.93, 0.78, 1)
+light_energy = 1.65
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Route" type="Path3D" parent="."]
+curve = SubResource("Curve3D_kitv2")
+script = ExtResource("3_route")
+
+[node name="GroundFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -34)
+
+[node name="FloorShape" type="CollisionShape3D" parent="GroundFloor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="GroundFloorMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -34)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = ExtResource("4_gmat")
+
+[node name="RoadsideBoulders" type="Node3D" parent="."]
+
+[node name="Corridor" type="Node3D" parent="."]
+script = ExtResource("5_corr")
+navigation_sources = Array[NodePath]([NodePath("../GroundFloor"), NodePath("../RoadsideBoulders")])
+
+[node name="OrichalcumCraterGround" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.25, 0.015, -22.2)
+mesh = SubResource("QuadMesh_crater")
+surface_material_override/0 = ExtResource("6_cmat")
+
+[node name="CraterOrichalcumGlow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.65, -22.2)
+light_color = Color(1, 0.74, 0.26, 1)
+light_energy = 1.15
+omni_range = 4.5
+
+[node name="BlueCommander" parent="." instance=ExtResource("7_cmd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 6)
+
+[node name="CameraRig" parent="." instance=ExtResource("8_cam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 17.9)

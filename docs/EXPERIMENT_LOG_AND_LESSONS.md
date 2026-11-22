@@ -601,3 +601,26 @@ The owner found the second pass claustrophobic around the commander. The retaini
   - Exit (`Z = -13.97`): `Hero=(-0.848, 0.0008, -13.973)`, `on_floor=true`, `ExitSignal=true`, `LandmarkScene | Occluder=clear`. [W1B_Final_pos3_exit.png](../render_captures/way1b_free_3d/W1B_Final_pos3_exit.png)
   - [Progression & Raw vs Harmonized Comparison Sheet](../render_captures/way1b_free_3d/way1b_comparison_sheet.jpg)
 
+## 23. 3D Kit Canyon · v2 (`scenes/maps/canyon_v3_kit_v2.tscn`) (2026-11-22)
+
+**Direction.** Standalone playable study based on `3D Kit Canyon` (`canyon_v3_kit.tscn`) with all debug HUD labels and switching hotkeys removed (`WASD`/Arrows walk, `Esc` returns). Built to enforce one uniform pixel size (`64.0 texels/m`) across every surface, rock, plant, crater and character without node scaling, `<= 32` colours per object, seamless X/Y tiling, organic cliff bedrock with flush non-intersecting rock seating, and anti-aliasing.
+
+**Textures (`tools/python/build_kit_v2_assets.py` -> `assets/textures/kit_v2/`).**
+- **Cobblestones:** Uploaded `img1` (`assets/source_inputs/kit_v2_cobble_img1.jpg`), cyclic minimum-error seam cut on both axes, box-averaged to `160×160 px` (`2.5000×2.5000 m`), quantized to `28` colours, seam `(1.02, 1.08)`, with morphological crevice height driving normal + ORM maps.
+- **Sand & Exit Dunes:** `art_gemini` (`hd2d_sand_albedo.png` -> `200×172 px` `3.1250×2.6875 m`, `24` colours, seam `(1.12, 0.85)`; `pure_dune_sand_albedo.png` -> `100×92 px` `1.5625×1.4375 m`, `24` colours, seam `(0.99, 0.96)`), sampled once in `canyon_kit_v2_ground.gdshader` without a scaled second sand octave.
+- **Cliffs (`art_road_goal` look):** Horizontal world-Y `d64/d_sandstone_strata_albedo.png` (`188×89 px`, `21` colours, seam `(0.89, 1.20)`), organic weathered sandstone shelf surface `cliff_ledge_albedo.png` (`128×128 px`, `8` colours, seam `(1.02, 0.69)`, replacing concrete-like paving tiles), `cliff_rock_side` (`128×128 px`, `8` colours, seam `(1.03, 0.46)`), `cliff_rock_top` (`110×118 px`, `10` colours, seam `(0.90, 0.53)`).
+- **Curbs, Boulders, Plants, Commander & Crater:** `curb_stone` (`118×118 px`, `13` colours, seam `(1.00, 0.30)`), `road_boulder` (`106×106 px`, `15` colours, seam `(1.09, 1.02)`), 7 `kit_sprites/*_goal.png` plants (`13–24` colours with 2-px RGB edge bleed), `blue_commander_v2.png` (`40×82 px`, `0.6250×1.2812 m`, `29` colours, `pixel_size = 1/64`), and `orichalcum_crater_v2.png` (`384×256 px`, `6.0000×4.0000 m`, `23` colours).
+
+**Organic Cliffs, Unscaled 1:1 Meshes & Anti-Aliasing.**
+- `tools/blender/build_kit_v2_meshes.py` exports 19 unscaled `1:1` metric meshes (`cliff_rock_0..5` asymmetric stepped sandstone outcrops, `rubble_0..3`, `road_boulder_0..2` craggy ridged boulders, `curb_0..5`), all with flat bases at `min_y = 0.0000` and exact metric UVs (`1 UV unit = tile_m`).
+- `scripts/canyon/canyon_kit_v2_cliffs.gd` builds 4 smoothstep-tapered organic tiers (`CoreLeft`/`CoreRight`) with meandering cliff toes, 5-point battered rock risers using world-Y horizontal strata UVs, and undulating shelves whose seating pads level locally to exact `seat_y` under each rock with guaranteed clearance from back risers, front lips, and neighbours.
+- `scripts/canyon/canyon_kit_v2.gd` enables `Viewport.MSAA_4X` and `Viewport.ANISOTROPY_8X` (restored in `_exit_tree()`), paired with derivative-clamped sharp-pixel texel-edge AA (`pixel_aa_uv` + `textureGrad`) across all 4 v2 shaders and `ALPHA_ANTIALIASING_EDGE = 0.35` + RGB edge bleed on sprites.
+
+**Verification (`1376×768` Forward+ & Headless Audit).**
+- `tests/test_canyon_v3_kit_v2.gd` (headless): `PASS` — `54` curbs, `114` cliff rocks, `35` rubble, `7` roadside boulders, `71` plants (`0` overlaps or interpenetrations), unscaled `1:1` transforms, zero debug HUD/hotkeys, `MSAA_4X`, `Anisotropy=8X`, physics corridor walls, exit signal, 12-point navmesh path, and Developers Page entry verified.
+- Windowed Forward+ walk (`tests/test_composition_walk.gd`):
+  - Start: `Hero=(1.93743, 0.000137, 6.0)`, `on_floor=true`, `ExitSignal=false`. [KV2_pos1_start.png](../render_captures/kit_v2/KV2_pos1_start.png)
+  - Midway: `Hero=(-0.264434, 0.000942, -3.523834)`, `on_floor=true`, `ExitSignal=false`. [KV2_pos2_midway.png](../render_captures/kit_v2/KV2_pos2_midway.png)
+  - Exit: `Hero=(-0.848297, 0.000941, -13.97293)`, `on_floor=true`, `ExitSignal=true` (post-strafe `flip_h=true`, `on_floor=true`). [KV2_pos3_exit.png](../render_captures/kit_v2/KV2_pos3_exit.png)
+
+

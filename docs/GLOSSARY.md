@@ -867,4 +867,17 @@ Area: Shaders
 Adjusting the brightness and colour temperature of different photo-scanned models inside a shader so rocks photographed in different places (such as grey lunar pebbles, mossy rock faces and reddish desert cliffs) share one cohesive warm desert palette while keeping their original photo grain and cracks.
 *In Balance:* toggleable live with key **G** in [3D Canyon · Way 1B Free 3D Modules](CANYON_WAY1B_FREE_3D.md).
 
+### MSAA
+Area: Rendering
+Multisample Anti-Aliasing: smoothing jagged stair-step edges along 3D rock, curb and silhouette outlines by sampling geometry coverage several times per screen pixel (such as `4× MSAA` in 3D Kit Canyon · v2).
+
+### Sharp-pixel anti-aliasing
+Area: Shaders
+A shader sampling trick (`pixel_aa_uv` with `textureGrad`) that keeps the middle of every pixel-art texel crisp and square while smoothly blending only the single-pixel border between neighbouring texels, preventing jagged rotation shimmer without turning pixel art blurry.
+
+### Alpha edge bleed
+Area: Textures
+Copying the border colours of a pixel sprite a couple of pixels outward into its invisible (`alpha = 0`) background before saving. It stops dark outlines or halos from appearing when anti-aliasing samples right along the sprite's cutout edge.
+
+
 

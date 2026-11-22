@@ -377,6 +377,23 @@ Build a constant-scale scrolling 2D RPG canyon (960×540 with 640×360 toggle, 1
 ### Done when
 - Both approaches scroll smoothly with zero seams, constant hero size, clean Y-sort depth occlusion behind boulders/bushes/archways, 192-colour palette compliance, and passing headless/windowed tests.
 
+## 3D Kit Canyon · v2 (uniform 64 texels/m, <=32-colour kit, flush rock seating)
+Area: Canyon · Status: In use · Tools: Python, Blender 5.2, Godot 4.7
+Build the clean, option-free 3D Kit Canyon v2 assets and verify geometry clearances and Forward+ renders.
+
+### Steps
+1. **Generate uniform-density (`64 texels/m`) seamless textures (`<= 32` colours per object)** with cyclic minimum-error seam cuts and 2-px sprite RGB edge bleed:
+   `C:/Python312/python.exe tools/python/build_kit_v2_assets.py` (writes `assets/textures/kit_v2/` + `manifest.json`).
+2. **Author unscaled `1:1` metric meshes (`min_y = 0.0000`, exact metric UVs from `manifest.json`)** in Blender:
+   `C:/Blender/blender.exe -b --factory-startup --disable-autoexec --python tools/blender/build_kit_v2_meshes.py` (writes `assets/models/kit_v2/kit_v2_meshes.glb` + `.json`).
+3. **Import and run automated headless geometry & AA audit**:
+   `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --path . --headless --editor --quit`
+   `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --path . --headless --script res://tests/test_canyon_v3_kit_v2.gd`
+4. **Capture real Forward+ walk stops (`1376×768`)** with `tests/test_composition_walk.gd` on `res://scenes/maps/canyon_v3_kit_v2.tscn` and inspect `render_captures/kit_v2/KV2_*.png`.
+
+### Done when
+- All tiling textures report seam ratios `<= 1.25` and `<= 32` colours, `test_canyon_v3_kit_v2.gd` prints `PASS`, and all walk captures pass visual review.
+
 ## Record a decision or a new term
 Area: Workflow · Status: In use · Tools: Balance Studio, any agent
 Keep the project's memory in the repository instead of in chat histories.

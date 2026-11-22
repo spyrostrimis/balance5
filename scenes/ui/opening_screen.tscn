@@ -324,6 +324,16 @@ credit = "Antigravity (Gemini 4), Poly Haven, BlenderKit and CraftPix"
 built_utc = "2026-11-22 10:18:00"
 action = "Play"
 
+[sub_resource type="Resource" id="Build_kit3d_v2"]
+script = ExtResource("4")
+section = "Canyon builds"
+title = "3D Kit Canyon · v2"
+summary = "Standalone playable study based on 3D Kit Canyon with all debug toggles removed: img1 cobblestone road, art_gemini sand, art_road_goal cliffs with organic sculpted bedrock and flush non-intersecting rock seating, uniform 64 texels/m seamless tiling, <=32-colour palettes per object, and 4x MSAA + sharp-pixel anti-aliasing. Walk with WASD or arrows; Esc returns."
+scene_path = "res://scenes/maps/canyon_v3_kit_v2.tscn"
+credit = "Antigravity (Gemini 4) and ChatGPT Images"
+built_utc = "2026-11-22 13:10:21"
+action = "Play"
+
 [node name="OpeningScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -333,7 +343,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_rts_units_test"), SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera"), SubResource("Build_rpg_2d_canyon_study"), SubResource("Build_rpg_2d_approach2_modular"), SubResource("Build_pixel_canyon_follow"), SubResource("Build_img9_perspective_follow"), SubResource("Build_canyon_session_b"), SubResource("Build_canyon_session_b_painted"), SubResource("Build_kit3d"), SubResource("Build_sculpted_bend"), SubResource("Build_way1b_free_3d")])
+builds = Array[ExtResource("4")]([SubResource("Build_rts_units_test"), SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera"), SubResource("Build_rpg_2d_canyon_study"), SubResource("Build_rpg_2d_approach2_modular"), SubResource("Build_pixel_canyon_follow"), SubResource("Build_img9_perspective_follow"), SubResource("Build_canyon_session_b"), SubResource("Build_canyon_session_b_painted"), SubResource("Build_kit3d"), SubResource("Build_sculpted_bend"), SubResource("Build_way1b_free_3d"), SubResource("Build_kit3d_v2")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

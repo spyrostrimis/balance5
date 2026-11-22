@@ -1,5 +1,11 @@
 # Pipelines
 
+## Assemble a short 3D bend from scanned rock
+
+Use the CC0 downloads and `tools/blender/build_sculpted_bend.py` to make the compact mesh kit. The script takes a download directory and Blender executable. It keeps five cobble shapes, gathers three succulent clusters, resizes to foot-level origins and gives texture values a shared palette. In `scenes/maps/sculpted_bend.tscn`, place cliff and plant markers and edit the Route curve. Seat thin scanned surfaces in solid stepped bedrock and check the camera coming and going. Plants use cutout leaf edges so they cast shadows without transparent rectangles. The road shares meshes between many copies and the comparison changes only their height.
+
+Keep a smooth physical floor for walking and give the navigation bake a narrow strip of the same floor so routes cannot start on islands outside the bend. Verify both sides, the end caps and a full route query. Inspect a matched, stationary pair before choosing road or distance art, then record the chosen scene in motion. When reusing the pale landmark, point to the tracked Way 1B GLB and texture so the existing export exclusions can stay in place. [Reproduction and credits](CANYON_SCULPTED_BEND.md)
+
 How each kind of thing gets made in Balance, step by step: what tool, who does it (you or an agent), and how you know it worked. Balance Studio shows this file on its **Pipelines** page, with a copy button for each agent brief.
 
 **Status** is one of *In use* (proven, we use it now), *Planned* (agreed, not yet built) or *Retired* (kept for history). **For agents:** when you prove, change or retire a way of making something, update its entry here. Keep steps short, name real files, and explain new terms in [GLOSSARY.md](GLOSSARY.md).

@@ -1,5 +1,15 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## 3D Canyon · Sculpted Bend · 2026-11-22
+
+- [x] Captured the 3D Kit Canyon before changing the framing. The standalone study's tall inside wall partly screens the vista at the bend, and the lower shelf leaves the outside open.
+- [x] Checked individual raised stones, a matched flat road, longer curb stones and three solid succulent silhouettes in Forward+. The walking floor and light stayed paired. Focus uses only a light native depth-of-field effect.
+- [x] Captured the model and painting from identical entrance, bend and exit camera poses. Walked out and back, stopped, stepped sideways, reversed and reached the exit without losing floor contact.
+- [x] Checked corridor sides, both end caps, navigation and the exit signal. Verified the Developers Page, Esc and three landmarks in both Godot and the Windows executable.
+- [ ] Match Painted Bend's cohesive rock-to-terrace composition and Approach 2 Modular's verge detail. The 3D shelf has broader faces and the modeled distance is less articulate than the painting.
+
+[Frames, recording and measured stops](CANYON_SCULPTED_BEND.md)
+
 ## 3D Kit Canyon · v2 · 2026-11-22
 
 - [x] Standalone playable scene (`scenes/maps/canyon_v3_kit_v2.tscn`) with all debug HUD labels and switching hotkeys removed (`WASD`/Arrows walk, `Esc` returns).

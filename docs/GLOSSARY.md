@@ -1,5 +1,11 @@
 # Balance dictionary
 
+## Sculpted Bend
+
+- **Matte painting** — a picture of the far landscape placed beyond the playable 3D ground. It can add cliffs, distance and light that would take much longer to model.
+- **Navigation bake** — Godot's calculation of which parts of the floor a unit can use to find a route. The canyon gives it a narrow floor strip so the result stays inside the cliffs.
+- **Stone relief** — how far the crown of a paving stone rises from the surrounding sand. A low sun makes the raised edge easier to see.
+
 Plain-language meanings of the words we use while building Balance. Written for the owner, who knows some programming but is new to game development. Balance Studio shows this file as the **Dictionary** and underlines these terms wherever they appear in other documents.
 
 **For agents:** when you use a technical term the owner may not know, add it here in the same format (a `###` heading, an `Area:` line, two to four plain sentences, and an *In Balance* line when it helps). Keep definitions short and concrete. Prefer an everyday comparison over jargon.

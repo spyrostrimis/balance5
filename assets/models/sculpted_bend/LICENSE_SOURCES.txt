@@ -1,0 +1,25 @@
+Sculpted Bend asset sources
+
+Poly Haven CC0, texture values regraded for Balance and meshes resized for the study:
+https://polyhaven.com/license
+- Namaqualand Cliff 02 — Dario Barresi and Rico Cilliers
+  https://polyhaven.com/a/namaqualand_cliff_02
+- Rock Face 01 — Dario Barresi
+  https://polyhaven.com/a/rock_face_01
+- Namaqualand Stones 01 — Greg Zaal and Jenelle van Heerden
+  https://polyhaven.com/a/namaqualand_stones_01
+- Rock 07 — Jenelle van Heerden
+  https://polyhaven.com/a/rock_07
+- Cheiridopsis Succulent — James Ray Cock and Jenelle van Heerden
+  https://polyhaven.com/a/cheiridopsis_succulent
+
+The pale Grand Canyon Rock is Austin Beaulier's photo scan from
+grand-canyon-rock-photogrammetry.zip, under Sketchfab Free Standard.
+https://sketchfab.com/3d-models/grand-canyon-rock-photogrammetry-bc98301459854d57984c5a40525d536f
+https://api.sketchfab.com/v3/models/bc98301459854d57984c5a40525d536f
+https://sketchfab.com/licenses
+The scene uses the shared GLB and texture in assets/models/way1b_free_3d/.
+The Windows executable embeds the game's imported resources.
+
+The two layered boulders use the original Trellis wrappers from ChatGPT AI Boulders.
+The painted distance is original ChatGPT Images art for this study.

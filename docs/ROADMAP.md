@@ -1,5 +1,10 @@
 # Roadmap
 
+## RPG canyon direction comparison
+
+- [x] Build and export **3D Canyon · Sculpted Bend**. Verify the round trip, both road heights, both vistas and all three landmark rocks. [Study and evidence](CANYON_SCULPTED_BEND.md)
+- [ ] Owner compares Sculpted Bend with Painted Bend and Approach 2 Modular and chooses the RPG direction.
+
 What we are building, in order. The RTS comes first (`docs/GAME_DESIGN.md` §1). Balance Studio shows this file on its **Plan** page and can tick the boxes.
 
 **For agents:** tick an item (`- [x]`) when it is verified, not when it is started. Add new items under the right heading when work turns up. Keep each item one line, written so the owner understands it.

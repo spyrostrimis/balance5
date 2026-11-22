@@ -1,5 +1,11 @@
 # Experiment Log & Hard-Won Lessons
 
+## 3D Canyon · Sculpted Bend · 2026-11-22
+
+Captured the existing 3D Kit Canyon, then tested the bend before and after dressing a single foreground stretch. The first camera crossed into the thin rear of the inside cliff. A solid stepped footing and a camera that follows the curve at its own depth let the wall slide out of the frame as the arch emerges. The five raised stones added readable lips and shadow in direct light, with a much smaller difference in shade. Four art passes and the final walk make the trade-off visible. Painted Bend's wall and terrace connect more convincingly, and Approach 2 Modular gives the curbs and verges more visual weight. The painted distance has a stronger arch and more layers of depth than the first modeled valley. V keeps both available from the same camera.
+
+The 1376 × 768 Forward+ round trip is 15.57 seconds with a stop, a sideways step and a reversal near the wall. Both end caps and the obstacle-aware navigation query passed. The exit signal entered once and cleared on return. All three landmark rocks appeared in the editor and in the exported Play card. [Study and verification](CANYON_SCULPTED_BEND.md)
+
 ## Pixel Canyon · Painted Bend · 2026-11-21
 
 Tried a full ChatGPT painting on Session B's existing map. Compared three candidates at the live camera stops and chose the warm-and-cool light pass. Its pale arch and stair edges read clearly against the violet canyon. The raw candidates moved the near wall away from its place over the road. Fitting the ground and near wall as separate Krita layers restored the original foreground overlap. The 19.2-second Forward+ round trip matched Session B's boot positions, camera centres and wall coverage at the marked stops. The overlook is the strongest view. The near wall at the bend still dominates the frame, and fitting the rock softened its finer marks. Keep the original painting as the quality target. [Paintings, walk and verdict](PIXEL_CANYON_SESSION_B_PAINTED.md)

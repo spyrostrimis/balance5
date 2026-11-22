@@ -1,0 +1,524 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/canyon/sculpted_bend.gd" id="1_study"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_route_path.gd" id="2_route"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_corridor.gd" id="3_corridor"]
+[ext_resource type="PackedScene" path="res://scenes/actors/blue_commander_3d.tscn" id="4_commander"]
+[ext_resource type="PackedScene" path="res://scenes/actors/canyon_camera.tscn" id="5_camera"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_hf_trellis2.tscn" id="6_boulder"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_trellis3dnet.tscn" id="7_boulder"]
+[ext_resource type="Shader" path="res://assets/shaders/sculpted_bend_sand.gdshader" id="8_sand"]
+[ext_resource type="Script" path="res://scripts/canyon/sculpted_bend_camera.gd" id="9_camera"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_pbr/hd2d_sand_albedo.png" id="10_sand"]
+[ext_resource type="PackedScene" path="res://assets/models/way1b_free_3d/grand_canyon_rock.glb" id="11_pale"]
+[ext_resource type="Texture2D" path="res://assets/textures/canyon_layers/sculpted_bend_painted_vista.webp" id="12_vista"]
+
+[sub_resource type="Curve3D" id="Curve3D_bend"]
+bake_interval = 0.17
+_data = {
+"points": PackedVector3Array(-0.01, 0, 2.66667, 0.01, 0, -2.66667, -1.35, 0, 20, -0.03333, 0, 2.33333, 0.03333, 0, -2.33333, -1.32, 0, 12, -0.11167, 0, 1.83333, 0.11167, 0, -1.83333, -1.15, 0, 6, -0.3, 0, 1.66667, 0.3, 0, -1.66667, -0.65, 0, 1, -0.55, 0, 1.66667, 0.55, 0, -1.66667, 0.65, 0, -4, -0.725, 0, 1.66667, 0.725, 0, -1.66667, 2.65, 0, -9, -0.66667, 0, 1.66667, 0.66667, 0, -1.66667, 5, 0, -14, -0.73333, 0, 2.0, 0.73333, 0, -2.0, 6.65, 0, -19, -0.91667, 0, 2.33333, 0.91667, 0, -2.33333, 9.4, 0, -26),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 9
+
+[sub_resource type="Environment" id="Environment_bend"]
+background_mode = 1
+background_color = Color(0.67, 0.58, 0.69, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.70588, 0.66667, 0.75294, 1)
+ambient_light_energy = 0.58
+reflected_light_source = 2
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 0.9
+ssao_intensity = 1.30
+ssao_power = 1.13
+fog_enabled = true
+fog_light_color = Color(0.67059, 0.59608, 0.72157, 1)
+fog_mode = 1
+fog_density = 0.80
+fog_depth_begin = 14.5
+fog_depth_end = 85.0
+fog_depth_curve = 0.82
+fog_sky_affect = 0.0
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributes_bend"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 31.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 8.2
+dof_blur_near_transition = 4.9
+dof_blur_far_transition = 39.0
+dof_blur_amount = 0.008
+
+[sub_resource type="BoxShape3D" id="Box_floor"]
+size = Vector3(60, 1, 40)
+
+[sub_resource type="PlaneMesh" id="Plane_seed"]
+size = Vector2(54, 40)
+
+[sub_resource type="ShaderMaterial" id="Sand_material"]
+resource_local_to_scene = true
+shader = ExtResource("8_sand")
+shader_parameter/sand_albedo = ExtResource("10_sand")
+
+[sub_resource type="BoxShape3D" id="Box_pale"]
+size = Vector3(0.68, 0.9, 0.74)
+
+[sub_resource type="StandardMaterial3D" id="Material_painted"]
+shading_mode = 0
+albedo_texture = ExtResource("12_vista")
+disable_fog = true
+
+[sub_resource type="QuadMesh" id="Quad_painted"]
+material = SubResource("Material_painted")
+size = Vector2(100, 47)
+
+[node name="SculptedBend" type="Node3D"]
+script = ExtResource("1_study")
+start_with_painted_vista = true
+
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bend")
+
+[node name="DesertSun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.628319, 2.111848, 0)
+light_color = Color(1.0, 0.87843, 0.71373, 1)
+light_energy = 1.34
+light_angular_distance = 1.8
+shadow_enabled = true
+shadow_bias = 0.027
+shadow_normal_bias = 0.42
+directional_shadow_max_distance = 72.0
+
+[node name="Route" type="Path3D" parent="."]
+curve = SubResource("Curve3D_bend")
+script = ExtResource("2_route")
+half_width = 2.22
+
+[node name="GroundFloor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.5, -7)
+
+[node name="FloorShape" type="CollisionShape3D" parent="GroundFloor"]
+shape = SubResource("Box_floor")
+
+[node name="GroundFloorMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("Plane_seed")
+surface_material_override/0 = SubResource("Sand_material")
+
+[node name="NavigationFloor" type="StaticBody3D" parent="."]
+collision_layer = 524288
+collision_mask = 0
+
+[node name="Corridor" type="Node3D" parent="."]
+script = ExtResource("3_corridor")
+z_limits = Vector2(-18.5, 7.5)
+navigation_sources = Array[NodePath]([NodePath("../NavigationFloor"), NodePath("../Landmarks")])
+
+[node name="Dressing" type="Node3D" parent="."]
+
+[node name="Landmarks" type="Node3D" parent="."]
+
+[node name="LayeredWest" parent="Landmarks" instance=ExtResource("6_boulder")]
+position = Vector3(-3.48, -0.04, 5.6)
+rotation = Vector3(0, 0.26, 0)
+scale = Vector3(0.77, 0.77, 0.77)
+
+[node name="LayeredEast" parent="Landmarks" instance=ExtResource("7_boulder")]
+position = Vector3(1.43, -0.08, 4.45)
+rotation = Vector3(0, -0.36, 0)
+scale = Vector3(0.79, 0.79, 0.79)
+
+[node name="PaleRock" type="Marker3D" parent="Landmarks"]
+position = Vector3(-3.00, -0.035, -1.25)
+rotation = Vector3(0, -0.698132, 0)
+scale = Vector3(0.67, 0.67, 0.67)
+
+[node name="PhotoScan" parent="Landmarks/PaleRock" instance=ExtResource("11_pale")]
+
+[node name="Blocker" type="StaticBody3D" parent="Landmarks/PaleRock"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Landmarks/PaleRock/Blocker"]
+position = Vector3(0, 0.45, 0)
+shape = SubResource("Box_pale")
+
+[node name="Landforms" type="Node3D" parent="."]
+
+[node name="InsideNose" type="Marker3D" parent="Landforms"]
+position = Vector3(5.1, -0.95, -3.95)
+rotation = Vector3(0, -1.326450, 0)
+scale = Vector3(7.0, 9.2, 8.7)
+metadata/part = &"wall0"
+
+[node name="InsideCrown" type="Marker3D" parent="Landforms"]
+position = Vector3(8.6, -0.1, -5.85)
+rotation = Vector3(0, -1.518436, 0)
+scale = Vector3(7.0, 9.5, 7.8)
+metadata/part = &"shelf0"
+
+[node name="InsideFoot" type="Marker3D" parent="Landforms"]
+position = Vector3(3.8, -1.05, 0.5)
+rotation = Vector3(0, -1.326450, 0)
+scale = Vector3(4.8, 2.1, 5.3)
+metadata/part = &"shelf0"
+
+[node name="InsideNearEdge" type="Marker3D" parent="Landforms"]
+position = Vector3(5.0, -1.7, 10.8)
+rotation = Vector3(0, -1.553343, 0)
+scale = Vector3(6.0, 5.4, 12.4)
+metadata/part = &"shelf0"
+
+[node name="OuterEntrance" type="Marker3D" parent="Landforms"]
+position = Vector3(-5.35, -0.75, 10.25)
+rotation = Vector3(0, 1.326450, 0)
+scale = Vector3(6.2, 2.45, 10.9)
+metadata/part = &"shelf0"
+
+[node name="OuterLowShelf" type="Marker3D" parent="Landforms"]
+position = Vector3(-5.02, -0.8, 0.2)
+rotation = Vector3(0, 1.745329, 0)
+scale = Vector3(6.8, 2.45, 7.5)
+metadata/part = &"shelf0"
+
+[node name="OuterRisingShelf" type="Marker3D" parent="Landforms"]
+position = Vector3(-4.0, -0.84, -7.5)
+rotation = Vector3(0, 1.797689, 0)
+scale = Vector3(4.6, 2.35, 10.0)
+metadata/part = &"shelf0"
+
+[node name="OuterBackwall" type="Marker3D" parent="Landforms"]
+position = Vector3(-10.2, -2.0, 0.0)
+rotation = Vector3(0, 1.413717, 0)
+scale = Vector3(8.1, 7.4, 19.1)
+metadata/part = &"wall0"
+
+[node name="OuterBackSteps" type="Marker3D" parent="Landforms"]
+position = Vector3(-10.8, 0.3, -7.7)
+rotation = Vector3(0, 1.832596, 0)
+scale = Vector3(9.3, 5.1, 12.2)
+metadata/part = &"shelf0"
+
+[node name="OverlookLeftEdge" type="Marker3D" parent="Landforms"]
+position = Vector3(0.35, -1.8, -14.45)
+rotation = Vector3(0, 1.378810, 0)
+scale = Vector3(6.2, 2.55, 9.4)
+metadata/part = &"shelf0"
+
+[node name="OverlookRightEdge" type="Marker3D" parent="Landforms"]
+position = Vector3(9.65, -1.45, -16.8)
+rotation = Vector3(0, -1.675516, 0)
+scale = Vector3(4.5, 2.7, 7.0)
+metadata/part = &"shelf0"
+
+[node name="OverlookApron" type="Marker3D" parent="Landforms"]
+position = Vector3(6.4, -4.95, -21.25)
+rotation = Vector3(0, 0.069813, 0)
+scale = Vector3(9.5, 4.45, 6.8)
+metadata/part = &"shelf0"
+
+[node name="NearValleyShoulder" type="Marker3D" parent="Landforms"]
+position = Vector3(-13.0, -15, -29.4)
+rotation = Vector3(0, 1.431170, 0)
+scale = Vector3(16, 18, 23)
+metadata/part = &"wall0"
+metadata/distant = true
+
+[node name="ValleyShelf" type="Marker3D" parent="Landforms"]
+position = Vector3(-6.5, -12.4, -41)
+rotation = Vector3(0, 0.209440, 0)
+scale = Vector3(21, 11.7, 14)
+metadata/part = &"shelf0"
+metadata/distant = true
+
+[node name="ArchShoulder" type="Marker3D" parent="Landforms"]
+position = Vector3(25.1, -15.0, -45.0)
+rotation = Vector3(0, -0.436332, 0)
+scale = Vector3(16, 18, 15)
+metadata/part = &"shelf0"
+metadata/distant = true
+
+[node name="FarRidgeWest" type="Marker3D" parent="Landforms"]
+position = Vector3(-16.7, -15.5, -68.1)
+rotation = Vector3(0, 0.506145, 0)
+scale = Vector3(30, 23, 27)
+metadata/part = &"wall0"
+metadata/distant = true
+
+[node name="FarRidgeCentre" type="Marker3D" parent="Landforms"]
+position = Vector3(19, -15, -78)
+rotation = Vector3(0, -0.174533, 0)
+scale = Vector3(43, 26, 24)
+metadata/part = &"shelf0"
+metadata/distant = true
+
+[node name="FarRidgeEast" type="Marker3D" parent="Landforms"]
+position = Vector3(49, -19, -79)
+rotation = Vector3(0, 0.314159, 0)
+scale = Vector3(47, 32, 30)
+metadata/part = &"wall0"
+metadata/distant = true
+
+[node name="Horizon" type="Marker3D" parent="Landforms"]
+position = Vector3(2, -13, -112)
+rotation = Vector3(0, 0.087266, 0)
+scale = Vector3(126, 25, 48)
+metadata/part = &"shelf0"
+metadata/distant = true
+
+[node name="Succulents" type="Node3D" parent="."]
+
+[node name="Pocket01" type="Marker3D" parent="Succulents"]
+position = Vector3(-3.26, 0.025, 10.1)
+rotation = Vector3(0, 0.0000, 0)
+scale = Vector3(0.78, 0.36, 0.6708)
+metadata/part = &"plant2"
+metadata/coolness = 0.16
+
+[node name="Pocket02" type="Marker3D" parent="Succulents"]
+position = Vector3(1.02, 0.025, 9.9)
+rotation = Vector3(0, 1.3700, 0)
+scale = Vector3(0.74, 0.27, 0.6364)
+metadata/part = &"plant1"
+metadata/coolness = 0.33
+
+[node name="Pocket03" type="Marker3D" parent="Succulents"]
+position = Vector3(-3.13, 0.025, 7.3)
+rotation = Vector3(0, 2.7400, 0)
+scale = Vector3(0.47, 0.26, 0.4042)
+metadata/part = &"plant1"
+metadata/coolness = 0.50
+
+[node name="Pocket04" type="Marker3D" parent="Succulents"]
+position = Vector3(1.12, 0.025, 6.9)
+rotation = Vector3(0, 4.1100, 0)
+scale = Vector3(0.83, 0.42, 0.7138)
+metadata/part = &"plant2"
+metadata/coolness = 0.67
+
+[node name="Pocket05" type="Marker3D" parent="Succulents"]
+position = Vector3(1.49, 0.025, 6.7)
+rotation = Vector3(0, 5.4800, 0)
+scale = Vector3(0.45, 0.27, 0.3870)
+metadata/part = &"plant0"
+metadata/coolness = 0.16
+
+[node name="Pocket06" type="Marker3D" parent="Succulents"]
+position = Vector3(-3.4, 0.025, 3.05)
+rotation = Vector3(0, 0.5700, 0)
+scale = Vector3(0.69, 0.31, 0.5934)
+metadata/part = &"plant2"
+metadata/coolness = 0.33
+
+[node name="Pocket07" type="Marker3D" parent="Succulents"]
+position = Vector3(-2.98, 0.025, 2.78)
+rotation = Vector3(0, 1.9400, 0)
+scale = Vector3(0.41, 0.18, 0.3526)
+metadata/part = &"plant0"
+metadata/coolness = 0.50
+
+[node name="Pocket08" type="Marker3D" parent="Succulents"]
+position = Vector3(1.57, 0.025, 1.42)
+rotation = Vector3(0, 3.3100, 0)
+scale = Vector3(0.61, 0.32, 0.5246)
+metadata/part = &"plant1"
+metadata/coolness = 0.67
+
+[node name="Pocket09" type="Marker3D" parent="Succulents"]
+position = Vector3(-2.25, 0.025, -1.7)
+rotation = Vector3(0, 4.6800, 0)
+scale = Vector3(0.54, 0.22, 0.4644)
+metadata/part = &"plant0"
+metadata/coolness = 0.16
+
+[node name="Pocket10" type="Marker3D" parent="Succulents"]
+position = Vector3(-2.78, 0.025, -2.23)
+rotation = Vector3(0, 6.0500, 0)
+scale = Vector3(0.73, 0.36, 0.6278)
+metadata/part = &"plant2"
+metadata/coolness = 0.33
+
+[node name="Pocket11" type="Marker3D" parent="Succulents"]
+position = Vector3(-1.48, 0.025, -4.87)
+rotation = Vector3(0, 1.1400, 0)
+scale = Vector3(0.52, 0.25, 0.4472)
+metadata/part = &"plant1"
+metadata/coolness = 0.50
+
+[node name="Pocket12" type="Marker3D" parent="Succulents"]
+position = Vector3(-1.76, 0.025, -4.58)
+rotation = Vector3(0, 2.5100, 0)
+scale = Vector3(0.75, 0.33, 0.6450)
+metadata/part = &"plant2"
+metadata/coolness = 0.67
+
+[node name="Pocket13" type="Marker3D" parent="Succulents"]
+position = Vector3(2.66, 0.025, -4.68)
+rotation = Vector3(0, 3.8800, 0)
+scale = Vector3(0.57, 0.26, 0.4902)
+metadata/part = &"plant2"
+metadata/coolness = 0.16
+
+[node name="Pocket14" type="Marker3D" parent="Succulents"]
+position = Vector3(-0.6, 0.025, -7.78)
+rotation = Vector3(0, 5.2500, 0)
+scale = Vector3(0.54, 0.25, 0.4644)
+metadata/part = &"plant0"
+metadata/coolness = 0.33
+
+[node name="Pocket15" type="Marker3D" parent="Succulents"]
+position = Vector3(4.65, 0.025, -9.8)
+rotation = Vector3(0, 0.3400, 0)
+scale = Vector3(0.78, 0.4, 0.6708)
+metadata/part = &"plant2"
+metadata/coolness = 0.50
+
+[node name="Pocket16" type="Marker3D" parent="Succulents"]
+position = Vector3(5.04, 0.025, -9.45)
+rotation = Vector3(0, 1.7100, 0)
+scale = Vector3(0.48, 0.25, 0.4128)
+metadata/part = &"plant1"
+metadata/coolness = 0.67
+
+[node name="Pocket17" type="Marker3D" parent="Succulents"]
+position = Vector3(2.27, 0.025, -11.27)
+rotation = Vector3(0, 3.0800, 0)
+scale = Vector3(0.84, 0.36, 0.7224)
+metadata/part = &"plant2"
+metadata/coolness = 0.16
+
+[node name="Pocket18" type="Marker3D" parent="Succulents"]
+position = Vector3(1.89, 0.025, -11.46)
+rotation = Vector3(0, 4.4500, 0)
+scale = Vector3(0.39, 0.21, 0.3354)
+metadata/part = &"plant0"
+metadata/coolness = 0.33
+
+[node name="Pocket19" type="Marker3D" parent="Succulents"]
+position = Vector3(7.23, 0.025, -14.32)
+rotation = Vector3(0, 5.8200, 0)
+scale = Vector3(0.61, 0.33, 0.5246)
+metadata/part = &"plant1"
+metadata/coolness = 0.50
+
+[node name="Pocket20" type="Marker3D" parent="Succulents"]
+position = Vector3(7.71, 0.025, -14.48)
+rotation = Vector3(0, 0.9100, 0)
+scale = Vector3(0.77, 0.41, 0.6622)
+metadata/part = &"plant2"
+metadata/coolness = 0.67
+
+[node name="Pocket21" type="Marker3D" parent="Succulents"]
+position = Vector3(2.98, 0.025, -15.07)
+rotation = Vector3(0, 2.2800, 0)
+scale = Vector3(0.72, 0.29, 0.6192)
+metadata/part = &"plant2"
+metadata/coolness = 0.16
+
+[node name="Pocket22" type="Marker3D" parent="Succulents"]
+position = Vector3(4.1, 0.025, -17.7)
+rotation = Vector3(0, 3.6500, 0)
+scale = Vector3(0.74, 0.3, 0.6364)
+metadata/part = &"plant1"
+metadata/coolness = 0.33
+
+[node name="Pocket23" type="Marker3D" parent="Succulents"]
+position = Vector3(8.99, 0.025, -17.81)
+rotation = Vector3(0, 5.0200, 0)
+scale = Vector3(0.62, 0.28, 0.5332)
+metadata/part = &"plant0"
+metadata/coolness = 0.50
+
+[node name="Pocket24" type="Marker3D" parent="Succulents"]
+position = Vector3(8.62, 0.025, -18.16)
+rotation = Vector3(0, 0.1100, 0)
+scale = Vector3(0.71, 0.37, 0.6106)
+metadata/part = &"plant2"
+metadata/coolness = 0.67
+
+[node name="Bedrock" type="Node3D" parent="."]
+
+[node name="InsideMass" type="Marker3D" parent="Bedrock"]
+position = Vector3(7.25, -0.55, -3.7)
+rotation = Vector3(0, -0.21, 0)
+scale = Vector3(6.4, 7.5, 9.9)
+metadata/stages = 9
+
+[node name="InsideLowerCourse" type="Marker3D" parent="Bedrock"]
+position = Vector3(5.0, -0.60, 0.5)
+scale = Vector3(4.9, 2.2, 6.7)
+metadata/stages = 4
+
+[node name="InsideEntrance" type="Marker3D" parent="Bedrock"]
+position = Vector3(6.2, -0.65, 8.1)
+scale = Vector3(6.8, 5.8, 10.7)
+metadata/stages = 8
+
+[node name="OppositeFoot" type="Marker3D" parent="Bedrock"]
+position = Vector3(-6.75, -0.78, 5.5)
+scale = Vector3(5.4, 2.03, 15.3)
+metadata/stages = 5
+
+[node name="OppositeRetreat" type="Marker3D" parent="Bedrock"]
+position = Vector3(-5.4, -0.65, -6.5)
+rotation = Vector3(0, -0.16, 0)
+scale = Vector3(5.1, 2.4, 12.6)
+metadata/stages = 5
+
+[node name="OppositeHighBank" type="Marker3D" parent="Bedrock"]
+position = Vector3(-10.1, -0.9, 0.2)
+scale = Vector3(7.5, 5.9, 20.2)
+metadata/stages = 8
+
+[node name="OverlookFoundation" type="Marker3D" parent="Bedrock"]
+position = Vector3(6.0, -7.8, -17.0)
+rotation = Vector3(0, -0.60, 0)
+scale = Vector3(10.8, 7.6, 9.7)
+metadata/stages = 9
+
+[node name="ValleyFloor" type="Marker3D" parent="Bedrock"]
+position = Vector3(10.4, -14, -35.4)
+scale = Vector3(50, 5, 43)
+metadata/stages = 4
+metadata/distant = true
+
+[node name="WestMesa" type="Marker3D" parent="Bedrock"]
+position = Vector3(-5.9, -13.7, -46.4)
+rotation = Vector3(0, 0.54, 0)
+scale = Vector3(17, 14, 21)
+metadata/stages = 8
+metadata/distant = true
+
+[node name="EastMesa" type="Marker3D" parent="Bedrock"]
+position = Vector3(26.7, -15.6, -45.3)
+rotation = Vector3(0, -0.40, 0)
+scale = Vector3(14, 17, 21)
+metadata/stages = 9
+metadata/distant = true
+
+[node name="VistaArch" type="Node3D" parent="."]
+position = Vector3(14.6, -3.95, -40.0)
+rotation = Vector3(0, -0.19, 0)
+
+[node name="PaintedVista" type="MeshInstance3D" parent="."]
+position = Vector3(11.714, -15.943, -76.94)
+rotation = Vector3(-0.315904, -0.30587, 0)
+visible = false
+cast_shadow = 0
+mesh = SubResource("Quad_painted")
+
+[node name="BlueCommander" parent="." instance=ExtResource("4_commander")]
+position = Vector3(-1.15, 0.02, 6)
+path_z_limits = Vector2(-18.5, 7.5)
+exit_z = -16.1
+clamp_to_route = false
+
+[node name="CameraRig" parent="." instance=ExtResource("5_camera")]
+script = ExtResource("9_camera")
+attributes = SubResource("CameraAttributes_bend")
+composition_pitch_deg = -18.1
+composition_offset = Vector3(0, 4.24, 10.05)
+route_follow = 0.93
+x_follow_factor = 0.30
+yaw_follow = 0.85
+look_ahead = 10.0

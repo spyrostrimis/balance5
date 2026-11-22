@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-11-22 · RPG canyon · Sculpted Bend study defaults
+
+**Verified for this study.** Shallow raised cobbles stay on because their lips read in direct light while the collision floor stays smooth. The painted distance opens by default because its arch and receding ridges read more clearly from the live overlook. R and V keep the matched alternatives playable. The final RPG art direction remains open. [Evidence](CANYON_SCULPTED_BEND.md)
+
 What we decided, when and why, newest first. Balance Studio shows this file on its **Decisions** page. Open questions live in `docs/GAME_DESIGN.md` §9 and in the roadmap.
 
 **For agents:** add an entry when the owner accepts or rejects a direction, or when a test settles a question. Use the format below. **Status** is *Decided*, *Trying* (provisional, being tested) or *Reversed* (say what replaced it). Do not delete reversed decisions; they stop us repeating mistakes.

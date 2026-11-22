@@ -130,6 +130,11 @@ Area: 3D
 The three directions in 3D. In Godot, **X** is left–right, **Y** is up, **Z** is towards/away from the camera. The canyon walk goes along **−Z** (from Z +6 at the start to Z −14 at the exit). Blender uses Z for up, which the export converts.
 *Also:* −Z, world axes
 
+### Billboard
+Area: Rendering
+A flat picture in the 3D world that keeps turning to face the camera, so it never shows its thin edge. Our bushes and grass turn around their vertical axis only, so they stay upright.
+*Also:* camera-facing card, Y billboard
+
 ### Course (of stone)
 Area: 3D
 One horizontal row of stones or blocks in a wall. Our 3D cliffs stack several courses, each set back and higher than the one below, like steps.
@@ -272,6 +277,11 @@ Area: Art
 The fixed list of colours an image may use. A **colour ramp** is a short run of shades of one material from darkest to lightest. Pixel art keeps palettes small (4–7 colours per material).
 *In Balance:* the **goal palette** (`assets/textures/pixel_ab/palette_preview.png`) is 48 colours taken from the RPG goal image; B64 and `pixel_snap.py --painted` map every surface onto it, so they all belong to the same picture.
 *Also:* colour ramp, color ramp, ramp, goal palette
+
+### Gradient map
+Area: Art
+A way to recolour an image: each pixel's brightness picks a colour from a ramp (dark to light shades of one material). Shapes and detail stay exactly as drawn; only the colours change. We use it to repaint the 3D kit in the goal image's colours.
+*Also:* palette swap, ramp recolour
 
 ### Pixel art
 Area: Art
@@ -841,4 +851,20 @@ Drawing 2D sprites in order of their vertical screen position (from top to botto
 Area: Textures
 Joining two overlapping textures along a wavy path where their colours already match most closely, instead of cutting along a straight line. We use it to stitch the uncut canyon plates and the S-curve cobblestone road without visible joins.
 *Also:* graph-cut seam, dynamic-programming seam
+
+### Photogrammetry scan
+Area: 3D
+A 3D model and texture reconstructed from dozens of real photographs of a rock, cliff or plant (such as our Poly Haven Namaqualand desert cliffs, stones and succulents, or the white Grand Canyon rock). It captures real-world cracks and surface shapes that are hard to sculpt by hand.
+*Also:* photo scan, scan
+
+### Level of Detail (LOD)
+Area: 3D
+Several versions of the same 3D mesh stored at different triangle counts (`LOD0` is the heaviest original scan; `LOD2` and `LOD3` have far fewer triangles but keep the same overall shape and texture mapping). Using `LOD2` or `LOD3` lets the game draw dozens of scanned cliffs and stones smoothly.
+*Also:* LOD, LOD0, LOD2, LOD3
+
+### Palette harmonization
+Area: Shaders
+Adjusting the brightness and colour temperature of different photo-scanned models inside a shader so rocks photographed in different places (such as grey lunar pebbles, mossy rock faces and reddish desert cliffs) share one cohesive warm desert palette while keeping their original photo grain and cracks.
+*In Balance:* toggleable live with key **G** in [3D Canyon · Way 1B Free 3D Modules](CANYON_WAY1B_FREE_3D.md).
+
 

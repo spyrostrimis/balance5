@@ -1,0 +1,27 @@
+# Way 1B Free 3D Modules — Sources & Licences
+
+1. Poly Haven (CC0 1.0 Universal Public Domain — https://polyhaven.com/license):
+   - namaqualand_cliff_01.glb         <- namaqualand_cliff_01_4k.blend.zip (Poly Haven)
+   - namaqualand_cliff_02.glb         <- namaqualand_cliff_02_4k.blend.zip (Poly Haven)
+   - rock_face_01.glb                 <- rock_face_01_4k.blend.zip (Poly Haven)
+   - rock_face_02.glb                 <- rock_face_02_4k.blend.zip (Poly Haven)
+   - rock_07.glb                      <- rock_07_4k.blend.zip (Poly Haven)
+   - namaqualand_boulder_02.glb       <- namaqualand_boulder_02_4k.blend.zip (Poly Haven)
+   - namaqualand_boulder_03.glb       <- namaqualand_boulder_03_4k.blend.zip (Poly Haven)
+   - namaqualand_boulder_05.glb       <- namaqualand_boulder_05_4k.blend.zip (Poly Haven)
+   - namaqualand_stones_01.glb        <- namaqualand_stones_01_4k.blend.zip (Poly Haven)
+   - moon_rock_04.glb                 <- moon_rock_04_4k.blend.zip (Poly Haven)
+   - cheiridopsis_succulent.glb       <- cheiridopsis_succulent_4k.blend.zip (Poly Haven)
+   - sand_rocks_small_01.glb          <- sand_rocks_small_01_4k.blend.zip (Poly Haven)
+   - namaqualand_rocks_01.glb         <- namaqualand_rocks_01_4k.blend.zip (Poly Haven)
+
+2. BlenderKit Free Plan Assets (https://www.blenderkit.com/docs/licenses/):
+   - cliff_scan_ledge.glb             <- cliff-scan_2ef1dd47-faa4-4aba-98df-7d10e6cc277b
+   - canyon_river_terrain.glb         <- canyon-river-ter_2d5f9aa3-4ad5-4e4a-9d58-ad9b5e223238
+
+3. CraftPix Free 3D Low-Poly Desert Mountains (https://craftpix.net/file-licenses/):
+   - mountain_desert_009.glb          <- free-desert-mountain-3d-low-poly-models.zip (Fbx/Mountain_desert_009.fbx)
+
+4. Sketchfab Free Standard License — Austin Beaulier (https://sketchfab.com/3d-models/grand-canyon-rock-photogrammetry-bc98301459854d57984c5a40525d536f):
+   - grand_canyon_rock.glb            <- grand-canyon-rock-photogrammetry.zip (Austin Beaulier)
+   - grand_canyon_rock_tex_u1_v1.jpg  <- grand-canyon-rock-photogrammetry.zip (Austin Beaulier)

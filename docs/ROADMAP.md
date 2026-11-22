@@ -67,13 +67,17 @@ Plan agreed 2026-11-20: Phase 0 lock the look → 1 build `scenes/rpg/canyon_01.
 - [x] Phase 0: why B64 looked best (painted source + shared palette) and `pixel_snap.py --painted`
 - [x] Phase 0: owner prefers B64 and art_gpt, without raised stones (2026-11-21)
 - [x] 3D kit step 1: real curb blocks along the road (`canyon_v3_kit.tscn`, key K, §17)
-- [ ] 3D kit step 2: road surface (smaller stones, darker sand strip by the curbs)
-- [ ] 3D kit step 3: bushes and grass as pixel sprites at the wall foot and between curbs and cliffs
+- [x] 3D kit step 2: new road and sand tiles, darker sand by the curbs (key N, §20)
+- [x] Goal colours: five colour ramps from the goal image repaint every kit piece (key M, §21)
+- [ ] Owner verdict on the goal-colour look; exit dunes and sky in the same colours
+- [x] 3D kit step 3: pixel bushes and grass on the sand strip, wall foot and ledges (key B, §19)
 - [x] 3D kit step 4, first pass: stepped sandstone cliffs from ChatGPT block outlines (key W, §18)
 - [x] 3D kit step 4, second pass: darker, purple shade, fewer larger blocks, strata faces, rubble (§18b)
 - [x] Cliffs moved out to 2.7 m: an open sand strip between curbs and cliffs (§18c)
 - [ ] Cliffs: owner verdict; possible third pass (taller faces, sand terraces)
-- [ ] Compare the 3D kit canyon with the 2D canyons and decide the RPG direction
+- [x] Audit and catalog all 61 downloaded 3D canyon assets with visual contact sheets, ratings and cleanup guide ([CANYON_ASSET_CATALOG.md](CANYON_ASSET_CATALOG.md))
+- [x] Build and verify **3D Canyon · Way 1B Free 3D Modules** (`scenes/maps/canyon_way1b_free_3d.tscn`, §22) combining Namaqualand cliffs, Rock Face 01/02, Rock 07 & Boulder 03 curbs, Namaqualand Stones 01 & Moon Rock 04 3D cobbles, Cheiridopsis Succulents, Sand Rocks Small 01, Mountain 009 Arch and Canyon River Terrain with the kept Trellis boulders and white Grand Canyon rock ([Study](CANYON_WAY1B_FREE_3D.md))
+- [ ] Compare the 3D canyon studies (Way 1B Free 3D Modules, Sculpted Bend, 3D Kit Canyon) with the 2D canyons and decide the RPG direction
 
 The HD-2D walking sequence. If it fails, the RTS alone is the game.
 

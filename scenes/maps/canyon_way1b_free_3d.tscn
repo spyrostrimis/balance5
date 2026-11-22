@@ -1,0 +1,116 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/canyon/canyon_way1b_free_3d.gd" id="1_way1b"]
+[ext_resource type="Environment" path="res://assets/environments/canyon_clear_air.tres" id="2_env"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_route_path.gd" id="3_route"]
+[ext_resource type="Material" path="res://assets/materials/canyon_road_chatgpt.tres" id="4_road"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_layout.gd" id="5_layout"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_placement.gd" id="6_place"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_layout_data.gd" id="7_ldata"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_hf_trellis2.tscn" id="8_boulder_l"]
+[ext_resource type="PackedScene" path="res://scenes/maps/chatgpt_boulder_trellis3dnet.tscn" id="9_boulder_r"]
+[ext_resource type="Material" path="res://assets/materials/orichalcum_crater_ground.tres" id="10_crater"]
+[ext_resource type="Material" path="res://assets/materials/canyon_vista_backdrop.tres" id="11_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/actors/blue_commander_3d.tscn" id="12_hero"]
+[ext_resource type="PackedScene" path="res://scenes/actors/canyon_camera.tscn" id="13_cam"]
+[ext_resource type="Script" path="res://scripts/canyon/canyon_corridor.gd" id="14_corridor"]
+
+[sub_resource type="Curve3D" id="Curve3D_way1b"]
+bake_interval = 0.25
+_data = {
+"points": PackedVector3Array(-0.40091908, 0, 1.3333334, 0.40091908, 0, -1.3333334, -1.4601167, 0, 18, -0.58555424, 0, 1.3333334, 0.58555424, 0, -1.3333334, 0.12310743, 0, 14, -0.345254, 0, 1.3333334, 0.345254, 0, -1.3333334, 1.6169928, 0, 10, 0.14559627, 0, 1.3333334, -0.14559627, 0, -1.3333334, 1.9374301, 0, 6, 0.53078765, 0, 1.3333334, -0.53078765, 0, -1.3333334, 0.85187894, 0, 2, 0.53078765, 0, 1.3333334, -0.53078765, 0, -1.3333334, -0.85187894, 0, -2, 0.14559627, 0, 1.3333334, -0.14559627, 0, -1.3333334, -1.9374301, 0, -6, -0.345254, 0, 1.3333334, 0.345254, 0, -1.3333334, -1.6169928, 0, -10, -0.58555424, 0, 1.3333334, 0.58555424, 0, -1.3333334, -0.12310743, 0, -14, -0.40091908, 0, 1.3333334, 0.40091908, 0, -1.3333334, 1.4601167, 0, -18, 0.074662104, 0, 1.3333334, -0.074662104, 0, -1.3333334, 1.9837375, 0, -22, 0.49606118, 0, 1.3333334, -0.49606118, 0, -1.3333334, 1.0677645, 0, -26, 0.55746984, 0, 1.3333334, -0.55746984, 0, -1.3333334, -0.6230827, 0, -30),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(60, 1, 90)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(60, 90)
+
+[sub_resource type="Resource" id="Resource_boulder_left"]
+script = ExtResource("6_place")
+label = "ChatGPTBoulder_HF_Trellis2"
+scene = ExtResource("8_boulder_l")
+z = 4.85
+lateral = -1.8192
+yaw_offset_deg = -3.823
+scale = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="Resource" id="Resource_boulder_right"]
+script = ExtResource("6_place")
+label = "ChatGPTBoulder_Trellis3DNet"
+scene = ExtResource("9_boulder_r")
+z = 4.65
+lateral = 1.4951
+yaw_offset_deg = -4.124
+scale = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="Resource" id="Resource_layout_anchors"]
+script = ExtResource("7_ldata")
+placements = Array[ExtResource("6_place")]([SubResource("Resource_boulder_left"), SubResource("Resource_boulder_right")])
+
+[sub_resource type="QuadMesh" id="QuadMesh_crater"]
+size = Vector2(7.6, 5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_backdrop"]
+size = Vector2(72, 34)
+
+[node name="CanyonWay1BFree3D" type="Node3D"]
+script = ExtResource("1_way1b")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="DesertSun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.81915206, -0.38379756, 0.42625037, 0, 0.7431448, 0.6691306, -0.57357645, 0.5481197, -0.6087486, 0, 0, 0)
+light_color = Color(1, 0.93, 0.78, 1)
+light_energy = 1.65
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Route" type="Path3D" parent="."]
+curve = SubResource("Curve3D_way1b")
+script = ExtResource("3_route")
+
+[node name="GroundFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -14)
+
+[node name="FloorShape" type="CollisionShape3D" parent="GroundFloor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="GroundFloorMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = ExtResource("4_road")
+
+[node name="Corridor" type="Node3D" parent="."]
+script = ExtResource("14_corridor")
+
+[node name="Layout" type="Node3D" parent="."]
+script = ExtResource("5_layout")
+route_path = NodePath("../Route")
+data = SubResource("Resource_layout_anchors")
+
+[node name="OrichalcumCraterGround" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.25, 0.03, -22.2)
+mesh = SubResource("QuadMesh_crater")
+surface_material_override/0 = ExtResource("10_crater")
+
+[node name="CraterOrichalcumGlow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.65, -22.2)
+light_color = Color(1, 0.74, 0.26, 1)
+light_energy = 1.15
+omni_range = 4.5
+
+[node name="BattlefieldVistaBackdrop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.97437006, 0.22495104, 0, -0.22495104, 0.97437006, 0, -2.4, -52)
+mesh = SubResource("QuadMesh_backdrop")
+surface_material_override/0 = ExtResource("11_backdrop")
+
+[node name="BlueCommander" parent="." instance=ExtResource("12_hero")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 6)
+
+[node name="CameraRig" parent="." instance=ExtResource("13_cam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 17.9)

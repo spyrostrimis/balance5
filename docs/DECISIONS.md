@@ -10,6 +10,10 @@ Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | 
 Why, in one to three sentences. Where the evidence is.
 ```
 
+### 2026-11-22 · Build 3D Canyon · Way 1B Free 3D Modules for the 2D vs 3D evaluation
+Area: Canyon · Status: Trying
+Following the 61-asset audit (`docs/CANYON_ASSET_CATALOG.md` and `Canyon Asset Catalog.html`), the owner chose Way 1B to test a full photogrammetry-and-kit 3D canyon bend (`scenes/maps/canyon_way1b_free_3d.tscn`) against the 2D builds while keeping the Blue Commander, the two ChatGPT Trellis boulders, and the pale Grand Canyon rock. Harmonizing the scans' luminance ramps (`way1b_scan_rock.gdshader`, toggleable with key `G`) unified disparate photo scans (lunar grey `Moon Rock 04`, ironstone `Namaqualand Stones 01`, mossy `Rock Face 01`, and `Namaqualand Cliff 01/02`) into one warm terracotta, slate-terrace, and sun-bleached cobblestone canyon with verified spawn landmark occlusion and midway reveal. Evidence: `docs/CANYON_WAY1B_FREE_3D.md`, `docs/EXPERIMENT_LOG_AND_LESSONS.md` §22, `render_captures/way1b_free_3d/`.
+
 ### 2026-11-21 · Keep Painted Bend as an art study
 Area: Canyon · Status: Trying
 The warm-and-cool candidate made the overlook the most inviting of the three paintings. Fitting it preserved the walk and gave the arch a clear reveal. The original Arch Overlook remains the quality target for crisp stonework and the sweep of the road. [Painted Bend evidence](PIXEL_CANYON_SESSION_B_PAINTED.md)

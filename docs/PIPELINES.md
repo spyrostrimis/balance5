@@ -186,14 +186,57 @@ Build stepped canyon walls from rounded sandstone blocks whose 3D shapes come fr
 ### Done when
 - Both walls follow the whole road, no gaps show through to the sky or the floor, and the commander still walks start to exit.
 
+## Road and sand tiles for the 3D canyon
+Area: Art · Status: Trying · Tools: ChatGPT, Python, Godot
+Turn a ChatGPT cobble texture and a sand panel into seamless 64-texel-per-metre tiles for the road shader.
+
+### Steps
+1. **ChatGPT:** one square, seamless top-down cobble texture in the style of the 2D kit road (attach the road sheet). Save it as `assets/source_inputs/road_cobble_gpt.webp`. The sand comes from the left panel of `road_sheet_gpt.webp`.
+2. **Python:** `C:/Python312/python.exe tools/python/build_road_tiles.py` cuts both images to tile, shrinks them to 64 texels per metre and writes the sets `art_road_gpt` and `art_road_goal`. Check `tmp/road_tiles_preview.png` for seams.
+3. **Godot:** in `scenes/maps/canyon_v3_kit.tscn`, press N to swap the new road with the previous one; capture with `PIXEL_AB_MODE=art_road_goal` or `art_road_gpt`.
+
+### Done when
+- No seam lines on the road or sand, the stones read at walking distance, and the road still stands out from the sand and cliffs.
+
+## Recolour the 3D kit to the goal image's colours
+Area: Art · Status: Trying · Tools: Python, Godot
+Repaint every kit texture with a few colour families taken from the goal image, keeping all shapes and pixel detail.
+
+### Steps
+1. Decide the families and where they appear in the goal image; the sample boxes are at the top of `tools/python/recolor_kit.py` (`REGIONS`).
+2. Run `C:/Python312/python.exe tools/python/recolor_kit.py`. Check `tmp/kit_ramps_preview.png`: one row per family, dark to light.
+3. In `scenes/maps/canyon_v3_kit.tscn` press M (or capture with `PIXEL_AB_MODE=art_road_ramp`).
+4. Adjust a family by moving its boxes, its brightness window (`WINDOWS`) or the road and curb brightness, and run again.
+
+### Done when
+- Each material reads as its own family at walking distance, and the road stands out from the sand and cliffs.
+
+## Pixel plants in the 3D canyon
+Area: Art · Status: Trying · Tools: ChatGPT, Python, Godot
+Turn a sheet of drawn plants into camera-facing pixel sprites scattered along the canyon.
+
+### Steps
+1. **ChatGPT:** a props sheet of bushes and grass tufts on a plain dark purple background (the 2D kit sheet works). Save it as `assets/source_inputs/props_kit_gpt.webp`.
+2. **Python:** `C:/Python312/python.exe tools/python/build_kit_sprites.py` cuts each plant at its real size (64 texels per metre) into `assets/textures/kit_sprites/`. Edit the size list at the top of the script for new sheets. Check `tmp/kit_sprites_preview.png`.
+3. **Godot:** `scripts/canyon/canyon_bushes.gd` scatters them (spacing and the sand strip are settings on the node). Open `scenes/maps/canyon_v3_kit.tscn`, press B to compare with the old bush cards, capture both.
+
+### Done when
+- Plants grow on the sand strip, at the wall foot and on the ledges, stay clear of boulders, keep their green, and do not hide the commander.
+
 ## Free pack model into the canyon
 Area: 3D · Status: Trying · Tools: Blender, Godot
 Use a downloaded model (FBX or OBJ) as a wall piece, landmark or boulder.
 
+On the owner's PC, the **Balance game asset library** is at `D:\Pictures\Saved Pictures\Canyon\Canyon Asset Catalog.html`. Its first collection covers the 3D environment downloads gathered for the canyon, including BlenderKit models and individual CraftPix pieces. Filter by possible world or game use to find assets for other settings. The numerical score measures fit for the canyon walk. Expand **File, source & license** for Blender dimensions, available levels of detail, the original download and the publisher record. The library links to the [canyon audit and contact sheets](CANYON_ASSET_CATALOG.md). The white roadside rock is Austin Beaulier’s [Grand Canyon Rock (photogrammetry)](https://sketchfab.com/3d-models/grand-canyon-rock-photogrammetry-bc98301459854d57984c5a40525d536f) under the Sketchfab Free Standard licence; note that `export_presets.cfg` previously had `assets/models/packs_local/*` in `exclude_filter`, which caused the white boulder to appear in the Godot editor but disappear in `builds/Balance.exe`. `export_presets.cfg` now sets `exclude_filter="render_captures/*,tmp/*"` and a tracked copy also lives at `assets/models/way1b_free_3d/grand_canyon_rock.glb`, so the white boulder is always packed into `builds/Balance.exe`.
+
 ### Steps
 1. Check the licence first. No licence found → keep it in `assets/models/packs_local/` (ignored by git) for tests only.
-2. Convert: `C:/Blender/blender.exe -b --factory-startup --disable-autoexec --python tools/blender/convert_pack_model.py -- in.fbx out.glb --height 9` (add `--keep-material` to keep a photo texture).
+2. Convert single FBX/OBJ: `C:/Blender/blender.exe -b --factory-startup --disable-autoexec --python tools/blender/convert_pack_model.py -- in.fbx out.glb --height 9` (add `--keep-material` to keep a photo texture).
 3. Place it in `scripts/canyon/canyon_packs_test.gd` (z, offset from the road, yaw, scale) with `canyon_rock.tres`, and capture `scenes/maps/canyon_v2_packs.tscn` with packs on and off.
+4. **Full Way 1B photogrammetry kit pipeline (`canyon_way1b_free_3d.tscn`):**
+   - `C:/Blender/blender.exe -b --python tools/blender/build_way1b_free_3d.py` extracts the game-ready LOD meshes (`LOD2`/`LOD3`) from the Poly Haven `.blend.zip` archives, BlenderKit `.blend` files and CraftPix FBX archives, aligns cliff scans so their long axis runs along `Z` and their scanned front face points toward `+X` with a foot pivot at `(0, 0, 0)`, bakes height-based vertex AO, and dumps linear `.exr` normal/roughness buffers.
+   - `python tools/python/build_way1b_textures.py` converts the linear normal and roughness arrays into `2048²`/`1024²` PNGs and computes multi-scale normal divergence to pack `*_orm.png` (`R = crevice cavity AO`, `G = roughness`, `B = convex ridge highlight / translucency`).
+   - `scripts/canyon/canyon_way1b_free_3d.gd` assembles all 5 canyon roles with `assets/shaders/way1b_scan_rock.gdshader` and `way1b_succulent.gdshader` (key `G` toggles warm palette harmonization vs raw scan colours). Verify with `tests/test_canyon_way1b_free_3d.gd` headless and `tests/test_composition_walk.gd` at `1376×768` Forward+.
 
 ### Done when
 - It reads as the same rock as the walls in a matched capture, and its licence is recorded next to it.

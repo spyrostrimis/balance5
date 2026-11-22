@@ -182,5 +182,6 @@ Play `res://scenes/maps/desert_canyon_crisp_road_patch.tscn` for this experiment
 
 - [x] Verify the exported image-authored road at 3.2 m per repeat and compare the native and shared-material Trellis boulders at spawn. Both play from their own cards.
 - [x] Ground contact at the three camera stops, blocked glint at spawn, clear glint by midway and exit signal on the integrated build.
+- [x] Assemble and verify **3D Canyon · Way 1B Free 3D Modules** (`scenes/maps/canyon_way1b_free_3d.tscn`) using real photogrammetry cliffs (`Namaqualand Cliff 01/02`, `Rock Face 01/02`), 3D curb blocks (`Rock 07`, `Namaqualand Boulder 03/05`), 3D cobblestones (`Namaqualand Stones 01`, `Moon Rock 04`), 3D `Cheiridopsis Succulent` plants and `Sand Rocks Small 01` verge banks, and exit arch/gorge (`Mountain Desert 009`, `Canyon River Terrain`) alongside the kept Trellis boulders and pale Grand Canyon rock, with verified spawn occlusion (`25.94 m`) and midway/exit reveal. [Study and captures](CANYON_WAY1B_FREE_3D.md)
 - [ ] Conceal the far road end at spawn with one right-hand gateway outcrop and reveal the crater on approach. Preserve clearance, landmark timing and the grounded exit.
 - [ ] Measure localized shafts against the accepted gateway control, then prove selection and a reachable move order at tactical framing.

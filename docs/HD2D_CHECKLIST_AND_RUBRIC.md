@@ -1,5 +1,12 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## 2D canyon · Approach 3 assessment · 2026-11-22
+
+- [x] Captured both 2D baselines at the entrance, bend, upper pass and north barrier. Compared the standing commander across two art sources and two rendering sizes at matched framing.
+- [ ] Carry the clearer idle through the walk, back view and combat poses. Keep her fully framed at the north barrier and give the exit a distinct silhouette.
+
+[Matched frames and acceptance checks](CANYON_APPROACH_3_HANDOFF.md)
+
 ## Sculpted Bend · camera comparison · 2026-11-22
 
 - [x] Matched the commander's on-screen height to both 2D approaches, with fixed angle and scale through the 1376 × 768 walk.

@@ -1,5 +1,9 @@
 # Pipelines
 
+## Compare a 2D commander's art and display resolution
+
+Measure the height of the visible figure, excluding transparent space. Capture a single idle pose against the same stone, with the same lighting and camera framing. Make four images by crossing the old and candidate art with the old and candidate resolutions. For the 1376 × 768 canyon review, 105 pixels at 540 picture height matched 149 at 765. Show the window crops at their original size. Repeat with the final lighting and in motion before adopting an animation sheet. [Worked example](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
+
 ## Assemble a short 3D bend from scanned rock
 
 Use the CC0 downloads and `tools/blender/build_sculpted_bend.py` to make the compact mesh kit. The script takes a download directory and Blender executable. It keeps five cobble shapes, gathers three succulent clusters, resizes to foot-level origins and gives texture values a shared palette. In `scenes/maps/sculpted_bend.tscn`, place cliff and plant markers and edit the Route curve. Seat thin scanned surfaces in solid stepped bedrock and check the camera coming and going. Plants use cutout leaf edges so they cast shadows without transparent rectangles. The road shares meshes between many copies and the comparison changes only their height.

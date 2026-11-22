@@ -2,6 +2,7 @@
 
 ## RPG canyon direction comparison
 
+- [ ] Build Approach 3 from the tested standing pose, then verify the commander in motion and the painted bend through to its exit. [Assessment, visual proof and Sol handoff](CANYON_APPROACH_3_HANDOFF.md)
 - [x] Build and export **3D Canyon · Sculpted Bend**. Verify the round trip, both road heights, both vistas and all three landmark rocks. [Study and evidence](CANYON_SCULPTED_BEND.md)
 - [x] Match Sculpted Bend's camera to 2D Parallel-Projection Canyon · Approach 1 vs 2 and verify the original view on C. [Matched camera evidence](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
 - [ ] Owner compares Sculpted Bend with Painted Bend and Approach 2 Modular and chooses the RPG direction.

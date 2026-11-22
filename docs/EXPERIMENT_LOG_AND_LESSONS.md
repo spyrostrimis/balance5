@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## 2D canyon · commander detail and the north barrier · 2026-11-22
+
+Captured both menu entries at four matched stops and drove each route out and back. The continuous painting joins the road and terraces most convincingly. The modular arch and curb read clearly, but the same arch appears three times. Both cameras crop the commander's head at the north barrier. On the modular entrance, four flat-light renders paired the current and reference-derived idle with the existing and higher resolution. Changing the art gave the larger visible improvement. The 149-pixel reference-derived idle drawn one-to-one kept the face, scarf, blue armour and rifle clearest at the original apparent height. Animation and the final lighting are open. [Comparison, measurements and four-way proof](CANYON_APPROACH_3_HANDOFF.md)
+
 ## Sculpted Bend · parallel-projection camera · 2026-11-22
 
 Compared both modes of the live 2D Approach 1 vs 2 study with both Sculpted Bend cameras at the entrance, middle and upper pass. Measured 105 art pixels of 540 for the 2D commander and approximately 150 of 768 in the new shot. The camera stays at a fixed 42° downward angle and heading with 17 m to the boots at rest. The upper view makes the joint spacing and verge layout easier to judge. Its down angle crops the distant arch, which is still composed for the original camera on C. The 1376 × 768 round trip, C switch and exported Esc return passed. [Camera comparison and walk](CANYON_SCULPTED_BEND.md#parallel-projection-camera)

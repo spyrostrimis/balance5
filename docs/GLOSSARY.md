@@ -636,6 +636,10 @@ Area: Art
 One pixel of the artwork as drawn, before the game enlarges it. In the RTS, one art pixel shows as 2×2 screen pixels at 1920×1080, which gives the chunky pixel-art look.
 *In Balance:* `docs/RTS_ART_RULES.md` §1.
 
+### One-to-one display
+Area: Art
+Each pixel the game renders occupies exactly one screen pixel. For the Approach 3 standing pose, a 149-pixel-tall drawing occupies 149 screen pixels inside a centred 1360 × 765 picture. [Visual example](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
+
 ### Nearest-neighbour scaling
 Area: Art
 Enlarging artwork by copying the closest pixel's exact colour. At 2× every original pixel becomes a square of four equal screen pixels.

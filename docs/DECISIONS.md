@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-11-22 · RPG canyon · Standing commander comparison
+
+**Test result.** At the same apparent height and lighting, the reference-derived commander made her features easier to read than raising the render resolution with the existing sprite. Use the 149-pixel standing pose as a benchmark for the proposed Approach 3 animation. The owner’s choice of canyon direction remains open. [Visual comparison](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
+
 ## 2026-11-22 · RPG canyon · Sculpted Bend camera match
 
 The owner asked for the framing of 2D Parallel-Projection Canyon · Approach 1 vs 2. Sculpted Bend now opens with a fixed 42° downward orthographic camera. Its view gives the commander about the same on-screen height as the 2D sprite. Press C to compare the original perspective and see the distant arch. [Measured camera match](CANYON_SCULPTED_BEND.md#parallel-projection-camera)

@@ -1,8 +1,16 @@
 # 3D Canyon · Sculpted Bend
 
-**Play** from the Developers Page. Use WASD or arrows to walk both ways, **R** for raised or flat stones, **V** for the painted or modeled valley and **Esc** to return. The study uses the existing Blue Commander with her original sprite, movement and animation.
+**Play** from the Developers Page. Use WASD or arrows to walk both ways, **C** to switch cameras, **R** for raised or flat stones, **V** for the painted or modeled valley and **Esc** to return. The study uses the existing Blue Commander with her original sprite, movement and animation.
 
 [Three-study comparison](../render_captures/sculpted_bend/three_studies.jpg) · [Round trip](../render_captures/sculpted_bend/round_trip.mp4) · [3D Kit Canyon control](../render_captures/sculpted_bend/control_comparison.jpg) · [Raised vs. flat cobbles](../render_captures/sculpted_bend/raised_flat.jpg) · [Modeled vs. painted distance](../render_captures/sculpted_bend/distance_comparison.jpg)
+
+## Parallel-projection camera
+
+The study now opens at a fixed **42° downward angle** with a fixed heading. The existing commander takes up approximately **150.4 pixels vertically at 1376 × 768**, within about one pixel of the 2D reference's 105 of 540 pixels at the same display size. The boots are centred at a stop, with the camera 17 m away and a 5.05 m vertical view. The 2D camera establishes apparent angle and scale from its painted art. The 17 m setback is a staging choice for the 3D camera.
+
+**C** restores the original perspective at the same spot. The higher view prioritizes the ground and crops the distant arch. The original camera opens onto the arch and shows more of the reveal. The captures in the original study below use that camera.
+
+Verified both cameras at three matched stops and replayed the 15.57-second round trip with the higher view. The navigation query, corridor sides, end caps and exit signal still passed. Launched the exported entry, switched cameras and returned with Esc. [Comparison of both 2D modes and both Sculpted Bend cameras](../render_captures/sculpted_bend/camera/camera_comparison.jpg) · [Round trip](../render_captures/sculpted_bend/camera/round_trip.mp4) · [Measured camera stops](../render_captures/sculpted_bend/camera/pair.log)
 
 ## What changed through the passes
 
@@ -52,9 +60,10 @@ Painted Bend has the strongest RPG image as a whole. Its foreground overlap, col
 $godot = 'C:/Godot/Godot_v4.7.2-stable_win64_console.exe'
 $test = 'res://tests/test_sculpted_bend.gd'
 & $godot --path . --headless --fixed-fps 60 --script $test
-& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --record
-& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --road-pair
-& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --vista-pair
+& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --perspective --record
+& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --perspective --road-pair
+& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --perspective --vista-pair
+& $godot --path . --resolution 1376x768 --fixed-fps 30 --script $test -- --camera-pair
 & $godot --path . --resolution 1376x768 --script $test -- --catalog
 & $godot --path . --headless --export-release 'Windows Desktop' builds/Balance.exe
 ```

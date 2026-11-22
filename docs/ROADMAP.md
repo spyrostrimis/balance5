@@ -3,6 +3,7 @@
 ## RPG canyon direction comparison
 
 - [x] Build and export **3D Canyon · Sculpted Bend**. Verify the round trip, both road heights, both vistas and all three landmark rocks. [Study and evidence](CANYON_SCULPTED_BEND.md)
+- [x] Match Sculpted Bend's camera to 2D Parallel-Projection Canyon · Approach 1 vs 2 and verify the original view on C. [Matched camera evidence](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
 - [ ] Owner compares Sculpted Bend with Painted Bend and Approach 2 Modular and chooses the RPG direction.
 
 What we are building, in order. The RTS comes first (`docs/GAME_DESIGN.md` §1). Balance Studio shows this file on its **Plan** page and can tick the boxes.

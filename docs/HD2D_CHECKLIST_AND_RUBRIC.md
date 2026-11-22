@@ -1,5 +1,13 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## Sculpted Bend · camera comparison · 2026-11-22
+
+- [x] Matched the commander's on-screen height to both 2D approaches, with fixed angle and scale through the 1376 × 768 walk.
+- [x] Verified C in both directions at three stops. The higher view shows the path and nearby rocks. The original framing shows the arch at the overlook.
+- [x] Verified the round trip, ground contact, corridor, navigation, exit signal and exported Play and Esc return.
+
+[Matched frames and walk](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
+
 ## 3D Canyon · Sculpted Bend · 2026-11-22
 
 - [x] Captured the 3D Kit Canyon before changing the framing. The standalone study's tall inside wall partly screens the vista at the bend, and the lower shelf leaves the outside open.

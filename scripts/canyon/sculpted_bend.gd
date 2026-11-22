@@ -40,6 +40,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
 	match event.keycode:
+		KEY_C:
+			$CameraRig.set_parallel_view(not $CameraRig.parallel_view)
 		KEY_R:
 			set_road_flat(not _flat)
 		KEY_V:

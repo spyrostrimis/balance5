@@ -6,6 +6,8 @@ Use the CC0 downloads and `tools/blender/build_sculpted_bend.py` to make the com
 
 Keep a smooth physical floor for walking and give the navigation bake a narrow strip of the same floor so routes cannot start on islands outside the bend. Verify both sides, the end caps and a full route query. Inspect a matched, stationary pair before choosing road or distance art, then record the chosen scene in motion. When reusing the pale landmark, point to the tracked Way 1B GLB and texture so the existing export exclusions can stay in place. [Reproduction and credits](CANYON_SCULPTED_BEND.md)
 
+To match a live 2D view, measure the opaque commander sprite as a share of the viewport height. Set the 3D orthographic view height to achieve that share at the chosen pitch, then check both cameras at the same stops. A 2D painting establishes the apparent angle and scale. The physical camera distance is a 3D staging choice. [Sculpted Bend camera comparison](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
+
 How each kind of thing gets made in Balance, step by step: what tool, who does it (you or an agent), and how you know it worked. Balance Studio shows this file on its **Pipelines** page, with a copy button for each agent brief.
 
 **Status** is one of *In use* (proven, we use it now), *Planned* (agreed, not yet built) or *Retired* (kept for history). **For agents:** when you prove, change or retire a way of making something, update its entry here. Keep steps short, name real files, and explain new terms in [GLOSSARY.md](GLOSSARY.md).

@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## Sculpted Bend · parallel-projection camera · 2026-11-22
+
+Compared both modes of the live 2D Approach 1 vs 2 study with both Sculpted Bend cameras at the entrance, middle and upper pass. Measured 105 art pixels of 540 for the 2D commander and approximately 150 of 768 in the new shot. The camera stays at a fixed 42° downward angle and heading with 17 m to the boots at rest. The upper view makes the joint spacing and verge layout easier to judge. Its down angle crops the distant arch, which is still composed for the original camera on C. The 1376 × 768 round trip, C switch and exported Esc return passed. [Camera comparison and walk](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
+
 ## 3D Canyon · Sculpted Bend · 2026-11-22
 
 Captured the existing 3D Kit Canyon, then tested the bend before and after dressing a single foreground stretch. The first camera crossed into the thin rear of the inside cliff. A solid stepped footing and a camera that follows the curve at its own depth let the wall slide out of the frame as the arch emerges. The five raised stones added readable lips and shadow in direct light, with a much smaller difference in shade. Four art passes and the final walk make the trade-off visible. Painted Bend's wall and terrace connect more convincingly, and Approach 2 Modular gives the curbs and verges more visual weight. The painted distance has a stronger arch and more layers of depth than the first modeled valley. V keeps both available from the same camera.

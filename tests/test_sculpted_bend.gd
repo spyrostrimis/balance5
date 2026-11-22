@@ -2,6 +2,7 @@ extends SceneTree
 ## Real-input round trip in Forward+ at 1376Γ—768, physics and navigation checks headless.
 ## Add --road-pair for a stationary raised/flat pair and a short walk in the flat variant.
 ## Add --catalog for the Developers Page launch and Esc path, or --vista-pair for both overlooks.
+## Add --camera-pair to verify and capture the two cameras, or --perspective to start in the original view.
 ## Add --record with --fixed-fps 30 to write the exact rendered window as raw RGB frames.
 
 const SCENE := "res://scenes/maps/sculpted_bend.tscn"
@@ -22,6 +23,7 @@ var _furthest_lateral := 0.0
 var _exit_events: Array[bool] = []
 var _recording: FileAccess
 var _recorded := 0
+var _capture_dir := CAPTURES.path_join("camera")
 
 
 func _initialize() -> void:
@@ -34,10 +36,12 @@ func _initialize() -> void:
 func _run() -> void:
 	var args := OS.get_cmdline_user_args()
 	_windowed = DisplayServer.get_name() != "headless"
+	if "--perspective" in args:
+		_capture_dir = CAPTURES
 	if _windowed:
 		root.size = SIZE
 		root.content_scale_size = SIZE
-		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(CAPTURES))
+		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(_capture_dir))
 		_check(RenderingServer.get_current_rendering_method() == "forward_plus", "Forward+ renderer")
 	if "--catalog" in args:
 		await _launch_from_catalog()
@@ -51,6 +55,10 @@ func _run() -> void:
 	_hero = _study.get_node("BlueCommander")
 	_route = _study.get_node("Route")
 	_camera = _study.get_node("CameraRig")
+	if "--perspective" in args:
+		_camera.set_parallel_view(false)
+	else:
+		_check(_camera.parallel_view, "the matched camera is the default")
 	_hero.reached_canyon_exit.connect(func(value: bool) -> void: _exit_events.append(value))
 	await _wait_ticks(20)
 	_check(not _hero.clamp_to_route, "physics containment is active")
@@ -82,6 +90,8 @@ func _run() -> void:
 		await _road_pair()
 	elif "--vista-pair" in args:
 		await _vista_pair()
+	elif "--camera-pair" in args:
+		await _camera_pair()
 	else:
 		await _round_trip()
 		_check_navigation()
@@ -188,6 +198,36 @@ func _vista_pair() -> void:
 		_key(KEY_V)
 		await _wait_ticks(4)
 		_check(_study.get_node("VistaArch").visible, "V restores the 3D terrain")
+
+
+func _camera_pair() -> void:
+	var z_stops := {"entrance": 6.0, "middle": -3.433, "exit": -17.583}
+	var sprite: Sprite3D = _hero.get_node("CommanderSprite")
+	var opaque_height := sprite.texture.get_image().get_used_rect().size.y * sprite.pixel_size
+	for label: String in z_stops:
+		_hero.position = _point(z_stops[label]) + Vector3.UP * 0.001
+		await _wait_ticks(4)
+		_camera.snap()
+		var orthographic_pose := _camera.global_transform
+		_check(_camera.projection == Camera3D.PROJECTION_ORTHOGONAL, "parallel projection")
+		_check(absf(_camera.rotation_degrees.x + 42.0) < 0.01 and absf(_camera.rotation_degrees.y) < 0.01,
+			"camera pitch and heading are fixed")
+		_check(absf(_camera.position.distance_to(_hero.position) - 17.0) < 0.005, "17 m camera setback")
+		var boots := _camera.unproject_position(_hero.position)
+		var head := _camera.unproject_position(_hero.position + Vector3.UP * opaque_height)
+		_check(boots.distance_to(Vector2(SIZE) * 0.5) < 0.02, "boots at screen centre")
+		var hero_pixels := boots.y - head.y
+		_check(absf(hero_pixels - SIZE.y * 105.0 / 540.0) <= 2.0, "visible hero scale matches the 2D reference")
+		print("Camera match %s | hero %.1f px | boots %s" % [label, hero_pixels, boots])
+		await _capture("parallel_" + label)
+		_key(KEY_C)
+		await _wait_ticks(5)
+		_check(_camera.projection == Camera3D.PROJECTION_PERSPECTIVE
+			and absf(_camera.rotation_degrees.x + 18.1) < 0.01, "C restores the original perspective")
+		await _capture("perspective_" + label)
+		_key(KEY_C)
+		await _wait_ticks(5)
+		_check(_camera.global_transform.is_equal_approx(orthographic_pose), "C restores the matched camera exactly")
 
 
 func _record_frame() -> void:
@@ -307,7 +347,7 @@ func _capture(label: String) -> void:
 		return
 	await RenderingServer.frame_post_draw
 	var image := root.get_texture().get_image()
-	_check(image.get_size() == SIZE and image.save_png("%s/%s.png" % [CAPTURES, label]) == OK,
+	_check(image.get_size() == SIZE and image.save_png("%s/%s.png" % [_capture_dir, label]) == OK,
 		"saved 1376Γ—768 viewport frame " + label)
 
 

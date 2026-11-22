@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-11-22 · RPG canyon · Sculpted Bend camera match
+
+The owner asked for the framing of 2D Parallel-Projection Canyon · Approach 1 vs 2. Sculpted Bend now opens with a fixed 42° downward orthographic camera. Its view gives the commander about the same on-screen height as the 2D sprite. Press C to compare the original perspective and see the distant arch. [Measured camera match](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
+
 ## 2026-11-22 · RPG canyon · Sculpted Bend study defaults
 
 **Verified for this study.** Shallow raised cobbles stay on because their lips read in direct light while the collision floor stays smooth. The painted distance opens by default because its arch and receding ridges read more clearly from the live overlook. R and V keep the matched alternatives playable. The final RPG art direction remains open. [Evidence](CANYON_SCULPTED_BEND.md)

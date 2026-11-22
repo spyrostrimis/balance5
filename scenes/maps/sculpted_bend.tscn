@@ -516,6 +516,7 @@ clamp_to_route = false
 [node name="CameraRig" parent="." instance=ExtResource("5_camera")]
 script = ExtResource("9_camera")
 attributes = SubResource("CameraAttributes_bend")
+parallel_view = true
 composition_pitch_deg = -18.1
 composition_offset = Vector3(0, 4.24, 10.05)
 route_follow = 0.93

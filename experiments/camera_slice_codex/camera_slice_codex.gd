@@ -5,9 +5,9 @@ const ART_DIR := SLICE_DIR + "assets/"
 const HERO_SOURCE := "res://assets/textures/units/blue_commander_rpg.png"
 const GROUND_Z := -130.0
 const ROAD_HALF_WIDTH := 2.0
-const CLIFF_FRONT_Z := 20
+const CLIFF_FIRST_Z := 20
 const CLIFF_LAST_Z := -90
-const CLIFF_DEPTH := 5
+const PROP_VERGE_STEP := 5
 const SEED := 42
 const HERO_SPEED := 3.0
 const CAMERA_SPAN := 8.95
@@ -22,7 +22,7 @@ var _profiles: Dictionary
 var _profile := "A"
 var _pitch := 0.0
 var _distance := 0.0
-var _cliff_edges := PackedVector2Array()
+var _prop_verge_edges := PackedVector2Array()
 
 @onready var _camera: Camera3D = $Camera3D
 @onready var _hero: Node3D = $Hero
@@ -32,9 +32,10 @@ var _cliff_edges := PackedVector2Array()
 func _ready() -> void:
 	get_viewport().anisotropic_filtering_level = Viewport.ANISOTROPY_16X
 	get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_IGNORE
+	var prop_config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SLICE_DIR + "props.json"))
 	_build_ground()
-	_build_cliffs()
-	_build_props()
+	_build_cliff_cards(prop_config["cliff_heights_m"])
+	_build_props(prop_config)
 	_build_hero()
 	_profiles = JSON.parse_string(FileAccess.get_file_as_string(SLICE_DIR + "camera_profiles.json"))
 	_select_profile("A")
@@ -106,40 +107,52 @@ func _build_ground() -> void:
 	_add_mesh($Ground, "Road", road, Vector3(0.0, 0.01, GROUND_Z))
 
 
-func _build_cliffs() -> void:
-	var front := QuadMesh.new()
-	front.size = Vector2(8.0, 6.0)
-	front.material = _surface_material("cliff_front.png", Color("9e5839"), Vector2.ONE)
-	var side := QuadMesh.new()
-	side.size = Vector2(CLIFF_DEPTH, 6.0)
-	var side_material := front.material.duplicate() as StandardMaterial3D
-	side_material.uv1_scale.x = CLIFF_DEPTH / 8.0
-	side.material = side_material
-	var top := QuadMesh.new()
-	top.size = Vector2(8.0, CLIFF_DEPTH)
-	top.material = _surface_material("cliff_top.png", Color("b7784c"), top.size / Vector2(8.0, 4.0))
+func _build_cliff_cards(heights: Dictionary) -> void:
+	var files := heights.keys()
+	files.sort()
+	var art: Array[Dictionary] = []
+	for file: String in files:
+		var image := _load_art(ART_DIR + file, Color("9e5839"))
+		art.append({"texture": _make_texture(image), "bounds": image.get_used_rect(), "height": heights[file]})
 
+	var shadow_material := _make_shadow_material(0.4)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = SEED
-	for z in range(CLIFF_FRONT_Z, CLIFF_LAST_Z - 1, -CLIFF_DEPTH):
-		var edges := Vector2(2.5 + rng.randf_range(0.0, 1.5), 2.5 + rng.randf_range(0.0, 1.5))
-		_cliff_edges.append(edges)
+	var rows := [
+		{"min_x": 4.5, "max_x": 6.0, "step": 6},
+		{"min_x": 9.0, "max_x": 12.0, "step": 9},
+	]
+	for row_index in rows.size():
+		var row: Dictionary = rows[row_index]
 		for direction: float in [-1.0, 1.0]:
-			var edge := edges.x if direction < 0.0 else edges.y
-			var block := Node3D.new()
-			block.name = "CliffBlock_%s_%02d" % ["L" if direction < 0.0 else "R", _cliff_edges.size()]
-			block.position = Vector3(direction * edge, 0.0, z)
-			$Cliffs.add_child(block)
-			var midpoint_x := direction * front.size.x * 0.5
-			var midpoint_z := -CLIFF_DEPTH * 0.5
-			var mid_height := front.size.y * 0.5
-			_add_mesh(block, "Front", front, Vector3(midpoint_x, mid_height, 0.0))
-			_add_mesh(block, "Top", top, Vector3(midpoint_x, front.size.y, midpoint_z)).rotation.x = -PI * 0.5
-			_add_mesh(block, "InnerSide", side, Vector3(0.0, mid_height, midpoint_z)).rotation.y = -direction * PI * 0.5
+			var side := "L" if direction < 0.0 else "R"
+			var index := 0
+			for z in range(CLIFF_FIRST_Z, CLIFF_LAST_Z - 1, -row.step):
+				var x := direction * rng.randf_range(row.min_x, row.max_x)
+				var chosen := art[rng.randi_range(0, art.size() - 1)]
+				var bounds: Rect2i = chosen.bounds
+				var card := _make_billboard(chosen.texture, bounds, chosen.height, SpriteBase3D.ALPHA_CUT_OPAQUE_PREPASS)
+				var id := "%d_%s_%02d" % [row_index + 1, side, index + 1]
+				card.name = "CliffCard_" + id
+				card.position.x = x
+				card.position.z = z
+				card.flip_h = index % 2 == 1
+				$Cliffs.add_child(card)
+
+				var shadow := PlaneMesh.new()
+				shadow.size = Vector2(0.8 * bounds.size.x * card.pixel_size, 1.5)
+				shadow.material = shadow_material
+				_add_mesh($Cliffs, "CliffShadow_" + id, shadow, Vector3(x, 0.005, z))
+				index += 1
 
 
-func _build_props() -> void:
-	var config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(SLICE_DIR + "props.json"))
+func _build_props(config: Dictionary) -> void:
+	# Keep the original seeded verge limits so the cliff swap leaves all 40 props in place.
+	var verge_rng := RandomNumberGenerator.new()
+	verge_rng.seed = SEED
+	for z in range(CLIFF_FIRST_Z, CLIFF_LAST_Z - 1, -PROP_VERGE_STEP):
+		_prop_verge_edges.append(Vector2(2.5 + verge_rng.randf_range(0.0, 1.5), 2.5 + verge_rng.randf_range(0.0, 1.5)))
+
 	var heights: Dictionary = config["heights_m"]
 	var kinds: Dictionary = config["types_by_file"]
 	for file in DirAccess.get_files_at(ART_DIR):
@@ -176,7 +189,7 @@ func _prop_position(rng: RandomNumberGenerator, half_width: float) -> Vector2:
 	for attempt in range(256):
 		var z := rng.randf_range(-90.0, 10.0)
 		var direction := -1.0 if rng.randi_range(0, 1) == 0 else 1.0
-		var edges := _cliff_edges[int((CLIFF_FRONT_Z - z) / CLIFF_DEPTH)]
+		var edges := _prop_verge_edges[int((CLIFF_FIRST_Z - z) / PROP_VERGE_STEP)]
 		var edge := edges.x if direction < 0.0 else edges.y
 		var max_x := minf(5.0, edge - half_width)
 		if min_x <= max_x:
@@ -195,12 +208,19 @@ func _build_hero() -> void:
 	_hero.add_child(sprite)
 
 	# Same soft contact shadow as the original camera test.
+	var shadow := PlaneMesh.new()
+	shadow.size = Vector2(0.9, 0.45)
+	shadow.material = _make_shadow_material(0.45)
+	_add_mesh(_hero, "FootShadow", shadow, Vector3(0.0, 0.015, 0.0))
+
+
+func _make_shadow_material(peak_alpha: float) -> StandardMaterial3D:
 	var shadow_image := Image.create_empty(128, 128, false, Image.FORMAT_RGBA8)
 	var center := Vector2(63.5, 63.5)
 	for y in range(128):
 		for x in range(128):
 			var falloff := maxf(1.0 - (Vector2(x, y) - center).length() / center.x, 0.0)
-			var alpha := 0.45 * falloff * falloff * (3.0 - 2.0 * falloff)
+			var alpha := peak_alpha * falloff * falloff * (3.0 - 2.0 * falloff)
 			shadow_image.set_pixel(x, y, Color(0.0, 0.0, 0.0, alpha))
 	var material := StandardMaterial3D.new()
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -208,10 +228,7 @@ func _build_hero() -> void:
 	material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
 	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	material.albedo_texture = _make_texture(shadow_image)
-	var shadow := PlaneMesh.new()
-	shadow.size = Vector2(0.9, 0.45)
-	shadow.material = material
-	_add_mesh(_hero, "FootShadow", shadow, Vector3(0.0, 0.015, 0.0))
+	return material
 
 
 func _make_billboard(

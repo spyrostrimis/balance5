@@ -18,5 +18,13 @@
     "prop_10.png": "flower",
     "prop_11.png": "rock",
     "prop_12.png": "grass"
+  },
+  "cliff_heights_m": {
+    "cliff_01.png": 8.0,
+    "cliff_02.png": 6.0,
+    "cliff_03.png": 9.0,
+    "cliff_04.png": 5.0,
+    "cliff_05.png": 5.0,
+    "cliff_06.png": 5.0
   }
 }

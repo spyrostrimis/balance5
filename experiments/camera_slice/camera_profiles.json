@@ -1,0 +1,15 @@
+{
+  "default": "A",
+  "vertical_span_m": 8.95,
+  "target_offset": [0.0, 1.0, 0.0],
+  "profiles": {
+    "A": {
+      "pitch_deg": 25.0,
+      "fov_deg": 30.0
+    },
+    "B": {
+      "pitch_deg": 30.0,
+      "fov_deg": 45.0
+    }
+  }
+}

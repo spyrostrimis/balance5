@@ -4,6 +4,18 @@ render_mode unshaded, cull_disabled;
 
 uniform sampler2D sprite_tex : source_color, filter_linear, repeat_disable;
 uniform float brightness = 1.0;
+uniform float pitch_tilt_deg = 0.0;
+
+void vertex() {
+	if (abs(pitch_tilt_deg) > 0.001) {
+		float a = radians(pitch_tilt_deg);
+		float c = cos(a);
+		float s = sin(a);
+		float py = VERTEX.y + 0.640625;
+		VERTEX.y = py * c - 0.640625;
+		VERTEX.z -= py * s;
+	}
+}
 
 vec2 pixel_aa_uv_clamped(vec2 uv, vec2 tex_size) {
 	vec2 p = uv * tex_size;

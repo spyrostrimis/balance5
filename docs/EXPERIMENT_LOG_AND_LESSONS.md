@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## 2D painted forest · four stretches · 2026-11-24
+
+Proved the route with repeated markers before generating three paintings from the same guide. In the 1376 × 768 Forward+ run, the Commander’s rendered height changed from 154 to 133 pixels at the entrance, stayed near 131 in the fern grove, fell to 115 on the rise and settled at 114 in the clearing. Reversals retraced the size curve. Buttress Light kept the four landmarks distinct, and tracing its wider grove and leftward clearing kept the boots on the painted trail. The existing four poses retain some sole travel. The guide-free recording and the other two candidates are ready for owner review. [Study and evidence](../assets/scenes/forest_test/REPORT.md)
+
 ## 2D canyon · commander detail and the north barrier · 2026-11-22
 
 Captured both menu entries at four matched stops and drove each route out and back. The continuous painting joins the road and terraces most convincingly. The modular arch and curb read clearly, but the same arch appears three times. Both cameras crop the commander's head at the north barrier. On the modular entrance, four flat-light renders paired the current and reference-derived idle with the existing and higher resolution. Changing the art gave the larger visible improvement. The 149-pixel reference-derived idle drawn one-to-one kept the face, scarf, blue armour and rifle clearest at the original apparent height. Animation and the final lighting are open. [Comparison, measurements and four-way proof](CANYON_APPROACH_3_HANDOFF.md)
@@ -631,10 +635,25 @@ The owner found the second pass claustrophobic around the commander. The retaini
 - `scripts/canyon/canyon_kit_v2.gd` enables `Viewport.MSAA_4X` and `Viewport.ANISOTROPY_8X` (restored in `_exit_tree()`), paired with derivative-clamped sharp-pixel texel-edge AA (`pixel_aa_uv` + `textureGrad`) across all 4 v2 shaders and `ALPHA_ANTIALIASING_EDGE = 0.35` + RGB edge bleed on sprites.
 
 **Verification (`1376×768` Forward+ & Headless Audit).**
-- `tests/test_canyon_v3_kit_v2.gd` (headless): `PASS` — `54` curbs, `114` cliff rocks, `35` rubble, `7` roadside boulders, `71` plants (`0` overlaps or interpenetrations), unscaled `1:1` transforms, zero debug HUD/hotkeys, `MSAA_4X`, `Anisotropy=8X`, physics corridor walls, exit signal, 12-point navmesh path, and Developers Page entry verified.
-- Windowed Forward+ walk (`tests/test_composition_walk.gd`):
-  - Start: `Hero=(1.93743, 0.000137, 6.0)`, `on_floor=true`, `ExitSignal=false`. [KV2_pos1_start.png](../render_captures/kit_v2/KV2_pos1_start.png)
-  - Midway: `Hero=(-0.264434, 0.000942, -3.523834)`, `on_floor=true`, `ExitSignal=false`. [KV2_pos2_midway.png](../render_captures/kit_v2/KV2_pos2_midway.png)
-  - Exit: `Hero=(-0.848297, 0.000941, -13.97293)`, `on_floor=true`, `ExitSignal=true` (post-strafe `flip_h=true`, `on_floor=true`). [KV2_pos3_exit.png](../render_captures/kit_v2/KV2_pos3_exit.png)
+- `tests/test_canyon_v3_kit_v2.gd` (headless): `PASS` — `54` curbs, `111` cliff rocks, `42` rubble, `7` roadside boulders, `74` plants (`0` overlaps or interpenetrations), unscaled `1:1` transforms, zero debug HUD/hotkeys, `MSAA_4X`, `Anisotropy=8X`, camera (`FOV=22.0°`, `rot=(-42.0, 0.0, 0.0)`), physics corridor walls, exit signal, 12-point navmesh path, and Developers Page entry verified.
+- **2D Parallel-Projection Camera & Exit-Mouth Update (2026-11-22):** Matched camera angle and distance from the hero to `2D Parallel-Projection · Approach 1 vs 2` (`fov = 22.0°`, `composition_pitch_deg = -42.0°`, `composition_offset = (0.0, 11.83, 12.13)`, `~17.0 m` hero distance, `yaw_follow = 0.0`, `route_follow = 0.7`, `x_follow_factor = 0.3`), shifted DOF near/far focus (`13.0–24.5 m`, `amount = 0.008`) and distance haze (`26.0–64.0 m`), tilted `canyon_kit_v2_commander.gdshader` by `42.0°` around boot anchor `-0.640625` (plus `12.0°` gentle sprite billboard tilt) so silhouettes match without sinking into the ground, flared the cliff exit jaws out to `Z_END = -24.0` (`get_cliff_foot_lat` smoothstep flare, skipping `y < 0.03` flat ledge quads), and moved `OrichalcumCraterGround` / `CraterOrichalcumGlow` to `(0.1, 0.015, -18.0)` so the full crater frames cleanly at the canyon exit (`tmp/kit_v2_vs_2d_parallel_cam.png`).
+- Windowed Forward+ walk (`tests/test_composition_walk.gd`, `--landmark 0.10,0.35,-18.0`):
+  - Start: `Hero=(1.93743, 0.000137, 6.0)`, `Cam=(1.356201, 11.83, 18.13)`, `on_floor=true`, `ExitSignal=false`. [KV2_pos1_start.png](../render_captures/kit_v2/KV2_pos1_start.png)
+  - Midway: `Hero=(-0.264434, 0.000942, -3.523834)`, `Cam=(-0.541609, 11.83, 9.005719)`, `on_floor=true`, `ExitSignal=false`. [KV2_pos2_midway.png](../render_captures/kit_v2/KV2_pos2_midway.png)
+  - Exit: `Hero=(-0.8483, 0.000941, -13.97291)`, `Cam=(-0.388871, 11.83, -1.369018)`, `on_floor=true`, `ExitSignal=true`, `Landmark=(0.1, 0.35, -18.0)` at `Pixel=(736.19, 128.00)`, `InFrustum=true`, `Occluder=clear` (post-strafe `flip_h=true`, `on_floor=true`). [KV2_pos3_exit.png](../render_captures/kit_v2/KV2_pos3_exit.png)
 
 
+
+## 24. 2D Painted Canyon · Approach 3 (2026-11-22)
+
+The front idle recreated the bottom-right proof at 149 visible pixels. The rendered commander crop at the modular entrance matched the handoff proof pixel for pixel. The 1280 × 720 view uses a 140-pixel idle. New rear and profile artwork keeps the commander’s braid, pale scarf, blue armour and rifle readable in sun and shade. The first walk loop exposed seams at the knees. Separate drawings for the in-between poses corrected those edges. [Proof pair](../render_captures/approach3/proof-pair.png) · [Pose crops](../render_captures/approach3/commander-poses.png) · [Walk loop](../render_captures/approach3/commander-walk.gif)
+
+Approach 3 keeps the continuous slope and broad, painted shade from Approach 1. Its lighter curbs and sandy verge retain Approach 2’s clearer road edges. The gate begins to read at the upper pass. The north barrier leaves the full figure and gateway in frame. Two foreground rock cuts share pixels with the painting and draw by their bases. The larger boulder covered the lower figure in both directions when the commander passed behind it. [Four matched stops](../render_captures/approach3/comparison.jpg) · [Boulder pass](../render_captures/approach3/boulder-pass.png) · [Round-trip recording](../render_captures/approach3/roundtrip.mp4)
+
+In the Forward+ recording the boots reached (475.3, 88.076), fired left and right after stopping and strafing, and returned to (495.1, 1719.4). The [same-machine lighting run](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification) found median canyon-view GPU times of 0.036 ms with surface lighting and 0.019 ms with it off. The painted gate light remains and extra moving shafts start off. Both RPG logic suites passed. The Windows Play card was clicked in the re-exported executable and the Esc test passed against its packaged scenes. Walking style and overall look remain open for owner review.
+
+### Independent review · 23 November 2026
+
+Fresh Forward+ captures compared all three playable studies at four matched stops. Both logic suites passed. With the controls visible, the gate message remained on screen after the commander returned to the entrance. In a separate windowed check, C entered rifle stance and Space fired from the road centre at Y 1560 and Y 1010. All four shots across the lane travelled about 756 ground units before disappearing near their 760-unit range. A capture shows a bolt over the right cliff shelf. The rifle-origin checks and the character's wall checks both pass with this behaviour.
+
+The review favours Approach 3 for a short painted walk. It recommends comparing the commander's footfalls and an earlier stopping point at the gate before extending the scene. The owner's choice remains open. [Illustrated assessment, measurements and reproduction details](../output/pdf/painted-canyon-approach-3-review.pdf)

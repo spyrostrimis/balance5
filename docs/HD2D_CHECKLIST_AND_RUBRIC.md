@@ -1,11 +1,21 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## 2D painted tropical forest · 2026-11-24
+
+- [x] Verify the four connected stretches in a 1376 × 768 Forward+ viewport. The Commander fits in the clearing with its landmark visible.
+- [x] Check a full round trip, both sides of the trail, stops and reversals inside all three blend bands. Size stays fixed while the camera settles at a stop.
+- [ ] Owner chooses the painting and judges the guide-free motion. Some sole drift remains in the four existing walk poses.
+
+[Matched stills, recording and fit overlay](../assets/scenes/forest_test/REPORT.md)
+
 ## 2D canyon · Approach 3 assessment · 2026-11-22
 
 - [x] Captured both 2D baselines at the entrance, bend, upper pass and north barrier. Compared the standing commander across two art sources and two rendering sizes at matched framing.
-- [ ] Carry the clearer idle through the walk, back view and combat poses. Keep her fully framed at the north barrier and give the exit a distinct silhouette.
+- [x] Verified the proof-sized front, rear and mirrored rifle poses on pale stones and in shade. Kept the commander fully framed below the one gate when the north barrier stopped her.
+- [x] Walked around the same foreground boulder in both directions, with its base and the edge of its shadow fixed to the painting.
+- [ ] Owner reviews the walking motion and chooses how Approach 3 compares with the earlier studies.
 
-[Matched frames and acceptance checks](CANYON_APPROACH_3_HANDOFF.md)
+[Matched frames and acceptance checks](CANYON_APPROACH_3_HANDOFF.md) · [Independent assessment with four matched views per study, 23 November 2026](../output/pdf/painted-canyon-approach-3-review.pdf)
 
 ## Sculpted Bend · camera comparison · 2026-11-22
 
@@ -30,7 +40,8 @@
 - [x] Standalone playable scene (`scenes/maps/canyon_v3_kit_v2.tscn`) with all debug HUD labels and switching hotkeys removed (`WASD`/Arrows walk, `Esc` returns).
 - [x] `img1` cobble road (`28` colours), `art_gemini` sand & dunes (`24` colours each), and `art_road_goal` cliff look (`<= 29` colours per object across every rock, curb, plant, commander and crater).
 - [x] Uniform `64.0 texels/m` across every surface, unscaled `1:1` metric meshes (`cliff_rock_0..5`, `rubble_0..3`, `road_boulder_0..2`, `curb_0..5`) and sprites (`40×82` Blue Commander, `384×256` Orichalcum crater), with cyclic minimum-error seam cuts (`<= 1.20`) on all tiling textures.
-- [x] Organic sculpted bedrock tiers (horizontal world-Y strata, weathered sandstone shelves instead of concrete paving) with `114` cliff rocks, `35` rubble, `54` curbs, `7` boulders and `71` plants seated flush with zero interpenetration (`tests/test_canyon_v3_kit_v2.gd` `PASS`).
+- [x] Organic sculpted bedrock tiers (horizontal world-Y strata, weathered sandstone shelves instead of concrete paving) with `111` cliff rocks, `42` rubble, `54` curbs, `7` boulders and `74` plants seated flush with zero interpenetration (`tests/test_canyon_v3_kit_v2.gd` `PASS`).
+- [x] `-42.0°` oblique near-parallel camera (`fov = 22.0°`, offset `(0, 11.83, 12.13)`, `~17.0 m` hero distance, `42°` boot-anchored commander pitch tilt) matching `2D Parallel-Projection · Approach 1 vs 2` framing, plus flared cliff exit jaws (`Z = -24.0`) framing the full `OrichalcumCraterGround` at `Z = -18.0` (`InFrustum=true`).
 - [x] `4× MSAA`, `8×` anisotropic filtering, derivative sharp-pixel AA and sprite edge AA verified in `1376×768` Forward+ captures ([KV2_pos1_start.png](../render_captures/kit_v2/KV2_pos1_start.png) · [KV2_pos2_midway.png](../render_captures/kit_v2/KV2_pos2_midway.png) · [KV2_pos3_exit.png](../render_captures/kit_v2/KV2_pos3_exit.png)).
 
 ## Pixel Canyon · Painted Bend · 2026-11-21

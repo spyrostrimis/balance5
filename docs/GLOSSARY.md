@@ -28,6 +28,11 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Blend band
+Area: 2D walking
+
+The part of the trail where the Commander gradually switches between changing size and holding it. Her position on that stretch determines the same size whether she is walking forward, standing still or retracing her steps. [Forest measurements](../assets/scenes/forest_test/REPORT.md#walk-and-measurements)
+
 ### Visual master
 Area: Art
 The agreed image or playable view that future maps use as their standard for colour, light and detail. The [Painted Bend study](PIXEL_CANYON_SESSION_B_PAINTED.md) compares a live view with the original Arch Overlook painting before choosing that standard.
@@ -891,3 +896,19 @@ Copying the border colours of a pixel sprite a couple of pixels outward into its
 
 
 
+
+### One-to-one presentation
+Area: Rendering
+One pixel in the game's final picture goes to one window pixel. Approach 3 draws a 1360 × 765 picture in a 1376 × 768 window and centres it with narrow borders. The **ground coordinates** keep the same scale for movement at either window size.
+
+### Boot anchor
+Area: 2D
+The fixed drawing point where the commander's planted boot meets the ground. Each walking and rifle drawing uses this point so the picture stays aligned with the feet that collide with a wall.
+
+### Surface lighting
+Area: Rendering
+A live light that picks out shallow ridges and cracks using a **normal map**. In Approach 3, broad cliff shadows and the glow at the gate are painted into the canyon. The live light adds a small amount of relief on top.
+
+### Frame time
+Area: Rendering
+Milliseconds to produce a picture. Frame time can be measured for the full window or for the work the graphics card does on one view. The two measurements cover different parts of the game.

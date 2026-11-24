@@ -4,11 +4,13 @@
 
 ## Play
 
+Open **Developers Page → Forest builds → 2D Painted Forest Walk → Play**. Esc returns to the Developers Page when launched there. The direct launch below exits on Esc.
+
 ```powershell
 & 'C:\Godot\Godot_v4.7.2-stable_win64.exe' --path 'D:\Games\Balance5' --rendering-method forward_plus --resolution 1376x768 res://assets/scenes/forest_test/forest_walk.tscn
 ```
 
-**WASD or arrows** walk in either direction and across the trail. **R** resets to the opening. **Esc** quits. **G** shows the boot limits, the three boundaries and a size readout. **F2** switches between the painting and the plain trail with equal-size markers. Both guides and markers are hidden in the opening painted view. Add `-- --rough` to start on the plain trail.
+**WASD or arrows** walk in either direction and across the trail. **R** resets to the opening. **G** shows the boot limits, the three boundaries and a size readout. **F2** switches between the painting and the plain trail with equal-size markers. Both guides and markers are hidden in the opening painted view. Add `-- --rough` to start on the plain trail.
 
 ## Walk and measurements
 
@@ -33,7 +35,7 @@ All three original **1086 × 1448** PNGs came from the built-in image generation
 
 | Candidate | What it offers | Exact prompt |
 | --- | --- | --- |
-| [A · Buttress Light](art/a-buttress-light.png) | **Provisional pick.** It keeps the four landmarks distinct and the earth quiet behind the blue armour. Its grove edges and narrowing rise fit the tested changes in size most closely. | [A prompt](art/a-buttress-light.prompt.txt) |
+| [A · Buttress Light](a-buttress-light.png) | **Provisional pick.** It keeps the four landmarks distinct and the earth quiet behind the blue armour. Its grove edges and narrowing rise fit the tested changes in size most closely. | [A prompt](art/a-buttress-light.prompt.txt) |
 | [B · Fern and Limestone](art/b-fern-and-limestone.png) | Stronger fern silhouettes and more humid shade. The narrowing reads more continuously through the grove into the rise. | [B prompt](art/b-fern-and-limestone.prompt.txt) |
 | [C · Gold Canopy](art/c-gold-canopy.png) | Brightest foliage and clearing light. Its grove narrows earlier and the pale stones read as a pair. | [C prompt](art/c-gold-canopy.prompt.txt) |
 
@@ -43,13 +45,14 @@ In A, the entrance tapers from 477 to 383 canvas pixels against the planned 474 
 
 - The plain route was playable and passed a rendered round trip before painting. The painted run in Godot 4.7.2 Forward+ on Vulkan repeated the full route, stopped in every stretch, touched both sides in each and reversed inside all three blend bands on both passes. The camera stayed over the painting and kept the Commander fully framed. A 26-pixel reversal fell within its leeway. The largest measured change from depth in one physics tick was 0.22 pixels of idle height. Size stayed fixed at stops even while the camera settled.
 - The four clean stills and the guide-free tour were checked for the landmarks, artwork continuity and finish framing. A single plate avoids panel joins. The tour was captured from the running viewport over 21.68 wall-clock seconds and encoded at 30 fps. It includes a short reversal before the rise and a full return from the clearing.
+- The Developers Page Play card opens the forest and Esc returns to the catalog with its window settings restored. The check passed in the source project and against the resources embedded in the rebuilt Windows executable.
 - The four existing walking drawings still have discrete footfalls and some sole travel within a held drawing. Distance-based cadence limits the size-related drift. Individual soles do not lock to the ground as they would with a rigged walk.
-- The owner will choose the art and judge whether all four stretches read strongly enough in motion. The study uses the existing local Approach 3 atlas, which was already present as an untracked asset in this workspace. A clean checkout needs that asset at its original path.
+- The owner will choose the art and judge whether all four stretches read strongly enough in motion. The painting, existing Approach 3 Commander atlas and contact shadow are scene resources included in the Windows export.
 
 ## Files and references
 
 - [Playable scene](forest_walk.tscn) contains the fitted verge and selects the painting. [Walk script](forest_walk.gd) handles input, foot placement, pose selection and the rough view. [Route](forest_route.gd) owns the guide and size curve. [Camera](forest_camera.gd) owns the follow leeway and painting bounds.
-- [Verification script](tests/verify_walk.gd) accepts `-- --rough` for the plain route, `-- --stills` for windowed checks and captures, or `-- --tour --live-record` for a timed recording into `captures/live_frames/`. Run it with Godot's console executable and `--script res://assets/scenes/forest_test/tests/verify_walk.gd`. The [guide generator](guides/draw_layout.py) regenerates the guide and fit overlay with Pillow.
+- [Verification script](tests/verify_walk.gd) accepts `-- --rough` for the plain route, `-- --stills` for windowed checks and captures, `-- --catalog` for the Play and Esc check, or `-- --tour --live-record` for a timed recording into `captures/live_frames/`. Run it with Godot's console executable and `--script res://assets/scenes/forest_test/tests/verify_walk.gd`. The [guide generator](guides/draw_layout.py) regenerates the guide and fit overlay with Pillow.
 - Approach 3 supplied the camera feel and the front, rear and profile walking drawings. The atlas and shadow are read from their existing paths. [Approach 3 scene](../../../scenes/rpg_2d/canyon_approach3.tscn) · [Camera reference](../../../scripts/rpg_2d/approach3_camera.gd) · [Commander reference](../../../scripts/rpg_2d/approach3_commander.gd) · [Atlas](../../textures/rpg_2d/approach3/commander_765.png) · [Shadow](../../textures/rpg_2d/sprites/contact_shadow.png)
 - Painted Perspective Walk supplied the 20% opening scale, boot anchoring and speed calibration. [Reference report](../../../experiments/scene_walk/REPORT.md) · [Reference scene](../../../experiments/scene_walk/scene_walk.tscn) · [Arch painting](../../../experiments/scene_walk/art/approach3_arch.png)
 - Project direction and visual checks came from the [working rules](../../../AGENTS.md), [overview](../../../README.md), [game design](../../../docs/GAME_DESIGN.md), [visual rubric](../../../docs/HD2D_CHECKLIST_AND_RUBRIC.md) and [experiment log](../../../docs/EXPERIMENT_LOG_AND_LESSONS.md).

@@ -77,7 +77,7 @@ void fragment() {
 
 	col *= brightness * mix(0.55, 1.04, orm.r);
 	float cam_dist = length(CAMERA_POSITION_WORLD - world_pos);
-	float haze_t = smoothstep(20.0, 56.0, cam_dist) * haze_strength;
+	float haze_t = smoothstep(26.0, 64.0, cam_dist) * haze_strength;
 
 	ALBEDO = mix(col, haze_color, haze_t);
 	NORMAL_MAP = nrm_sample;

@@ -7,6 +7,7 @@ uniform sampler2D sprite_tex : source_color, filter_linear, repeat_disable;
 uniform float texel_m = 0.015625;
 uniform float sway_texels = 1.0;
 uniform float sway_speed = 1.25;
+uniform float pitch_tilt_deg = 12.0;
 uniform vec3 shade_fill : source_color = vec3(0.34, 0.22, 0.42);
 uniform float shade_strength = 0.8;
 uniform float brightness = 0.80;
@@ -33,9 +34,11 @@ void vertex() {
 	float sx = length(MODEL_MATRIX[0].xyz) * (MODEL_MATRIX[0].x < 0.0 ? -1.0 : 1.0);
 	float sy = length(MODEL_MATRIX[1].xyz);
 	float sz = length(MODEL_MATRIX[2].xyz);
+	float tilt = radians(pitch_tilt_deg);
+	vec3 up_tilted = vec3(0.0, cos(tilt), 0.0) - fwd * sin(tilt);
 	mat4 bb = mat4(
 		vec4(right * sx, 0.0),
-		vec4(0.0, sy, 0.0, 0.0),
+		vec4(up_tilted * sy, 0.0),
 		vec4(-fwd * sz, 0.0),
 		MODEL_MATRIX[3]
 	);

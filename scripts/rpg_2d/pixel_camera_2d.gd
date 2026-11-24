@@ -63,4 +63,8 @@ func _apply_clamped_snapped_pos() -> void:
 	else:
 		clamped.y = map_bounds.get_center().y
 
-	global_position = Vector2(round(clamped.x), round(clamped.y))
+	global_position = snap_position(clamped)
+
+
+func snap_position(point: Vector2) -> Vector2:
+	return point.round()

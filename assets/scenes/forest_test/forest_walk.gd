@@ -4,18 +4,18 @@ const Route := preload("res://assets/scenes/forest_test/forest_route.gd")
 const SPEED := Vector2(218.0, 174.0)
 const FRAMES_PER_SECOND := 7.6
 const IDLE_HEIGHT := 149.0
-const ART_FOLDER := "res://assets/scenes/forest_test/art/"
-const ATLAS_PATH := "res://assets/textures/rpg_2d/approach3/commander_765.png"
-const SHADOW_PATH := "res://assets/textures/rpg_2d/sprites/contact_shadow.png"
-
-@export var painting_file := ""
 @export var painted_trail: Array[Vector3] = []
 
 var rough := true
 var guides := false
 var stride_phase := 0.0
 var facing := Vector2.DOWN
-var _warned_about_painting := false
+var _window: Window
+var _original_title: String
+var _original_size: Vector2i
+var _original_scale_size: Vector2i
+var _original_scale_mode: Window.ContentScaleMode
+var _original_scale_aspect: Window.ContentScaleAspect
 
 @onready var commander: Node2D = $Commander
 @onready var pose: Sprite2D = $Commander/Pose
@@ -26,33 +26,30 @@ var _warned_about_painting := false
 
 
 func _ready() -> void:
-	var window := get_window()
-	window.title = "Balance · Painted Forest Walk"
-	window.content_scale_size = Vector2i(Route.VIEW)
-	window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
-	window.size = Vector2i(Route.VIEW)
+	_window = get_window()
+	_original_title = _window.title
+	_original_size = _window.size
+	_original_scale_size = _window.content_scale_size
+	_original_scale_mode = _window.content_scale_mode
+	_original_scale_aspect = _window.content_scale_aspect
+	_window.title = "Balance · Painted Forest Walk"
+	_window.content_scale_size = Vector2i(Route.VIEW)
+	_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	_window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	_window.size = Vector2i(Route.VIEW)
 
-	pose.texture = _load_image(ATLAS_PATH)
-	shadow.texture = _load_image(SHADOW_PATH)
-	if pose.texture == null or shadow.texture == null:
-		push_error("Forest walk requires the existing Approach 3 Commander atlas and contact shadow.")
-		get_tree().quit(1)
-		set_physics_process(false)
-		return
 	pose.scale = Vector2.ONE * Route.START_HEIGHT / IDLE_HEIGHT
-
-	rough = painting_file.is_empty() or "--rough" in OS.get_cmdline_user_args()
-	_show_rough(rough)
+	painting.scale = Route.CANVAS / painting.texture.get_size()
+	_show_rough("--rough" in OS.get_cmdline_user_args())
 	reset_walk()
 
 
-func _load_image(path: String) -> ImageTexture:
-	var source := Image.load_from_file(ProjectSettings.globalize_path(path))
-	if source.is_empty():
-		return null
-	source.generate_mipmaps()
-	return ImageTexture.create_from_image(source)
+func _exit_tree() -> void:
+	_window.title = _original_title
+	_window.content_scale_size = _original_scale_size
+	_window.content_scale_mode = _original_scale_mode
+	_window.content_scale_aspect = _original_scale_aspect
+	_window.size = _original_size
 
 
 func active_trail() -> Array:
@@ -125,17 +122,7 @@ func _update_pose(moving: bool) -> void:
 
 
 func _show_rough(enabled: bool) -> void:
-	if not enabled and painting.texture == null:
-		if not painting_file.is_empty() and not _warned_about_painting:
-			var path := ART_FOLDER + painting_file
-			if FileAccess.file_exists(path):
-				painting.texture = _load_image(path)
-			if painting.texture == null:
-				_warned_about_painting = true
-				push_warning("Forest painting unavailable. Showing the rough trail.")
-		if painting.texture != null:
-			painting.scale = Route.CANVAS / painting.texture.get_size()
-	rough = enabled or painting.texture == null
+	rough = enabled
 	painting.visible = not rough
 	if is_node_ready():
 		var limits := Route.feet_limits(commander.position.y, active_trail())
@@ -156,7 +143,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_R:
 			reset_walk()
 		KEY_ESCAPE:
-			get_tree().quit()
+			var launcher := get_node_or_null("/root/BuildLauncher")
+			if launcher == null or not launcher.is_build_active():
+				get_tree().quit()
 
 
 func _draw() -> void:

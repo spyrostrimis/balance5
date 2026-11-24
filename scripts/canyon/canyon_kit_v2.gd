@@ -82,6 +82,7 @@ func _ready() -> void:
 
 	_apply_commander_v2()
 	super()
+	_apply_camera_v2()
 
 
 func _exit_tree() -> void:
@@ -228,7 +229,23 @@ func _apply_commander_v2() -> void:
 	mat.shader = COMMANDER_SHADER
 	mat.set_shader_parameter("sprite_tex", COMMANDER_TEX)
 	mat.set_shader_parameter("brightness", 1.0)
+	mat.set_shader_parameter("pitch_tilt_deg", 42.0)
 	sprite.texture = COMMANDER_TEX
 	sprite.pixel_size = 1.0 / 64.0
 	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR
 	sprite.material_override = mat
+
+
+func _apply_camera_v2() -> void:
+	var cam := get_node_or_null(camera_path) as Camera3D
+	if cam == null:
+		return
+	cam.fov = 22.0
+	if cam.attributes is CameraAttributesPractical:
+		var attrs := (cam.attributes as CameraAttributesPractical).duplicate() as CameraAttributesPractical
+		attrs.dof_blur_near_distance = 13.0
+		attrs.dof_blur_far_distance = 24.5
+		attrs.dof_blur_amount = 0.008
+		cam.attributes = attrs
+	if cam.has_method("snap"):
+		cam.snap()

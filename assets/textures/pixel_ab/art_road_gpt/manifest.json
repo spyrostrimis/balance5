@@ -1,0 +1,54 @@
+{
+  "textures": {
+    "chatgpt_cobble_albedo.png": {
+      "role": "cobble",
+      "procedure": "road_tiles",
+      "source": "road_cobble_gpt.webp",
+      "cells": [
+        128,
+        128
+      ],
+      "metres": [
+        2.0,
+        2.0
+      ],
+      "updated": "2026-11-22 07:25 UTC"
+    },
+    "hd2d_sand_albedo.png": {
+      "role": "sand",
+      "procedure": "road_tiles",
+      "source": "road_sheet_gpt.webp (left panel)",
+      "cells": [
+        128,
+        230
+      ],
+      "metres": [
+        2.0,
+        3.5938
+      ],
+      "updated": "2026-11-22 07:25 UTC"
+    },
+    "d_sandstone_strata_albedo.png": {
+      "role": "strata",
+      "cells": [
+        238,
+        163
+      ],
+      "density": 64.0,
+      "metres": [
+        3.7188,
+        2.5469
+      ],
+      "procedure": "pixel_snap",
+      "source": "strata_GPT.png",
+      "height": "strata_height_GPT.png",
+      "drawn_pixel": [
+        6.46,
+        6.3
+      ],
+      "grid_fit": 0.95,
+      "colors": 24,
+      "updated": "2026-11-19 22:44 UTC"
+    }
+  }
+}

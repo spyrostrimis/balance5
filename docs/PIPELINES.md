@@ -1,5 +1,9 @@
 # Pipelines
 
+## Build a scrolling 2D painted walk
+
+Prove the route first with plain ground and repeated markers. Test turns and stops in both directions with the camera following. Give each painting candidate the same full-height route guide and save the original image and prompt. Trace the chosen painting’s actual trail edges and keep the Commander’s boot anchor slightly inside that trace. Keep the painting, Commander and shadow as imported scene resources so the Windows build includes them. Run the matched stills in Forward+, watch the walk with guides hidden, and check Play and Esc from the Developers Page. [Forest study and test commands](../assets/scenes/forest_test/REPORT.md)
+
 ## Compare a 2D commander's art and display resolution
 
 Measure the height of the visible figure, excluding transparent space. Capture a single idle pose against the same stone, with the same lighting and camera framing. Make four images by crossing the old and candidate art with the old and candidate resolutions. For the 1376 × 768 canyon review, 105 pixels at 540 picture height matched 149 at 765. Show the window crops at their original size. Repeat with the final lighting and in motion before adopting an animation sheet. [Worked example](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
@@ -418,3 +422,14 @@ Keep the project's memory in the repository instead of in chat histories.
 
 ### Done when
 - Studio shows it after **Refresh**, and any agent reading the docs knows it.
+
+## 2D Painted Canyon · Approach 3
+
+1. Use the transparent Blue Commander illustration for the front idle. Keep her own colours and check it first at 149 visible pixels against the original sprite at the flat-lit modular entrance.
+2. Keep pose references and the canyon painting under `assets/source_inputs/rpg_2d/approach3/`. The canyon guide records the road and cliff shapes used before painting. Run `python tools/python/build_approach3_assets.py` with Pillow and NumPy to make the game textures under `assets/textures/rpg_2d/approach3/`.
+3. Keep sprite cells at 160 × 168, with the drawing origin at the boot anchor (80, 160). Rows 1–3 each hold idle plus four walking poses. Row 4 holds rifle idle, two steps and recoil. Record the recoil barrel tip relative to the boot anchor in `scripts/rpg_2d/approach3_commander.gd` for both picture sizes.
+4. Survey the road centre and walkable edges in `scripts/rpg_2d/canyon_approach3.gd` against the final painting. Keep traced foreground masks in the art builder. Its crop positions map into the scene, where the boulder is drawn by its base and blocked only at its foot.
+5. Import with Godot, run `tests/test_canyon_approach3.gd` headless and `tests/capture_approach3.gd` windowed. Capture the modular proof with `tests/capture_approach3_proof.gd`. The standalone study controls softly lift the camera toward the gate at the upper pass.
+6. Compare the four matched stops and run the recorded round trip, resize checks and lighting timing. Re-export the Windows Desktop preset after a catalog change and verify Play and Esc on the exported executable.
+
+[Commands and matched captures](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)

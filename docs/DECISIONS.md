@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-11-24 · Painted forest · Study defaults
+
+**Verified for this study.** Use one continuous painting with two stretches where the Commander gets smaller and two where she holds her size. Tie size and stride to her position so a reversal retraces the change and camera movement at a stop leaves her size alone. Buttress Light is the provisional painting because its landmarks distinguish the stretches and its quieter ground preserves the Commander’s silhouette. Art selection and the feel of the footfalls remain open for owner review. [Measurements and alternatives](../assets/scenes/forest_test/REPORT.md)
+
 ## 2026-11-22 · RPG canyon · Standing commander comparison
 
 **Test result.** At the same apparent height and lighting, the reference-derived commander made her features easier to read than raising the render resolution with the existing sprite. Use the 149-pixel standing pose as a benchmark for the proposed Approach 3 animation. The owner’s choice of canyon direction remains open. [Visual comparison](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
@@ -21,6 +25,10 @@ What we decided, when and why, newest first. Balance Studio shows this file on i
 Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | Reversed
 Why, in one to three sentences. Where the evidence is.
 ```
+
+### 2026-11-22 · Match 3D Kit Canyon · v2 camera angle & distance to 2D Parallel-Projection
+Area: Canyon · Status: Trying
+Set `3D Kit Canyon · v2`'s `CameraRig` to `pitch = -42.0°`, `yaw_follow = 0.0`, `fov = 22.0°`, and offset `(0.0, 11.83, 12.13)` (`~17.0 m` camera-to-hero distance), paired with a `42.0°` boot-anchored shader pitch tilt on `CommanderSprite` (`-0.640625`), `12.0°` sprite tilt on plants, flared canyon exit jaws to `Z = -24.0`, and `OrichalcumCraterGround` at `(0.1, 0.015, -18.0)` so spawn/midway hero scale matches `2D Parallel-Projection · Approach 1 vs 2` (`19.4%` screen height) while framing the full glowing exit crater without cliff cutoffs. Evidence: `tmp/kit_v2_vs_2d_parallel_cam.png`, `render_captures/kit_v2/KV2_pos*.png`, `docs/EXPERIMENT_LOG_AND_LESSONS.md` §23.
 
 ### 2026-11-22 · Build 3D Kit Canyon · v2 with uniform 64 texels/m, <=32-colour palettes, organic non-intersecting cliffs and AA
 Area: Canyon · Status: Trying
@@ -209,3 +217,10 @@ Blender stores vertex colour as sRGB, so 0.5 arrives in Godot as about 0.21. Bin
 ### 2026-11-16 · Godot 4.7.2 with Forward+
 Area: Tech · Status: Decided
 The engine and renderer for the whole project, with Git and GitHub (`spyrostrimis/balance5`).
+
+## 2026-11-22 · Approach 3 keeps the proof’s scale and uses one painted destination
+Area: RPG canyon · Status: Verified in the playable study
+
+The modular entrance test kept the commander about one fifth of the screen high. The direct illustration reduction made the scarf, face, blue armour and rifle easier to separate. Approach 3 uses that front idle, drawn rear and profile poses, and a continuous painted road. The rock pieces that can cover her are traced from that same painting so their feet and shadows stay in place. The camera leads toward a single gate on the upper pass. The gate and the entire commander fit together when the north barrier stops her.
+
+The gate gets its bright opening and light shafts from the painting. The shallow live surface light remains on by default. Added moving shafts are available on G for comparison. Overall look and walking style remain open for the owner’s review. [Study and matched evidence](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)

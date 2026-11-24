@@ -1,8 +1,14 @@
 # Roadmap
 
+## Painted tropical forest study
+
+- [x] Build the four-stretch Blue Commander walk, verify both directions and add it to Developers Page under **Forest builds**. [Playable study and evidence](../assets/scenes/forest_test/REPORT.md)
+- [ ] Owner chooses one of the three paintings and judges how clearly the four stretches read with guides hidden. [Candidates and recording](../assets/scenes/forest_test/REPORT.md)
+
 ## RPG canyon direction comparison
 
-- [ ] Build Approach 3 from the tested standing pose, then verify the commander in motion and the painted bend through to its exit. [Assessment, visual proof and Sol handoff](CANYON_APPROACH_3_HANDOFF.md)
+- [x] Build playable Approach 3 from the tested standing pose and verify the walk, rifle stance and painted bend through to the gate. [Matched captures and recording](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)
+- [ ] Owner reviews Approach 3’s walking poses and overall look beside both existing studies. [Illustrated comparison](../output/pdf/painted-canyon-approach-3-review.pdf)
 - [x] Build and export **3D Canyon · Sculpted Bend**. Verify the round trip, both road heights, both vistas and all three landmark rocks. [Study and evidence](CANYON_SCULPTED_BEND.md)
 - [x] Match Sculpted Bend's camera to 2D Parallel-Projection Canyon · Approach 1 vs 2 and verify the original view on C. [Matched camera evidence](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
 - [ ] Owner compares Sculpted Bend with Painted Bend and Approach 2 Modular and chooses the RPG direction.

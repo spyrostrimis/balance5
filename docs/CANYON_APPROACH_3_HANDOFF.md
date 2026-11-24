@@ -49,11 +49,11 @@ The art change makes the largest difference. Even in the upper-right image I can
 
 **Completion checks**
 
-- [ ] At normal window size, face, scarf, blue armour, gauntlet and rifle are distinguishable at the entrance. The rear view reads as her back. Both boots and the muzzle stay registered through a walk, stop and shot.
-- [ ] The new idle remains about 19.4% of picture height. At 1376 × 768 the 149-pixel candidate and original are compared at equal apparent height, with matched lighting and pose.
-- [ ] Entrance, bend and exit are recognisable from the landscape alone. The ruin appears once. The commander stays fully framed at the north end.
-- [ ] In both directions the foreground boulder briefly covers the appropriate part of her, with clean edges, stable ground contact and a clear route around it.
-- [ ] New and baseline tests pass. The playable scene, short recording, evidence and exported Play/Esc round trip are available for the owner to judge.
+- [x] At normal window size, face, scarf, blue armour, gauntlet and rifle are distinguishable at the entrance. The rear view reads as her back. Both boots and the muzzle stay registered through a walk, stop and shot.
+- [x] The new idle remains about 19.4% of picture height. At 1376 × 768 the 149-pixel candidate and original are compared at equal apparent height, with matched lighting and pose.
+- [x] Entrance, bend and exit are recognisable from the landscape alone. The ruin appears once. The commander stays fully framed at the north end.
+- [x] In both directions the foreground boulder briefly covers the appropriate part of her, with clean edges, stable ground contact and a clear route around it.
+- [x] New and baseline tests pass. The playable scene, short recording, evidence and exported Play/Esc round trip are available for the owner to judge.
 
 ## Baseline and reproduction
 
@@ -71,4 +71,40 @@ The headless road-centre round trips ended at Y 1719.5 and 1720.2 respectively, 
 ```powershell
 & "C:/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path . --script res://tests/test_rpg_2d_canyon_logic.gd
 & "C:/Godot/Godot_v4.7.2-stable_win64_console.exe" --path . --resolution 1376x768 --script res://tests/capture_rpg_2d_canyon.gd
+```
+
+## Implementation and verification
+
+**Play** opens **2D Painted Canyon · Approach 3** in the Developers Page. Walk with WASD or the arrow keys, press C for rifle stance, and fire with Space, J or left click. Up and down in rifle stance move through depth while the rifle keeps its horizontal direction. L and G compare live surface light and added shafts. Esc returns to the library.
+
+The 149-pixel front idle in the modular proof matches the handoff’s commander crop pixel for pixel. The new scene draws at 1360 × 765 in a 1376 × 768 window and uses a separate 140-pixel idle at 1280 × 720. Both use the same ground coordinates and foot collider. The camera and drawing origin align to final picture pixels. The sprites keep their own colour palette. The north pose has a drawn backplate and braid, with four walking frames in each of the three exploration facings. The recoil barrel tip registers the flash and projectile in both directions. [Matched modular proof](../render_captures/approach3/proof-pair.png) · [Front, back and both rifle profiles](../render_captures/approach3/commander-poses.png) · [Walk loop](../render_captures/approach3/commander-walk.gif) · [Window size check](../render_captures/approach3/resize.jpg)
+
+**Against Approach 1.** The road, terraces and cliff shelf share one 838 × 1877 painting, fitted and sharpened to the 1360 × 3044 drawing surface. The entrance has a low overhang and an open sandy apron. The left wall projects into the bend and shades the grey lane in one broad shape. The single ruin comes into view on the upper pass as the camera looks uphill, then fits in the same view as the whole commander at the north barrier. Its crown is outside the middle bend frame. [Three studies at four matched stops](../render_captures/approach3/comparison.jpg)
+
+**Against Approach 2.** The lighter curb separates the walking lane from the sand without the repeating modular arch. The raised boulder and bend rocks share pixels with the painting. Boot depth determines which draws in front, with the boulder’s small floor footprint blocking movement and room to pass to its left. The boulder masks the boots and lower legs in the behind poses. [Boulder from both directions](../render_captures/approach3/boulder-pass.png)
+
+| Stop | Approach 3 boots | Camera Y | Arrived |
+| --- | --- | ---: | --- |
+| Entrance | (485, 1560) | 1560.4 | No |
+| Bend | (539, 1010) | 1009.8 | No |
+| Upper pass | (502, 360) | 179.6 | No |
+| North barrier | (474.6, 88.1) | 87.9 | Yes |
+
+The controller-driven recording stopped at (475.3, 88.076), strafed, fired horizontally both ways, and returned to (495.1, 1719.4). The 2D foot collider stays on the painted corridor and the gate event fires once. [28-second round trip](../render_captures/approach3/roundtrip.mp4)
+
+Forward+ timing on the RTX 4060 Ti used the same walk from Y=1200 to Y=780 with shafts off and vertical sync disabled. Full-window frame time was 0.361 ms median and 2.725 ms at the 95th percentile with surface lighting, compared with 0.350 ms and 1.984 ms with it off. GPU time for the canyon view was 0.036/0.063 ms with lighting and 0.019/0.039 ms with it off. These are local measurements for this short route. The shallow surface light stays on by default. The opening keeps the shafts in the painting, with the added shafts off. [Lighting comparison](../render_captures/approach3/lighting.jpg)
+
+The Windows Desktop release was re-exported. The Approach 3 Play card opened the study in the release window. The catalog test loaded the resources from the same executable, opened the Play card and sent Esc through the game input to verify the return. Both Approach 3 and the Approach 1/2 logic suite passed.
+
+The overall look and in-motion read remain open for owner review. Original generated paintings and exact prompts are in [Approach 3 source art](../assets/source_inputs/rpg_2d/approach3/PROMPTS.md).
+
+```powershell
+$godot = "C:/Godot/Godot_v4.7.2-stable_win64_console.exe"
+& $godot --headless --path . --fixed-fps 60 --script res://tests/test_canyon_approach3.gd
+& $godot --path . --resolution 1376x768 --script res://tests/capture_approach3_proof.gd
+& $godot --path . --resolution 1376x768 --script res://tests/capture_approach3.gd
+& $godot --path . --resolution 1376x768 --script res://tests/capture_approach3.gd -- --walk-cycle
+& $godot --path . --resolution 1376x768 --script res://tests/capture_approach3.gd -- --timing
+& $godot --path . --resolution 1280x720 --write-movie tmp/approach3.avi --fixed-fps 60 --disable-vsync --script res://tests/capture_approach3.gd -- --record
+& $godot --headless --path . --export-release "Windows Desktop" builds/Balance.exe
 ```

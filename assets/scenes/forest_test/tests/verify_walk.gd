@@ -8,6 +8,7 @@ const STOPS := ["01-entrance", "02-fern-grove", "03-rise", "04-clearing"]
 const CAPTURES := STUDY + "captures/"
 const LIVE_FRAMES := CAPTURES + "live_frames/"
 const RECORDING_FPS := 30.0
+const OPENING := "res://scenes/ui/opening_screen.tscn"
 
 var walk: Walk
 var failures := 0
@@ -91,8 +92,44 @@ func _run() -> void:
 	print("Max physics step: scale %.5f (%.3f idle px), camera %.3f px" % [
 		max_scale_step, max_scale_step * Route.START_HEIGHT, max_camera_step,
 	])
+	if "--catalog" in OS.get_cmdline_user_args():
+		await _check_catalog()
 	print("Forest walk %s" % ("PASS" if failures == 0 else "FAIL (%d)" % failures))
 	quit(0 if failures == 0 else 1)
+
+
+func _check_catalog() -> void:
+	var result := change_scene_to_file(OPENING)
+	_check(result == OK, "opening screen scene loads")
+	if result != OK:
+		return
+	await scene_changed
+	var original_settings := [root.size, root.content_scale_size, root.title]
+	current_scene.get_node("%DevelopersPage").pressed.emit()
+	var catalog := current_scene.get_node("%Catalog")
+	for section in catalog.get_children():
+		for card in section.get_children():
+			if card.get_meta("catalog_key", "") != Forest.resource_path:
+				continue
+			for button in card.find_children("*", "Button", true, false):
+				if button.text != "Play":
+					continue
+				button.pressed.emit()
+				await scene_changed
+				_check(current_scene is Walk, "catalog Play opens the forest walk")
+				_check(current_scene.get_node("Painting").visible, "packaged painting is visible")
+				var esc := InputEventKey.new()
+				esc.keycode = KEY_ESCAPE
+				esc.physical_keycode = KEY_ESCAPE
+				esc.pressed = true
+				root.push_input(esc)
+				await scene_changed
+				_check(current_scene.get_node("%Library").visible, "Esc returns to the Developers Page")
+				_check(original_settings == [root.size, root.content_scale_size, root.title],
+					"forest restores the catalog window")
+				print("Catalog Play and Esc checked")
+				return
+	_check(false, "Developers Page lists the forest Play card")
 
 
 func _record_tour() -> void:

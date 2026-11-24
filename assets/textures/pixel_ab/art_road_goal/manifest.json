@@ -1,0 +1,32 @@
+{
+  "textures": {
+    "chatgpt_cobble_albedo.png": {
+      "role": "cobble",
+      "procedure": "road_tiles",
+      "source": "road_cobble_gpt.webp",
+      "cells": [
+        128,
+        128
+      ],
+      "metres": [
+        2.0,
+        2.0
+      ],
+      "updated": "2026-11-22 07:25 UTC"
+    },
+    "hd2d_sand_albedo.png": {
+      "role": "sand",
+      "procedure": "road_tiles",
+      "source": "road_sheet_gpt.webp (left panel)",
+      "cells": [
+        128,
+        230
+      ],
+      "metres": [
+        2.0,
+        3.5938
+      ],
+      "updated": "2026-11-22 07:25 UTC"
+    }
+  }
+}

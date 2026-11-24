@@ -89,14 +89,14 @@ for y, label in [
 canvas.save(HERE / "trail-annotated.png")
 
 scene = (HERE.parent / "forest_walk.tscn").read_text(encoding="utf-8")
-painting = re.search(r'^painting_file = "(.*)"$', scene, re.MULTILINE)[1]
+painting = "a-buttress-light.png"
 painted_rows = scene.split("painted_trail =")[1].split("])")[0]
 fitted = [
     tuple(map(int, match))
     for match in re.findall(r"Vector3\((\d+), (\d+), (\d+)\)", painted_rows)
 ]
 
-with Image.open(HERE.parent / "art" / painting) as source:
+with Image.open(HERE.parent / painting) as source:
     fitted_guide = source.resize((width, height), Image.Resampling.LANCZOS)
 
 draw = ImageDraw.Draw(fitted_guide, "RGBA")

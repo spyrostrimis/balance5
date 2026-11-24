@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Units in Motion · 2026-11-24
+
+Repeated the original route at matched camera framing, then switched between Painted HD and 960 × 540 Pixel art on the same running map. The 640 × 360 proof kept green brackets, health and the tank outline. Some rifles and the commander’s scarf lost their separation. The Blue playing-size proof exposed dark armour and weak rifle tips before the Red pass. Distance-driven feet and treads improved the moving silhouette. Facing changes can still shift a sole. The tight elbow, occupied lane, manual passing bay, route to the rock, cursor after resize, and both exported Play cards and Esc passed. [Stills, clip and measurements](RTS_UNITS_IN_MOTION.md)
+
 ## 2D painted forest · four stretches · 2026-11-24
 
 Proved the route with repeated markers before generating three paintings from the same guide. In the 1376 × 768 Forward+ run, the Commander’s rendered height changed from 154 to 133 pixels at the entrance, stayed near 131 in the fern grove, fell to 115 on the rise and settled at 114 in the clearing. Reversals retraced the size curve. Buttress Light kept the four landmarks distinct, and tracing its wider grove and leftward clearing kept the boots on the painted trail. The existing four poses retain some sole travel. The guide-free recording and the other two candidates are ready for owner review. [Study and evidence](../assets/scenes/forest_test/REPORT.md)

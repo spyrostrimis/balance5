@@ -50,6 +50,12 @@ func add_track(pos: Vector2, angle: float) -> void:
 		_tracks.append([pos, angle, 0.0])
 
 
+## Each sample uses the rear tread contacts at both ends of a part of the turn.
+func add_track_pair(previous: Vector2, previous_heading: Vector2, next: Vector2, heading: Vector2) -> void:
+	if marks:
+		_tracks.append([previous, next, 0.0, previous_heading, heading])
+
+
 func add_footprints(pos: Vector2) -> void:
 	if marks:
 		_feet.append([pos, 0.0])
@@ -79,6 +85,12 @@ func _draw() -> void:
 	if marks:
 		for t: Array in _tracks:
 			var fade: float = 1.0 - t[2] / TRACK_LIFE
+			if t.size() == 5:
+				for side in [-6.0, 6.0]:
+					var a: Vector2 = t[0] - t[3] * 6.0 + t[3].orthogonal() * side
+					var b: Vector2 = t[1] - t[4] * 6.0 + t[4].orthogonal() * side
+					draw_line(a, b, Color(TRACK_COLOR, 0.46 * fade), 1.6)
+				continue
 			var along := Vector2.from_angle(t[1])
 			var side := along.orthogonal()
 			for s in [-5.0, 5.0]:

@@ -5,6 +5,8 @@ extends Node2D
 ##   P patrol (units wander peacefully)   K shadows   L ground light   M tracks and footprints
 ##   N dust   F1 blocked tiles
 
+signal controls_changed
+
 @onready var grid: RtsGrid = $Grid
 @onready var units: Node2D = $Units
 @onready var _help: Label = $HUD/Help
@@ -75,3 +77,4 @@ func _update_help() -> void:
 	var on := func(v: bool) -> String: return "on" if v else "off"
 	_help.text = "P patrol %s · K shadows %s · L ground light %s · M tracks %s · N dust %s · F1 tiles · select + right-click to move · Esc back" % [
 		on.call(patrol), on.call(RtsLook.shadows), on.call(RtsLook.ground_light), on.call(RtsLook.marks), on.call(RtsLook.dust)]
+	controls_changed.emit()

@@ -1,5 +1,9 @@
 # Pipelines
 
+## Compare RTS art and motion on the same map
+
+Begin with an in-game crop at the playing size. Use it and the desert reference to brief the unit art, then save the prompt and source with the other RTS inputs. Check the Blue proof on the road and in the shadow before drawing Red. Run `tools/python/make_rts_units_motion.py` to rebuild both treatments. The terrain detail uses the original painted sources, and the pixel assets share the desert palette. Verify the same orders in Godot with the camera tied to the same world area. Capture a still at each landmark and record the live switch. Check input at the review window sizes and reopen both comparison cards from the Windows export. [Commands and captures](RTS_UNITS_IN_MOTION.md)
+
 ## Build a scrolling 2D painted walk
 
 Prove the route first with plain ground and repeated markers. Test turns and stops in both directions with the camera following. Give each painting candidate the same full-height route guide and save the original image and prompt. Trace the chosen painting’s actual trail edges and keep the Commander’s boot anchor slightly inside that trace. Keep the painting, Commander and shadow as imported scene resources so the Windows build includes them. Run the matched stills in Forward+, watch the walk with guides hidden, and check Play and Esc from the Developers Page. [Forest study and test commands](../assets/scenes/forest_test/REPORT.md)

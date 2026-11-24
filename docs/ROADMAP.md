@@ -53,8 +53,9 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Style test 4: orderly dunes in fields towards the edges, calm round road and plaza, sparser scatter, lighter rock tops (art rules §6d)
 - [x] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; cliff ledges (art rules §6e). Environment look settled
 - [x] Units on the style-test map: shadows, ground light, tracks, footprints and dust, each switchable (art rules §8)
-- [ ] Smooth unit movement: any-angle routes, vehicles turn gradually, curved tracks
-- [ ] Real unit sprites: 8 facings and walk frames for squads, commanders and vehicles
+- [x] Units in Motion study has any-angle travel, gradual tank turns and curved tracks. Tight corner and single-lane traffic checks passed. [Playable study](RTS_UNITS_IN_MOTION.md)
+- [x] Compare both factions’ eight-facing squads, commanders and tanks in Painted HD and Pixel art at the same playing size. [Matched captures and motion](RTS_UNITS_IN_MOTION.md#matched-captures)
+- [ ] Owner plays Units in Motion and chooses the RTS art direction. [One-minute comparison route](RTS_UNITS_IN_MOTION.md#one-minute-route)
 - [ ] Big map pieces (whole cliff formations, dune fields, the Orichalcum rock) as placeable scenes with their blocked tiles, for laying out maps by hand
 - [ ] Decide: is a troop a squad of four soldiers?
 - [ ] Desert tileset with height drawn in: cliff walls, curving road edges, shaded dunes (light from the top-left)

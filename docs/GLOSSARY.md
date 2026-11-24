@@ -28,6 +28,16 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Render resolution
+Area: RTS art
+
+How many pixels Godot uses to draw the battlefield before fitting it in the window. On a 1920 × 1080 display, a 960 × 540 battlefield pixel fills a 2 × 2 block. Changing this leaves the size of a movement tile the same. [Matched captures](RTS_UNITS_IN_MOTION.md#matched-captures)
+
+### Footfall
+Area: Animation
+
+The moment a character puts a foot on the ground. The four soldiers in an RTS squad reach that moment at different points in their walking cycles. Their walking pictures advance only as far as the squad has moved. [Motion study](RTS_UNITS_IN_MOTION.md#art-and-movement)
+
 ### Blend band
 Area: 2D walking
 

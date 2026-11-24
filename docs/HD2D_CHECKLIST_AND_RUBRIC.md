@@ -1,5 +1,14 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Units in Motion · 2026-11-24
+
+- [x] Original, Painted HD and Pixel art share the desert route and the camera framing. Matched 1080p stills cover the opening, open sand, northwest cliff, Orichalcum shadow and first hit.
+- [x] Inspect both teams at playing size, including Blue in boulder shade and Red against orange sand. At 640 × 360, selection stays clear and fine rifle and scarf detail drops.
+- [x] Switch during travel, stop and reissue, verify a tight turn and opposing traffic, and check selection and orders after resizing. Both exported Play cards and Esc passed.
+- [ ] Owner compares the two looks in play and picks the RTS direction.
+
+[RTS captures and clip](RTS_UNITS_IN_MOTION.md)
+
 ## 2D painted tropical forest · 2026-11-24
 
 - [x] Verify the four connected stretches in a 1376 × 768 Forward+ viewport. The Commander fits in the clearing with its landmark visible.

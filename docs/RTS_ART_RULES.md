@@ -231,6 +231,10 @@ Cliffs, mesas and the Orichalcum rock are blocked (`assets/textures/rts/units_te
   - Real units need 8 facings and walk frames (art rules §1 sizes).
   - Footprints at 1 px are barely visible; real soldiers can leave a pair per step.
 
+## 9. Units in Motion (2026-11-24)
+
+The successor compares Painted HD and 960 × 540 Pixel art live on V. Both use the same battlefield layout and unit sizes. A 640 × 360 still shows where rifle, scarf and diagonal barrel details begin to drop out. The new battle motions are available in both looks. [Playable route, source art and matched captures](RTS_UNITS_IN_MOTION.md)
+
 ## Open questions
 
 - **Is a "troop" a squad of four soldiers?** The reference card ("Squad 4 of 4") suggests so, and four soldiers fill one tile. The RTS test map still treats a troop as one disc.

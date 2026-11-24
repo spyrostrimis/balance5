@@ -70,6 +70,12 @@ func look_at_point(world: Vector2) -> void:
 	clamp_to_map()
 
 
+## Painted scenery can extend past the last complete, navigable tile.
+func set_scroll_bounds(bounds: Rect2) -> void:
+	_bounds = bounds
+	clamp_to_map()
+
+
 func _set_zoom(value: float) -> void:
 	var z := clampf(value, zoom_min, zoom_max)
 	zoom = Vector2(z, z)

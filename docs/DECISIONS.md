@@ -1,5 +1,10 @@
 # Decisions
 
+### 2026-11-24 · Match the RTS looks during live play
+Area: RTS · Status: Trying
+
+Open Units in Motion in Painted HD and switch to 960 × 540 Pixel art on V. Keep the same 32-pixel movement grid, viewport framing and live unit state. At 1080p, the 960 × 540 proof kept more of the rifles and scarf than the 640 × 360 proof, which is saved as a still. The owner will choose the direction after playing. [Matched captures and motion](RTS_UNITS_IN_MOTION.md)
+
 ## 2026-11-24 · Painted forest · Study defaults
 
 **Verified for this study.** Use one continuous painting with two stretches where the Commander gets smaller and two where she holds her size. Tie size and stride to her position so a reversal retraces the change and camera movement at a stop leaves her size alone. Buttress Light is the provisional painting because its landmarks distinguish the stretches and its quieter ground preserves the Commander’s silhouette. Art selection and the feel of the footfalls remain open for owner review. [Measurements and alternatives](../assets/scenes/forest_test/REPORT.md)

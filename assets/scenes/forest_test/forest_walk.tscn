@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://assets/scenes/forest_test/forest_walk.gd" id="1"]
+[ext_resource type="Script" path="res://assets/scenes/forest_test/forest_camera.gd" id="2"]
+
+[node name="ForestWalk" type="Node2D"]
+texture_filter = 4
+script = ExtResource("1")
+painting_file = "a-buttress-light.png"
+painted_trail = Array[Vector3]([
+Vector3(1880, 480, 1048), Vector3(1780, 512, 1020), Vector3(1720, 528, 1005),
+Vector3(1660, 545, 1000), Vector3(1600, 550, 1007), Vector3(1520, 565, 1018),
+Vector3(1450, 586, 1005), Vector3(1380, 610, 993), Vector3(1300, 631, 991),
+Vector3(1240, 634, 990), Vector3(1180, 631, 1020), Vector3(1100, 626, 1028),
+Vector3(1070, 623, 1024), Vector3(1000, 605, 1000), Vector3(930, 596, 966),
+Vector3(880, 608, 936), Vector3(825, 633, 926), Vector3(780, 648, 921),
+Vector3(730, 648, 919), Vector3(670, 639, 916), Vector3(615, 620, 904),
+Vector3(550, 610, 902), Vector3(490, 604, 896), Vector3(440, 585, 854),
+Vector3(394, 573, 830), Vector3(355, 595, 869), Vector3(320, 625, 844)
+])
+
+[node name="Painting" type="Sprite2D" parent="."]
+z_index = -2
+centered = false
+
+[node name="Commander" type="Node2D" parent="."]
+z_index = 2
+
+[node name="Shadow" type="Sprite2D" parent="Commander"]
+position = Vector2(0, -2)
+scale = Vector2(1.28, 0.94)
+modulate = Color(0.38, 0.29, 0.20, 0.62)
+
+[node name="Pose" type="Sprite2D" parent="Commander"]
+hframes = 5
+vframes = 4
+offset = Vector2(0, -76)
+
+[node name="Camera" type="Camera2D" parent="."]
+process_callback = 0
+script = ExtResource("2")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Readout" type="Label" parent="HUD"]
+visible = false
+offset_left = 22.0
+offset_top = 18.0
+theme_override_colors/font_outline_color = Color(0.03, 0.06, 0.04, 0.95)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 20

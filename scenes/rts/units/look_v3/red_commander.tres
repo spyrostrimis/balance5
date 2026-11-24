@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="UnitStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/rts/unit_stats.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units/commander_neutral_1x.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units/commander_neutral_2x.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units/commander_mask_1x.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units/commander_mask_2x.png" id="5"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Red Commander"
+faction = 1
+kind = 1
+max_health = 120
+attack = 18
+armour = 6
+attack_range = 2
+attack_cooldown = 1.1
+guard_range = 5
+move_speed = 2.4
+sprite = ExtResource("2")
+sprite_hd = ExtResource("3")
+team_mask = ExtResource("4")
+team_mask_hd = ExtResource("5")
+sprite_directions = 1
+sprite_frames = 4
+vehicle = false
+sprite_scale = 1.0

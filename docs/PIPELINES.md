@@ -1,5 +1,12 @@
 # Pipelines
 
+## Build and verify RTS Units Test 3 (1x Pixel / 2x HD Painted profiles)
+Area: RTS · Status: In use · Tools: Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+
+
+1. **Generate 1× and 2× map layers:** Run `C:/Python312/python.exe tools/python/make_rts_style_test.py` (for the 960×540 48-colour `t5` layers) and `C:/Python312/python.exe tools/python/make_rts_hd_layers.py` (for the 1920×1080 un-quantized `t5_hd` layers with mipmaps and the NE cliff oasis).
+2. **Generate neutral unit sheets, team masks and v3 `.tres` stats:** Run `C:/Python312/python.exe tools/python/make_rts_units_test_v3.py` to build 1× and 2× neutral sheets (`tank_neutral_1x/2x.png`, `squad_neutral_1x/2x.png`, `commander_neutral_1x/2x.png`), RGBA masks (`*_mask_1x/2x.png`) with `sprite_scale = 1.0` in `scenes/rts/units/look_v3/*.tres`, and `scenes/maps/rts_units_test_v3.tscn` (keeping `scenes/maps/rts_units_test.tscn` and `scenes/rts/units/look/*.tres` untouched).
+3. **Verify headless and in Forward+:** Run `C:/Godot/Godot_v4.7.2-stable_win64.exe --path . --headless --script res://tests/test_rts_units_test.gd` (grid parity, shader binding, 0.0 px blocked moonwalk check, 100-unit 4-faction stress test, Window state restore, and original scene check) and `C:/Godot/Godot_v4.7.2-stable_win64.exe --path . --script res://tests/capture_rts_units_test_v3.gd` (matched 1080p and 720p captures of `pixel` and `hd_painted` in `render_captures/rts_units/`).
+
 ## Compare RTS art and motion on the same map
 
 Begin with an in-game crop at the playing size. Use it and the desert reference to brief the unit art, then save the prompt and source with the other RTS inputs. Check the Blue proof on the road and in the shadow before drawing Red. Run `tools/python/make_rts_units_motion.py` to rebuild both treatments. The terrain detail uses the original painted sources, and the pixel assets share the desert palette. Verify the same orders in Godot with the camera tied to the same world area. Capture a still at each landmark and record the live switch. Check input at the review window sizes and reopen both comparison cards from the Windows export. [Commands and captures](RTS_UNITS_IN_MOTION.md)

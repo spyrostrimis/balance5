@@ -28,6 +28,18 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Team-colour mask
+Area: RTS art
+
+A companion image stored alongside a neutral grey unit sprite that tells the shader which pixels wear faction paint (`R` channel), how bright or shaded each armour plate is from the top-left sun (`G` channel), and where secondary trim or a commander's emblem sits (`B` channel). One sprite sheet and mask can then draw Blue, Red, Green or Palatinate units while keeping the dark outline intact.
+*In Balance:* `assets/shaders/rts/rts_team_color.gdshader` uses `*_neutral_1x.png` and `*_mask_1x.png` (and their `2x` counterparts).
+
+### Integer scaling (letterbox)
+Area: Display
+
+Enlarging a low-resolution pixel-art view only by whole numbers (`1×`, `2×`, `3×`, `4×`) so every art pixel stays an exact square of screen pixels and never shimmers as the camera or unit moves. When the window size is not an even multiple of `960×540` (such as `1280×720`), Godot centers the `1×` (`960×540`) picture with a clean black border around it instead of stretching pixels by `1.33×`.
+*In Balance:* `RtsVisualProfile` enables `Window.CONTENT_SCALE_STRETCH_INTEGER` in `"pixel"` mode and restores the window's default scaling when leaving the scene.
+
 ### Render resolution
 Area: RTS art
 

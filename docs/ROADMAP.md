@@ -3,7 +3,7 @@
 ## Painted tropical forest study
 
 - [x] Build the four-stretch Blue Commander walk, verify both directions and add it to Developers Page under **Forest builds**. [Playable study and evidence](../assets/scenes/forest_test/REPORT.md)
-- [ ] Owner chooses one of the three paintings and judges how clearly the four stretches read with guides hidden. [Candidates and recording](../assets/scenes/forest_test/REPORT.md)
+- [ ] Owner chooses one of the three paintings and judges how clearly the four stretches read with guides hidden. [Candidates and recording](../assets/scenes/forest_test/REPORT.md) · [Independent assessment](../output/pdf/painted-forest-walk-assessment.pdf)
 
 ## RPG canyon direction comparison
 
@@ -53,6 +53,7 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Style test 4: orderly dunes in fields towards the edges, calm round road and plaza, sparser scatter, lighter rock tops (art rules §6d)
 - [x] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; cliff ledges (art rules §6e). Environment look settled
 - [x] Units on the style-test map: shadows, ground light, tracks, footprints and dust, each switchable (art rules §8)
+- [x] Build RTS Units Test — Units on the Map 3 (`scenes/maps/rts_units_test_v3.tscn`) alongside the original RTS Units Test with scene-local `F4` Pixel (1× integer) / HD Painted (2× smooth + NE oasis + crystal glow) switch, `1:1` tank frames (`sprite_scale = 1.0`), 4-faction team-colour mask shader, distance-driven walk/tread cadence and `F3` perf overlay (`tests/test_rts_units_test.gd`)
 - [x] Units in Motion study has any-angle travel, gradual tank turns and curved tracks. Tight corner and single-lane traffic checks passed. [Playable study](RTS_UNITS_IN_MOTION.md)
 - [x] Compare both factions’ eight-facing squads, commanders and tanks in Painted HD and Pixel art at the same playing size. [Matched captures and motion](RTS_UNITS_IN_MOTION.md#matched-captures)
 - [ ] Owner plays Units in Motion and chooses the RTS art direction. [One-minute comparison route](RTS_UNITS_IN_MOTION.md#one-minute-route)

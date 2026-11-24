@@ -1,5 +1,20 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Units Test 3 — Scene-Local Pixel (1x) vs HD Painted (2x) Profile & Team-Colour Shader · 2026-11-24
+
+Built `scenes/maps/rts_units_test_v3.tscn` ("RTS Units Test — Units on the Map 3") as a standalone build alongside the preserved original `scenes/maps/rts_units_test.tscn` without modifying `project.godot`:
+
+1. **Root cause of earlier tank shimmer (`0.85` scale + `1.3333` camera zoom):** `tank_blue.png` (`288×108`, `36×36` per cell) was drawn at `sprite_scale = 0.85` (`30.6×30.6` fractional pixels) under `TEXTURE_FILTER_NEAREST` inside a `1280×720` viewport with `Camera2D.zoom = Vector2(1.3333, 1.3333)`. Resampling the tank into exact `32×32` 1× frames (`256×96` sheet) and `64×64` 2× frames (`512×192` sheet) at `sprite_scale = 1.0` with integer window stretch (`Window.CONTENT_SCALE_STRETCH_INTEGER` at `960×540` logical view, `zoom = 1.0`) eliminated sub-pixel nearest-neighbour wobble completely (`2.00×` integer at `1920×1080`, centered `1.00×` integer letterbox with `(160, 90)` margins at `1280×720`).
+2. **4-Faction Team-Colour Mask Shader (`assets/shaders/rts/rts_team_color.gdshader`):** One neutral sprite + RGBA mask (`R` = primary armour weight, `G` = local top-left shading ramp `0..1`, `B` = scarf/trim at `0.45` and commander emblem at `1.0`) renders Blue, Red, Green and Palatinate (`UnitStats.FACTION_PALETTES`) while protecting the `#221814` outline and passing primitive `draw_circle`/`draw_line`/`draw_rect` calls (`TEXTURE_PIXEL_SIZE.x > 0.5`) through untouched.
+3. **Distance-Driven Cadence:** Tying `_distance_moved`, walk frame rows (`4` rows on squads and commanders), tank treads (`3` rows), walk bob, footprints and vehicle dust strictly to distance traveled prevents units from moonwalking when paused behind an occupied intermediate tile (`0.0 px` advance while blocked, verified in `tests/test_rts_units_test.gd`).
+4. **2× Painterly Layers & Forward+ GPU Benchmarks (`NVIDIA GeForce RTX 4060 Ti`):** `tools/python/make_rts_hd_layers.py` exports `1920×1080` un-quantized smooth layers (`assets/textures/rts/style_test/t5_hd/*.png`, mipmaps enabled) from `assets/source_inputs/rts/*.png` at half the 1× shrink factor and adds the NE cliff oasis pool and shrub clumps inside the blocked cliff terrace.
+   - `pixel @ 1080p (8 units)`: `2349.8 FPS`, `GPU 0.08 ms`, `CPU 0.08 ms` (`Scale 2.00× INTEGER`)
+   - `hd_painted @ 1080p (8 units)`: `233.6 FPS`, `GPU 0.27 ms`, `CPU 0.51 ms` (`Scale 1.00× INTEGER`, `Art px 2.00×`)
+   - `pixel @ 720p (8 units)`: `2444.5 FPS`, `GPU 0.03 ms`, `CPU 0.08 ms` (`Scale 1.00× INTEGER`, letterboxed)
+   - `hd_painted @ 720p (8 units)`: `322.6 FPS`, `GPU 0.24 ms`, `CPU 0.46 ms` (`Scale 0.67× FRACTIONAL`)
+   - `100-unit stress @ 1080p (4 factions patrolling, 0 overlaps)`: `pixel` `1291.9 FPS` (`GPU 0.11 ms`, `CPU 0.22 ms`), `hd_painted` `213.5 FPS` (`GPU 0.36 ms`, `CPU 0.81 ms`).
+   - Developers Page Play -> Esc round-trip restores all `Window` properties cleanly (`render_captures/rts_units/developers_page_after_esc.png`).
+
 ## RTS Units in Motion · 2026-11-24
 
 Repeated the original route at matched camera framing, then switched between Painted HD and 960 × 540 Pixel art on the same running map. The 640 × 360 proof kept green brackets, health and the tank outline. Some rifles and the commander’s scarf lost their separation. The Blue playing-size proof exposed dark armour and weak rifle tips before the Red pass. Distance-driven feet and treads improved the moving silhouette. Facing changes can still shift a sole. The tight elbow, occupied lane, manual passing bay, route to the rock, cursor after resize, and both exported Play cards and Esc passed. [Stills, clip and measurements](RTS_UNITS_IN_MOTION.md)
@@ -7,6 +22,12 @@ Repeated the original route at matched camera framing, then switched between Pai
 ## 2D painted forest · four stretches · 2026-11-24
 
 Proved the route with repeated markers before generating three paintings from the same guide. In the 1376 × 768 Forward+ run, the Commander’s rendered height changed from 154 to 133 pixels at the entrance, stayed near 131 in the fern grove, fell to 115 on the rise and settled at 114 in the clearing. Reversals retraced the size curve. Buttress Light kept the four landmarks distinct, and tracing its wider grove and leftward clearing kept the boots on the painted trail. The existing four poses retain some sole travel. The guide-free recording and the other two candidates are ready for owner review. [Study and evidence](../assets/scenes/forest_test/REPORT.md)
+
+### Independent comparison with Painted Canyon · Approach 3
+
+At the same clearing position and camera angle, holding the commander at her opening height made her fill more of the trail beside the boulder. The playable scale of 73% put her farther into the clearing. The guide-free run measured 154 pixels at the entrance and 112 at the end. Painted and plain-route checks passed, including reversals. The painted run also passed the Developers Page Play and Esc check.
+
+The first rear drawing now sits four source pixels higher than in the canyon, bringing its lowest sole into line. The third and fourth drawings still lift the same heel. During one held drawing the boots travelled 19.6 painting pixels near the entrance and 14.8 in the clearing. The canyon gate still reads as a stronger destination. [Illustrated assessment and same-camera comparison](../output/pdf/painted-forest-walk-assessment.pdf)
 
 ## 2D canyon · commander detail and the north barrier · 2026-11-22
 

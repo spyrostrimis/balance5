@@ -1,5 +1,10 @@
 # Decisions
 
+### 2026-11-24 · Scene-local Pixel (1x) vs HD Painted (2x) visual profile & 4-faction team-colour mask shader on RTS Units Test 3
+Area: RTS · Status: Trying
+
+Created `scenes/maps/rts_units_test_v3.tscn` ("RTS Units Test — Units on the Map 3") as a standalone build alongside the preserved original `scenes/maps/rts_units_test.tscn` ("RTS Units Test — Units on the Map"), adding a scene-local `RtsVisualProfile` (`scripts/rts/rts_visual_profile.gd`, CLI `--profile=pixel|hd_painted`, live hotkey `F4`, `F3` perf/scale overlay) that switches between `"pixel"` (`960×540` logical view, `CONTENT_SCALE_STRETCH_INTEGER`, `TEXTURE_FILTER_NEAREST`, exact `2×` at `1920×1080` and centered `1×` letterbox at `1280×720`, pixel-snapped camera/units/effects) and `"hd_painted"` (`1920×1080` `canvas_items`, `TEXTURE_FILTER_LINEAR_WITH_MIPMAPS`, 2× un-quantized painted layers `assets/textures/rts/style_test/t5_hd/*.png` with the NE cliff oasis cue, smooth movement, soft shadows/dust/tracks, warm Orichalcum crystal radial glow and vignette) on the exact same `32×32` logical tile grid (`RtsGrid` untouched) while restoring all `Window` properties in `_exit_tree()`. Replaced the `0.85` fractional tank `sprite_scale` (`30.6×30.6` pixel wobble) and raw RGB channel swap with exact `1:1` `32×32` (1×) and `64×64` (2×) neutral sheets (`sprite_scale = 1.0` in `scenes/rts/units/look_v3/*.tres`), a reusable 4-faction team-colour mask shader (`assets/shaders/rts/rts_team_color.gdshader` supporting Blue, Red, Green and Palatinate while protecting dark `#221814` outlines), and distance-driven walk/tread cadence. Evidence: `tests/test_rts_units_test.gd`, `tests/capture_rts_units_test_v3.gd`, `render_captures/rts_units/pixel_1080p_*.png`, `render_captures/rts_units/hd_painted_1080p_*.png`.
+
 ### 2026-11-24 · Match the RTS looks during live play
 Area: RTS · Status: Trying
 

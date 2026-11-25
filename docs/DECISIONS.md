@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-25 · Try continuous isometric movement and full-circle fire in Fight 4
+
+Area: RPG · Status: Trying
+
+The owner chose to test one camera angle, character scale and control scheme from daylight into the cavern. A joined floor lets the Commander cross in either direction while moving and firing. At the playing size she measures 130 pixels in all three sampled locations. The owner will judge the feel of the adventure after playing. [Fight 4 evidence](FOREST_FIGHT_4.md)
+
 ### 2026-11-25 · Ground the painted RTS cliffs
 Area: RTS · Status: Decided
 

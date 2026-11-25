@@ -1,5 +1,12 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## 2D Painted Forest Fight 4 · 2026-11-25
+
+- [x] Floor diamonds project at ±30°. Camera translation, zoom, figure height, aim and movement carry across the doorway in both directions.
+- [x] The forest keeps the diagonal ochre trail, sunlit tree and exposed cliff over mist. The cave continues the trail under a stone lip into lavender-grey rock and a daylight pool.
+- [x] At 1376 × 768 Forward+, the standing Commander measures 130 px near, far and underground. Captures verify foreground overlap at the fence, cave lip and boulder.
+- [x] Fire in the eight main directions and between poses. A wide miss leaves its target alive, rock intercepts a bolt, contact sparks without damage, and exactly three one-shot kills clear the cavern. [Fight 4 evidence](FOREST_FIGHT_4.md)
+
 ## RTS Desert Crossing · painted terrain reference pass · 2026-11-25
 
 - [x] Check cliff and mesa feet at the same camera. The shadow starts at the rock edge and fades into the sand beyond the rubble. [Before and after](RTS_DESERT_CROSSING.md#cliff-contact-pass)

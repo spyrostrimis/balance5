@@ -392,6 +392,16 @@ credit = "Antigravity (Gemini 4) and ChatGPT Images"
 built_utc = "2026-11-24 22:56:00"
 action = "Play"
 
+[sub_resource type="Resource" id="Build_painted_forest_fight_4"]
+script = ExtResource("4")
+section = "Forest builds"
+title = "2D Painted Forest Fight 4"
+summary = "Follow a sunlit cliff trail into a mossy cavern and face three diving bats in one fixed isometric view. WASD or arrows move, mouse aims, left click fires, R restarts and Esc returns."
+scene_path = "res://scenes/forest_fight_4/forest_fight_4.tscn"
+credit = "Codex and ChatGPT Images"
+built_utc = "2026-11-25 20:49:19"
+action = "Play"
+
 [sub_resource type="Resource" id="Build_rts_reusable_2_carbon"]
 script = ExtResource("4")
 section = "Desert RTS builds"
@@ -421,7 +431,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
 script = ExtResource("1")
-builds = Array[ExtResource("4")]([SubResource("Build_rts_reusable_2_carbon"), SubResource("Build_rts_units_test"), SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera"), SubResource("Build_rpg_2d_canyon_study"), SubResource("Build_rpg_2d_approach2_modular"), SubResource("Build_pixel_canyon_follow"), SubResource("Build_img9_perspective_follow"), SubResource("Build_canyon_session_b"), SubResource("Build_canyon_session_b_painted"), SubResource("Build_kit3d"), SubResource("Build_sculpted_bend"), SubResource("Build_way1b_free_3d"), SubResource("Build_kit3d_v2"), SubResource("Build_rpg_2d_approach3"), SubResource("Build_painted_forest_walk"), SubResource("Build_rts_units_test_v2"), SubResource("Build_rts_units_test_v3"), SubResource("Build_painted_forest_fight"), SubResource("Build_painted_forest_fight_2"), SubResource("Build_rts_desert_crossing")])
+builds = Array[ExtResource("4")]([SubResource("Build_rts_reusable_2_carbon"), SubResource("Build_rts_units_test"), SubResource("Build_rts_style_test"), SubResource("Build_rts_test_map"), SubResource("Build_kitbash_minimap"), SubResource("Build_battlefield"), SubResource("Build_session_2"), SubResource("Build_chatgpt_boulders"), SubResource("Build_chatgpt_road"), SubResource("Build_session_3"), SubResource("Build_crisp_road"), SubResource("Build_pixel_ab"), SubResource("Build_packs"), SubResource("Build_canyon_v2"), SubResource("Build_composition"), SubResource("Build_sett_study"), SubResource("Build_session_1"), SubResource("Build_ai_boulders"), SubResource("Build_ultra_crisp"), SubResource("Build_four_crowns"), SubResource("Build_buttress_control"), SubResource("Build_d4b"), SubResource("Build_3d_walk"), SubResource("Build_2d_walk"), SubResource("Build_battlefield_3d"), SubResource("Build_pixel_canyon_study"), SubResource("Build_pixel_canyon_camera"), SubResource("Build_rpg_2d_canyon_study"), SubResource("Build_rpg_2d_approach2_modular"), SubResource("Build_pixel_canyon_follow"), SubResource("Build_img9_perspective_follow"), SubResource("Build_canyon_session_b"), SubResource("Build_canyon_session_b_painted"), SubResource("Build_kit3d"), SubResource("Build_sculpted_bend"), SubResource("Build_way1b_free_3d"), SubResource("Build_kit3d_v2"), SubResource("Build_rpg_2d_approach3"), SubResource("Build_painted_forest_walk"), SubResource("Build_rts_units_test_v2"), SubResource("Build_rts_units_test_v3"), SubResource("Build_painted_forest_fight"), SubResource("Build_painted_forest_fight_2"), SubResource("Build_rts_desert_crossing"), SubResource("Build_painted_forest_fight_4")])
 
 [node name="CanyonArtwork" type="TextureRect" parent="."]
 layout_mode = 1

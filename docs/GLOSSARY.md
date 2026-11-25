@@ -884,6 +884,16 @@ Area: Art
 A flat-camera view with no perspective shrinking—characters and tiles stay the exact same pixel size at the top and bottom of the screen, like *Sea of Stars* or *Chrono Trigger*.
 *Also:* orthographic
 
+### Isometric projection
+Area: Art
+
+A fixed kind of overhead view that treats the three world axes equally. A square on level ground appears as a diamond with edges at 30° above and below the screen horizontal. Parallel edges stay parallel, and figures keep their apparent size as they move away. [Fight 4 example](FOREST_FIGHT_4.md)
+
+### Strafe
+Area: Controls
+
+Move to the side while continuing to look or fire in another direction. In Fight 4 the keyboard moves the Commander and the pointer controls her rifle. [Fight 4 controls](FOREST_FIGHT_4.md)
+
 ### Camera leeway
 Area: Art
 The small band in which the commander can step uphill or downhill before the view moves with her. In Through the Bend it extends 8 art pixels either side of her starting boot height. Exact follow sets it to zero.

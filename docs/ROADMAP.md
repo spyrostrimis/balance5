@@ -2,6 +2,9 @@
 
 ## Painted tropical forest study
 
+- [x] Build and export **2D Painted Forest Fight 4** with a fixed isometric camera, continuous two-way doorway and three-bat encounter. Verify full-circle fire in both settings. [Play and captures](FOREST_FIGHT_4.md)
+- [ ] Owner plays Fight 4 and judges the feel of the continuous forest-to-cave view.
+
 - [x] Walk the forest into a painted cave and clear three bats in the **2D Painted Forest Fight** Play card. Verify the mode change, rifle directions, depth lanes, replay and Esc. [Live sequence and framing](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
 - [ ] Owner plays 2D Painted Forest Fight and reviews the doorway transition and combat framing.
 

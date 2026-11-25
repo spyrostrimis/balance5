@@ -1,5 +1,14 @@
 # Pipelines
 
+## Build a continuous isometric painted walk and fight
+
+Area: RPG · Status: In use · Tools: Godot 4.7.2 Forward+, ImageGen, Python with Pillow and NumPy, FFmpeg
+
+1. Draw a square grid with edges at ±30° and block out the floor, entrance and chamber. Test held diagonal walking and aim in both directions with one camera and Commander.
+2. Paint the exterior from the owner's reference and frame it at playing size before extending the cavern. Register the art to one walking route. Match the lip, fence and stone cutouts to the same pixels in the paintings so they can cover the Commander in place.
+3. Run `python tools/python/build_forest_fight_4_art.py` to pack the paintings, foreground cutouts, rifle and foot-aligned poses. Check the rotating barrel against the poses during a strafe and across a turn.
+4. Run the Fight 4 suite headless and with `--stills`, then record the live Forward+ walk at the same 1376 × 768 size. Verify Play and Esc from the new Windows export. [Commands and evidence](FOREST_FIGHT_4.md)
+
 ## Fit painted RTS modules to a composition reference
 
 For cliffs and mesas, run `tools/python/make_desert_cliff_footing.py` to build a close shadow and rubble layer from the cutout's outline. Place those layers beneath the rock using the same local rectangle. [Cliff contact pass](RTS_DESERT_CROSSING.md#cliff-contact-pass)

@@ -889,5 +889,12 @@ A shader sampling trick (`pixel_aa_uv` with `textureGrad`) that keeps the middle
 Area: Textures
 Copying the border colours of a pixel sprite a couple of pixels outward into its invisible (`alpha = 0`) background before saving. It stops dark outlines or halos from appearing when anti-aliasing samples right along the sprite's cutout edge.
 
+### String-pulling
+Area: RTS
+Smoothing a grid path so units walk straight from one clear point to another at any natural angle instead of zig-zagging along 90° and 45° tile corners whenever the sand between them has no obstacles.
+*In Balance:* `scripts/rts_carbon/rts_carbon_unit.gd`.
 
-
+### Dune delta overlay
+Area: Shaders
+Storing only how much brighter a sunlit dune crest is and how much darker its lee shadow is relative to flat sand, fading smoothly to zero at the piece's edge. Placed over the continuous desert floor, the dune cluster blends with no rectangular seam and lets tank tracks flatten the ripple crests in real time.
+*In Balance:* `assets/shaders/rts_carbon_dune.gdshader` in [RTS Reusable 2 Carbon](RTS_REUSABLE_2_CARBON.md).

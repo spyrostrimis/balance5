@@ -1,5 +1,9 @@
 # Decisions
 
+### 2026-11-25 · Build RTS Reusable 2 Carbon playable slice with Dune II HUD, dual zoom stops and live Detailed vs 960×540 Pixel toggle
+Area: RTS · Status: Trying
+Built `scenes/maps/rts_reusable_2_carbon.tscn` (`RTS Reusable 2 Carbon`) entirely from reusable painted ChatGPT pieces (central Orichalcum outcrop, northeast cliff and turquoise spring oasis, mesas, ridge, boulders, bevelled stone outpost pads, oval flagstone plaza, desert scrub and seamless signed-delta dune clusters) over continuous calm-masked sand, paired with 4-soldier squads, commanders (`Mend`), 8-facing hull+turret tanks that flatten two lanes through dune ripples, an Orichalcum hold timer and the Dune II HUD frame. Press `V` to compare Detailed Painted (`2×` HD) against `960×540` Pixel (`1×` curated 74-colour palette with 1 px unit outlines) and `Z` to compare `21×14` Command framing against `15×10` Close framing while playing. Evidence: `docs/RTS_REUSABLE_2_CARBON.md`, `tests/test_rts_reusable_2_carbon.gd`, `render_captures/rts_carbon/`.
+
 ## 2026-11-22 · RPG canyon · Standing commander comparison
 
 **Test result.** At the same apparent height and lighting, the reference-derived commander made her features easier to read than raising the render resolution with the existing sprite. Use the 149-pixel standing pose as a benchmark for the proposed Approach 3 animation. The owner’s choice of canyon direction remains open. [Visual comparison](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)

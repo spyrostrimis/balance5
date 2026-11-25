@@ -47,6 +47,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Style test 4: orderly dunes in fields towards the edges, calm round road and plaza, sparser scatter, lighter rock tops (art rules §6d)
 - [x] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; cliff ledges (art rules §6e). Environment look settled
 - [x] Units on the style-test map: shadows, ground light, tracks, footprints and dust, each switchable (art rules §8)
+- [x] Build playable **RTS Reusable 2 Carbon** (`scenes/maps/rts_reusable_2_carbon.tscn`) from reusable ChatGPT landmarks, dune clusters, limestone road, stone outposts, 4-soldier squads, commanders, 8-facing tanks, Mend healing, Orichalcum hold timer and Dune II HUD, with live `V` Detailed Painted / `960×540` Pixel and `Z` `21×14` / `15×10` zoom comparison ([Study](RTS_REUSABLE_2_CARBON.md))
+- [ ] Owner compares RTS Reusable 2 Carbon alongside Codex's desert proof and chooses the RTS art and zoom direction
 - [ ] Smooth unit movement: any-angle routes, vehicles turn gradually, curved tracks
 - [ ] Real unit sprites: 8 facings and walk frames for squads, commanders and vehicles
 - [ ] Big map pieces (whole cliff formations, dune fields, the Orichalcum rock) as placeable scenes with their blocked tiles, for laying out maps by hand

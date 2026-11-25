@@ -406,6 +406,21 @@ Build the clean, option-free 3D Kit Canyon v2 assets and verify geometry clearan
 ### Done when
 - All tiling textures report seam ratios `<= 1.25` and `<= 32` colours, `test_canyon_v3_kit_v2.gd` prints `PASS`, and all walk captures pass visual review.
 
+## RTS Reusable 2 Carbon (reusable painted landmarks + 960×540 pixel kit)
+Area: RTS · Status: Trying · Tools: ChatGPT, Python, Godot 4.7
+Turn isolated ChatGPT top-down landmark/unit sheets (`assets/source_inputs/rts_carbon/`) into a matched `2×` Detailed Painted and `1×` (`960×540`) Pixel reusable RTS kit (`assets/textures/rts/carbon/`) and verify gameplay and Forward+ captures.
+
+### Steps
+1. Save high-resolution ChatGPT sheets in `assets/source_inputs/rts_carbon/` following `assets/source_inputs/rts_carbon/PROMPTS.md` (`rts_mission1_desert_red.webp` attached as style/angle/light reference).
+2. Run `C:/Python312/python.exe tools/python/make_rts_reusable_2_carbon.py` to slice, de-fringe, build signed-delta dune overlays, render 8-facing orthographic tank hulls/turrets and infantry walk sheets, and quantize the `1×` Pixel set onto the 74-colour desert+oasis+faction palette.
+3. Import and verify headless + Forward+ `1376×768` captures:
+   `C:/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --editor --import --path .`
+   `C:/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://tests/test_rts_reusable_2_carbon.gd`
+   `C:/Godot/Godot_v4.7.2-stable_win64_console.exe --path . --rendering-method forward_plus --resolution 1376x768 --script res://tests/test_rts_reusable_2_carbon.gd -- --capture`
+
+### Done when
+- `test_rts_reusable_2_carbon.gd` passes with `0 failures`, `render_captures/rts_carbon/01_*`..`05_*` pass visual inspection in both HD and Pixel modes, and `builds/Balance.exe` launches the card and returns on Esc.
+
 ## Record a decision or a new term
 Area: Workflow · Status: In use · Tools: Balance Studio, any agent
 Keep the project's memory in the repository instead of in chat histories.

@@ -14,6 +14,10 @@
 [ext_resource type="Resource" path="res://scenes/rts/units/look/red_squad.tres" id="red_squad"]
 [ext_resource type="Resource" path="res://scenes/rts/units/look/red_tank.tres" id="red_tank"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/terraces.png" id="terraces"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/terraces_foot_shade.png" id="terrace_shade"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/terraces_foot_scree.png" id="terrace_scree"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/mesa_foot_shade.png" id="mesa_shade"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/mesa_foot_scree.png" id="mesa_scree"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/ripple_field.png" id="ripples"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/dune_swells.png" id="swells"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/orichalcum.png" id="crystal"]
@@ -117,9 +121,11 @@ position = Vector2(587, 131)
 script = ExtResource("piece")
 size = Vector2(364, 238)
 footprint = PackedVector2Array(-82, -119, 182, -119, 182, 117, 126, 107, 82, 72, 57, 48, 27, 53, 4, 76, -43, 86, -114, 75, -164, 50, -173, 26, -158, 3, -148, -32, -119, -60)
-shade_offset = Vector2(-48, 88)
-shade_size = Vector2(338, 134)
-shade_strength = 0.78
+shade_offset = Vector2(8, 15)
+shade_size = Vector2(428, 292)
+shade_strength = 1.0
+shade_texture = ExtResource("terrace_shade")
+footing_texture = ExtResource("terrace_scree")
 shared_texture = ExtResource("terraces")
 
 [node name="WestCliff" type="Node2D" parent="Terrain/Landmarks"]
@@ -127,9 +133,11 @@ position = Vector2(126, 103)
 script = ExtResource("piece")
 size = Vector2(83, 64)
 footprint = PackedVector2Array(-35, -18, 9, -28, 32, -16, 38, 10, 24, 26, -18, 28, -39, 13)
-shade_offset = Vector2(11, 17)
-shade_size = Vector2(94, 62)
-shade_strength = 0.51
+shade_offset = Vector2(4.74, 8.89)
+shade_size = Vector2(120.94, 96)
+shade_strength = 0.87
+shade_texture = ExtResource("mesa_shade")
+footing_texture = ExtResource("mesa_scree")
 shared_texture = ExtResource("mesa")
 
 [node name="Oasis" type="Node2D" parent="Terrain/Landmarks"]
@@ -204,9 +212,11 @@ position = Vector2(113, 459)
 shared_texture = ExtResource("mesa")
 size = Vector2(155, 120)
 footprint = PackedVector2Array(-69, -38, 8, -55, 61, -29, 73, 22, 38, 50, -35, 54, -72, 24)
-shade_offset = Vector2(18, 14)
-shade_size = Vector2(168, 102)
-shade_strength = 0.62
+shade_offset = Vector2(8.86, 16.67)
+shade_size = Vector2(225.86, 180)
+shade_strength = 0.87
+shade_texture = ExtResource("mesa_shade")
+footing_texture = ExtResource("mesa_scree")
 
 [node name="ApronVerge" type="Node2D" parent="Terrain/Landmarks"]
 script = ExtResource("piece")

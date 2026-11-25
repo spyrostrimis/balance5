@@ -2,6 +2,7 @@
 
 ## RTS Desert Crossing · painted terrain reference pass · 2026-11-25
 
+- [x] Check cliff and mesa feet at the same camera. The shadow starts at the rock edge and fades into the sand beyond the rubble. [Before and after](RTS_DESERT_CROSSING.md#cliff-contact-pass)
 - [x] Compare the old opening and reference pass with the same field and HUD. Read the northeast terraces, turquoise spring, broad dune fields, and Orichalcum plaza as separate landmarks.
 - [x] Retain the squad route, dune slow-down, paired tank tracks and right-click attack. Check the revised rock and outpost footprints.
 - [x] Verify both Desert Crossing and Carbon on the main Developers Page and through Play and Esc in the Windows export.

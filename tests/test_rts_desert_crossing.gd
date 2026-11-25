@@ -3,8 +3,8 @@ extends SceneTree
 
 const STUDY := preload("res://scenes/maps/rts_desert_crossing.tscn")
 const CARBON := "res://scenes/maps/rts_reusable_2_carbon.tscn"
-const OUTPUT := "res://render_captures/rts_desert_reference_pass/"
-const SHADE := Vector2(464, 240)
+const OUTPUT := "res://render_captures/rts_desert_cliff_grounding/"
+const SHADE := Vector2(496, 240)
 const TANK_GOAL := Vector2(432, 240)
 
 var _study: Node2D
@@ -56,6 +56,8 @@ func _headless() -> void:
 		_check(not grid.is_walkable(grid.cell_of(landmark.position)), "%s footprint blocks routes" % name)
 	_check(grid.is_walkable(grid.cell_of(SHADE)) and grid.is_walkable(grid.cell_of(Vector2(306, 264))),
 		"dune and cliff shade are walkable")
+	_check(terrain.shade_at(Vector2(464, 212)) < 0.8 and terrain.shade_at(Vector2(464, 256)) > 0.98,
+		"base shadow stays close to the cliff and clears into sunlit sand")
 	_squad.command_move(grid.cell_of(SHADE))
 	var max_height := 0.0
 	var max_rate := 1.0
@@ -70,7 +72,7 @@ func _headless() -> void:
 	_check(max_height > 8 and max_rate > 1.12 and min_speed < 0.9,
 		"squad crests dune and shortens uphill steps (height %.2f, cadence %.2f, speed %.2f)" %
 		[max_height, max_rate, min_speed])
-	_check(safe and _squad.position.is_equal_approx(SHADE) and _squad._ground_light() < 0.80,
+	_check(safe and _squad.position.is_equal_approx(SHADE) and _squad._ground_light() < 0.96,
 		"squad holds its cells and reaches shared cliff shade (light %.2f)" % _squad._ground_light())
 	_tank.command_move(grid.cell_of(TANK_GOAL))
 	for i in 106:
@@ -146,7 +148,7 @@ func _stills() -> void:
 	for i in 125:
 		await physics_frame
 	await _pair("02-squad-crossing")
-	for i in 90:
+	for i in 115:
 		await physics_frame
 	_check(_squad.position.is_equal_approx(SHADE), "right-click squad into shade")
 	_click(_tank.position, MOUSE_BUTTON_LEFT)

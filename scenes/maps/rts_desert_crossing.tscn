@@ -132,7 +132,7 @@ offset_bottom = 489.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.83, 0.76, 0.63, 1)
 theme_override_font_sizes/font_size = 16
-text = "Send the squad across the dune into cliff shade. Follow with the tank and watch its tracks."
+text = "Send the squad across the dune toward the cliff foot. Follow with the tank and watch its tracks."
 autowrap_mode = 3
 
 [node name="Route" type="CheckButton" parent="HUD/Sidebar"]

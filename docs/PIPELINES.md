@@ -2,6 +2,8 @@
 
 ## Fit painted RTS modules to a composition reference
 
+For cliffs and mesas, run `tools/python/make_desert_cliff_footing.py` to build a close shadow and rubble layer from the cutout's outline. Place those layers beneath the rock using the same local rectangle. [Cliff contact pass](RTS_DESERT_CROSSING.md#cliff-contact-pass)
+
 Keep a matched opening capture before moving the terrain. Use the composition image to brief reusable cutouts for the cliff shelf, broad dune fields, outcrop, springs and verge rocks. Extract the cutouts with `tools/python/make_rts_desert_reference_pass.py`. Layer the dunes under the paved road and draw the plaza around the outcrop. Keep the dune relief and the landmark footprints aligned with the placed art. Run the crossing and compare the opening, tread lanes and arrival in shade in Forward+. [Reference pass and captures](RTS_DESERT_CROSSING.md)
 
 ## Compare a 2D commander's art and display resolution

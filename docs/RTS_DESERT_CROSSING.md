@@ -10,9 +10,13 @@ The same starting camera and HUD show both versions. The first proof's build, ca
 
 The new cutouts were generated with the built-in image tool from the owner's attached reference, which matched the saved concept pixel for pixel. The extraction script slices the cutouts and softens the dune edges into the flat sand. The placed art still uses authored height, shadow and blocking data. [Terrace prompt](../assets/source_inputs/rts/desert_reference_pass/terraces.prompt.txt) · [Dune prompt](../assets/source_inputs/rts/desert_reference_pass/dunes.prompt.txt) · [Landmarks prompt](../assets/source_inputs/rts/desert_reference_pass/landmarks.prompt.txt) · [Source sheets](../assets/source_inputs/rts/desert_reference_pass/) · [Extraction tool](../tools/python/make_rts_desert_reference_pass.py)
 
+## Cliff contact pass
+
+The wide ellipse beneath the northeast terrace suggested a gap under the rock. A shadow cut from the cliff's outline now starts at its foot and fades a short distance down and right. Loose chips bridge the edge from rock to sand. The same treatment grounds the two corner mesas. Unit tint reads the same mask. The gold squad target moved one tile east to meet the short shadow at its edge. [Matched cliff close-up](../render_captures/rts_desert_cliff_grounding/cliff-before-after.png) · [Full opening](../render_captures/rts_desert_cliff_grounding/01-opening-painted.png) · [Footing generator](../tools/python/make_desert_cliff_footing.py)
+
 ## The crossing
 
-1. Turn on **Show crossing targets** in the sidebar. The starting Blue squad is already selected. Right-click the gold **Squad** ring. Watch its first steps on the incline and the change in colour beneath the cliff.
+1. Turn on **Show crossing targets** in the sidebar. The starting Blue squad is already selected. Right-click the gold **Squad** ring. Watch its steps on the incline and the narrow strip of shade where the cliff meets the sand.
 2. Select the Blue tank below the squad's starting point. Right-click the pale blue **Tank** ring. Watch the bright dune crests break under its two treads, then press **V** while it is driving.
 3. Right-click a Red unit to start a skirmish. Press **R** to do the comparison again in the current look.
 
@@ -22,7 +26,7 @@ The outpost gives the player a building-sized reference. The minimap shows the a
 
 - **Painted HD.** The calmer sand gives the infantry and tank space. The layered rock shelf, amber deposit and teal pool locate the player across the view. The approach is paved from a reusable texture along a path, with separately placed stone patches under the landmarks.
 - **Pixel art.** The dune faces, water, and rock ledges group into fewer colours. The frame keeps the same landmarks and unit proportions. Terrain textures use material-specific colour ramps, with stepped shadow edges and nearest-neighbour display.
-- **Motion.** The uphill squad covered about 71% of its flat speed on the steepest part of the test route and advanced its walking cycle about 1.50 times as fast per world pixel. The lee changes its light multiplier to about 0.71, a modest difference on the small sprites. The tank stamps a shared map of tread contact where it crosses dunes. That map removes part of the drawn ripples along the two lanes for the rest of the trial. The slope remains in place so the pass is repeatable.
+- **Motion.** The uphill squad covered about 71% of its flat speed on the steepest part of the test route and advanced its walking cycle about 1.49 times as fast per world pixel. The shade is deepest right at the rock. The squad's light multiplier is about 0.93 at the gold ring. The tank stamps a shared map of tread contact where it crosses dunes. That map removes part of the drawn ripples along the two lanes for the rest of the trial. The slope remains in place so the pass is repeatable.
 
 ## First proof assets and layout
 

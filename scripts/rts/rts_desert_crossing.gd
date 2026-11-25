@@ -4,7 +4,7 @@ const CROSSING := preload("res://scenes/maps/rts_desert_crossing_field.tscn")
 const PIXEL_FIELD := Vector2i(720, 504)
 const FRAME := Rect2(0, 48, 960, 672)
 const START := Vector2(360, 264)
-const SQUAD_TARGET := Vector2(464, 240)
+const SQUAD_TARGET := Vector2(496, 240)
 const TANK_TARGET := Vector2(432, 240)
 
 var terrain: RtsDesertTerrain

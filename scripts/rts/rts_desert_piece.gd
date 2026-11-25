@@ -10,10 +10,14 @@ extends Node2D
 @export var shade_offset := Vector2(12, 9)
 @export var shade_size := Vector2.ZERO
 @export_range(0.0, 1.0) var shade_strength := 0.0
+## Optional cliff-foot layers share the placement and dimensions of the shade.
+@export var shade_texture: Texture2D
+@export var footing_texture: Texture2D
 @export var relief_height := 0.0
 @export var relief_radius := Vector2(52.0, 45.0)
 
 var texture: Texture2D
+var _shade_pixels: Image
 
 
 func _draw() -> void:
@@ -33,8 +37,24 @@ func height_at(world: Vector2) -> float:
 	return relief_height * hill * hill
 
 
+func prepare_shade() -> void:
+	if shade_texture != null:
+		_shade_pixels = shade_texture.get_image()
+
+
+func shade_rect() -> Rect2:
+	return Rect2(shade_offset - shade_size * 0.5, shade_size)
+
+
 func shade_at(world: Vector2) -> float:
 	if shade_strength <= 0.0:
 		return 0.0
-	var d := 2.0 * (to_local(world) - shade_offset) / shade_size
+	var point := to_local(world)
+	if _shade_pixels != null:
+		var rect := shade_rect()
+		if not rect.has_point(point):
+			return 0.0
+		var texel := Vector2i((point - rect.position) / rect.size * Vector2(_shade_pixels.get_size()))
+		return shade_strength * _shade_pixels.get_pixelv(texel).a
+	var d := 2.0 * (point - shade_offset) / shade_size
 	return shade_strength * (1.0 - smoothstep(0.22, 1.0, d.length()))

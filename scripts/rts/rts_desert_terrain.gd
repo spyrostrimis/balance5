@@ -32,6 +32,7 @@ func prepare(grid: RtsGrid) -> void:
 				_relief.append(item)
 			if item.shade_strength > 0.0:
 				_shade.append(item)
+				item.prepare_shade()
 	var mask := Image.create_empty(WORLD_SIZE.x / CELL, WORLD_SIZE.y / CELL, false, Image.FORMAT_L8)
 	for y in mask.get_height():
 		for x in mask.get_width():
@@ -91,9 +92,12 @@ func _draw_shadows() -> void:
 		return
 	var shadows: Node2D = $Shadows
 	for piece in _shade:
-		var center := shadows.to_local(piece.to_global(piece.shade_offset))
-		shadows.draw_texture_rect(_shadow, Rect2(center - piece.shade_size * 0.5, piece.shade_size),
-			false, Color(1, 1, 1, piece.shade_strength))
+		var stamp := piece.shade_texture if piece.shade_texture != null else _shadow
+		shadows.draw_set_transform_matrix(shadows.global_transform.affine_inverse() * piece.global_transform)
+		shadows.draw_texture_rect(stamp, piece.shade_rect(), false, Color(1, 1, 1, piece.shade_strength))
+		if piece.footing_texture != null:
+			shadows.draw_texture_rect(piece.footing_texture, piece.shade_rect(), false)
+	shadows.draw_set_transform(Vector2.ZERO)
 
 
 func height_at(point: Vector2) -> float:

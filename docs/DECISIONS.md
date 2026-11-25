@@ -1,5 +1,10 @@
 # Decisions
 
+### 2026-11-25 · Ground the painted RTS cliffs
+Area: RTS · Status: Decided
+
+Use a tight shadow derived from the cliff silhouette and place loose rubble at the foot. Sample that same shadow for unit lighting. The broad ellipse beneath the northeast terrace made the rock look suspended. [Matched evidence](RTS_DESERT_CROSSING.md#cliff-contact-pass)
+
 ### 2026-11-25 · Choose modular Painted HD 2D for the RTS
 Area: RTS · Status: Decided
 

@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Desert Crossing · cliff contact · 2026-11-25
+
+The owner saw the northeast terrace as hovering above its broad shadow. At the same camera, a shadow shaped by the cliff outline and a scatter of loose stones make the rock meet the sand. The corner mesas use the same approach. The squad still slows on the dune and reaches the edge of the shorter shadow. The tank still leaves paired lanes and the right-click attack works. [Matched cliff comparison](RTS_DESERT_CROSSING.md#cliff-contact-pass)
+
 ## RTS Desert Crossing · painted terrain reference pass · 2026-11-25
 
 At the same opening camera, the stepped northeast cliff reads as one formation, the pool sits at its foot and the amber deposit sits in a continuous paved approach. Broad dune bands leave a quiet centre for the units. The old three-crest stamp had a conspicuous repeated outline at the opening. The new ripples and swells give the upper and lower fields different shapes. The remaining visual gap is richer variation within the broad sand and at the scale of the units. The squad still crosses and slows on the dune, and the tank still makes two distinct lanes. Desert Crossing and the Carbon build are on the main Developers Page. [Matched stills and source pieces](RTS_DESERT_CROSSING.md)

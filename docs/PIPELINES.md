@@ -1,5 +1,14 @@
 # Pipelines
 
+## Repaint an existing Carbon battlefield
+
+Area: RTS art · Status: In use · Tools: ImageGen, Python with Pillow, NumPy and OpenCV, Godot 4.7.2 Forward+, FFmpeg
+
+1. Capture the original northeast framing at both zooms with the same tank and squad. Use the Carbon cutouts for angle, silhouette and posing and the forest image for paint and light.
+2. Build the northeast set with `tools/python/make_rts_carbon_miasaki.py --proof`. Check both views in the live game, including the cliff's blocked tiles and the squad on bare sand.
+3. Build the remaining modules with the same tool. It fits the generated paint to the original transparency, preserves the joints and feet in the unit sheets, and stores dune colour as the changes the ground shader can flatten under tracks. Give mirrored rocks separately painted upper-left light.
+4. Run both Carbon checks and the Miasaki route. Capture and inspect the views and clip, then export the Windows Desktop preset and verify the available Play cards and Esc. [Commands and evidence](RTS_REUSABLE_2_CARBON_MIASAKI.md)
+
 ## Build a continuous isometric painted walk and fight
 
 Area: RPG · Status: In use · Tools: Godot 4.7.2 Forward+, ImageGen, Python with Pillow and NumPy, FFmpeg

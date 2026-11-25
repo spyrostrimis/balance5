@@ -13,7 +13,6 @@ const GRID_W := 44
 const GRID_H := 28
 const TREAD_W := 704
 const TREAD_H := 448
-const TEX_DIR := "res://assets/textures/rts/carbon/"
 const GROUND_SHADER := preload("res://assets/shaders/rts_carbon_ground.gdshader")
 const DUNE_SHADER := preload("res://assets/shaders/rts_carbon_dune.gdshader")
 const HOLD_RADIUS := 138.0
@@ -21,6 +20,7 @@ const HOLD_DURATION := 30.0
 
 @export var start_pixel_mode := false
 @export var start_close_zoom := false
+@export_dir var detailed_art_directory := ""
 
 var pixel_mode := false
 var close_zoom := false
@@ -85,11 +85,11 @@ var _initial_unit_spawns: Array[Dictionary] = []
 
 func _ready() -> void:
 	_parse_cli_flags()
-	_sand_hd = load(TEX_DIR + "sand_tile_hd.png") as Texture2D
-	_sand_px = load(TEX_DIR + "sand_tile_pixel.png") as Texture2D
-	_road_hd = load(TEX_DIR + "road_strip_hd.png") as Texture2D
-	_road_px = load(TEX_DIR + "road_strip_pixel.png") as Texture2D
-	_shadow_tex = load(TEX_DIR + "soft_shadow.png") as Texture2D
+	_sand_hd = RtsCarbonArt.texture("sand_tile", false, detailed_art_directory)
+	_sand_px = RtsCarbonArt.texture("sand_tile", true)
+	_road_hd = RtsCarbonArt.texture("road_strip", false, detailed_art_directory)
+	_road_px = RtsCarbonArt.texture("road_strip", true)
+	_shadow_tex = preload("res://assets/textures/rts/carbon/soft_shadow.png")
 
 	_collect_pieces()
 	_build_blocked_and_calm_masks()
@@ -103,6 +103,7 @@ func _ready() -> void:
 
 	hud.world_size = WORLD_SIZE
 	hud.minimap_tex = _build_minimap_texture()
+	hud.load_portraits(detailed_art_directory)
 	hud.command_button_pressed.connect(_on_hud_command)
 	hud.minimap_pan_requested.connect(func(wpos: Vector2) -> void: set_camera_focus(wpos))
 	hud.minimap_order_requested.connect(func(wpos: Vector2) -> void: issue_order_at(wpos))
@@ -225,7 +226,7 @@ func _setup_units() -> void:
 	for child in world_ysort.get_children():
 		var u := child as RtsCarbonUnit
 		if u != null:
-			u.setup(self, grid, pixel_mode)
+			u.setup(self, grid, pixel_mode, detailed_art_directory)
 
 
 func _select_initial_group() -> void:
@@ -251,6 +252,7 @@ func apply_visual_mode(use_pixel: bool) -> void:
 	var stex := _sand_px if use_pixel else _sand_hd
 	_ground_mat.set_shader_parameter("sand_tex", stex)
 	_ground_mat.set_shader_parameter("pixel_mode", use_pixel)
+	_ground_mat.set_shader_parameter("painted_sand", not use_pixel and not detailed_art_directory.is_empty())
 	_ground_mat.set_shader_parameter("show_treads", show_treads)
 
 	road_line.texture = _road_px if use_pixel else _road_hd
@@ -258,7 +260,8 @@ func apply_visual_mode(use_pixel: bool) -> void:
 	road_line.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if use_pixel else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 	for p in _pieces:
-		p.apply_visual_mode(use_pixel, DUNE_SHADER, stex, _calm_tex, _tread_tex, WORLD_SIZE, show_treads)
+		p.apply_visual_mode(use_pixel, DUNE_SHADER, stex, _calm_tex, _tread_tex, WORLD_SIZE,
+				show_treads, detailed_art_directory)
 
 	for u in get_living_units():
 		u.apply_visual_mode(use_pixel)
@@ -641,7 +644,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var mb := event as InputEventMouseButton
 		if hud.consumes_screen_point(mb.position):
 			return
-		var wpos := get_global_mouse_position()
+		var wpos := get_canvas_transform().affine_inverse() * mb.position
 		if mb.button_index == MOUSE_BUTTON_MIDDLE:
 			_pan_dragging = mb.pressed
 			get_viewport().set_input_as_handled()
@@ -684,7 +687,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_sync_camera_transform()
 			get_viewport().set_input_as_handled()
 		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not hud.consumes_screen_point(mm.position):
-			_drag_world = get_global_mouse_position()
+			_drag_world = get_canvas_transform().affine_inverse() * mm.position
 			if not _dragging_box and mm.position.distance_to(_press_screen) > 6.0:
 				_dragging_box = true
 			if _dragging_box:
@@ -863,7 +866,7 @@ func reset_encounter() -> void:
 		nu.turn_rate = float(sp["turn_rate"])
 		nu.position = sp["pos"] as Vector2
 		world_ysort.add_child(nu)
-		nu.setup(self, grid, pixel_mode)
+		nu.setup(self, grid, pixel_mode, detailed_art_directory)
 
 	set_camera_focus(Vector2(548.0, 432.0))
 	_select_initial_group()

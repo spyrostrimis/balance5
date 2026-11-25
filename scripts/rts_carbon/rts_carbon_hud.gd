@@ -11,7 +11,6 @@ signal minimap_pan_requested(world_pos: Vector2)
 signal minimap_order_requested(world_pos: Vector2)
 signal toggle_requested(which: String)
 
-const TEX_DIR := "res://assets/textures/rts/carbon/"
 const VIRTUAL_W := 960.0
 const VIRTUAL_H := 540.0
 const TOP_BAR_H := 34.0
@@ -62,9 +61,11 @@ func _ready() -> void:
 	_panel.gui_input.connect(_on_panel_gui_input)
 	add_child(_panel)
 
+
+func load_portraits(detailed_art_directory: String) -> void:
 	for key in ["blue_squad", "blue_commander", "blue_tank", "red_squad", "red_commander", "red_tank", "orichalcum"]:
-		_portraits_hd[key] = load(TEX_DIR + "portrait_" + key + "_hd.png") as Texture2D
-		_portraits_px[key] = load(TEX_DIR + "portrait_" + key + "_pixel.png") as Texture2D
+		_portraits_hd[key] = RtsCarbonArt.texture("portrait_" + key, false, detailed_art_directory)
+		_portraits_px[key] = RtsCarbonArt.texture("portrait_" + key, true)
 
 
 func request_repaint() -> void:

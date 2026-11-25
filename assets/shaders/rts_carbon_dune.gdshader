@@ -8,6 +8,7 @@ uniform vec2 piece_origin = vec2(0.0);
 uniform vec2 piece_size = vec2(256.0, 192.0);
 uniform bool pixel_mode = false;
 uniform bool show_treads = true;
+uniform bool painted_sand = false;
 
 float hash21(vec2 p) {
 	p = fract(p * vec2(123.34, 456.21));
@@ -33,6 +34,11 @@ vec3 eval_desert_sand(vec2 wpos, float calm) {
 		sample_pos.x * 0.94 + sample_pos.y * 0.34,
 		-sample_pos.x * 0.34 + sample_pos.y * 0.94
 	);
+	if (painted_sand) {
+		float swell = sin(wind_uv.y * 0.027 + sin(wind_uv.x * 0.011) * 0.72);
+		float drift = sin(dot(sample_pos, vec2(0.005, -0.008)));
+		return base * (1.0 + (swell * 0.037 + drift * 0.016) * mix(1.0, 0.3, calm));
+	}
 	float swell = value_noise(wind_uv / vec2(190.0, 78.0)) - 0.5;
 	float drift = value_noise(sample_pos / 320.0) - 0.5;
 	float open_factor = mix(1.0, 0.25, calm);

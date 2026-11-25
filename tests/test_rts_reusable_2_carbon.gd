@@ -9,13 +9,18 @@ extends SceneTree
 
 const SCENE_PATH := "res://scenes/maps/rts_reusable_2_carbon.tscn"
 const CAP_DIR := "res://render_captures/rts_carbon/"
+const MIASAKI_SCENE_PATH := "res://scenes/maps/rts_reusable_2_carbon_miasaki.tscn"
 
 var _failures: Array[String] = []
+var _capture_dir := CAP_DIR
 
 
 func _initialize() -> void:
-	var capture_mode := "--capture" in OS.get_cmdline_user_args()
-	call_deferred("_run", capture_mode)
+	var args := OS.get_cmdline_user_args()
+	var miasaki := "--miasaki" in args
+	if miasaki:
+		_capture_dir = "res://render_captures/rts_carbon_miasaki/regression/"
+	call_deferred("_run", "--capture" in args, MIASAKI_SCENE_PATH if miasaki else SCENE_PATH)
 
 
 func _check(cond: bool, msg: String) -> void:
@@ -37,22 +42,23 @@ func _save_pair(map: RtsCarbonBattlefield, stem: String) -> void:
 	await process_frame
 	await process_frame
 	var img_hd := root.get_viewport().get_texture().get_image()
-	img_hd.save_png(ProjectSettings.globalize_path(CAP_DIR + stem + "_hd.png"))
+	img_hd.save_png(ProjectSettings.globalize_path(_capture_dir + stem + "_hd.png"))
 
 	map.apply_visual_mode(true)
 	await process_frame
 	await process_frame
 	var img_px := root.get_viewport().get_texture().get_image()
-	img_px.save_png(ProjectSettings.globalize_path(CAP_DIR + stem + "_pixel.png"))
+	img_px.save_png(ProjectSettings.globalize_path(_capture_dir + stem + "_pixel.png"))
 
 	map.apply_visual_mode(false)
 	await process_frame
 
 
-func _run(capture_mode: bool) -> void:
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(CAP_DIR))
-	var packed := load(SCENE_PATH) as PackedScene
-	_check(packed != null, "Load rts_reusable_2_carbon.tscn")
+func _run(capture_mode: bool, scene_path: String) -> void:
+	if capture_mode:
+		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(_capture_dir))
+	var packed := load(scene_path) as PackedScene
+	_check(packed != null, "Load " + scene_path)
 	if packed == null:
 		quit(1)
 		return

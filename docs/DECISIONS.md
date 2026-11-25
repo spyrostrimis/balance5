@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-25 · Compare Forest Fight 4 painting on the Carbon battlefield
+
+Area: RTS · Status: Trying
+
+The owner chose Forest Fight 4 for paint and light, with Carbon setting the camera, positioning and play. Put the repaint on a separate Play card and use the existing Pixel look on V. Northeast review settled quieter peach sand, cool shadows under limestone ledges and a sharp cliff foot as the colour and contrast targets. The new Detailed treatment carries them across the map. [Miasaki frames and route](RTS_REUSABLE_2_CARBON_MIASAKI.md)
+
 ### 2026-11-25 · Try continuous isometric movement and full-circle fire in Fight 4
 
 Area: RPG · Status: Trying

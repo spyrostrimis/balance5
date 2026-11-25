@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/rts_reusable_2_carbon.tscn" id="1_carbon"]
+
+[node name="RtsReusable2CarbonMiasaki" instance=ExtResource("1_carbon")]
+detailed_art_directory = "res://assets/textures/rts/carbon_miasaki"

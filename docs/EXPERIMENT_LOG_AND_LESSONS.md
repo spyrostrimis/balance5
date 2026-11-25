@@ -1,5 +1,11 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Reusable 2 Carbon — Miasaki · 2026-11-25
+
+The first matched northeast frames showed that warm limestone, soft reflected turquoise and cool ledge shade could tie the desert to Forest Fight 4. The new field also exposed diagonal steps in the original sand lighting. A continuous wind-light pattern removed those steps in Detailed, and deeper shade under the painted ledges kept the cliff grounded. Four Red soldiers remained countable on the quieter sand at Command. The blocked tiles follow Carbon's stepped grid, with a little walkable rubble and shallow water at the rim.
+
+The full repaint followed that check. The tank crossed the dune, left two visible flattened lanes and darkened at the cliff foot. A Blue squad went around Orichalcum with all four soldiers. Both versions reached the same battlefield and minimap click destinations, and the matched Pixel captures were identical. Verified Play and Esc from the Windows export. [Matched frames and 20-second route](RTS_REUSABLE_2_CARBON_MIASAKI.md)
+
 ## RTS Desert Crossing · cliff contact · 2026-11-25
 
 The owner saw the northeast terrace as hovering above its broad shadow. At the same camera, a shadow shaped by the cliff outline and a scatter of loose stones make the rock meet the sand. The corner mesas use the same approach. The squad still slows on the dune and reaches the edge of the shorter shadow. The tank still leaves paired lanes and the right-click attack works. [Matched cliff comparison](RTS_DESERT_CROSSING.md#cliff-contact-pass)

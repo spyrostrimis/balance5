@@ -5,8 +5,6 @@ extends Node2D
 ## Swaps cleanly in-place between 2x Detailed Painted (*_hd.png) and 1x 960x540 Pixel (*_pixel.png),
 ## while sharing the exact same blocked footprint, cast shadow, lee shade, and dune relief.
 
-const TEX_DIR := "res://assets/textures/rts/carbon/"
-
 @export var piece_id := "rock_mesa"
 @export var world_size := Vector2(196.0, 140.0)
 ## "obstacle", "dune", "ground_decal", or "prop"
@@ -33,10 +31,13 @@ var pixel_mode := false
 
 func apply_visual_mode(use_pixel: bool, dune_shader: Shader = null, sand_tex: Texture2D = null,
 		calm_tex: Texture2D = null, tread_tex: Texture2D = null, map_world_size := Vector2(1408, 896),
-		show_treads := true) -> void:
+		show_treads := true, detailed_art_directory := "") -> void:
 	pixel_mode = use_pixel
-	var suffix := "_pixel.png" if use_pixel else "_hd.png"
-	texture = load(TEX_DIR + piece_id + suffix) as Texture2D
+	texture = null
+	if flip_x and not use_pixel:
+		texture = RtsCarbonArt.detailed_texture(piece_id + "_mirrored", detailed_art_directory)
+	if texture == null:
+		texture = RtsCarbonArt.texture(piece_id, use_pixel, detailed_art_directory)
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if use_pixel else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 	if layer_role == "dune" and dune_shader != null:
@@ -52,6 +53,7 @@ func apply_visual_mode(use_pixel: bool, dune_shader: Shader = null, sand_tex: Te
 		sm.set_shader_parameter("piece_origin", global_position)
 		sm.set_shader_parameter("piece_size", world_size)
 		sm.set_shader_parameter("pixel_mode", use_pixel)
+		sm.set_shader_parameter("painted_sand", not use_pixel and not detailed_art_directory.is_empty())
 		sm.set_shader_parameter("show_treads", show_treads)
 	queue_redraw()
 

@@ -10,7 +10,6 @@ enum Team { BLUE, RED }
 enum Role { SQUAD, COMMANDER, TANK }
 enum Order { NONE, MOVE, ATTACK }
 
-const TEX_DIR := "res://assets/textures/rts/carbon/"
 const MEND_COOLDOWN := 8.0
 const MEND_RADIUS := 120.0
 const MEND_AMOUNT := 30
@@ -76,6 +75,7 @@ var _moving_now := false
 
 var _tex_main: Texture2D
 var _tex_turret: Texture2D
+var _detailed_art_directory := ""
 
 # Staggered diamond offsets for 4-soldier squads (in local rotated space)
 const SQUAD_SLOTS := [
@@ -86,9 +86,10 @@ const SQUAD_SLOTS := [
 ]
 
 
-func setup(p_battlefield: Node2D, p_grid: RtsGrid, use_pixel: bool) -> void:
+func setup(p_battlefield: Node2D, p_grid: RtsGrid, use_pixel: bool, detailed_art_directory := "") -> void:
 	battlefield = p_battlefield
 	grid = p_grid
+	_detailed_art_directory = detailed_art_directory
 	health = max_health
 	cell = grid.cell_of(position)
 	if not grid.is_free(cell, self):
@@ -110,14 +111,13 @@ func setup(p_battlefield: Node2D, p_grid: RtsGrid, use_pixel: bool) -> void:
 
 func apply_visual_mode(use_pixel: bool) -> void:
 	pixel_mode = use_pixel
-	var suf := "_pixel.png" if use_pixel else "_hd.png"
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if use_pixel else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	if role == Role.TANK:
 		var prefix := "blue_tank" if team == Team.BLUE else "red_tank"
-		_tex_main = load(TEX_DIR + prefix + "_hull" + suf) as Texture2D
-		_tex_turret = load(TEX_DIR + prefix + "_turret" + suf) as Texture2D
+		_tex_main = RtsCarbonArt.texture(prefix + "_hull", use_pixel, _detailed_art_directory)
+		_tex_turret = RtsCarbonArt.texture(prefix + "_turret", use_pixel, _detailed_art_directory)
 	else:
-		_tex_main = load(TEX_DIR + sprite_key + suf) as Texture2D
+		_tex_main = RtsCarbonArt.texture(sprite_key, use_pixel, _detailed_art_directory)
 		_tex_turret = null
 	queue_redraw()
 

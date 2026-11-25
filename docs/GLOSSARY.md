@@ -28,6 +28,11 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Sprite sheet
+Area: RTS art
+
+One picture holding several poses in fixed boxes. The game picks a box as a unit turns or walks. In Carbon the tank's hull and turret use separate sheets with the same centre so one can turn while the other keeps aiming.
+
 ### Terrain module
 Area: RTS art
 

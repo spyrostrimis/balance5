@@ -1,5 +1,14 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Reusable 2 Carbon — Miasaki · 2026-11-25
+
+- [x] Review the same tank and four Red soldiers beside the northeast cliff at Command and Close in Forward+. Check warm rims, cool faces, reflected water colour and where the cliff blocks movement.
+- [x] Repaint the separate modules and unit frames while preserving dimensions, feet and tank turret centres. Keep the amber Orichalcum as the main landmark.
+- [x] Check the paired tracks through the east dune, shade on the moving tank and the four soldiers around the Orichalcum rock. Verify both click destinations, live Pixel, both Play cards and Esc from the export.
+- [ ] Owner reviews the desert beside Forest Fight 4 and chooses the preferred painted look.
+
+[Miasaki evidence](RTS_REUSABLE_2_CARBON_MIASAKI.md)
+
 ## 2D Painted Forest Fight 4 · 2026-11-25
 
 - [x] Floor diamonds project at ±30°. Camera translation, zoom, figure height, aim and movement carry across the doorway in both directions.

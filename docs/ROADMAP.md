@@ -65,6 +65,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Units in Motion study has any-angle travel, gradual tank turns and curved tracks. Tight corner and single-lane traffic checks passed. [Playable study](RTS_UNITS_IN_MOTION.md)
 - [x] Compare both factions’ eight-facing squads, commanders and tanks in Painted HD and Pixel art at the same playing size. [Matched captures and motion](RTS_UNITS_IN_MOTION.md#matched-captures)
 - [x] Build playable **RTS Reusable 2 Carbon** (`scenes/maps/rts_reusable_2_carbon.tscn`) from reusable ChatGPT landmarks, dune clusters, limestone road, stone outposts, 4-soldier squads, commanders, 8-facing tanks, Mend healing, Orichalcum hold timer and Dune II HUD, with live `V` Detailed Painted / `960×540` Pixel and `Z` `21×14` / `15×10` zoom comparison ([Study](RTS_REUSABLE_2_CARBON.md))
+- [x] Build and export **RTS Reusable 2 Carbon — Miasaki** as a separate Play card. Verify the northeast comparison, live Pixel, tank tracks and shade, and the squad route around Orichalcum. [Matched frames and recording](RTS_REUSABLE_2_CARBON_MIASAKI.md)
+- [ ] Owner compares Miasaki with original Carbon and Forest Fight 4 at both zoom stops.
 - [x] Owner plays Units in Motion / Desert Crossing and chooses modular Painted HD 2D as the RTS art direction.
 - [x] Bring Desert Crossing and Carbon into the main Developers Page. Paint the connected terraces, dune fields and Orichalcum plaza for the Desert Crossing reference pass. [Desert Crossing](RTS_DESERT_CROSSING.md)
 - [ ] Compare mission-scale visibility and zoom with the modular painted terrain in play.

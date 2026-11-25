@@ -1,0 +1,174 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts/rts_desert_crossing.gd" id="study"]
+[ext_resource type="Theme" path="res://scenes/ui/launcher_theme.tres" id="theme"]
+
+[sub_resource type="StyleBoxFlat" id="TopStyle"]
+bg_color = Color(0.105, 0.094, 0.081, 1)
+border_width_bottom = 1
+border_color = Color(0.59, 0.43, 0.24, 1)
+
+[sub_resource type="StyleBoxFlat" id="SideStyle"]
+bg_color = Color(0.125, 0.111, 0.093, 1)
+border_width_left = 1
+border_color = Color(0.59, 0.43, 0.24, 1)
+
+[node name="DesertCrossing" type="Node2D"]
+script = ExtResource("study")
+
+[node name="Screen" type="SubViewportContainer" parent="."]
+mouse_filter = 1
+
+[node name="Field" type="SubViewport" parent="Screen"]
+handle_input_locally = false
+size = Vector2i(720, 504)
+render_target_update_mode = 4
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Help" type="Label" parent="HUD"]
+visible = false
+
+[node name="Notice" type="Label" parent="HUD"]
+visible = false
+
+[node name="Top" type="Panel" parent="HUD"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TopStyle")
+
+[node name="Title" type="Label" parent="HUD/Top"]
+offset_left = 230.0
+offset_top = 3.0
+offset_right = 880.0
+offset_bottom = 45.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.97, 0.91, 0.79, 1)
+theme_override_font_sizes/font_size = 25
+text = "Desert Crossing"
+
+[node name="Look" type="Label" parent="HUD/Top"]
+offset_left = 1000.0
+offset_top = 6.0
+offset_right = 1253.0
+offset_bottom = 42.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.76, 0.43, 1)
+theme_override_font_sizes/font_size = 15
+text = "PAINTED HD"
+horizontal_alignment = 2
+
+[node name="Sidebar" type="Panel" parent="HUD"]
+offset_left = 960.0
+offset_top = 48.0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme = ExtResource("theme")
+theme_override_styles/panel = SubResource("SideStyle")
+
+[node name="MapLabel" type="Label" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 38.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.76, 0.43, 1)
+theme_override_font_sizes/font_size = 13
+text = "BATTLEFIELD"
+
+[node name="Overview" type="Control" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 48.0
+offset_right = 296.0
+offset_bottom = 228.0
+mouse_filter = 2
+
+[node name="SelectionLabel" type="Label" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 248.0
+offset_right = 300.0
+offset_bottom = 270.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.76, 0.43, 1)
+theme_override_font_sizes/font_size = 13
+text = "SELECTION"
+
+[node name="Selection" type="Label" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 277.0
+offset_right = 296.0
+offset_bottom = 334.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.97, 0.91, 0.79, 1)
+theme_override_font_sizes/font_size = 18
+text = "Blue Squad\n60 / 60 health"
+
+[node name="Divider" type="ColorRect" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 351.0
+offset_right = 296.0
+offset_bottom = 352.0
+mouse_filter = 2
+color = Color(0.46, 0.35, 0.23, 1)
+
+[node name="RouteLabel" type="Label" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 372.0
+offset_right = 296.0
+offset_bottom = 394.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.76, 0.43, 1)
+theme_override_font_sizes/font_size = 13
+text = "CROSS THE DUNE"
+
+[node name="Instructions" type="Label" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 403.0
+offset_right = 296.0
+offset_bottom = 489.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.83, 0.76, 0.63, 1)
+theme_override_font_sizes/font_size = 16
+text = "Send the squad across the dune into cliff shade. Follow with the tank and watch its tracks."
+autowrap_mode = 3
+
+[node name="Route" type="CheckButton" parent="HUD/Sidebar"]
+offset_left = 18.0
+offset_top = 488.0
+offset_right = 296.0
+offset_bottom = 518.0
+theme_override_font_sizes/font_size = 15
+focus_mode = 0
+text = "Show crossing targets"
+
+[node name="Switch" type="Button" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 536.0
+offset_right = 296.0
+offset_bottom = 575.0
+theme_override_font_sizes/font_size = 17
+focus_mode = 0
+text = "Pixel art  [V]"
+
+[node name="Restart" type="Button" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 583.0
+offset_right = 296.0
+offset_bottom = 619.0
+theme_type_variation = "QuietButton"
+theme_override_font_sizes/font_size = 14
+focus_mode = 0
+text = "Restart  [R]"
+
+[node name="Input" type="Label" parent="HUD/Sidebar"]
+offset_left = 24.0
+offset_top = 634.0
+offset_right = 299.0
+offset_bottom = 664.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.74, 0.65, 0.53, 1)
+theme_override_font_sizes/font_size = 13
+text = "Right-click order   ·   S stop   ·   F1 grid"

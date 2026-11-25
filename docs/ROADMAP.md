@@ -49,6 +49,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [ ] Objective panel with progress bar ("Hold the Orichalcum rock")
 
 ### Maps
+- [x] Build the painted modular Desert Crossing proof and a matched pixel look. Verify a dune crossing, cliff shade and paired tread lanes at playing size. [Playable proof](RTS_DESERT_CROSSING.md)
+- [ ] Owner reviews Desert Crossing and decides whether to extend the modular desert kit or test the whole-map painting in play. [Matched captures and route](RTS_DESERT_CROSSING.md)
 - [x] Modular desert kitbash library and a playable mini-map
 - [x] RTS art rules (scale, 48-colour palette, light) and style test 1 with every layer (`docs/RTS_ART_RULES.md`)
 - [x] Style test 2: painted sand, dune, rock-top, cliff-wall and road textures (art rules §6b)

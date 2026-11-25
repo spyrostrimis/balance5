@@ -1,5 +1,13 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Desert Crossing · 2026-11-25
+
+- [x] Match the two looks at a 15 × 10½-cell opening field with a minimap and selection in the sidebar. See a building, the squad, a tank and the resource in the same view.
+- [x] Verify a squad slowing on the incline and darkening under the cliff. Follow with a tank. Inspect the two lanes, switch styles, and verify restart and Play/Esc.
+- [ ] Owner plays the crossing and judges the modular detailed direction next to the pixel treatment.
+
+[Desert Crossing evidence](RTS_DESERT_CROSSING.md)
+
 ## 2D Painted Forest Fight · 2026-11-25
 
 - [x] Stop and reverse before the sill with the forest trail, buttress trees and mossy boulder visible. Crossing the sill once hides the boots first, then the silhouette, before showing daylight from inside.

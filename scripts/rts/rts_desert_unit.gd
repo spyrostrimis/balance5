@@ -17,3 +17,9 @@ func _footfall_rate() -> float:
 
 func _ground_light() -> float:
 	return terrain.shade_at(position) if RtsLook.ground_light else 1.0
+
+
+func take_damage(amount: int, attacker: RtsUnit) -> void:
+	if alive and is_instance_valid(attacker):
+		peaceful = false
+	super.take_damage(amount, attacker)

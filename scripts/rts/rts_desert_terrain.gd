@@ -78,7 +78,7 @@ func _load_art(key: String) -> Texture2D:
 
 func _draw() -> void:
 	if _sand != null:
-		var density := 2.0 if painted else 1.0
+		var density := 3.0 if painted else 1.5
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE / density)
 		draw_texture_rect(_sand, Rect2(Vector2.ZERO, Vector2(WORLD_SIZE) * density), true)
 		draw_set_transform(Vector2.ZERO)
@@ -110,6 +110,16 @@ func shade_at(point: Vector2) -> float:
 	for piece in _shade:
 		light *= 1.0 - piece.shade_at(point) * 0.60
 	return clampf(light, 0.54, 1.0)
+
+
+func is_paved(point: Vector2) -> bool:
+	var paving := $Road/Paving as Line2D
+	var points := paving.points
+	for index in range(1, points.size()):
+		var nearest := Geometry2D.get_closest_point_to_segment(point, points[index - 1], points[index])
+		if nearest.distance_to(point) < paving.width * 0.46:
+			return true
+	return false
 
 
 func add_treads(previous: Vector2, previous_heading: Vector2, next: Vector2, heading: Vector2) -> void:

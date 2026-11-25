@@ -1,5 +1,9 @@
 # Pipelines
 
+## Lay out a reusable painted RTS battlefield
+
+Use a layout guide to generate one full-scene concept and a sheet of isolated pieces at a consistent overhead angle. Keep the original images and prompts. The Desert Crossing extraction tool makes the paired artwork for each module. Place the modules in the playfield scene and set footprints, dune relief and shade with the same placement. Check a live crossing and switch art with the camera and selection held in place. [Desert Crossing assets and tests](RTS_DESERT_CROSSING.md#assets-and-layout)
+
 ## Build and verify a painted forest fight
 Area: RPG · Status: In use · Tools: Godot 4.7.2 Forward+, ChatGPT ImageGen, Python (Pillow, NumPy and OpenCV), FFmpeg
 

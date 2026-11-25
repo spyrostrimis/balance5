@@ -1,5 +1,10 @@
 # Decisions
 
+### 2026-11-25 · Painted terrain first for the RTS proof
+Area: RTS · Status: Trying
+
+The owner prefers painted detail alongside the RPG and wants a distinct pixel version as a second choice. Desert Crossing tests reusable terrain and units on one battlefield, with shared camera framing, relief, shade and tread positions. A whole-scene painting provides the composition and remains available for a future playable comparison. [Desert Crossing](RTS_DESERT_CROSSING.md)
+
 ### 2026-11-25 · Walk into the forest cave before raising the rifle
 Area: Canyon · Status: Trying
 

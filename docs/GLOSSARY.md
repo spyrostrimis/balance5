@@ -28,6 +28,16 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Terrain module
+Area: RTS art
+
+A reusable piece of art that can be placed on a battlefield, such as a cliff shelf or a low dune. A module can carry its own footprint, relief or shadow so its gameplay information moves with its picture. [Desert Crossing](RTS_DESERT_CROSSING.md#assets-and-layout)
+
+### Tread compression
+Area: RTS terrain
+
+The flattened strips left by a tank's two treads on a dune. Desert Crossing records where the treads touched and softens or removes the drawn ripples there. Both looks read the same record. [Desert Crossing](RTS_DESERT_CROSSING.md#what-to-judge)
+
 ### Depth lane
 Area: RPG combat
 

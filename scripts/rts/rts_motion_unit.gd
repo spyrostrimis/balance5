@@ -194,6 +194,8 @@ func _leave_distance_marks(previous: Vector2) -> void:
 		return
 	_moving_now = true
 	distance_walked += moved
+	var step_advance := moved * _footfall_rate() if not stats.vehicle else 0.0
+	_step_distance += step_advance
 	if RtsLook.instance == null:
 		return
 	if stats.vehicle:
@@ -210,8 +212,6 @@ func _leave_distance_marks(previous: Vector2) -> void:
 			RtsLook.instance.add_dust(position - _facing * 10.0, -_facing)
 	else:
 		var stride := _stride()
-		var step_advance := moved * _footfall_rate()
-		_step_distance += step_advance
 		for index in _figure_count():
 			var phase: float = PHASE[index] if _figure_count() == 4 else 0.0
 			var p := _step_distance / stride + phase

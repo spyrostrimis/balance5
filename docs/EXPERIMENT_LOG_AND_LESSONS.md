@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Desert Crossing · 2026-11-25
+
+Proved a 15 × 10½-cell RTS view with a HUD, a reusable cliff shelf and dune cluster, the amber resource and teal water. The paired painted and pixel treatments share a field. Both render the same squad slowing uphill and darkening in shadow, and the same tank cutting two lanes into the dune art. The corridor and lens keep the route legible. The cliff shadow uses a soft authored shape, and the tread change is visual. The painted composition and tile pieces are ready for owner review. [Stills, clip, art and verification](RTS_DESERT_CROSSING.md)
+
 ## 2D Painted Forest Fight · 2026-11-25
 
 The windowed blockout proved the stop and reversal at the cave mouth, the boots-first threshold crossing, the cut to daylight behind the Commander and a same-lane shot on one diving bat. The finished Play card starts at the original forest entrance. A painted cave lip covers the last of her outline as she walks into shadow. The reverse view lasts just under one second before the side-on chamber appears and she raises the rifle. Holding forward through the change plays all three beats, then moves her towards the far wall. The first contact takes just over two seconds from the start of player control at the default position.

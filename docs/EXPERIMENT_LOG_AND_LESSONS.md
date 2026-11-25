@@ -1,5 +1,15 @@
 # Experiment Log & Hard-Won Lessons
 
+## 2D Painted Forest Fight · 2026-11-25
+
+The windowed blockout proved the stop and reversal at the cave mouth, the boots-first threshold crossing, the cut to daylight behind the Commander and a same-lane shot on one diving bat. The finished Play card starts at the original forest entrance. A painted cave lip covers the last of her outline as she walks into shadow. The reverse view lasts just under one second before the side-on chamber appears and she raises the rifle. Holding forward through the change plays all three beats, then moves her towards the far wall. The first contact takes just over two seconds from the start of player control at the default position.
+
+In the 1376 × 768 Forward+ capture, her standing pose measured 277 pixels from crown to boots (36.1%, equivalent to 260 pixels at 720p). The far edge of the floor is at about 58.5% down the picture, just like the street edge in the supplied first image. The cave uses a straighter far edge and an open foreground so the feet and bat shadows stay visible. The rock and backlit doorway read between views. The change in angle and the raised rifle do most of the work of signalling combat. [Middle-depth capture](../render_captures/forest_fight/cave-middle-depth.png) · [Live sequence through Cave clear](../render_captures/forest_fight/forest-fight-sequence.mp4)
+
+The first bat sweeps from the left at the starting depth. One curls around the right into the near lane and the third drops from the back into the far lane. The chest and its floor shadow keep their registration during the wing cycle. A bat passes through the Commander with a blue spark once per pass. Holding fire at the starting depth cleared one bat. Moving into the other two lanes cleared both with one shot each and let the Commander keep moving after the clear message. Verified both walls, nearest valid shot impact, misses by depth, firing during diagonal movement, direct keyboard and mouse controls, Esc in both modes and a fresh Play. The original forest and Approach 3 checks also passed. The same Forest Fight test passed against the game files embedded in the refreshed Windows export.
+
+[Original art prompts](../assets/source_inputs/rpg_2d/forest_fight/IMAGEGEN_PROMPTS.md) · [Build and verification commands](PIPELINES.md#build-and-verify-a-painted-forest-fight)
+
 ## RTS Units Test 3 — Scene-Local Pixel (1x) vs HD Painted (2x) Profile & Team-Colour Shader · 2026-11-24
 
 Built `scenes/maps/rts_units_test_v3.tscn` ("RTS Units Test — Units on the Map 3") as a standalone build alongside the preserved original `scenes/maps/rts_units_test.tscn` without modifying `project.godot`:

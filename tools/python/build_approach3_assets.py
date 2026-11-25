@@ -1,6 +1,7 @@
 """Pack Approach 3's source plates at the 765-high view density."""
 
 from pathlib import Path
+import sys
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
@@ -24,13 +25,13 @@ def cutout(image: Image.Image, height: int, threshold: int) -> Image.Image:
     return image
 
 
-def read_poses(filename: str, heights: tuple[int, ...]) -> list[Image.Image]:
+def read_poses(filename: str, heights: tuple[int, ...], density: int) -> list[Image.Image]:
     with Image.open(SOURCE / filename) as source:
         width, height = source.width // 3, source.height // 2
         return [
             cutout(
                 source.crop((x * width, y * height, (x + 1) * width, (y + 1) * height)),
-                heights[y * 3 + x],
+                heights[y * 3 + x] * density,
                 140,
             )
             for y in range(2)
@@ -45,12 +46,15 @@ def switch_leg(pose: Image.Image, bounds: tuple[int, int, int, int]) -> Image.Im
     return result
 
 
-def pack_atlas(frames: list[list[tuple[Image.Image, int, int]]], scale: float) -> Image.Image:
-    atlas = Image.new("RGBA", (CELL[0] * 5, CELL[1] * 4))
+def pack_atlas(
+    frames: list[list[tuple[Image.Image, int, int]]], scale: float, density: int = 1
+) -> Image.Image:
+    cell_w, cell_h = (size * density for size in CELL)
+    atlas = Image.new("RGBA", (cell_w * 5, cell_h * 4))
     for row, poses in enumerate(frames):
         for column, (pose, boot_x, boot_y) in enumerate(poses):
-            left = BOOT[0] - round(scale * boot_x)
-            top = BOOT[1] - round(scale * boot_y)
+            left = BOOT[0] * density - round(scale * boot_x)
+            top = BOOT[1] * density - round(scale * boot_y)
             if scale != 1.0:
                 pose = pose.resize(
                     (round(pose.width * scale), round(pose.height * scale)),
@@ -58,28 +62,27 @@ def pack_atlas(frames: list[list[tuple[Image.Image, int, int]]], scale: float) -
                 )
                 pose.putalpha(pose.getchannel("A").point(lambda value: 255 if value >= 128 else 0))
             assert left >= 0 and top >= 0
-            assert left + pose.width <= CELL[0] and top + pose.height <= CELL[1]
-            atlas.paste(pose, (column * CELL[0] + left, row * CELL[1] + top))
+            assert left + pose.width <= cell_w and top + pose.height <= cell_h
+            atlas.paste(pose, (column * cell_w + left, row * cell_h + top))
     return atlas
 
 
-def commander() -> None:
+def commander_frames(density: int) -> list[list[tuple[Image.Image, int, int]]]:
     front = cutout(
         Image.open(ROOT / "assets/textures/units/blue_commander_rpg.png").convert("RGBA"),
-        149,
+        149 * density,
         128,
     )
-    front.save(OUTPUT / "commander_front_idle.png")
     back, side, aim, back_walk, side_walk, aim_walk = read_poses(
-        "commander_views.png", (149, 149, 149, 146, 148, 144)
+        "commander_views.png", (149, 149, 149, 146, 148, 144), density
     )
     front_a, front_b, back_other, side_other, aim_other, recoil = read_poses(
-        "commander_motion.png", (149, 147, 149, 146, 145, 147)
+        "commander_motion.png", (149, 147, 149, 146, 145, 147), density
     )
     front_pass_right, back_pass_left, side_pass_right, front_pass_left, back_pass_right, side_pass_left = read_poses(
-        "commander_passing.png", (148, 148, 148, 149, 149, 149)
+        "commander_passing.png", (148, 148, 148, 149, 149, 149), density
     )
-    back_other = switch_leg(back_other, (26, 94, 67, back_other.height))
+    back_other = switch_leg(back_other, (26 * density, 94 * density, 67 * density, back_other.height))
     frames = [
         [
             (front, 50, 149),
@@ -104,6 +107,12 @@ def commander() -> None:
         ],
         [(aim, 46, 149), (aim_walk, 59, 144), (aim_other, 54, 145), (recoil, 50, 147)],
     ]
+    return [[(pose, x * density, y * density) for pose, x, y in row] for row in frames]
+
+
+def commander() -> None:
+    frames = commander_frames(1)
+    frames[0][0][0].save(OUTPUT / "commander_front_idle.png")
     pack_atlas(frames, 1.0).save(OUTPUT / "commander_765.png")
     pack_atlas(frames, 720 / 765).save(OUTPUT / "commander_720.png")
 
@@ -163,6 +172,11 @@ def canyon() -> None:
 
 
 if __name__ == "__main__":
-    OUTPUT.mkdir(parents=True, exist_ok=True)
-    commander()
-    canyon()
+    if sys.argv[1:] == ["--forest-fight"]:
+        destination = OUTPUT.parent / "forest_fight"
+        destination.mkdir(parents=True, exist_ok=True)
+        pack_atlas(commander_frames(2), 1.0, 2).save(destination / "commander.png")
+    else:
+        OUTPUT.mkdir(parents=True, exist_ok=True)
+        commander()
+        canyon()

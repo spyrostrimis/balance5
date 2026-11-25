@@ -2,6 +2,9 @@
 
 ## Painted tropical forest study
 
+- [x] Walk the forest into a painted cave and clear three bats in the **2D Painted Forest Fight** Play card. Verify the mode change, rifle directions, depth lanes, replay and Esc. [Live sequence and framing](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
+- [ ] Owner plays 2D Painted Forest Fight and reviews the doorway transition and combat framing.
+
 - [x] Build the four-stretch Blue Commander walk, verify both directions and add it to Developers Page under **Forest builds**. [Playable study and evidence](../assets/scenes/forest_test/REPORT.md)
 - [ ] Owner chooses one of the three paintings and judges how clearly the four stretches read with guides hidden. [Candidates and recording](../assets/scenes/forest_test/REPORT.md) · [Independent assessment](../output/pdf/painted-forest-walk-assessment.pdf)
 

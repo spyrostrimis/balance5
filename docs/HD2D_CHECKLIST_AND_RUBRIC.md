@@ -1,5 +1,15 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## 2D Painted Forest Fight · 2026-11-25
+
+- [x] Stop and reverse before the sill with the forest trail, buttress trees and mossy boulder visible. Crossing the sill once hides the boots first, then the silhouette, before showing daylight from inside.
+- [x] The inside shot leads into a fixed side-on chamber and automatic rifle stance. Holding forward continues into depth after the change, with time to move before contact.
+- [x] Read the Commander at 277 rendered pixels (36.1%) at middle depth in 1376 × 768 Forward+. Compare the broad shallow floor and visible rear wall with the supplied first image.
+- [x] Verify three distinct approaches, a clear rifle-height pass in each depth lane, harmless repeat contact, three one-shot kills and free movement after the clear message.
+- [ ] Owner judges the doorway timing and side-on composition in play.
+
+[Experiment and evidence](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
+
 ## RTS Units in Motion · 2026-11-24
 
 - [x] Original, Painted HD and Pixel art share the desert route and the camera framing. Matched 1080p stills cover the opening, open sand, northwest cliff, Orichalcum shadow and first hit.

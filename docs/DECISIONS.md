@@ -1,5 +1,10 @@
 # Decisions
 
+### 2026-11-25 · Walk into the forest cave before raising the rifle
+Area: Canyon · Status: Trying
+
+Cross the sill at the end of the painted forest trail, then use a brief view back towards the forest before settling into a fixed side-on chamber. The close view uses Approach 3’s source drawings at twice the original picture resolution. Place one bat pass at the starting depth and two at other depths so moving across the floor matters. The Commander stays responsive through harmless contacts. [Test and capture](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
+
 ### 2026-11-24 · Scene-local Pixel (1x) vs HD Painted (2x) visual profile & 4-faction team-colour mask shader on RTS Units Test 3
 Area: RTS · Status: Trying
 

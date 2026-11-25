@@ -28,6 +28,16 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Depth lane
+Area: RPG combat
+
+How far into the screen a fighter or a bat's shadow sits. In the cave, a rifle bolt travels sideways and can hit a bat if the bat is both at rifle height and close enough to the Commander’s depth when she fired. The Commander can walk into another lane by moving towards the back wall or the foreground.
+
+### Doorway threshold
+Area: RPG movement
+
+The line across the floor of a doorway. The Commander can stop or turn around before it. In the forest fight, her boots crossing the cave's threshold starts the passage into the chamber.
+
 ### Team-colour mask
 Area: RTS art
 

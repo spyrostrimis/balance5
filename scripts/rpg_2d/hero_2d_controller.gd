@@ -97,7 +97,7 @@ func fire_horizontal_shot() -> RifleBolt2D:
 	var dir := Vector2(float(dir_x), 0.0)
 	var origin := get_shot_origin(dir_x)
 
-	var bolt := RifleBolt2D.new()
+	var bolt := _make_bolt()
 	bolt.configure(origin, dir_x)
 	var host := projectiles_parent if projectiles_parent != null else get_parent()
 	if host != null:
@@ -107,6 +107,10 @@ func fire_horizontal_shot() -> RifleBolt2D:
 	_update_visuals(Vector2.ZERO)
 	shot_fired.emit(origin, dir)
 	return bolt
+
+
+func _make_bolt() -> RifleBolt2D:
+	return RifleBolt2D.new()
 
 
 func get_shot_origin(dir_x: int) -> Vector2:

@@ -77,11 +77,11 @@ func _keyboard_direction() -> Vector2:
 	return Vector2(float(right) - float(left), float(down) - float(up))
 
 
-func step_walk(input_direction: Vector2, delta: float) -> void:
+func step_walk(input_direction: Vector2, delta: float, north_limit := Route.NORTH_Y) -> void:
 	var previous := commander.position
 	var ratio := Route.figure_scale(previous.y)
 	var next := previous + input_direction.limit_length() * SPEED * ratio * delta
-	next.y = clampf(next.y, Route.NORTH_Y, Route.SOUTH_Y)
+	next.y = clampf(next.y, north_limit, Route.SOUTH_Y)
 	var limits := Route.feet_limits(next.y, active_trail())
 	next.x = clampf(next.x, limits.x, limits.y)
 	var travel := next - previous

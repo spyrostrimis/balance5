@@ -1,5 +1,13 @@
 # Pipelines
 
+## Build and verify a painted forest fight
+Area: RPG · Status: In use · Tools: Godot 4.7.2 Forward+, ChatGPT ImageGen, Python (Pillow, NumPy and OpenCV), FFmpeg
+
+1. Instance the original forest scene and block out the mouth, reverse view and chamber. Test boot crossing, a reversal and one hittable dive with `--blockout`. Set the camera framing using the standing figure at middle depth.
+2. Import the outside mouth with a transparent edge, the view out of the doorway, and the side-on chamber as separate paintings. Register the visible sill to the boot crossing. The lip uses the same pixels as the exterior art, and draws in front only during the crossing. Keep the original forest behind the new entrance. [ImageGen prompts](../assets/source_inputs/rpg_2d/forest_fight/IMAGEGEN_PROMPTS.md)
+3. Run `python tools/python/build_approach3_assets.py --forest-fight` for the close-up Commander atlas. For the bat, run `C:/Python312/python.exe tools/python/pack_forest_fight_bat.py` to register the four painted poses around the chest. Spot-check muzzle and boots in a moving capture.
+4. Run the Godot console with `--path . --headless --fixed-fps 60 --script res://tests/test_forest_fight.gd` for the Play, Esc and fight checks. Use `--path . --max-fps 60 --script res://tests/test_forest_fight.gd -- --record` for the 1376 × 768 still and live frames. Encode the fresh frames in `render_captures/forest_fight/frames/` at 30 fps with `ffmpeg -framerate 30 -i %05d.jpg -c:v libx264 -pix_fmt yuv420p forest-fight-sequence.mp4`. Export the Windows Desktop preset after the catalog update.
+
 ## Build and verify RTS Units Test 3 (1x Pixel / 2x HD Painted profiles)
 Area: RTS · Status: In use · Tools: Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+
 

@@ -111,7 +111,7 @@ The HD-2D walking sequence. If it fails, the RTS alone is the game.
 - [ ] Dedicated right-wall modules instead of turned left courses
 - [ ] Fix the slate cap material, bush scale and exit vista
 - [ ] Atmosphere: a local FogVolume with light shafts at a wall opening, measured for GPU cost
-- [ ] RPG fight test in the Streets of Rage 4 style (free depth, face left or right)
+- [x] RPG fight test in the Streets of Rage 4 style (free depth, face left or right): verified in **2D Painted Forest Fight** (`scenes/rpg_2d/forest_fight.tscn`) and **2D Painted Forest Fight 2** (`scenes/forest_fight_2/forest_fight_2.tscn`, §25)
 
 ## Story and presentation
 

@@ -25,7 +25,7 @@
 - [x] Check a full round trip, both sides of the trail, stops and reversals inside all three blend bands. Size stays fixed while the camera settles at a stop.
 - [ ] Owner chooses the painting and judges the guide-free motion. Some sole drift remains in the four existing walk poses.
 
-[Matched stills, recording and fit overlay](../assets/scenes/forest_test/REPORT.md)
+[Matched stills, recording and fit overlay](../assets/scenes/forest_test/REPORT.md) · [Independent comparison with the canyon and the fixed-camera arch experiment](../output/pdf/painted-forest-walk-assessment.pdf)
 
 ## 2D canyon · Approach 3 assessment · 2026-11-22
 
@@ -248,3 +248,10 @@ Play `res://scenes/maps/desert_canyon_crisp_road_patch.tscn` for this experiment
 - [x] Assemble and verify **3D Canyon · Way 1B Free 3D Modules** (`scenes/maps/canyon_way1b_free_3d.tscn`) using real photogrammetry cliffs (`Namaqualand Cliff 01/02`, `Rock Face 01/02`), 3D curb blocks (`Rock 07`, `Namaqualand Boulder 03/05`), 3D cobblestones (`Namaqualand Stones 01`, `Moon Rock 04`), 3D `Cheiridopsis Succulent` plants and `Sand Rocks Small 01` verge banks, and exit arch/gorge (`Mountain Desert 009`, `Canyon River Terrain`) alongside the kept Trellis boulders and pale Grand Canyon rock, with verified spawn occlusion (`25.94 m`) and midway/exit reveal. [Study and captures](CANYON_WAY1B_FREE_3D.md)
 - [ ] Conceal the far road end at spawn with one right-hand gateway outcrop and reveal the crater on approach. Preserve clearance, landmark timing and the grounded exit.
 - [ ] Measure localized shafts against the accepted gateway control, then prove selection and a reachable move order at tactical framing.
+
+## 7. 2D Painted Forest Fight 2 — Exploration-to-Cave Transition & 2.5D Bat Arena
+
+- [x] Reuse `2D Painted Forest Walk` route and clearing landmarks while integrating an approachable cave mouth (`Y = 332` stop and back-away verified before `Y <= 312` threshold).
+- [x] Three-beat transition: Beat 1 walks visibly under the foreground stone arch lip into doorway shadow; Beat 2 cuts inside the sunlit left archway and settles into side-profile rifle stance; Beat 3 eases out to stable chamber framing with `>= 1.15 s` grace before any bat dives (continuous held `W`/`Up` verified).
+- [x] Match *Streets of Rage 4* cave framing at `1376×768` Forward+: middle-depth Commander measures `275 px` raster height (`35.81%` of `768 px`), back wall base at `~54%`, broad uncluttered floor (`54%–92%`), low foreground rock rim (`92%–100%`).
+- [x] Strictly horizontal rifle (`Space`/`J`/`Click`) and left/right profile across free 2.5D `(x, depth_y, altitude)` floor movement; off-lane rear bats survive shots passing in front, diving bats signal with tucked-wing silhouette + tightening floor shadow, contact triggers harmless cyan armour spark (`1` per pass), and three one-shot kills display `"Cave clear"`. [Log §25](EXPERIMENT_LOG_AND_LESSONS.md#25-2d-painted-forest-fight-2-2026-11-25)

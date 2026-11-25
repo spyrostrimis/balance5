@@ -13,6 +13,7 @@ var art_hd: Texture2D
 var art_pixel: Texture2D
 var painted := true
 var distance_walked := 0.0
+var _step_distance := 0.0
 
 var _route: Array[Vector2] = []
 var _extra_claims: Array[Vector2i] = []
@@ -60,7 +61,7 @@ func _walk_toward(dest: Vector2i, delta: float, is_move_order: bool) -> void:
 			return
 	else:
 		_facing = desired
-	var speed := stats.move_speed * grid.tile_size.x
+	var speed := stats.move_speed * grid.tile_size.x * _terrain_speed_factor(desired)
 	if stats.vehicle:
 		speed *= maxf(0.48, _facing.dot(desired))
 	var next := position.move_toward(_route[0], speed * delta)
@@ -209,13 +210,27 @@ func _leave_distance_marks(previous: Vector2) -> void:
 			RtsLook.instance.add_dust(position - _facing * 10.0, -_facing)
 	else:
 		var stride := _stride()
+		var step_advance := moved * _footfall_rate()
+		_step_distance += step_advance
 		for index in _figure_count():
 			var phase: float = PHASE[index] if _figure_count() == 4 else 0.0
-			var p := distance_walked / stride + phase
-			if floori(p * 2.0) != floori((p - moved / stride) * 2.0):
+			var p := _step_distance / stride + phase
+			if floori(p * 2.0) != floori((p - step_advance / stride) * 2.0):
 				var side := -1.0 if floori(p * 2.0) % 2 == 0 else 1.0
 				var foot := position + _figure_at(index) + _facing * (stride * 0.25)
 				RtsLook.instance.add_footprints(foot + _facing.orthogonal() * side * 1.5)
+
+
+func _terrain_speed_factor(_direction: Vector2) -> float:
+	return 1.0
+
+
+func _footfall_rate() -> float:
+	return 1.0
+
+
+func _ground_light() -> float:
+	return RtsLook.light_at(position)
 
 
 func _stride() -> float:
@@ -243,7 +258,7 @@ func _draw_sprite_unit(_radius: float) -> void:
 		return
 	var facing := _facing.angle()
 	var col := posmod(roundi(facing / (PI / 4.0)), 8)
-	var light := RtsLook.light_at(position)
+	var light := _ground_light()
 	var tint := Color(light, light, light).lerp(Color(2, 2, 2), 0.75 if _flash > 0.0 else 0.0)
 	if stats.vehicle:
 		_draw_vehicle(atlas, col, facing, tint)
@@ -271,7 +286,7 @@ func _draw_figures(atlas: Texture2D, col: int, tint: Color) -> void:
 		var row := 0
 		if _moving_now:
 			var phase: float = PHASE[index] if _figure_count() == 4 else 0.0
-			row = 1 + posmod(floori((distance_walked / _stride() + phase) * WALK_ROWS), WALK_ROWS)
+			row = 1 + posmod(floori((_step_distance / _stride() + phase) * WALK_ROWS), WALK_ROWS)
 		var origin := Vector2(9, 15)
 		draw_texture_rect_region(atlas, Rect2(foot - origin, Vector2(18, 20)),
 			Rect2(Vector2(col, row) * frame, frame), tint)

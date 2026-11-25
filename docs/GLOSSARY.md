@@ -944,3 +944,11 @@ A live light that picks out shallow ridges and cracks using a **normal map**. In
 ### Frame time
 Area: Rendering
 Milliseconds to produce a picture. Frame time can be measured for the full window or for the work the graphics card does on one view. The two measurements cover different parts of the game.
+
+### Depth lane (`depth_y`) and flight altitude
+Area: 2D
+In a *Streets of Rage*-style side-view arena, every character, flying creature and rifle shot tracks **where its shadow sits on the floor** (`depth_y`, closer to the back wall or closer to the bottom of the screen) separately from **how high it floats in the air** (`altitude`). Separating the two stops high foreground bats from being confused with low background bats, keeps floor shadows glued to the ground, and lets horizontal rifle shots connect only when both the floor lane and barrel height line up.
+
+### Foreground lip
+Area: 2D
+A cutout piece of scenery—such as the stone arch and hanging vines over a cave mouth—drawn on a layer *in front of* the character while the dark cave floor stays *behind* her. When she walks north across the threshold, her head, shoulders and boots genuinely pass underneath the stone arch instead of walking on top of a flat background painting.

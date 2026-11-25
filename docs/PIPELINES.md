@@ -452,3 +452,18 @@ Keep the project's memory in the repository instead of in chat histories.
 6. Compare the four matched stops and run the recorded round trip, resize checks and lighting timing. Re-export the Windows Desktop preset after a catalog change and verify Play and Esc on the exported executable.
 
 [Commands and matched captures](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)
+
+## 2D Painted Forest Fight 2 (forest-to-cave mode transition & 2.5D bat arena)
+Area: RPG 2D · Status: In use · Tools: ChatGPT Images, Python (Pillow + NumPy), Godot 4.7.2, FFmpeg
+
+1. **Generate source plates from exact aspect-matched crops**:
+   - Export a clean `3:2` character-free top half of `a-buttress-light.png` (`1086×724`) so ChatGPT Image (`1536×1024`) adds the clearing cave mouth without shifting the lower forest trail.
+   - Generate the `1536×1024` side-on cave chamber (left sunlit forest archway + flat low-contrast floor band across `56–92%` height), a `2×2` alien-mutant bat sheet on uniform grey, and a `3×2` HD painted Blue Commander side-profile combat sheet on uniform neutral card.
+2. **Build alpha-defringed game textures and foreground cave lip**:
+   `python tools/python/build_forest_fight_2_art.py <cave_patch> <cave_int> <bat_sheet> <cmd_sheet>`
+   Copies inputs to `assets/source_inputs/forest_fight_2/` and writes `assets/textures/forest_fight_2/` (`forest_cave_trail.png`, `forest_cave_lip.png`, `cave_chamber_bg.png`, `cave_foreground_rim.png`, `commander_hd_combat.png` centered on boot X `180`, `alien_bat_hd.png`, and HD bolt/spark sprites).
+3. **Import and run automated logic, still capture, and live clip tests**:
+   - Headless + catalog check: `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://tests/test_forest_fight_2.gd -- --catalog`
+   - Forward+ `1376×768` stills: `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --path . --rendering-method forward_plus --resolution 1376x768 --script res://tests/test_forest_fight_2.gd -- --stills --catalog`
+   - Uninterrupted real-time `30 fps` recording + MP4 encode: run with `-- --record-clip`, then encode `render_captures/forest_fight_2/live_frames/%05d.jpg` with `C:\ffmpeg\bin\ffmpeg.exe` into `render_captures/forest_fight_2/forest_fight_2_sequence.mp4`.
+4. **Re-export `builds/Balance.exe`** after adding or updating the Developers Page card.

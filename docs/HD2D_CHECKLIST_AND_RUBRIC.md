@@ -1,5 +1,13 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Desert Crossing · painted terrain reference pass · 2026-11-25
+
+- [x] Compare the old opening and reference pass with the same field and HUD. Read the northeast terraces, turquoise spring, broad dune fields, and Orichalcum plaza as separate landmarks.
+- [x] Retain the squad route, dune slow-down, paired tank tracks and right-click attack. Check the revised rock and outpost footprints.
+- [x] Verify both Desert Crossing and Carbon on the main Developers Page and through Play and Esc in the Windows export.
+
+[Art pass and matched captures](RTS_DESERT_CROSSING.md)
+
 ## 2D canyon · Approach 3 assessment · 2026-11-22
 
 - [x] Captured both 2D baselines at the entrance, bend, upper pass and north barrier. Compared the standing commander across two art sources and two rendering sizes at matched framing.

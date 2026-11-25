@@ -28,6 +28,11 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Terrain module
+Area: RTS art
+
+A reusable piece of painted terrain placed on a battlefield, such as a cliff shelf or a field of dunes. Its terrain footprint, height or shade can travel with its picture. [Desert Crossing](RTS_DESERT_CROSSING.md)
+
 ### Visual master
 Area: Art
 The agreed image or playable view that future maps use as their standard for colour, light and detail. The [Painted Bend study](PIXEL_CANYON_SESSION_B_PAINTED.md) compares a live view with the original Arch Overlook painting before choosing that standard.

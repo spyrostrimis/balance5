@@ -13,6 +13,15 @@
 [ext_resource type="Resource" path="res://scenes/rts/units/look/blue_tank.tres" id="blue_tank"]
 [ext_resource type="Resource" path="res://scenes/rts/units/look/red_squad.tres" id="red_squad"]
 [ext_resource type="Resource" path="res://scenes/rts/units/look/red_tank.tres" id="red_tank"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/terraces.png" id="terraces"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/ripple_field.png" id="ripples"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/dune_swells.png" id="swells"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/orichalcum.png" id="crystal"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/oasis.png" id="oasis"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_reference_pass/verge_scrub.png" id="verge"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/plaza_oval_hd.png" id="plaza"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_mesa_hd.png" id="mesa"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/scrub_small_hd.png" id="scrub"]
 
 [node name="DesertField" type="Node2D"]
 script = ExtResource("field")
@@ -21,166 +30,201 @@ script = ExtResource("field")
 script = ExtResource("terrain")
 texture_repeat = 2
 
+[node name="DuneFields" type="Node2D" parent="Terrain"]
+
+[node name="CrossingDune" type="Node2D" parent="Terrain/DuneFields"]
+position = Vector2(306, 264)
+script = ExtResource("piece")
+size = Vector2(143, 76)
+rotation = 0.2
+relief_height = 13.0
+relief_radius = Vector2(64, 49)
+shared_texture = ExtResource("ripples")
+
+[node name="SouthDune" type="Node2D" parent="Terrain/DuneFields"]
+position = Vector2(179, 359)
+script = ExtResource("piece")
+size = Vector2(207, 107)
+rotation = -0.09
+relief_height = 8.0
+relief_radius = Vector2(96, 48)
+shared_texture = ExtResource("swells")
+
+[node name="EastDune" type="Node2D" parent="Terrain/DuneFields"]
+position = Vector2(659, 328)
+script = ExtResource("piece")
+size = Vector2(208, 113)
+rotation = -0.07
+relief_height = 9.0
+relief_radius = Vector2(89, 51)
+shared_texture = ExtResource("swells")
+
+[node name="NorthDune" type="Node2D" parent="Terrain/DuneFields"]
+position = Vector2(254, 129)
+script = ExtResource("piece")
+size = Vector2(265, 105)
+rotation = -0.08
+relief_height = 6.0
+relief_radius = Vector2(119, 44)
+shared_texture = ExtResource("ripples")
+
+[node name="SouthRipples" type="Node2D" parent="Terrain/DuneFields"]
+script = ExtResource("piece")
+position = Vector2(411, 449)
+shared_texture = ExtResource("ripples")
+size = Vector2(247, 102)
+rotation = 0.12
+relief_height = 5.0
+relief_radius = Vector2(114, 45)
+
 [node name="Road" type="Node2D" parent="Terrain"]
 
 [node name="Roadbed" type="Line2D" parent="Terrain/Road"]
-points = PackedVector2Array(-40, 309, 73, 289, 132, 259, 191, 247, 233, 263, 272, 298, 329, 335, 392, 351, 446, 355, 496, 359, 559, 373, 650, 413, 793, 463)
-width = 46.0
-default_color = Color(0.52, 0.32, 0.20, 0.20)
+points = PackedVector2Array(-40, 167, 82, 202, 127, 217, 172, 233, 212, 250, 255, 273, 290, 290, 325, 307, 359, 322, 399, 329, 440, 341, 461, 352, 485, 374, 515, 399, 549, 421, 598, 449, 655, 470, 792, 501)
+width = 36.0
+default_color = Color(0.52, 0.32, 0.20, 0.1)
 joint_mode = 2
 antialiased = true
 
 [node name="Paving" type="Line2D" parent="Terrain/Road"]
-points = PackedVector2Array(-40, 309, 73, 289, 132, 259, 191, 247, 233, 263, 272, 298, 329, 335, 392, 351, 446, 355, 496, 359, 559, 373, 650, 413, 793, 463)
-width = 43.0
-default_color = Color(0.98, 0.95, 0.88, 1)
+points = PackedVector2Array(-40, 167, 82, 202, 127, 217, 172, 233, 212, 250, 255, 273, 290, 290, 325, 307, 359, 322, 399, 329, 440, 341, 461, 352, 485, 374, 515, 399, 549, 421, 598, 449, 655, 470, 792, 501)
+width = 34.0
+default_color = Color(1, 1, 0.98, 1)
 texture_mode = 1
 joint_mode = 2
 
 [node name="GroundPieces" type="Node2D" parent="Terrain"]
 
 [node name="WestPaving" type="Node2D" parent="Terrain/GroundPieces"]
-position = Vector2(184, 233)
+position = Vector2(177, 215)
 script = ExtResource("piece")
+size = Vector2(86, 51)
 art = "flagstones"
-size = Vector2(101, 62)
 
 [node name="CrystalApron" type="Node2D" parent="Terrain/GroundPieces"]
-position = Vector2(449, 324)
+position = Vector2(407, 316)
 script = ExtResource("piece")
-art = "flagstones"
-size = Vector2(128, 104)
-rotation = 0.18
-
-[node name="CrossingDune" type="Node2D" parent="Terrain/GroundPieces"]
-position = Vector2(306, 264)
-script = ExtResource("piece")
-art = "dune"
-size = Vector2(134, 111)
-rotation = 0.58
-relief_height = 13.0
-relief_radius = Vector2(64, 49)
-
-[node name="SouthDune" type="Node2D" parent="Terrain/GroundPieces"]
-position = Vector2(194, 409)
-script = ExtResource("piece")
-art = "dune"
-size = Vector2(150, 97)
-rotation = 0.43
-relief_height = 8.0
-relief_radius = Vector2(67, 43)
-
-[node name="EastDune" type="Node2D" parent="Terrain/GroundPieces"]
-position = Vector2(624, 279)
-script = ExtResource("piece")
-art = "dune"
-size = Vector2(165, 122)
-rotation = 0.53
-relief_height = 9.0
-relief_radius = Vector2(71, 49)
-
-[node name="NorthDune" type="Node2D" parent="Terrain/GroundPieces"]
-position = Vector2(273, 126)
-script = ExtResource("piece")
-art = "dune"
-size = Vector2(131, 92)
-rotation = 0.58
-relief_height = 6.0
-relief_radius = Vector2(58, 38)
+size = Vector2(144, 111)
+rotation = 0.14
+shared_texture = ExtResource("plaza")
 
 [node name="Shadows" type="Node2D" parent="Terrain"]
 
 [node name="Landmarks" type="Node2D" parent="Terrain"]
 
-[node name="CliffBack" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(560, 103)
-script = ExtResource("piece")
-art = "cliff"
-size = Vector2(229, 150)
-footprint = PackedVector2Array(-108, -19, -50, -59, 4, -72, 52, -24, 105, -21, 100, 33, 36, 45, -14, 69, -62, 62, -105, 29)
-
 [node name="CliffShelf" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(450, 154)
+position = Vector2(587, 131)
 script = ExtResource("piece")
-art = "cliff"
-size = Vector2(226, 147)
-footprint = PackedVector2Array(-101, -22, -50, -55, 34, -70, 48, -25, 105, -13, 106, 18, 48, 44, 21, 62, -31, 67, -76, 44, -106, 14)
-shade_offset = Vector2(29, 55)
-shade_size = Vector2(271, 116)
-shade_strength = 0.72
+size = Vector2(364, 238)
+footprint = PackedVector2Array(-82, -119, 182, -119, 182, 117, 126, 107, 82, 72, 57, 48, 27, 53, 4, 76, -43, 86, -114, 75, -164, 50, -173, 26, -158, 3, -148, -32, -119, -60)
+shade_offset = Vector2(-48, 88)
+shade_size = Vector2(338, 134)
+shade_strength = 0.78
+shared_texture = ExtResource("terraces")
 
 [node name="WestCliff" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(84, 117)
+position = Vector2(126, 103)
 script = ExtResource("piece")
-art = "cliff"
-size = Vector2(141, 95)
-footprint = PackedVector2Array(-65, -20, 13, -43, 24, -18, 65, -6, 57, 20, 28, 29, -6, 42, -62, 22)
+size = Vector2(83, 64)
+footprint = PackedVector2Array(-35, -18, 9, -28, 32, -16, 38, 10, 24, 26, -18, 28, -39, 13)
 shade_offset = Vector2(11, 17)
-shade_size = Vector2(147, 74)
+shade_size = Vector2(94, 62)
 shade_strength = 0.51
+shared_texture = ExtResource("mesa")
 
 [node name="Oasis" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(567, 205)
+position = Vector2(566, 225)
 script = ExtResource("piece")
-art = "oasis"
-size = Vector2(66, 51)
-footprint = PackedVector2Array(-26, 1, -16, -16, 24, -22, 30, -4, 12, 20, -18, 22)
+size = Vector2(72, 63)
+footprint = PackedVector2Array(-28, 0, -18, -15, 23, -21, 33, -1, 18, 24, -17, 25)
+shared_texture = ExtResource("oasis")
+shade_offset = Vector2(7, 12)
+shade_size = Vector2(82, 54)
+shade_strength = 0.36
 
 [node name="Outpost" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(183, 200)
+position = Vector2(180, 192)
 script = ExtResource("piece")
 art = "outpost"
-size = Vector2(67, 68)
+size = Vector2(57, 59)
 footprint = PackedVector2Array(-26, -13, 23, -13, 27, 29, -27, 34)
 shade_offset = Vector2(15, 25)
 shade_size = Vector2(79, 38)
 shade_strength = 0.57
 
 [node name="Orichalcum" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(449, 305)
+position = Vector2(408, 301)
 script = ExtResource("piece")
-art = "crystal"
-size = Vector2(85, 59)
-footprint = PackedVector2Array(-37, -8, -21, -24, 20, -23, 39, -5, 35, 15, 0, 28, -26, 23)
-shade_offset = Vector2(14, 12)
-shade_size = Vector2(102, 58)
-shade_strength = 0.56
+size = Vector2(105, 86)
+footprint = PackedVector2Array(-45, -6, -22, -27, 15, -25, 44, -9, 41, 19, 16, 35, -23, 32, -47, 17)
+shade_offset = Vector2(13, 20)
+shade_size = Vector2(116, 75)
+shade_strength = 0.64
+shared_texture = ExtResource("crystal")
 
 [node name="Scatter1" type="Node2D" parent="Terrain/Landmarks"]
 position = Vector2(233, 209)
 script = ExtResource("piece")
-art = "pebble"
-size = Vector2(13, 9)
+size = Vector2(16, 9)
+shared_texture = ExtResource("verge")
 
 [node name="Scatter2" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(376, 236)
+position = Vector2(365, 239)
 script = ExtResource("piece")
-art = "pebble"
-size = Vector2(10, 7)
+size = Vector2(12, 7)
+shared_texture = ExtResource("verge")
 
 [node name="Scatter3" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(354, 386)
+position = Vector2(334, 380)
 script = ExtResource("piece")
-art = "pebble"
-size = Vector2(17, 10)
+size = Vector2(23, 13)
+shared_texture = ExtResource("verge")
 
 [node name="Scatter4" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(549, 296)
+position = Vector2(535, 295)
 script = ExtResource("piece")
-art = "pebble"
-size = Vector2(12, 7)
+size = Vector2(16, 10)
+shared_texture = ExtResource("scrub")
 
 [node name="Scatter5" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(253, 363)
+position = Vector2(261, 358)
 script = ExtResource("piece")
 art = "pebble"
 size = Vector2(9, 6)
 
 [node name="Scatter6" type="Node2D" parent="Terrain/Landmarks"]
-position = Vector2(140, 337)
+position = Vector2(162, 310)
 script = ExtResource("piece")
-art = "pebble"
-size = Vector2(12, 8)
+size = Vector2(13, 8)
+shared_texture = ExtResource("verge")
+
+[node name="SouthCliff" type="Node2D" parent="Terrain/Landmarks"]
+script = ExtResource("piece")
+position = Vector2(113, 459)
+shared_texture = ExtResource("mesa")
+size = Vector2(155, 120)
+footprint = PackedVector2Array(-69, -38, 8, -55, 61, -29, 73, 22, 38, 50, -35, 54, -72, 24)
+shade_offset = Vector2(18, 14)
+shade_size = Vector2(168, 102)
+shade_strength = 0.62
+
+[node name="ApronVerge" type="Node2D" parent="Terrain/Landmarks"]
+script = ExtResource("piece")
+position = Vector2(460, 309)
+shared_texture = ExtResource("verge")
+size = Vector2(18, 10)
+
+[node name="RoadVerge" type="Node2D" parent="Terrain/Landmarks"]
+script = ExtResource("piece")
+position = Vector2(498, 359)
+shared_texture = ExtResource("verge")
+size = Vector2(20, 11)
+
+[node name="NorthVerge" type="Node2D" parent="Terrain/Landmarks"]
+script = ExtResource("piece")
+position = Vector2(359, 159)
+shared_texture = ExtResource("scrub")
+size = Vector2(17, 10)
 
 [node name="Look" type="Node2D" parent="."]
 script = ExtResource("look")

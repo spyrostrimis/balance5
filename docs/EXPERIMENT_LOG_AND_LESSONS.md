@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Desert Crossing · painted terrain reference pass · 2026-11-25
+
+At the same opening camera, the stepped northeast cliff reads as one formation, the pool sits at its foot and the amber deposit sits in a continuous paved approach. Broad dune bands leave a quiet centre for the units. The old three-crest stamp had a conspicuous repeated outline at the opening. The new ripples and swells give the upper and lower fields different shapes. The remaining visual gap is richer variation within the broad sand and at the scale of the units. The squad still crosses and slows on the dune, and the tank still makes two distinct lanes. Desert Crossing and the Carbon build are on the main Developers Page. [Matched stills and source pieces](RTS_DESERT_CROSSING.md)
+
 ## 2D canyon · commander detail and the north barrier · 2026-11-22
 
 Captured both menu entries at four matched stops and drove each route out and back. The continuous painting joins the road and terraces most convincingly. The modular arch and curb read clearly, but the same arch appears three times. Both cameras crop the commander's head at the north barrier. On the modular entrance, four flat-light renders paired the current and reference-derived idle with the existing and higher resolution. Changing the art gave the larger visible improvement. The 149-pixel reference-derived idle drawn one-to-one kept the face, scarf, blue armour and rifle clearest at the original apparent height. Animation and the final lighting are open. [Comparison, measurements and four-way proof](CANYON_APPROACH_3_HANDOFF.md)

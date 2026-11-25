@@ -6,6 +6,8 @@ const ART := "res://assets/textures/rts/desert_proof/"
 const CELL := 32
 const WORLD_SIZE := Vector2i(768, 544)
 const DUNE_SURFACE := preload("res://assets/shaders/rts/desert_tread_surface.gdshader")
+const PAINTED_SAND := preload("res://assets/textures/rts/desert_reference_pass/sand.png")
+const PAINTED_PAVING := preload("res://assets/textures/rts/carbon/road_strip_hd.png")
 
 var painted := true
 var disturbed_pixels := 0
@@ -56,13 +58,13 @@ func _ready() -> void:
 func apply_art(is_painted: bool) -> void:
 	painted = is_painted
 	texture_filter = TEXTURE_FILTER_LINEAR if painted else TEXTURE_FILTER_NEAREST
-	_sand = _load_art("sand")
+	_sand = PAINTED_SAND if painted else _load_art("sand")
 	_shadow = _load_art("shadow")
 	for path: Line2D in $Road.get_children():
 		if path.texture_mode == Line2D.LINE_TEXTURE_TILE:
-			path.texture = _load_art("paving")
+			path.texture = PAINTED_PAVING if painted else _load_art("paving")
 	for piece in _pieces:
-		piece.texture = _load_art(piece.art)
+		piece.texture = piece.shared_texture if piece.shared_texture != null else _load_art(piece.art)
 		piece.queue_redraw()
 	_dune_material.set_shader_parameter("pixel_art", not painted)
 	$Shadows.queue_redraw()

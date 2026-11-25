@@ -366,10 +366,10 @@ built_utc = "2026-11-24 15:48:00"
 script = ExtResource("4")
 section = "Desert RTS builds"
 title = "RTS Desert Crossing — Terrain and Motion"
-summary = "Cross a low dune and enter cliff shade. Compare Painted HD and Pixel art live on V, or restart on R."
+summary = "Walk the reference-inspired desert with flowing dunes, stepped sandstone and an amber crystal plaza. Select a squad or tank and right-click to cross the sand. R restarts."
 scene_path = "res://scenes/maps/rts_desert_crossing.tscn"
 credit = "Codex and ChatGPT Images"
-built_utc = "2026-11-25 12:07:51"
+built_utc = "2026-11-25 17:58:29"
 action = "Play"
 
 [node name="OpeningScreen" type="Control"]

@@ -29,8 +29,12 @@ func consume_return() -> bool:
 
 
 func _update_return_button() -> void:
+	_return_button.visible = is_build_active()
+
+
+func is_build_active() -> bool:
 	var current := get_tree().current_scene
-	_return_button.visible = current != null and not _launched_scene.is_empty() and current.scene_file_path == _launched_scene
+	return current != null and not _launched_scene.is_empty() and current.scene_file_path == _launched_scene
 
 
 func _unhandled_key_input(event: InputEvent) -> void:

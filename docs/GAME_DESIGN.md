@@ -95,6 +95,8 @@ Orichalcum is the game's **only resource**. It is scarce and mined from small ro
 
 ## 7. Look and feel
 
+**RTS art direction.** Build the battlefield from reusable modular Painted HD 2D art. Use the painted reference to guide the camera, terrain composition and material treatment.
+
 | Reference | File | What it sets |
 | --- | --- | --- |
 | Img 1 — overall feeling | [`references/concept_world_blue_vs_red.webp`](references/concept_world_blue_vs_red.webp) | Warm fantasy desert, Blue and Red squads, Orichalcum vein, ancient temple, Blue Commander portrait |

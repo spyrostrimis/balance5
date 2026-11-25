@@ -3,6 +3,8 @@ extends Node2D
 ## One placed module. Art swaps in place. Footprints, relief and shade are in world units.
 
 @export var art: String
+## Both views can draw the same cutout so its silhouette follows the shared footprint.
+@export var shared_texture: Texture2D
 @export var size := Vector2(96, 64)
 @export var footprint := PackedVector2Array()
 @export var shade_offset := Vector2(12, 9)

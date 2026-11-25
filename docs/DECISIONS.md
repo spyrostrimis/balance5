@@ -1,5 +1,10 @@
 # Decisions
 
+### 2026-11-25 · Choose modular Painted HD 2D for the RTS
+Area: RTS · Status: Decided
+
+The owner chose the modular painted direction after playing Desert Crossing. Match the reference through connected terrain shapes, shared warm lighting and clear landmark placement. Individual terrain pieces remain reusable across scenes. [Reference and art pass](RTS_DESERT_CROSSING.md)
+
 ### 2026-11-25 · Build RTS Reusable 2 Carbon playable slice with Dune II HUD, dual zoom stops and live Detailed vs 960×540 Pixel toggle
 Area: RTS · Status: Trying
 Built `scenes/maps/rts_reusable_2_carbon.tscn` (`RTS Reusable 2 Carbon`) entirely from reusable painted ChatGPT pieces (central Orichalcum outcrop, northeast cliff and turquoise spring oasis, mesas, ridge, boulders, bevelled stone outpost pads, oval flagstone plaza, desert scrub and seamless signed-delta dune clusters) over continuous calm-masked sand, paired with 4-soldier squads, commanders (`Mend`), 8-facing hull+turret tanks that flatten two lanes through dune ripples, an Orichalcum hold timer and the Dune II HUD frame. Press `V` to compare Detailed Painted (`2×` HD) against `960×540` Pixel (`1×` curated 74-colour palette with 1 px unit outlines) and `Z` to compare `21×14` Command framing against `15×10` Close framing while playing. Evidence: `docs/RTS_REUSABLE_2_CARBON.md`, `tests/test_rts_reusable_2_carbon.gd`, `render_captures/rts_carbon/`.

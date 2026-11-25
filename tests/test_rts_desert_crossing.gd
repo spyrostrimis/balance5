@@ -2,7 +2,8 @@ extends SceneTree
 ## Headless checks by default. Windowed modes: -- --stills, -- --record, or -- --catalog.
 
 const STUDY := preload("res://scenes/maps/rts_desert_crossing.tscn")
-const OUTPUT := "res://render_captures/rts_desert_proof/"
+const CARBON := "res://scenes/maps/rts_reusable_2_carbon.tscn"
+const OUTPUT := "res://render_captures/rts_desert_reference_pass/"
 const SHADE := Vector2(464, 240)
 const TANK_GOAL := Vector2(432, 240)
 
@@ -50,9 +51,9 @@ func _headless() -> void:
 	_check(area.is_equal_approx(Vector2(480, 336)), "15 × 10.5 opening field")
 	for unit: RtsUnit in _study.map.units.get_children():
 		unit.set_physics_process(false)
-	_check(not grid.is_walkable(grid.cell_of(Vector2(450, 154)))
-		and not grid.is_walkable(grid.cell_of(Vector2(449, 305)))
-		and not grid.is_walkable(grid.cell_of(Vector2(183, 200))), "cliff, outcrop and outpost footprints block routes")
+	for name in ["CliffShelf", "Orichalcum", "Outpost"]:
+		var landmark := terrain.get_node("Landmarks/" + name) as RtsDesertPiece
+		_check(not grid.is_walkable(grid.cell_of(landmark.position)), "%s footprint blocks routes" % name)
 	_check(grid.is_walkable(grid.cell_of(SHADE)) and grid.is_walkable(grid.cell_of(Vector2(306, 264))),
 		"dune and cliff shade are walkable")
 	_squad.command_move(grid.cell_of(SHADE))
@@ -165,6 +166,7 @@ func _stills() -> void:
 	_key(KEY_M)
 	root.size = Vector2i(1376, 768)
 	await _frame()
+	await _pair("05-review-1376")
 	_key(KEY_V)
 	_click(_squad.position, MOUSE_BUTTON_LEFT)
 	var enemy: RtsUnit = _study.map.get_node("Units/RedSquad")
@@ -209,20 +211,28 @@ func _catalog() -> void:
 	change_scene_to_file("res://scenes/ui/opening_screen.tscn")
 	await scene_changed
 	current_scene.get_node("%DevelopersPage").pressed.emit()
+	for scene_path in [STUDY.resource_path, CARBON]:
+		var play := _find_play_button(scene_path)
+		_check(play != null, "Developers Page lists " + scene_path.get_file())
+		if play == null:
+			continue
+		play.pressed.emit()
+		await scene_changed
+		_check(current_scene.scene_file_path == scene_path, "Play launches " + scene_path.get_file())
+		if scene_path == STUDY.resource_path:
+			_key(KEY_V)
+			_check(current_scene.look == 1, "keyboard switches the packaged look")
+		_key(KEY_ESCAPE)
+		await scene_changed
+		_check(current_scene.get_node("%Library").visible, "Esc returns to the catalog")
+
+
+func _find_play_button(scene_path: String) -> Button:
 	for group in current_scene.get_node("%Catalog").get_children():
 		for card in group.get_children():
-			if card.get_meta("catalog_key", "") != STUDY.resource_path:
+			if card.get_meta("catalog_key", "") != scene_path:
 				continue
 			for button in card.find_children("*", "Button", true, false):
-				if button.text != "Play":
-					continue
-				button.pressed.emit()
-				await scene_changed
-				_check(current_scene.scene_file_path == STUDY.resource_path, "Developers Page launches Desert Crossing")
-				_key(KEY_V)
-				_check(current_scene.look == 1, "keyboard switches the packaged look")
-				_key(KEY_ESCAPE)
-				await scene_changed
-				_check(current_scene.get_node("%Library").visible, "Esc returns to the catalog")
-				return
-	_check(false, "Desert Crossing Play card is present")
+				if button.text == "Play":
+					return button
+	return null

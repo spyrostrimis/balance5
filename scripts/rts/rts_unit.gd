@@ -21,10 +21,15 @@ const OUTLINE := Color(0.08, 0.06, 0.05)
 const SELECT_COLOR := Color(0.35, 1.0, 0.35)
 const GOLD := Color(0.98, 0.8, 0.3)
 const CYAN := Color(0.45, 1.0, 1.0)
+const TEAM_SHADER := preload("res://assets/shaders/rts/rts_team_color.gdshader")
+const TREAD_STEP_PX := 2.4
+const WALK_STEP_PX := 3.5
+const BOB_STEP_PX := 4.0
 
 @export var stats: UnitStats
 
 var grid: RtsGrid
+var visual_profile: RtsVisualProfile
 var health := 0
 var alive := true
 var cell := Vector2i.ZERO
@@ -50,8 +55,12 @@ var _shot_timer := 0.0
 var _shot_to := Vector2.ZERO
 var _flash := 0.0
 var _anim_time := 0.0
+var _distance_moved := 0.0
 var _mark_distance := 0.0
+var _dust_distance := 0.0
 var _dust_timer := 0.0
+var _draw_snap := Vector2.ZERO
+var _team_material: ShaderMaterial
 
 
 func setup(p_grid: RtsGrid) -> void:
@@ -67,7 +76,38 @@ func setup(p_grid: RtsGrid) -> void:
 		push_warning("%s starts on a blocked or taken tile %s" % [name, cell])
 	_facing = Vector2.RIGHT if stats.faction == UnitStats.Faction.BLUE else Vector2.LEFT
 	add_to_group("rts_units")
+	_sync_team_material()
 	queue_redraw()
+
+
+func apply_visual_profile(profile: RtsVisualProfile) -> void:
+	visual_profile = profile
+	if profile != null:
+		texture_filter = profile.canvas_texture_filter
+	_sync_team_material()
+	queue_redraw()
+
+
+func _sync_team_material() -> void:
+	if stats == null:
+		return
+	var use_hd := visual_profile != null and visual_profile.is_hd_painted()
+	var mask: Texture2D = (stats.team_mask_hd if (use_hd and stats.team_mask_hd != null) else stats.team_mask)
+	if mask == null:
+		material = null
+		return
+	if _team_material == null:
+		_team_material = ShaderMaterial.new()
+		_team_material.shader = TEAM_SHADER
+	var pal := stats.palette()
+	_team_material.set_shader_parameter("use_mask", true)
+	_team_material.set_shader_parameter("mask_tex", mask)
+	_team_material.set_shader_parameter("team_dark", pal["dark"])
+	_team_material.set_shader_parameter("team_mid", pal["mid"])
+	_team_material.set_shader_parameter("team_light", pal["light"])
+	_team_material.set_shader_parameter("trim_color", pal["trim"])
+	_team_material.set_shader_parameter("emblem_color", pal["emblem"])
+	material = _team_material
 
 
 func radius() -> float:
@@ -240,7 +280,9 @@ func _advance(delta: float) -> void:
 	var step := stats.move_speed * float(grid.tile_size.x) * delta
 	if offset.length() > 0.01:
 		_facing = offset.normalized()
-	_leave_marks(minf(step, offset.length()), delta)
+	var moved := minf(step, offset.length())
+	_distance_moved += moved
+	_leave_marks(moved, delta)
 	if offset.length() <= step:
 		position = to
 		grid.release(cell, self)
@@ -252,23 +294,27 @@ func _advance(delta: float) -> void:
 
 
 ## Tracks or footprints every few pixels, dust behind vehicles (see RtsLook).
+## Cadence is tied strictly to actual distance moved so pausing/detouring never moonwalks.
 func _leave_marks(moved: float, delta: float) -> void:
+	if moved <= 0.001:
+		return
 	_anim_time += delta
 	if stats.sprite == null or RtsLook.instance == null:
 		return
 	_mark_distance += moved
 	var gap := 3.0 if stats.vehicle else 5.0
 	if _mark_distance >= gap:
-		_mark_distance = 0.0
+		_mark_distance = fmod(_mark_distance, gap)
 		if stats.vehicle:
 			RtsLook.instance.add_track(position, _facing.angle())
 		else:
-			var side := _facing.orthogonal() * (2.0 if int(_anim_time * 8.0) % 2 == 0 else -2.0)
+			var step_idx := posmod(floori(_distance_moved / gap), 2)
+			var side := _facing.orthogonal() * (2.0 if step_idx == 0 else -2.0)
 			RtsLook.instance.add_footprints(position + Vector2(0, 4) + side)
 	if stats.vehicle:
-		_dust_timer -= delta
-		if _dust_timer <= 0.0:
-			_dust_timer = 0.07
+		_dust_distance += moved
+		if _dust_distance >= 4.5:
+			_dust_distance = fmod(_dust_distance, 4.5)
 			RtsLook.instance.add_dust(position - _facing * 10.0 + Vector2(0, 3), -_facing)
 
 
@@ -320,17 +366,20 @@ func _draw() -> void:
 	if stats == null:
 		return
 	var r := radius()
+	var snap_px := visual_profile != null and visual_profile.snap_pixels
+	_draw_snap = (position.round() - position) if snap_px else Vector2.ZERO
 	if stats.sprite != null:
 		_draw_sprite_unit(r)
 	else:
 		# Shadow, offset down-right (light from the top-left).
-		draw_set_transform(Vector2(2.5, 3.5), 0.0, Vector2(1.0, 0.6))
+		draw_set_transform(_draw_snap + Vector2(2.5, 3.5), 0.0, Vector2(1.0, 0.6))
 		draw_circle(Vector2.ZERO, r, Color(0, 0, 0, 0.3))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		draw_set_transform(_draw_snap, 0.0, Vector2.ONE)
 	if selected:
-		_draw_brackets(r + 4.0)
+		_draw_brackets(r + 4.0, _draw_snap, snap_px)
 	var body := stats.color().lerp(Color.WHITE, 0.7 if _flash > 0.0 else 0.0)
 	if stats.sprite == null:
+		draw_set_transform(_draw_snap, 0.0, Vector2.ONE)
 		draw_circle(Vector2.ZERO, r, OUTLINE)
 		draw_circle(Vector2.ZERO, r - 1.5, body)
 		draw_circle(Vector2(-r * 0.3, -r * 0.3), r * 0.35, body.lightened(0.25))  # top-left highlight
@@ -344,60 +393,94 @@ func _draw() -> void:
 				draw_line(Vector2(0, -4), Vector2(0, 4), CYAN, 2.5)
 			else:
 				draw_colored_polygon(PackedVector2Array([Vector2(0, -5), Vector2(4, 0), Vector2(0, 5), Vector2(-4, 0)]), GOLD)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if selected or health < stats.max_health:
-		_draw_health_bar(r)
+		_draw_health_bar(r, _draw_snap, snap_px)
 	if _shot_timer > 0.0:
 		var hit := _shot_to - position
+		if snap_px:
+			hit = hit.round()
 		if stats.attack_range > 1:
-			draw_line(_facing * r, hit, Color(1.0, 0.95, 0.55), 2.0)
+			draw_line(_draw_snap + _facing * r, _draw_snap + hit, Color(1.0, 0.95, 0.55), 2.0, not snap_px)
 		else:
-			draw_line(hit + Vector2(-5, -5), hit + Vector2(5, 5), Color.WHITE, 2.0)
-			draw_line(hit + Vector2(-5, 5), hit + Vector2(5, -5), Color.WHITE, 2.0)
+			draw_line(_draw_snap + hit + Vector2(-5, -5), _draw_snap + hit + Vector2(5, 5), Color.WHITE, 2.0, not snap_px)
+			draw_line(_draw_snap + hit + Vector2(-5, 5), _draw_snap + hit + Vector2(5, -5), Color.WHITE, 2.0, not snap_px)
 
 
 ## A unit drawn from its sprite, grounded on the map: soft shadow down-right and a dark contact
 ## line at its base, lit like the ground under it, facing where it moves, bobbing as it walks.
-func _draw_sprite_unit(r: float) -> void:
-	var tex := stats.sprite
+func _draw_sprite_unit(_r: float) -> void:
+	var snap := _draw_snap
+	var use_hd := visual_profile != null and visual_profile.is_hd_painted() and stats.sprite_hd != null
+	var soft := visual_profile != null and visual_profile.soft_effects
+	var snap_px := visual_profile != null and visual_profile.snap_pixels
+	var base_tex := stats.sprite
+	var tex := stats.sprite_hd if use_hd else base_tex
 	var cols := 8 if stats.sprite_directions == 8 else 1
+	var base_frame := Vector2(base_tex.get_width() / float(cols), base_tex.get_height() / float(stats.sprite_frames))
 	var frame_size := Vector2(tex.get_width() / float(cols), tex.get_height() / float(stats.sprite_frames))
-	var size := frame_size * stats.sprite_scale
-	var moving := is_moving()
-	var foot := Vector2(0, size.y * 0.32)
+	var size := base_frame * stats.sprite_scale
+	if snap_px:
+		size = size.round()
+	var actively_stepping := _stepping
+	var foot := snap + Vector2(0, roundf(size.y * 0.32) if snap_px else size.y * 0.32)
 	if RtsLook.shadows:
 		var spread := size.x * (0.5 if stats.vehicle else 0.42)
-		draw_set_transform(foot + Vector2(3, 2), 0.0, Vector2(1.0, 0.45))
-		draw_circle(Vector2.ZERO, spread, Color(0.16, 0.06, 0.0, 0.28))
-		draw_set_transform(foot + Vector2(1, 1), 0.0, Vector2(1.0, 0.35))
-		draw_circle(Vector2.ZERO, spread * 0.7, Color(0.1, 0.03, 0.0, 0.32))
+		if soft:
+			draw_set_transform(foot + Vector2(3.5, 2.5), 0.0, Vector2(1.0, 0.48))
+			draw_circle(Vector2.ZERO, spread * 1.12, Color(0.16, 0.06, 0.0, 0.16), true, -1.0, true)
+			draw_set_transform(foot + Vector2(2.5, 1.8), 0.0, Vector2(1.0, 0.44))
+			draw_circle(Vector2.ZERO, spread * 0.92, Color(0.14, 0.05, 0.0, 0.24), true, -1.0, true)
+			draw_set_transform(foot + Vector2(1.0, 0.8), 0.0, Vector2(1.0, 0.35))
+			draw_circle(Vector2.ZERO, spread * 0.68, Color(0.08, 0.02, 0.0, 0.34), true, -1.0, true)
+		else:
+			draw_set_transform(foot + Vector2(3, 2), 0.0, Vector2(1.0, 0.45))
+			draw_circle(Vector2.ZERO, roundf(spread), Color(0.16, 0.06, 0.0, 0.28), true, -1.0, false)
+			draw_set_transform(foot + Vector2(1, 1), 0.0, Vector2(1.0, 0.35))
+			draw_circle(Vector2.ZERO, roundf(spread * 0.7), Color(0.1, 0.03, 0.0, 0.34), true, -1.0, false)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var col := 0
 	if cols == 8:
 		col = posmod(roundi(atan2(-_facing.x, _facing.y) / (PI / 4.0)), 8)
-	var row := int(_anim_time * 10.0) % stats.sprite_frames if moving else 0
+	var row := 0
+	if stats.vehicle:
+		row = posmod(floori(_distance_moved / TREAD_STEP_PX), stats.sprite_frames)
+	elif actively_stepping and stats.sprite_frames > 1:
+		row = 1 + posmod(floori(_distance_moved / WALK_STEP_PX), stats.sprite_frames - 1)
 	var src := Rect2(Vector2(col * frame_size.x, row * frame_size.y), frame_size)
-	var bob := -1.0 if (moving and not stats.vehicle and int(_anim_time * 7.0) % 2 == 0) else 0.0
+	var bob := -1.0 if (actively_stepping and not stats.vehicle and posmod(floori(_distance_moved / BOB_STEP_PX), 2) == 0) else 0.0
 	var light := RtsLook.light_at(position)
-	var tint := Color(light, light, light).lerp(Color(2, 2, 2), 1.0 if _flash > 0.0 else 0.0)
+	var flash_amt := 1.0 if _flash > 0.0 else 0.0
+	var tint := Color.WHITE
+	if _team_material != null and material == _team_material:
+		_team_material.set_shader_parameter("ground_light", light)
+		_team_material.set_shader_parameter("hit_flash", flash_amt)
+	else:
+		tint = Color(light, light, light).lerp(Color(2, 2, 2), flash_amt)
 	var flip := cols == 1 and _facing.x < -0.2
-	draw_set_transform(Vector2(0, bob), 0.0, Vector2(-1.0 if flip else 1.0, 1.0))
-	draw_texture_rect_region(tex, Rect2(-size * 0.5, size), src, tint)
+	var half_size := (size * 0.5).round() if snap_px else (size * 0.5)
+	draw_set_transform(snap + Vector2(0, bob), 0.0, Vector2(-1.0 if flip else 1.0, 1.0))
+	draw_texture_rect_region(tex, Rect2(-half_size, size), src, tint)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
-func _draw_brackets(half: float) -> void:
-	var l := half * 0.55
+func _draw_brackets(half: float, snap: Vector2 = Vector2.ZERO, snap_px: bool = false) -> void:
+	var h := roundf(half) if snap_px else half
+	var l := roundf(h * 0.55) if snap_px else (h * 0.55)
 	for sx in [-1.0, 1.0]:
 		for sy in [-1.0, 1.0]:
-			var corner := Vector2(sx * half, sy * half)
-			draw_line(corner, corner - Vector2(sx * l, 0), SELECT_COLOR, 2.0)
-			draw_line(corner, corner - Vector2(0, sy * l), SELECT_COLOR, 2.0)
+			var corner := snap + Vector2(sx * h, sy * h)
+			draw_line(corner, corner - Vector2(sx * l, 0), SELECT_COLOR, 2.0, not snap_px)
+			draw_line(corner, corner - Vector2(0, sy * l), SELECT_COLOR, 2.0, not snap_px)
 
 
-func _draw_health_bar(r: float) -> void:
-	var w := r * 2.0 + 4.0
-	var top_left := Vector2(-w * 0.5, -r - 9.0)
+func _draw_health_bar(r: float, snap: Vector2 = Vector2.ZERO, snap_px: bool = false) -> void:
+	var w := roundf(r * 2.0 + 4.0) if snap_px else (r * 2.0 + 4.0)
+	var top_left := snap + Vector2(-w * 0.5, -r - 9.0)
+	if snap_px:
+		top_left = snap + Vector2(roundf(-w * 0.5), roundf(-r - 9.0))
 	var ratio := clampf(float(health) / float(stats.max_health), 0.0, 1.0)
+	var fill_w := roundf(w * ratio) if snap_px else (w * ratio)
 	var fill := Color(0.3, 0.9, 0.3) if ratio > 0.5 else (Color(0.95, 0.8, 0.2) if ratio > 0.25 else Color(0.95, 0.25, 0.2))
 	draw_rect(Rect2(top_left - Vector2.ONE, Vector2(w + 2.0, 6.0)), OUTLINE)
-	draw_rect(Rect2(top_left, Vector2(w * ratio, 4.0)), fill)
+	draw_rect(Rect2(top_left, Vector2(fill_w, 4.0)), fill)

@@ -4,12 +4,45 @@ extends Resource
 ## Values are placeholders until balancing (docs/GAME_DESIGN.md §9). Ranges are in tiles:
 ## range 1 means "touching", including diagonally.
 
-enum Faction { BLUE, RED }
+enum Faction { BLUE, RED, GREEN, PALATINATE }
 enum Kind { TROOP, COMMANDER }
 
 const FACTION_COLORS := {
 	Faction.BLUE: Color(0.22, 0.45, 0.92),
-	Faction.RED: Color(0.86, 0.2, 0.17),
+	Faction.RED: Color(0.86, 0.20, 0.17),
+	Faction.GREEN: Color(0.22, 0.58, 0.27),
+	Faction.PALATINATE: Color(0.53, 0.24, 0.68),
+}
+
+const FACTION_PALETTES := {
+	Faction.BLUE: {
+		"dark": Color(0.086, 0.165, 0.471),
+		"mid": Color(0.180, 0.376, 0.871),
+		"light": Color(0.510, 0.686, 1.000),
+		"trim": Color(0.925, 0.894, 0.808),
+		"emblem": Color(0.431, 0.941, 0.941),
+	},
+	Faction.RED: {
+		"dark": Color(0.439, 0.086, 0.063),
+		"mid": Color(0.800, 0.173, 0.125),
+		"light": Color(1.000, 0.502, 0.408),
+		"trim": Color(0.886, 0.667, 0.235),
+		"emblem": Color(1.000, 0.871, 0.471),
+	},
+	Faction.GREEN: {
+		"dark": Color(0.090, 0.271, 0.129),
+		"mid": Color(0.200, 0.561, 0.259),
+		"light": Color(0.522, 0.839, 0.459),
+		"trim": Color(0.761, 0.639, 0.380),
+		"emblem": Color(0.922, 0.780, 0.341),
+	},
+	Faction.PALATINATE: {
+		"dark": Color(0.239, 0.102, 0.329),
+		"mid": Color(0.510, 0.220, 0.659),
+		"light": Color(0.820, 0.561, 0.961),
+		"trim": Color(0.922, 0.890, 0.831),
+		"emblem": Color(0.949, 0.878, 0.678),
+	},
 }
 
 @export var display_name := "Trooper"
@@ -34,6 +67,12 @@ const FACTION_COLORS := {
 @export_group("Look")
 ## Optional picture. Empty means the placeholder disc is drawn.
 @export var sprite: Texture2D
+## Optional 2x density sprite sheet for the "hd_painted" visual profile.
+@export var sprite_hd: Texture2D
+## Optional team-colour mask texture (R = team paint, G = shading value, B = trim/emblem).
+@export var team_mask: Texture2D
+## Optional 2x density team-colour mask texture for "hd_painted".
+@export var team_mask_hd: Texture2D
 ## 1 = one picture, mirrored when moving left; 8 = a sheet with one column per facing
 ## (S, SW, W, NW, N, NE, E, SE), like the Balance4 tank.
 @export_enum("1:1", "8:8") var sprite_directions: int = 1
@@ -46,7 +85,11 @@ const FACTION_COLORS := {
 
 
 func color() -> Color:
-	return FACTION_COLORS[faction]
+	return FACTION_COLORS.get(faction, FACTION_COLORS[Faction.BLUE])
+
+
+func palette() -> Dictionary:
+	return FACTION_PALETTES.get(faction, FACTION_PALETTES[Faction.BLUE])
 
 
 func damage_against(target: UnitStats) -> int:

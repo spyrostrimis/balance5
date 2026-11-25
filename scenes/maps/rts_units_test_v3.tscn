@@ -1,0 +1,105 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts/rts_units_test_v3.gd" id="r0"]
+[ext_resource type="Script" path="res://scripts/rts/rts_grid.gd" id="r1"]
+[ext_resource type="Script" path="res://scripts/rts/rts_look.gd" id="r2"]
+[ext_resource type="Script" path="res://scripts/rts/rts_commands.gd" id="r3"]
+[ext_resource type="Script" path="res://scripts/rts/rts_camera.gd" id="r4"]
+[ext_resource type="PackedScene" path="res://scenes/actors/rts_unit.tscn" id="r5"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t5/sand_dunes.png" id="r6"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t5/road.png" id="r7"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t5/rocks.png" id="r8"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/style_test/t5/scatter.png" id="r9"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units_test/walk_mask.png" id="r10"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/units_test/ground_light.png" id="r11"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look_v3/blue_squad.tres" id="r12"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look_v3/red_squad.tres" id="r13"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look_v3/blue_commander.tres" id="r14"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look_v3/red_commander.tres" id="r15"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look_v3/blue_tank.tres" id="r16"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look_v3/red_tank.tres" id="r17"]
+
+[node name="RtsUnitsTestV3" type="Node2D"]
+texture_filter = 1
+script = ExtResource("r0")
+
+[node name="Ground" type="Sprite2D" parent="."]
+texture = ExtResource("r6")
+centered = false
+
+[node name="Road" type="Sprite2D" parent="."]
+texture = ExtResource("r7")
+centered = false
+
+[node name="Rocks" type="Sprite2D" parent="."]
+texture = ExtResource("r8")
+centered = false
+
+[node name="Scatter" type="Sprite2D" parent="."]
+texture = ExtResource("r9")
+centered = false
+
+[node name="Look" type="Node2D" parent="."]
+script = ExtResource("r2")
+light_map = ExtResource("r11")
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("r1")
+blocked_cells = ExtResource("r10")
+
+[node name="Units" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="BlueCommander" parent="Units" instance=ExtResource("r5")]
+position = Vector2(200, 150)
+stats = ExtResource("r14")
+
+[node name="BlueSquad1" parent="Units" instance=ExtResource("r5")]
+position = Vector2(168, 160)
+stats = ExtResource("r12")
+
+[node name="BlueSquad2" parent="Units" instance=ExtResource("r5")]
+position = Vector2(136, 176)
+stats = ExtResource("r12")
+
+[node name="BlueTank" parent="Units" instance=ExtResource("r5")]
+position = Vector2(104, 132)
+stats = ExtResource("r16")
+
+[node name="RedCommander" parent="Units" instance=ExtResource("r5")]
+position = Vector2(480, 318)
+stats = ExtResource("r15")
+
+[node name="RedSquad1" parent="Units" instance=ExtResource("r5")]
+position = Vector2(452, 334)
+stats = ExtResource("r13")
+
+[node name="RedSquad2" parent="Units" instance=ExtResource("r5")]
+position = Vector2(560, 300)
+stats = ExtResource("r13")
+
+[node name="RedTank" parent="Units" instance=ExtResource("r5")]
+position = Vector2(528, 364)
+stats = ExtResource("r17")
+
+[node name="Commands" type="Node2D" parent="."]
+script = ExtResource("r3")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(480, 270)
+zoom = Vector2(1.0, 1.0)
+script = ExtResource("r4")
+zoom_min = 1.0
+zoom_max = 3.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Help" type="Label" parent="HUD"]
+offset_left = 10.0
+offset_top = 6.0
+offset_right = 950.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 13

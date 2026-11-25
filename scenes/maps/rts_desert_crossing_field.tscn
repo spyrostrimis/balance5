@@ -1,0 +1,233 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts/rts_desert_field.gd" id="field"]
+[ext_resource type="Script" path="res://scripts/rts/rts_desert_terrain.gd" id="terrain"]
+[ext_resource type="Script" path="res://scripts/rts/rts_desert_piece.gd" id="piece"]
+[ext_resource type="Script" path="res://scripts/rts/rts_desert_look.gd" id="look"]
+[ext_resource type="Script" path="res://scripts/rts/rts_grid.gd" id="grid"]
+[ext_resource type="Script" path="res://scripts/rts/rts_desert_unit.gd" id="unit"]
+[ext_resource type="Script" path="res://scripts/rts/rts_commands.gd" id="commands"]
+[ext_resource type="Script" path="res://scripts/rts/rts_camera.gd" id="camera"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look/blue_squad.tres" id="blue_squad"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look/blue_commander.tres" id="blue_commander"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look/blue_tank.tres" id="blue_tank"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look/red_squad.tres" id="red_squad"]
+[ext_resource type="Resource" path="res://scenes/rts/units/look/red_tank.tres" id="red_tank"]
+
+[node name="DesertField" type="Node2D"]
+script = ExtResource("field")
+
+[node name="Terrain" type="Node2D" parent="."]
+script = ExtResource("terrain")
+texture_repeat = 2
+
+[node name="Road" type="Node2D" parent="Terrain"]
+
+[node name="Roadbed" type="Line2D" parent="Terrain/Road"]
+points = PackedVector2Array(-40, 309, 73, 289, 132, 259, 191, 247, 233, 263, 272, 298, 329, 335, 392, 351, 446, 355, 496, 359, 559, 373, 650, 413, 793, 463)
+width = 46.0
+default_color = Color(0.52, 0.32, 0.20, 0.20)
+joint_mode = 2
+antialiased = true
+
+[node name="Paving" type="Line2D" parent="Terrain/Road"]
+points = PackedVector2Array(-40, 309, 73, 289, 132, 259, 191, 247, 233, 263, 272, 298, 329, 335, 392, 351, 446, 355, 496, 359, 559, 373, 650, 413, 793, 463)
+width = 43.0
+default_color = Color(0.98, 0.95, 0.88, 1)
+texture_mode = 1
+joint_mode = 2
+
+[node name="GroundPieces" type="Node2D" parent="Terrain"]
+
+[node name="WestPaving" type="Node2D" parent="Terrain/GroundPieces"]
+position = Vector2(184, 233)
+script = ExtResource("piece")
+art = "flagstones"
+size = Vector2(101, 62)
+
+[node name="CrystalApron" type="Node2D" parent="Terrain/GroundPieces"]
+position = Vector2(449, 324)
+script = ExtResource("piece")
+art = "flagstones"
+size = Vector2(128, 104)
+rotation = 0.18
+
+[node name="CrossingDune" type="Node2D" parent="Terrain/GroundPieces"]
+position = Vector2(306, 264)
+script = ExtResource("piece")
+art = "dune"
+size = Vector2(134, 111)
+rotation = 0.58
+relief_height = 13.0
+relief_radius = Vector2(64, 49)
+
+[node name="SouthDune" type="Node2D" parent="Terrain/GroundPieces"]
+position = Vector2(194, 409)
+script = ExtResource("piece")
+art = "dune"
+size = Vector2(150, 97)
+rotation = 0.43
+relief_height = 8.0
+relief_radius = Vector2(67, 43)
+
+[node name="EastDune" type="Node2D" parent="Terrain/GroundPieces"]
+position = Vector2(624, 279)
+script = ExtResource("piece")
+art = "dune"
+size = Vector2(165, 122)
+rotation = 0.53
+relief_height = 9.0
+relief_radius = Vector2(71, 49)
+
+[node name="NorthDune" type="Node2D" parent="Terrain/GroundPieces"]
+position = Vector2(273, 126)
+script = ExtResource("piece")
+art = "dune"
+size = Vector2(131, 92)
+rotation = 0.58
+relief_height = 6.0
+relief_radius = Vector2(58, 38)
+
+[node name="Shadows" type="Node2D" parent="Terrain"]
+
+[node name="Landmarks" type="Node2D" parent="Terrain"]
+
+[node name="CliffBack" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(560, 103)
+script = ExtResource("piece")
+art = "cliff"
+size = Vector2(229, 150)
+footprint = PackedVector2Array(-108, -19, -50, -59, 4, -72, 52, -24, 105, -21, 100, 33, 36, 45, -14, 69, -62, 62, -105, 29)
+
+[node name="CliffShelf" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(450, 154)
+script = ExtResource("piece")
+art = "cliff"
+size = Vector2(226, 147)
+footprint = PackedVector2Array(-101, -22, -50, -55, 34, -70, 48, -25, 105, -13, 106, 18, 48, 44, 21, 62, -31, 67, -76, 44, -106, 14)
+shade_offset = Vector2(29, 55)
+shade_size = Vector2(271, 116)
+shade_strength = 0.72
+
+[node name="WestCliff" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(84, 117)
+script = ExtResource("piece")
+art = "cliff"
+size = Vector2(141, 95)
+footprint = PackedVector2Array(-65, -20, 13, -43, 24, -18, 65, -6, 57, 20, 28, 29, -6, 42, -62, 22)
+shade_offset = Vector2(11, 17)
+shade_size = Vector2(147, 74)
+shade_strength = 0.51
+
+[node name="Oasis" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(567, 205)
+script = ExtResource("piece")
+art = "oasis"
+size = Vector2(66, 51)
+footprint = PackedVector2Array(-26, 1, -16, -16, 24, -22, 30, -4, 12, 20, -18, 22)
+
+[node name="Outpost" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(183, 200)
+script = ExtResource("piece")
+art = "outpost"
+size = Vector2(67, 68)
+footprint = PackedVector2Array(-26, -13, 23, -13, 27, 29, -27, 34)
+shade_offset = Vector2(15, 25)
+shade_size = Vector2(79, 38)
+shade_strength = 0.57
+
+[node name="Orichalcum" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(449, 305)
+script = ExtResource("piece")
+art = "crystal"
+size = Vector2(85, 59)
+footprint = PackedVector2Array(-37, -8, -21, -24, 20, -23, 39, -5, 35, 15, 0, 28, -26, 23)
+shade_offset = Vector2(14, 12)
+shade_size = Vector2(102, 58)
+shade_strength = 0.56
+
+[node name="Scatter1" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(233, 209)
+script = ExtResource("piece")
+art = "pebble"
+size = Vector2(13, 9)
+
+[node name="Scatter2" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(376, 236)
+script = ExtResource("piece")
+art = "pebble"
+size = Vector2(10, 7)
+
+[node name="Scatter3" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(354, 386)
+script = ExtResource("piece")
+art = "pebble"
+size = Vector2(17, 10)
+
+[node name="Scatter4" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(549, 296)
+script = ExtResource("piece")
+art = "pebble"
+size = Vector2(12, 7)
+
+[node name="Scatter5" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(253, 363)
+script = ExtResource("piece")
+art = "pebble"
+size = Vector2(9, 6)
+
+[node name="Scatter6" type="Node2D" parent="Terrain/Landmarks"]
+position = Vector2(140, 337)
+script = ExtResource("piece")
+art = "pebble"
+size = Vector2(12, 8)
+
+[node name="Look" type="Node2D" parent="."]
+script = ExtResource("look")
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("grid")
+
+[node name="Units" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="BlueSquad" type="Node2D" parent="Units"]
+position = Vector2(240, 272)
+script = ExtResource("unit")
+stats = ExtResource("blue_squad")
+
+[node name="BlueTank" type="Node2D" parent="Units"]
+position = Vector2(208, 304)
+script = ExtResource("unit")
+stats = ExtResource("blue_tank")
+
+[node name="BlueCommander" type="Node2D" parent="Units"]
+position = Vector2(176, 272)
+script = ExtResource("unit")
+stats = ExtResource("blue_commander")
+
+[node name="RedSquad" type="Node2D" parent="Units"]
+position = Vector2(528, 336)
+script = ExtResource("unit")
+stats = ExtResource("red_squad")
+
+[node name="RedTank" type="Node2D" parent="Units"]
+position = Vector2(560, 368)
+script = ExtResource("unit")
+stats = ExtResource("red_tank")
+
+[node name="Commands" type="Node2D" parent="."]
+script = ExtResource("commands")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(352, 264)
+zoom = Vector2(1.5, 1.5)
+zoom_min = 1.25
+zoom_max = 3.0
+edge_scroll = false
+script = ExtResource("camera")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Help" type="Label" parent="HUD"]

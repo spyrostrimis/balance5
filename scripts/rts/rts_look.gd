@@ -12,6 +12,8 @@ static var shadows := true
 static var ground_light := true
 static var marks := true
 static var dust := true
+static var pixel_snap := false
+static var soft_effects := false
 static var instance: RtsLook
 
 const TRACK_LIFE := 8.0
@@ -50,6 +52,12 @@ func add_track(pos: Vector2, angle: float) -> void:
 		_tracks.append([pos, angle, 0.0])
 
 
+## Each sample uses the rear tread contacts at both ends of a part of the turn.
+func add_track_pair(previous: Vector2, previous_heading: Vector2, next: Vector2, heading: Vector2) -> void:
+	if marks:
+		_tracks.append([previous, next, 0.0, previous_heading, heading])
+
+
 func add_footprints(pos: Vector2) -> void:
 	if marks:
 		_feet.append([pos, 0.0])
@@ -75,19 +83,61 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 
+func apply_visual_profile(profile: RtsVisualProfile) -> void:
+	pixel_snap = profile.snap_pixels
+	soft_effects = profile.soft_effects
+	texture_filter = profile.canvas_texture_filter
+	queue_redraw()
+
+
 func _draw() -> void:
 	if marks:
 		for t: Array in _tracks:
 			var fade: float = 1.0 - t[2] / TRACK_LIFE
+			if t.size() == 5:
+				for side in [-6.0, 6.0]:
+					var a: Vector2 = t[0] - t[3] * 6.0 + t[3].orthogonal() * side
+					var b: Vector2 = t[1] - t[4] * 6.0 + t[4].orthogonal() * side
+					if pixel_snap:
+						a = a.round()
+						b = b.round()
+					if soft_effects:
+						draw_line(a, b, Color(TRACK_COLOR, 0.22 * fade), 2.8, true)
+						draw_line(a, b, Color(TRACK_COLOR, 0.42 * fade), 1.4, true)
+					else:
+						draw_line(a, b, Color(TRACK_COLOR, 0.46 * fade), 1.6, false)
+				continue
 			var along := Vector2.from_angle(t[1])
 			var side := along.orthogonal()
 			for s in [-5.0, 5.0]:
 				var c: Vector2 = t[0] + side * s
-				draw_line(c - along * 1.5, c + along * 1.5, Color(TRACK_COLOR, 0.42 * fade), 2.0)
+				if pixel_snap:
+					var p0 := (c - along * 1.5).round()
+					var p1 := (c + along * 1.5).round()
+					draw_line(p0, p1, Color(TRACK_COLOR, 0.46 * fade), 2.0, false)
+				elif soft_effects:
+					draw_line(c - along * 1.7, c + along * 1.7, Color(TRACK_COLOR, 0.20 * fade), 3.0, true)
+					draw_line(c - along * 1.4, c + along * 1.4, Color(TRACK_COLOR, 0.40 * fade), 1.6, true)
+				else:
+					draw_line(c - along * 1.5, c + along * 1.5, Color(TRACK_COLOR, 0.42 * fade), 2.0)
 		for f: Array in _feet:
 			var fade: float = 1.0 - f[1] / FOOT_LIFE
-			draw_rect(Rect2(f[0], Vector2.ONE), Color(FOOT_COLOR, 0.45 * fade))
+			var fp: Vector2 = (f[0] as Vector2).round() if pixel_snap else (f[0] as Vector2)
+			if soft_effects:
+				draw_circle(fp + Vector2(0.5, 0.5), 0.95, Color(FOOT_COLOR, 0.38 * fade), true, -1.0, true)
+			else:
+				draw_rect(Rect2(fp, Vector2.ONE), Color(FOOT_COLOR, 0.48 * fade))
 	if dust:
 		for d: Array in _dust:
 			var k: float = d[2] / DUST_LIFE
-			draw_circle(d[0], d[3] * (1.0 + k * 1.6), Color(DUST_COLOR, 0.45 * (1.0 - k)))
+			var pos: Vector2 = (d[0] as Vector2).round() if pixel_snap else (d[0] as Vector2)
+			var rad: float = d[3] * (1.0 + k * 1.6)
+			if pixel_snap and not soft_effects:
+				var ir := maxf(1.0, roundf(rad))
+				var col := Color(DUST_COLOR, 0.45 * (1.0 - k))
+				draw_rect(Rect2(pos - Vector2(ir, ir), Vector2(ir * 2.0, ir * 2.0)), col)
+			elif soft_effects:
+				draw_circle(pos, rad * 1.35, Color(DUST_COLOR, 0.20 * (1.0 - k)), true, -1.0, true)
+				draw_circle(pos, rad * 0.85, Color(DUST_COLOR.lightened(0.08), 0.36 * (1.0 - k)), true, -1.0, true)
+			else:
+				draw_circle(pos, rad, Color(DUST_COLOR, 0.45 * (1.0 - k)))

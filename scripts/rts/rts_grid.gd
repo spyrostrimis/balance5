@@ -118,6 +118,40 @@ func unit_at(cell: Vector2i) -> Object:
 	return holder if is_instance_valid(holder) else null
 
 
+## Cells touched by a world-space segment, including a little clearance for sprite bodies.
+## Expand each cell's rectangle so passing through a grid corner checks both neighbours.
+func cells_along(from: Vector2, to: Vector2, clearance: float) -> Array[Vector2i]:
+	var pad := Vector2.ONE * clearance
+	var low := cell_of(from.min(to) - pad)
+	var high := cell_of(from.max(to) + pad)
+	var cells: Array[Vector2i] = []
+	for y in range(low.y, high.y + 1):
+		for x in range(low.x, high.x + 1):
+			var cell := Vector2i(x, y)
+			var box := Rect2(Vector2(cell * tile_size), Vector2(tile_size)).grow(clearance)
+			if _segment_touches_box(from, to, box):
+				cells.append(cell)
+	return cells
+
+
+func _segment_touches_box(from: Vector2, to: Vector2, box: Rect2) -> bool:
+	var enter := 0.0
+	var leave := 1.0
+	var offset := to - from
+	for axis in 2:
+		if is_zero_approx(offset[axis]):
+			if from[axis] < box.position[axis] or from[axis] > box.end[axis]:
+				return false
+		else:
+			var a := (box.position[axis] - from[axis]) / offset[axis]
+			var b := (box.end[axis] - from[axis]) / offset[axis]
+			enter = maxf(enter, minf(a, b))
+			leave = minf(leave, maxf(a, b))
+			if enter > leave:
+				return false
+	return true
+
+
 # --- Routes --------------------------------------------------------------------------------
 
 ## Tiles to walk through from `from` to `to`, not including `from`.

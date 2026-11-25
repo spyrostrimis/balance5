@@ -29,7 +29,7 @@ func consume_return() -> bool:
 
 
 func _update_return_button() -> void:
-	_return_button.visible = is_build_active()
+	_return_button.visible = is_build_active() and not get_tree().current_scene.get_meta("owns_catalog_button", false)
 
 
 func is_build_active() -> bool:
@@ -38,7 +38,7 @@ func is_build_active() -> bool:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if _return_button.visible and event.is_action_pressed("ui_cancel"):
+	if is_build_active() and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		_return_to_developers_page()
 

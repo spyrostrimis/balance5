@@ -1,5 +1,14 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Isometric — Forest Claim · 2026-11-26
+
+- [x] Review Blue, Red, the outcrop and both approaches in the Forward+ command view with the HUD on.
+- [x] Inspect the squad beside the rooted tree at close zoom and verify the canopy fades over selected troops.
+- [x] Verify cursor picks at both zooms, the same minimap destination around both ridge placements, both Play cards and Esc.
+- [ ] Owner judges the painted forest, cliff joins and repeated silhouettes at command zoom.
+
+[Matched gameplay views](RTS_FOREST_CLAIM.md)
+
 ## RTS Reusable 2 Carbon — Miasaki · 2026-11-25
 
 - [x] Review the same tank and four Red soldiers beside the northeast cliff at Command and Close in Forward+. Check warm rims, cool faces, reflected water colour and where the cliff blocks movement.

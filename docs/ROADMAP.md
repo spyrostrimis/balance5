@@ -51,6 +51,10 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [ ] Selected-unit card and the Move / Attack / Hold / Mend buttons
 - [ ] Objective panel with progress bar ("Hold the Orichalcum rock")
 
+### Painted forest study
+- [x] Build and export both **RTS Isometric — Forest Claim** cards. Verify both tank routes, the minimap orders, camera picks and Play/Esc. [Playable layouts and route evidence](RTS_FOREST_CLAIM.md)
+- [ ] Owner reviews Forest Claim beside Fight 4 at command zoom and checks the cliff joins and repeated crowns in play.
+
 ### Maps
 - [x] Build the painted modular Desert Crossing proof and a matched pixel look. Verify a dune crossing, cliff shade and paired tread lanes at playing size. [Playable proof](RTS_DESERT_CROSSING.md)
 - [ ] Owner reviews Desert Crossing and decides whether to extend the modular desert kit or test the whole-map painting in play. [Matched captures and route](RTS_DESERT_CROSSING.md)

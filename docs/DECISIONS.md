@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-26 · Try a reusable isometric forest battlefield
+
+Area: RTS · Status: Trying
+
+The owner chose Fight 4's forest as the paint reference for this study and required movable cliff and scenery pieces. Both layouts use the same [isometric projection](GLOSSARY.md#isometric-projection) for drawing and orders. Moving the ridge closes the tank's low route and changes which side it uses. The art verdict remains with the owner. [Study and matched tank routes](RTS_FOREST_CLAIM.md)
+
 ### 2026-11-25 · Compare Forest Fight 4 painting on the Carbon battlefield
 
 Area: RTS · Status: Trying

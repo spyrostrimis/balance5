@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_forest_claim/forest_claim_battlefield.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rts_forest_claim/forest_claim_landscape.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/rts/rts_grid.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_hud.gd" id="4"]
+
+[sub_resource type="Gradient" id="MaskGradient"]
+
+[sub_resource type="GradientTexture2D" id="PlaceholderMask"]
+gradient = SubResource("MaskGradient")
+width = 1
+height = 1
+
+[node name="ForestClaim" type="Node2D"]
+texture_filter = 4
+script = ExtResource("1")
+metadata/owns_catalog_button = true
+
+[node name="Landscape" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="SurfaceMarks" type="Node2D" parent="."]
+
+[node name="YSortWorld" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="CombatFx" type="Node2D" parent="."]
+
+[node name="SelectionOverlay" type="Node2D" parent="."]
+
+[node name="Grid" type="Node2D" parent="."]
+visible = false
+script = ExtResource("3")
+blocked_cells = SubResource("PlaceholderMask")
+
+[node name="Camera" type="Camera2D" parent="."]
+
+[node name="Hud" type="CanvasLayer" parent="."]
+script = ExtResource("4")

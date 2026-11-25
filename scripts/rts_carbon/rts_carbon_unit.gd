@@ -287,7 +287,7 @@ func _tick_attack(delta: float) -> void:
 		command_stop()
 		return
 	var dist := position.distance_to(target_enemy.position)
-	if dist <= attack_range_px():
+	if dist <= attack_range_px() and _can_fire_at(target_enemy):
 		_waypoints.clear()
 		_aim_and_fire(target_enemy, delta)
 		return
@@ -306,10 +306,14 @@ func _tick_guard(delta: float) -> void:
 	if nearest == null:
 		return
 	var dist := position.distance_to(nearest.position)
-	if dist <= attack_range_px():
+	if dist <= attack_range_px() and _can_fire_at(nearest):
 		_aim_and_fire(nearest, delta)
 	elif not hold_position and dist <= guard_range_px():
 		command_attack(nearest)
+
+
+func _can_fire_at(_enemy: RtsCarbonUnit) -> bool:
+	return true
 
 
 func _find_nearest_enemy() -> RtsCarbonUnit:
@@ -355,7 +359,7 @@ func _build_smooth_route(dest_cell: Vector2i, exact_dest: Vector2, avoid_units: 
 
 	var pts: Array[Vector2] = [position]
 	for i in range(raw_cells.size()):
-		if i == raw_cells.size() - 1 and grid.cell_of(exact_dest) == dest_cell:
+		if raw_cells[i] == dest_cell and grid.cell_of(exact_dest) == dest_cell:
 			pts.append(exact_dest)
 		else:
 			pts.append(grid.center_of(raw_cells[i]))
@@ -365,11 +369,15 @@ func _build_smooth_route(dest_cell: Vector2i, exact_dest: Vector2, avoid_units: 
 	while anchor < pts.size() - 1:
 		var furthest := anchor + 1
 		for probe in range(pts.size() - 1, anchor + 1, -1):
-			if _line_walkable(pts[anchor], pts[probe]):
+			if _may_smooth_between(pts[anchor], pts[probe], avoid_units):
 				furthest = probe
 				break
 		_waypoints.append(pts[furthest])
 		anchor = furthest
+
+
+func _may_smooth_between(a: Vector2, b: Vector2, _avoid_units: bool) -> bool:
+	return _line_walkable(a, b)
 
 
 func _line_walkable(a: Vector2, b: Vector2) -> bool:
@@ -438,9 +446,7 @@ func _advance_along_waypoints(delta: float, is_move_order: bool) -> void:
 		var turn_throttle := clampf(1.0 - ang_diff * 0.42, 0.32, 1.0)
 		var step := speed_px * slope_mult * turn_throttle * delta
 		var move_vec := facing * minf(step, dist)
-		var next_pos := position + move_vec
-		if not grid.is_walkable(grid.cell_of(next_pos)):
-			next_pos = position + desired_dir * minf(step * 0.6, dist)
+		var next_pos := _tank_step(desired_dir, move_vec, step, dist)
 		var moved := next_pos.distance_to(position)
 		if moved > 0.01:
 			_record_motion_fx(position, next_pos, facing, moved, slope_mult, delta)
@@ -459,6 +465,13 @@ func _advance_along_waypoints(delta: float, is_move_order: bool) -> void:
 		_update_cell_claim()
 
 	queue_redraw()
+
+
+func _tank_step(direction: Vector2, displacement: Vector2, step: float, distance: float) -> Vector2:
+	var next := position + displacement
+	if not grid.is_walkable(grid.cell_of(next)):
+		return position + direction * minf(step * 0.6, distance)
+	return next
 
 
 func _update_cell_claim() -> void:
@@ -510,7 +523,7 @@ func _draw() -> void:
 		return
 
 	# Pixel mode snaps local draw offset so sprites sit on crisp whole logical art pixels!
-	var snap_off := (position.round() - position) if pixel_mode else Vector2.ZERO
+	var snap_off := _draw_origin() + ((position.round() - position) if pixel_mode else Vector2.ZERO)
 
 	# Lee shadow darkening from cliffs, mesas, outpost & Orichalcum rock!
 	var shade := 0.0
@@ -535,6 +548,18 @@ func _draw() -> void:
 		_draw_health_bar(snap_off)
 
 
+func _draw_direction(dir: Vector2) -> Vector2:
+	return dir
+
+
+func _draw_slot(slot: Vector2) -> Vector2:
+	return slot
+
+
+func _draw_origin() -> Vector2:
+	return Vector2.ZERO
+
+
 func _draw_unit_shadow(center: Vector2, rx: float, ry: float) -> void:
 	# Soft top-left -> down-right cast shadow + tight contact patch at base
 	draw_set_transform(center + Vector2(3.2, 2.4), 0.0, Vector2(1.0, ry / maxf(rx, 1.0)))
@@ -548,14 +573,14 @@ func _draw_tank(snap_off: Vector2, tint: Color) -> void:
 	_draw_unit_shadow(snap_off + Vector2(0.0, 3.0), 14.5, 8.5)
 	var cell_w := _tex_main.get_width() / 8.0
 	var cell_h := _tex_main.get_height() / 2.0
-	var hull_col := dir_to_col(Vector2.from_angle(hull_angle))
+	var hull_col := dir_to_col(_draw_direction(Vector2.from_angle(hull_angle)))
 	var hull_row := (int(_stride_dist / 4.0) % 2) if _moving_now else 0
 	var dst_rect := Rect2(snap_off - Vector2(18.0, 18.0), Vector2(36.0, 36.0))
 	var src_hull := Rect2(Vector2(hull_col * cell_w, hull_row * cell_h), Vector2(cell_w, cell_h))
 	draw_texture_rect_region(_tex_main, dst_rect, src_hull, tint)
 
 	if _tex_turret != null:
-		var t_col := dir_to_col(Vector2.from_angle(turret_angle))
+		var t_col := dir_to_col(_draw_direction(Vector2.from_angle(turret_angle)))
 		var tw := _tex_turret.get_width() / 8.0
 		var th := float(_tex_turret.get_height())
 		var src_tur := Rect2(Vector2(t_col * tw, 0.0), Vector2(tw, th))
@@ -566,7 +591,7 @@ func _draw_commander(snap_off: Vector2, tint: Color) -> void:
 	_draw_unit_shadow(snap_off + Vector2(0.0, 5.5), 6.2, 3.2)
 	var cw := _tex_main.get_width() / 8.0
 	var ch := _tex_main.get_height() / 4.0
-	var col := dir_to_col(facing)
+	var col := dir_to_col(_draw_direction(facing))
 	var row := (int(_stride_dist / 5.0) % 4) if _moving_now else 0
 	var dst := Rect2(snap_off - Vector2(10.0, 15.0), Vector2(20.0, 23.0))
 	var src := Rect2(Vector2(col * cw, row * ch), Vector2(cw, ch))
@@ -576,14 +601,14 @@ func _draw_commander(snap_off: Vector2, tint: Color) -> void:
 func _draw_squad(snap_off: Vector2, tint: Color) -> void:
 	var cw := _tex_main.get_width() / 8.0
 	var ch := _tex_main.get_height() / 4.0
-	var col := dir_to_col(facing)
+	var col := dir_to_col(_draw_direction(facing))
 	var count := fit_count()
 
 	# Gently orient the 4-soldier diamond with facing, then sort back-to-front by Y!
 	var rot := facing.angle() - PI * 0.5
 	var members: Array[Dictionary] = []
 	for i in range(count):
-		var slot: Vector2 = (SQUAD_SLOTS[i] as Vector2).rotated(rot * 0.35)
+		var slot := _draw_slot((SQUAD_SLOTS[i] as Vector2).rotated(rot * 0.35))
 		if pixel_mode:
 			slot = slot.round()
 		var row := (int((_stride_dist + float(i) * 3.7) / 4.8) % 4) if _moving_now else 0

@@ -69,11 +69,11 @@ var _footprints: Array[Dictionary] = []  # {pos, age}
 var _mend_rings: Array[Dictionary] = []  # {pos, radius, age}
 var _initial_unit_spawns: Array[Dictionary] = []
 
-@onready var ground_rect: ColorRect = $GroundFloor
-@onready var dune_layer: Node2D = $Dunes
-@onready var decal_layer: Node2D = $GroundDecals
-@onready var road_line: Line2D = $RoadNetwork/MainRoad
-@onready var shadow_layer: Node2D = $CastShadows
+@onready var ground_rect: ColorRect = get_node_or_null("GroundFloor")
+@onready var dune_layer: Node2D = get_node_or_null("Dunes")
+@onready var decal_layer: Node2D = get_node_or_null("GroundDecals")
+@onready var road_line: Line2D = get_node_or_null("RoadNetwork/MainRoad")
+@onready var shadow_layer: Node2D = get_node_or_null("CastShadows")
 @onready var tracks_layer: Node2D = $SurfaceMarks
 @onready var world_ysort: Node2D = $YSortWorld
 @onready var fx_layer: Node2D = $CombatFx
@@ -450,6 +450,10 @@ func _tick_fx_and_treads(delta: float) -> void:
 		_tread_dirty = false
 		_tread_sync_clock = 0.0
 
+	_tick_effects(delta)
+
+
+func _tick_effects(delta: float) -> void:
 	var dirty_marks := false
 	for fp in _footprints:
 		fp["age"] = float(fp["age"]) + delta

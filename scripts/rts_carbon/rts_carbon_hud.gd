@@ -35,6 +35,11 @@ var hold_duration := 30.0
 var hold_state := "Uncontested · Move in"  # "Blue Holding", "Red Holding", "Contested!", "Victory!"
 var hold_owner := 0  # 0 none, 1 Blue, 2 Red
 
+var mission_title := "Mission 1 · The First Claim"
+var fixed_painted_style := false
+var tank_caption := "Compresses dune ripples"
+var minimap_projection := Transform2D.IDENTITY
+var minimap_map_bounds := Rect2()
 var world_size := Vector2(1408.0, 896.0)
 var camera_world_rect := Rect2(0, 0, 672, 448)
 var minimap_tex: Texture2D
@@ -119,7 +124,7 @@ func _on_panel_gui_input(event: InputEvent) -> void:
 		var vpt := _screen_to_virtual(mb.position)
 		if _minimap_rect.has_point(vpt):
 			var uv := ((vpt - _minimap_rect.position) / _minimap_rect.size).clamp(Vector2.ZERO, Vector2.ONE)
-			var wpos := uv * world_size
+			var wpos := _minimap_to_world(uv)
 			if mb.button_index == MOUSE_BUTTON_LEFT:
 				_minimap_dragging = mb.pressed
 				if mb.pressed:
@@ -145,8 +150,27 @@ func _on_panel_gui_input(event: InputEvent) -> void:
 		var mm := event as InputEventMouseMotion
 		var vpt_m := _screen_to_virtual(mm.position)
 		var uv_m := ((vpt_m - _minimap_rect.position) / _minimap_rect.size).clamp(Vector2.ZERO, Vector2.ONE)
-		minimap_pan_requested.emit(uv_m * world_size)
+		minimap_pan_requested.emit(_minimap_to_world(uv_m))
 		get_viewport().set_input_as_handled()
+
+
+func _minimap_bounds() -> Rect2:
+	return minimap_map_bounds if minimap_map_bounds.has_area() else Rect2(Vector2.ZERO, world_size)
+
+
+func _minimap_to_world(uv: Vector2) -> Vector2:
+	var bounds := _minimap_bounds()
+	return minimap_projection.affine_inverse() * (bounds.position + uv * bounds.size)
+
+
+func minimap_screen_point(world: Vector2) -> Vector2:
+	var uv := _minimap_uv(minimap_projection * world)
+	return (_minimap_rect.position + uv * _minimap_rect.size) * ui_scale()
+
+
+func _minimap_uv(projected: Vector2) -> Vector2:
+	var bounds := _minimap_bounds()
+	return (projected - bounds.position) / bounds.size
 
 
 func _draw_hud() -> void:
@@ -188,7 +212,7 @@ func _draw_hud() -> void:
 	# Mission parchment plaque
 	var plaque := Rect2(114.0, 5.0, 178.0, 24.0)
 	_draw_bevel_box(plaque, parch_bg, gold_trim)
-	_panel.draw_string(font, Vector2(plaque.position.x + 10.0, 21.0), "Mission 1 · The First Claim", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ink_dark)
+	_panel.draw_string(font, Vector2(plaque.position.x + 10.0, 21.0), mission_title, HORIZONTAL_ALIGNMENT_LEFT, 162, 11, ink_dark)
 
 	# Resource, Squads & Hold Timer counters
 	var stat_boxes := [
@@ -210,7 +234,11 @@ func _draw_hud() -> void:
 	var zoom_txt := "[Z] Close 15×10" if close_zoom else "[Z] Command 21×14"
 	var ai_txt := "[G] Red: Active AI" if red_ai_active else "[G] Red: Guard"
 	var right_x := vw - 6.0
-	for pair in [["ai", ai_txt, 104.0], ["zoom", zoom_txt, 118.0], ["style", style_txt, 126.0]]:
+	var toggles := [["ai", ai_txt, 104.0], ["zoom", zoom_txt, 118.0], ["style", style_txt, 126.0]]
+	if fixed_painted_style:
+		zoom_txt = "[Z] Inspect" if close_zoom else "[Z] Command"
+		toggles = [["menu", "Catalog [Esc]", 84.0], ["zoom", zoom_txt, 85.0], ["ai", ai_txt, 100.0]]
+	for pair in toggles:
 		var tid: String = String(pair[0])
 		var tlabel: String = String(pair[1])
 		var tw_btn: float = float(pair[2])
@@ -239,14 +267,14 @@ func _draw_hud() -> void:
 	for u in all_units:
 		if u == null or not is_instance_valid(u) or not u.alive:
 			continue
-		var mpos := _minimap_rect.position + (u.position / world_size) * _minimap_rect.size
+		var mpos := _minimap_rect.position + _minimap_uv(minimap_projection * u.position) * _minimap_rect.size
 		var bcol := Color(0.32, 0.68, 1.0) if u.team == RtsCarbonUnit.Team.BLUE else Color(1.0, 0.28, 0.22)
 		var bsz := 3.2 if u.role == RtsCarbonUnit.Role.COMMANDER or u.role == RtsCarbonUnit.Role.TANK else 2.4
 		_panel.draw_rect(Rect2(mpos - Vector2.ONE * (bsz * 0.5), Vector2.ONE * bsz), bcol)
 
 	# Camera viewport box on minimap
-	var c_min := ((camera_world_rect.position / world_size).clamp(Vector2.ZERO, Vector2.ONE)) * _minimap_rect.size
-	var c_end := ((camera_world_rect.end / world_size).clamp(Vector2.ZERO, Vector2.ONE)) * _minimap_rect.size
+	var c_min := _minimap_uv(camera_world_rect.position).clamp(Vector2.ZERO, Vector2.ONE) * _minimap_rect.size
+	var c_end := _minimap_uv(camera_world_rect.end).clamp(Vector2.ZERO, Vector2.ONE) * _minimap_rect.size
 	_panel.draw_rect(Rect2(_minimap_rect.position + c_min, (c_end - c_min).max(Vector2(8, 6))), Color(1, 1, 1, 0.92), false, 1.2)
 
 	# 2b. Decorative faction/command tabs row (matching HUD goal, custom crisp vector icons)
@@ -308,14 +336,14 @@ func _draw_hud() -> void:
 			_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 150.0), mend_txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.10, 0.44, 0.52))
 		else:
 			_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 131.0), "Armoured Tracked Chassis", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ink_dark)
-			_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 150.0), "Compresses dune ripples", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.36, 0.24, 0.14))
+			_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 150.0), tank_caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.36, 0.24, 0.14))
 	else:
 		_panel.draw_string(font, Vector2(info_x, card_rect.position.y + 24.0), "Orichalcum Vein", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ink_dark)
 		_panel.draw_string(font, Vector2(info_x, card_rect.position.y + 40.0), "Central Outcrop", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.36, 0.24, 0.14))
 		_panel.draw_string(font, Vector2(info_x, card_rect.position.y + 62.0), "Click or drag Blue", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ink_dark)
 		_panel.draw_string(font, Vector2(info_x, card_rect.position.y + 76.0), "forces to command.", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ink_dark)
-		_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 130.0), "Hotkeys: V Style · Z Zoom", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ink_dark)
-		_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 148.0), "H HUD · 1-3 Views · R Reset", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.36, 0.24, 0.14))
+		_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 130.0), "Arrows / middle drag to pan" if fixed_painted_style else "Hotkeys: V Style · Z Zoom", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ink_dark)
+		_panel.draw_string(font, Vector2(card_rect.position.x + 10.0, card_rect.position.y + 148.0), "Z Zoom · S Stop · R Reset" if fixed_painted_style else "H HUD · 1-3 Views · R Reset", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.36, 0.24, 0.14))
 
 	# 2d. Four Command Buttons: Move, Attack, Hold, Mend
 	var cmd_y := card_rect.end.y + 7.0

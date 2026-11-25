@@ -1,5 +1,14 @@
 # Pipelines
 
+## Build and rearrange a painted Forest Claim map
+
+Area: RTS art · Status: In use · Tools: built-in ImageGen, Python with Pillow and NumPy, Godot 4.7.2 Forward+, FFmpeg
+
+1. Start with the actual Fight 4 forest capture attached. Ask for separate scenery cutouts and filled surface swatches. Keep broad yellow-green leaf groups, upper-left light, cool rock and narrow rock lips. Save the source sheets and prompts together.
+2. Run `python tools/python/build_forest_claim_art.py` and let Godot import the textures with [mipmaps](GLOSSARY.md#mipmaps). Confirm the roots, boulders and outcrop meet the tile beneath them. Define each [blocked footprint](GLOSSARY.md#blocked-footprint) once in the kit.
+3. Edit the terrain rows and scenery coordinates in a layout resource. The game blends the two ground textures at the tile edges and places the cliff faces wherever adjacent heights differ. Inspect the minimap and both approaches with the HUD on.
+4. Move the same cliff run and trees in a second layout. Send the tank from the minimap in both maps. Inspect the squad under the canopy at close zoom and test the Play cards and Esc from the Windows export. [Commands and matched captures](RTS_FOREST_CLAIM.md)
+
 ## Repaint an existing Carbon battlefield
 
 Area: RTS art · Status: In use · Tools: ImageGen, Python with Pillow, NumPy and OpenCV, Godot 4.7.2 Forward+, FFmpeg

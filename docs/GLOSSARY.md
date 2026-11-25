@@ -28,6 +28,16 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Blocked footprint
+Area: RTS movement
+
+The ground cells a piece occupies and prevents units from entering. A forest tree reserves the cell under its trunk. Branches spread over the nearby cells so a squad can walk beneath them. [Forest Claim](RTS_FOREST_CLAIM.md)
+
+### Ground contact
+Area: RTS art
+
+The point where a painted piece sits on the map, such as the trunk at the centre of a tree's roots. Forest Claim uses that point to decide where to place the painting and what should draw over it as a unit passes. [Forest Claim](RTS_FOREST_CLAIM.md)
+
 ### Sprite sheet
 Area: RTS art
 

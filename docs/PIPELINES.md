@@ -6,6 +6,33 @@ For cliffs and mesas, run `tools/python/make_desert_cliff_footing.py` to build a
 
 Keep a matched opening capture before moving the terrain. Use the composition image to brief reusable cutouts for the cliff shelf, broad dune fields, outcrop, springs and verge rocks. Extract the cutouts with `tools/python/make_rts_desert_reference_pass.py`. Layer the dunes under the paved road and draw the plaza around the outcrop. Keep the dune relief and the landmark footprints aligned with the placed art. Run the crossing and compare the opening, tread lanes and arrival in shade in Forward+. [Reference pass and captures](RTS_DESERT_CROSSING.md)
 
+## Lay out a reusable painted RTS battlefield
+
+Use a layout guide to generate one full-scene concept and a sheet of isolated pieces at a consistent overhead angle. Keep the original images and prompts. The Desert Crossing extraction tool makes the paired artwork for each module. Place the modules in the playfield scene and set footprints, dune relief and shade with the same placement. Check a live crossing and switch art with the camera and selection held in place. [Desert Crossing assets and tests](RTS_DESERT_CROSSING.md)
+
+## Build and verify a painted forest fight
+Area: RPG · Status: In use · Tools: Godot 4.7.2 Forward+, ChatGPT ImageGen, Python (Pillow, NumPy and OpenCV), FFmpeg
+
+1. Instance the original forest scene and block out the mouth, reverse view and chamber. Test boot crossing, a reversal and one hittable dive with `--blockout`. Set the camera framing using the standing figure at middle depth.
+2. Import the outside mouth with a transparent edge, the view out of the doorway, and the side-on chamber as separate paintings. Register the visible sill to the boot crossing. The lip uses the same pixels as the exterior art, and draws in front only during the crossing. Keep the original forest behind the new entrance. [ImageGen prompts](../assets/source_inputs/rpg_2d/forest_fight/IMAGEGEN_PROMPTS.md)
+3. Run `python tools/python/build_approach3_assets.py --forest-fight` for the close-up Commander atlas. For the bat, run `C:/Python312/python.exe tools/python/pack_forest_fight_bat.py` to register the four painted poses around the chest. Spot-check muzzle and boots in a moving capture.
+4. Run the Godot console with `--path . --headless --fixed-fps 60 --script res://tests/test_forest_fight.gd` for the Play, Esc and fight checks. Use `--path . --max-fps 60 --script res://tests/test_forest_fight.gd -- --record` for the 1376 × 768 still and live frames. Encode the fresh frames in `render_captures/forest_fight/frames/` at 30 fps with `ffmpeg -framerate 30 -i %05d.jpg -c:v libx264 -pix_fmt yuv420p forest-fight-sequence.mp4`. Export the Windows Desktop preset after the catalog update.
+
+## Build and verify RTS Units Test 3 (1x Pixel / 2x HD Painted profiles)
+Area: RTS · Status: In use · Tools: Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+
+
+1. **Generate 1× and 2× map layers:** Run `C:/Python312/python.exe tools/python/make_rts_style_test.py` (for the 960×540 48-colour `t5` layers) and `C:/Python312/python.exe tools/python/make_rts_hd_layers.py` (for the 1920×1080 un-quantized `t5_hd` layers with mipmaps and the NE cliff oasis).
+2. **Generate neutral unit sheets, team masks and v3 `.tres` stats:** Run `C:/Python312/python.exe tools/python/make_rts_units_test_v3.py` to build 1× and 2× neutral sheets (`tank_neutral_1x/2x.png`, `squad_neutral_1x/2x.png`, `commander_neutral_1x/2x.png`), RGBA masks (`*_mask_1x/2x.png`) with `sprite_scale = 1.0` in `scenes/rts/units/look_v3/*.tres`, and `scenes/maps/rts_units_test_v3.tscn` (keeping `scenes/maps/rts_units_test.tscn` and `scenes/rts/units/look/*.tres` untouched).
+3. **Verify headless and in Forward+:** Run `C:/Godot/Godot_v4.7.2-stable_win64.exe --path . --headless --script res://tests/test_rts_units_test.gd` (grid parity, shader binding, 0.0 px blocked moonwalk check, 100-unit 4-faction stress test, Window state restore, and original scene check) and `C:/Godot/Godot_v4.7.2-stable_win64.exe --path . --script res://tests/capture_rts_units_test_v3.gd` (matched 1080p and 720p captures of `pixel` and `hd_painted` in `render_captures/rts_units/`).
+
+## Compare RTS art and motion on the same map
+
+Begin with an in-game crop at the playing size. Use it and the desert reference to brief the unit art, then save the prompt and source with the other RTS inputs. Check the Blue proof on the road and in the shadow before drawing Red. Run `tools/python/make_rts_units_motion.py` to rebuild both treatments. The terrain detail uses the original painted sources, and the pixel assets share the desert palette. Verify the same orders in Godot with the camera tied to the same world area. Capture a still at each landmark and record the live switch. Check input at the review window sizes and reopen both comparison cards from the Windows export. [Commands and captures](RTS_UNITS_IN_MOTION.md)
+
+## Build a scrolling 2D painted walk
+
+Prove the route first with plain ground and repeated markers. Test turns and stops in both directions with the camera following. Give each painting candidate the same full-height route guide and save the original image and prompt. Trace the chosen painting’s actual trail edges and keep the Commander’s boot anchor slightly inside that trace. Keep the painting, Commander and shadow as imported scene resources so the Windows build includes them. Run the matched stills in Forward+, watch the walk with guides hidden, and check Play and Esc from the Developers Page. [Forest study and test commands](../assets/scenes/forest_test/REPORT.md)
+
 ## Compare a 2D commander's art and display resolution
 
 Measure the height of the visible figure, excluding transparent space. Capture a single idle pose against the same stone, with the same lighting and camera framing. Make four images by crossing the old and candidate art with the old and candidate resolutions. For the 1376 × 768 canyon review, 105 pixels at 540 picture height matched 149 at 765. Show the window crops at their original size. Repeat with the final lighting and in motion before adopting an animation sheet. [Worked example](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
@@ -439,3 +466,29 @@ Keep the project's memory in the repository instead of in chat histories.
 
 ### Done when
 - Studio shows it after **Refresh**, and any agent reading the docs knows it.
+
+## 2D Painted Canyon · Approach 3
+
+1. Use the transparent Blue Commander illustration for the front idle. Keep her own colours and check it first at 149 visible pixels against the original sprite at the flat-lit modular entrance.
+2. Keep pose references and the canyon painting under `assets/source_inputs/rpg_2d/approach3/`. The canyon guide records the road and cliff shapes used before painting. Run `python tools/python/build_approach3_assets.py` with Pillow and NumPy to make the game textures under `assets/textures/rpg_2d/approach3/`.
+3. Keep sprite cells at 160 × 168, with the drawing origin at the boot anchor (80, 160). Rows 1–3 each hold idle plus four walking poses. Row 4 holds rifle idle, two steps and recoil. Record the recoil barrel tip relative to the boot anchor in `scripts/rpg_2d/approach3_commander.gd` for both picture sizes.
+4. Survey the road centre and walkable edges in `scripts/rpg_2d/canyon_approach3.gd` against the final painting. Keep traced foreground masks in the art builder. Its crop positions map into the scene, where the boulder is drawn by its base and blocked only at its foot.
+5. Import with Godot, run `tests/test_canyon_approach3.gd` headless and `tests/capture_approach3.gd` windowed. Capture the modular proof with `tests/capture_approach3_proof.gd`. The standalone study controls softly lift the camera toward the gate at the upper pass.
+6. Compare the four matched stops and run the recorded round trip, resize checks and lighting timing. Re-export the Windows Desktop preset after a catalog change and verify Play and Esc on the exported executable.
+
+[Commands and matched captures](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)
+
+## 2D Painted Forest Fight 2 (forest-to-cave mode transition & 2.5D bat arena)
+Area: RPG 2D · Status: In use · Tools: ChatGPT Images, Python (Pillow + NumPy), Godot 4.7.2, FFmpeg
+
+1. **Generate source plates from exact aspect-matched crops**:
+   - Export a clean `3:2` character-free top half of `a-buttress-light.png` (`1086×724`) so ChatGPT Image (`1536×1024`) adds the clearing cave mouth without shifting the lower forest trail.
+   - Generate the `1536×1024` side-on cave chamber (left sunlit forest archway + flat low-contrast floor band across `56–92%` height), a `2×2` alien-mutant bat sheet on uniform grey, and a `3×2` HD painted Blue Commander side-profile combat sheet on uniform neutral card.
+2. **Build alpha-defringed game textures and foreground cave lip**:
+   `python tools/python/build_forest_fight_2_art.py <cave_patch> <cave_int> <bat_sheet> <cmd_sheet>`
+   Copies inputs to `assets/source_inputs/forest_fight_2/` and writes `assets/textures/forest_fight_2/` (`forest_cave_trail.png`, `forest_cave_lip.png`, `cave_chamber_bg.png`, `cave_foreground_rim.png`, `commander_hd_combat.png` centered on boot X `180`, `alien_bat_hd.png`, and HD bolt/spark sprites).
+3. **Import and run automated logic, still capture, and live clip tests**:
+   - Headless + catalog check: `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://tests/test_forest_fight_2.gd -- --catalog`
+   - Forward+ `1376×768` stills: `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --path . --rendering-method forward_plus --resolution 1376x768 --script res://tests/test_forest_fight_2.gd -- --stills --catalog`
+   - Uninterrupted real-time `30 fps` recording + MP4 encode: run with `-- --record-clip`, then encode `render_captures/forest_fight_2/live_frames/%05d.jpg` with `C:\ffmpeg\bin\ffmpeg.exe` into `render_captures/forest_fight_2/forest_fight_2_sequence.mp4`.
+4. **Re-export `builds/Balance.exe`** after adding or updating the Developers Page card.

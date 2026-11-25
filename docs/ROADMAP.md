@@ -1,8 +1,17 @@
 # Roadmap
 
+## Painted tropical forest study
+
+- [x] Walk the forest into a painted cave and clear three bats in the **2D Painted Forest Fight** Play card. Verify the mode change, rifle directions, depth lanes, replay and Esc. [Live sequence and framing](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
+- [ ] Owner plays 2D Painted Forest Fight and reviews the doorway transition and combat framing.
+
+- [x] Build the four-stretch Blue Commander walk, verify both directions and add it to Developers Page under **Forest builds**. [Playable study and evidence](../assets/scenes/forest_test/REPORT.md)
+- [ ] Owner chooses one of the three paintings and judges how clearly the four stretches read with guides hidden. [Candidates and recording](../assets/scenes/forest_test/REPORT.md) · [Independent assessment](../output/pdf/painted-forest-walk-assessment.pdf)
+
 ## RPG canyon direction comparison
 
-- [ ] Build Approach 3 from the tested standing pose, then verify the commander in motion and the painted bend through to its exit. [Assessment, visual proof and Sol handoff](CANYON_APPROACH_3_HANDOFF.md)
+- [x] Build playable Approach 3 from the tested standing pose and verify the walk, rifle stance and painted bend through to the gate. [Matched captures and recording](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)
+- [ ] Owner reviews Approach 3’s walking poses and overall look beside both existing studies. [Illustrated comparison](../output/pdf/painted-canyon-approach-3-review.pdf)
 - [x] Build and export **3D Canyon · Sculpted Bend**. Verify the round trip, both road heights, both vistas and all three landmark rocks. [Study and evidence](CANYON_SCULPTED_BEND.md)
 - [x] Match Sculpted Bend's camera to 2D Parallel-Projection Canyon · Approach 1 vs 2 and verify the original view on C. [Matched camera evidence](CANYON_SCULPTED_BEND.md#parallel-projection-camera)
 - [ ] Owner compares Sculpted Bend with Painted Bend and Approach 2 Modular and chooses the RPG direction.
@@ -40,6 +49,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [ ] Objective panel with progress bar ("Hold the Orichalcum rock")
 
 ### Maps
+- [x] Build the painted modular Desert Crossing proof and a matched pixel look. Verify a dune crossing, cliff shade and paired tread lanes at playing size. [Playable proof](RTS_DESERT_CROSSING.md)
+- [ ] Owner reviews Desert Crossing and decides whether to extend the modular desert kit or test the whole-map painting in play. [Matched captures and route](RTS_DESERT_CROSSING.md)
 - [x] Modular desert kitbash library and a playable mini-map
 - [x] RTS art rules (scale, 48-colour palette, light) and style test 1 with every layer (`docs/RTS_ART_RULES.md`)
 - [x] Style test 2: painted sand, dune, rock-top, cliff-wall and road textures (art rules §6b)
@@ -47,8 +58,11 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Style test 4: orderly dunes in fields towards the edges, calm round road and plaza, sparser scatter, lighter rock tops (art rules §6d)
 - [x] Style test 5: dunes2 ripples turned to the wind inside test 4's fields; cliff ledges (art rules §6e). Environment look settled
 - [x] Units on the style-test map: shadows, ground light, tracks, footprints and dust, each switchable (art rules §8)
+- [x] Build RTS Units Test — Units on the Map 3 (`scenes/maps/rts_units_test_v3.tscn`) alongside the original RTS Units Test with scene-local `F4` Pixel (1× integer) / HD Painted (2× smooth + NE oasis + crystal glow) switch, `1:1` tank frames (`sprite_scale = 1.0`), 4-faction team-colour mask shader, distance-driven walk/tread cadence and `F3` perf overlay (`tests/test_rts_units_test.gd`)
+- [x] Units in Motion study has any-angle travel, gradual tank turns and curved tracks. Tight corner and single-lane traffic checks passed. [Playable study](RTS_UNITS_IN_MOTION.md)
+- [x] Compare both factions’ eight-facing squads, commanders and tanks in Painted HD and Pixel art at the same playing size. [Matched captures and motion](RTS_UNITS_IN_MOTION.md#matched-captures)
 - [x] Build playable **RTS Reusable 2 Carbon** (`scenes/maps/rts_reusable_2_carbon.tscn`) from reusable ChatGPT landmarks, dune clusters, limestone road, stone outposts, 4-soldier squads, commanders, 8-facing tanks, Mend healing, Orichalcum hold timer and Dune II HUD, with live `V` Detailed Painted / `960×540` Pixel and `Z` `21×14` / `15×10` zoom comparison ([Study](RTS_REUSABLE_2_CARBON.md))
-- [x] Owner chooses modular Painted HD 2D as the RTS art direction.
+- [x] Owner plays Units in Motion / Desert Crossing and chooses modular Painted HD 2D as the RTS art direction.
 - [x] Bring Desert Crossing and Carbon into the main Developers Page. Paint the connected terraces, dune fields and Orichalcum plaza for the Desert Crossing reference pass. [Desert Crossing](RTS_DESERT_CROSSING.md)
 - [ ] Compare mission-scale visibility and zoom with the modular painted terrain in play.
 - [ ] Smooth unit movement: any-angle routes, vehicles turn gradually, curved tracks
@@ -104,7 +118,7 @@ The HD-2D walking sequence. If it fails, the RTS alone is the game.
 - [ ] Dedicated right-wall modules instead of turned left courses
 - [ ] Fix the slate cap material, bush scale and exit vista
 - [ ] Atmosphere: a local FogVolume with light shafts at a wall opening, measured for GPU cost
-- [ ] RPG fight test in the Streets of Rage 4 style (free depth, face left or right)
+- [x] RPG fight test in the Streets of Rage 4 style (free depth, face left or right): verified in **2D Painted Forest Fight** (`scenes/rpg_2d/forest_fight.tscn`) and **2D Painted Forest Fight 2** (`scenes/forest_fight_2/forest_fight_2.tscn`, §25)
 
 ## Story and presentation
 

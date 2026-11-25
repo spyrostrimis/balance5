@@ -95,14 +95,9 @@ func fire_horizontal_shot() -> RifleBolt2D:
 
 	var dir_x := -1 if combat_facing < 0 else 1
 	var dir := Vector2(float(dir_x), 0.0)
-	var offset_x := 27.0 * float(dir_x)
-	var offset_y := -55.0
-	if _muzzle_point_r != null:
-		offset_x = absf(_muzzle_point_r.position.x) * float(dir_x)
-		offset_y = _muzzle_point_r.position.y
-	var origin := global_position + Vector2(offset_x, offset_y)
+	var origin := get_shot_origin(dir_x)
 
-	var bolt := RifleBolt2D.new()
+	var bolt := _make_bolt()
 	bolt.configure(origin, dir_x)
 	var host := projectiles_parent if projectiles_parent != null else get_parent()
 	if host != null:
@@ -112,6 +107,18 @@ func fire_horizontal_shot() -> RifleBolt2D:
 	_update_visuals(Vector2.ZERO)
 	shot_fired.emit(origin, dir)
 	return bolt
+
+
+func _make_bolt() -> RifleBolt2D:
+	return RifleBolt2D.new()
+
+
+func get_shot_origin(dir_x: int) -> Vector2:
+	var offset := Vector2(27.0, -55.0)
+	if _muzzle_point_r != null:
+		offset = _muzzle_point_r.position
+	offset.x = absf(offset.x) * dir_x
+	return global_position + offset
 
 
 func _physics_process(delta: float) -> void:

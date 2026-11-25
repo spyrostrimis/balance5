@@ -16,7 +16,7 @@ const ROCK_SHADER := preload("res://assets/shaders/canyon_kit_v2_rock.gdshader")
 const TEX_ROOT := "res://assets/textures/kit_v2/"
 
 const Z_START := 14.5
-const Z_END := -18.0
+const Z_END := -24.0
 const Z_STEP := 0.25
 const TIERS := 4
 const RISER_PTS := 5
@@ -67,7 +67,9 @@ func build(route: Node) -> void:
 
 func get_cliff_foot_lat(side: float, z: float) -> float:
 	var phase := 0.0 if side < 0.0 else 2.15
-	return 3.05 + 0.38 * sin(z * 0.28 + phase) + 0.20 * cos(z * 0.63 - phase * 0.6) + 0.08 * sin(z * 1.25 + phase * 1.3)
+	var flare_t := clampf((-12.0 - z) / 10.0, 0.0, 1.0)
+	var flare := flare_t * flare_t * (3.0 - 2.0 * flare_t) * 8.5
+	return 3.05 + flare + 0.38 * sin(z * 0.28 + phase) + 0.20 * cos(z * 0.63 - phase * 0.6) + 0.08 * sin(z * 1.25 + phase * 1.3)
 
 
 func get_placed_rocks() -> Array[Dictionary]:
@@ -151,8 +153,8 @@ func _generate_lattice(route: Node, side: float) -> Dictionary:
 
 	var phase := 0.0 if side < 0.0 else 2.15
 	var nominal_rise := [0.92, 1.15, 1.25, 1.32]
-	var taper_starts := [-13.0, -10.5, -8.2, -6.2]
-	var taper_ends := [-18.0, -16.2, -14.2, -12.0]
+	var taper_starts := [-14.0, -12.5, -10.5, -8.5]
+	var taper_ends := [-23.5, -21.0, -18.5, -16.0]
 
 	var tiers: Array[Dictionary] = []
 	for k in TIERS:
@@ -519,6 +521,8 @@ func _emit_ledge_grid(st: SurfaceTool, grid: Array, side: float) -> void:
 			var p11: Vector3 = grid[iz + 1][ip + 1]
 			var p10: Vector3 = grid[iz + 1][ip]
 			if p00.distance_to(p01) < 0.002 and p10.distance_to(p11) < 0.002:
+				continue
+			if p00.y < 0.03 and p01.y < 0.03 and p11.y < 0.03 and p10.y < 0.03:
 				continue
 			var uv00 := Vector2(p00.x / _ledge_tile.x, p00.z / _ledge_tile.y)
 			var uv01 := Vector2(p01.x / _ledge_tile.x, p01.z / _ledge_tile.y)

@@ -14,6 +14,30 @@ The owner chose the modular painted direction after playing Desert Crossing. Mat
 Area: RTS · Status: Trying
 Built `scenes/maps/rts_reusable_2_carbon.tscn` (`RTS Reusable 2 Carbon`) entirely from reusable painted ChatGPT pieces (central Orichalcum outcrop, northeast cliff and turquoise spring oasis, mesas, ridge, boulders, bevelled stone outpost pads, oval flagstone plaza, desert scrub and seamless signed-delta dune clusters) over continuous calm-masked sand, paired with 4-soldier squads, commanders (`Mend`), 8-facing hull+turret tanks that flatten two lanes through dune ripples, an Orichalcum hold timer and the Dune II HUD frame. Press `V` to compare Detailed Painted (`2×` HD) against `960×540` Pixel (`1×` curated 74-colour palette with 1 px unit outlines) and `Z` to compare `21×14` Command framing against `15×10` Close framing while playing. Evidence: `docs/RTS_REUSABLE_2_CARBON.md`, `tests/test_rts_reusable_2_carbon.gd`, `render_captures/rts_carbon/`.
 
+### 2026-11-25 · Painted terrain first for the RTS proof
+Area: RTS · Status: Trying
+
+The owner prefers painted detail alongside the RPG and wants a distinct pixel version as a second choice. Desert Crossing tests reusable terrain and units on one battlefield, with shared camera framing, relief, shade and tread positions. A whole-scene painting provides the composition and remains available for a future playable comparison. [Desert Crossing](RTS_DESERT_CROSSING.md)
+
+### 2026-11-25 · Walk into the forest cave before raising the rifle
+Area: Canyon · Status: Trying
+
+Cross the sill at the end of the painted forest trail, then use a brief view back towards the forest before settling into a fixed side-on chamber. The close view uses Approach 3’s source drawings at twice the original picture resolution. Place one bat pass at the starting depth and two at other depths so moving across the floor matters. The Commander stays responsive through harmless contacts. [Test and capture](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
+
+### 2026-11-24 · Scene-local Pixel (1x) vs HD Painted (2x) visual profile & 4-faction team-colour mask shader on RTS Units Test 3
+Area: RTS · Status: Trying
+
+Created `scenes/maps/rts_units_test_v3.tscn` ("RTS Units Test — Units on the Map 3") as a standalone build alongside the preserved original `scenes/maps/rts_units_test.tscn` ("RTS Units Test — Units on the Map"), adding a scene-local `RtsVisualProfile` (`scripts/rts/rts_visual_profile.gd`, CLI `--profile=pixel|hd_painted`, live hotkey `F4`, `F3` perf/scale overlay) that switches between `"pixel"` (`960×540` logical view, `CONTENT_SCALE_STRETCH_INTEGER`, `TEXTURE_FILTER_NEAREST`, exact `2×` at `1920×1080` and centered `1×` letterbox at `1280×720`, pixel-snapped camera/units/effects) and `"hd_painted"` (`1920×1080` `canvas_items`, `TEXTURE_FILTER_LINEAR_WITH_MIPMAPS`, 2× un-quantized painted layers `assets/textures/rts/style_test/t5_hd/*.png` with the NE cliff oasis cue, smooth movement, soft shadows/dust/tracks, warm Orichalcum crystal radial glow and vignette) on the exact same `32×32` logical tile grid (`RtsGrid` untouched) while restoring all `Window` properties in `_exit_tree()`. Replaced the `0.85` fractional tank `sprite_scale` (`30.6×30.6` pixel wobble) and raw RGB channel swap with exact `1:1` `32×32` (1×) and `64×64` (2×) neutral sheets (`sprite_scale = 1.0` in `scenes/rts/units/look_v3/*.tres`), a reusable 4-faction team-colour mask shader (`assets/shaders/rts/rts_team_color.gdshader` supporting Blue, Red, Green and Palatinate while protecting dark `#221814` outlines), and distance-driven walk/tread cadence. Evidence: `tests/test_rts_units_test.gd`, `tests/capture_rts_units_test_v3.gd`, `render_captures/rts_units/pixel_1080p_*.png`, `render_captures/rts_units/hd_painted_1080p_*.png`.
+
+### 2026-11-24 · Match the RTS looks during live play
+Area: RTS · Status: Trying
+
+Open Units in Motion in Painted HD and switch to 960 × 540 Pixel art on V. Keep the same 32-pixel movement grid, viewport framing and live unit state. At 1080p, the 960 × 540 proof kept more of the rifles and scarf than the 640 × 360 proof, which is saved as a still. The owner will choose the direction after playing. [Matched captures and motion](RTS_UNITS_IN_MOTION.md)
+
+## 2026-11-24 · Painted forest · Study defaults
+
+**Verified for this study.** Use one continuous painting with two stretches where the Commander gets smaller and two where she holds her size. Tie size and stride to her position so a reversal retraces the change and camera movement at a stop leaves her size alone. Buttress Light is the provisional painting because its landmarks distinguish the stretches and its quieter ground preserves the Commander’s silhouette. Art selection and the feel of the footfalls remain open for owner review. [Measurements and alternatives](../assets/scenes/forest_test/REPORT.md)
+
 ## 2026-11-22 · RPG canyon · Standing commander comparison
 
 **Test result.** At the same apparent height and lighting, the reference-derived commander made her features easier to read than raising the render resolution with the existing sprite. Use the 149-pixel standing pose as a benchmark for the proposed Approach 3 animation. The owner’s choice of canyon direction remains open. [Visual comparison](CANYON_APPROACH_3_HANDOFF.md#one-pose-experiment)
@@ -35,6 +59,10 @@ What we decided, when and why, newest first. Balance Studio shows this file on i
 Area: Game | RTS | Canyon | Art | Tech | Workflow · Status: Decided | Trying | Reversed
 Why, in one to three sentences. Where the evidence is.
 ```
+
+### 2026-11-22 · Match 3D Kit Canyon · v2 camera angle & distance to 2D Parallel-Projection
+Area: Canyon · Status: Trying
+Set `3D Kit Canyon · v2`'s `CameraRig` to `pitch = -42.0°`, `yaw_follow = 0.0`, `fov = 22.0°`, and offset `(0.0, 11.83, 12.13)` (`~17.0 m` camera-to-hero distance), paired with a `42.0°` boot-anchored shader pitch tilt on `CommanderSprite` (`-0.640625`), `12.0°` sprite tilt on plants, flared canyon exit jaws to `Z = -24.0`, and `OrichalcumCraterGround` at `(0.1, 0.015, -18.0)` so spawn/midway hero scale matches `2D Parallel-Projection · Approach 1 vs 2` (`19.4%` screen height) while framing the full glowing exit crater without cliff cutoffs. Evidence: `tmp/kit_v2_vs_2d_parallel_cam.png`, `render_captures/kit_v2/KV2_pos*.png`, `docs/EXPERIMENT_LOG_AND_LESSONS.md` §23.
 
 ### 2026-11-22 · Build 3D Kit Canyon · v2 with uniform 64 texels/m, <=32-colour palettes, organic non-intersecting cliffs and AA
 Area: Canyon · Status: Trying
@@ -223,3 +251,15 @@ Blender stores vertex colour as sRGB, so 0.5 arrives in Godot as about 0.21. Bin
 ### 2026-11-16 · Godot 4.7.2 with Forward+
 Area: Tech · Status: Decided
 The engine and renderer for the whole project, with Git and GitHub (`spyrostrimis/balance5`).
+
+## 2026-11-22 · Approach 3 keeps the proof’s scale and uses one painted destination
+Area: RPG canyon · Status: Verified in the playable study
+
+The modular entrance test kept the commander about one fifth of the screen high. The direct illustration reduction made the scarf, face, blue armour and rifle easier to separate. Approach 3 uses that front idle, drawn rear and profile poses, and a continuous painted road. The rock pieces that can cover her are traced from that same painting so their feet and shadows stay in place. The camera leads toward a single gate on the upper pass. The gate and the entire commander fit together when the north barrier stops her.
+
+The gate gets its bright opening and light shafts from the painting. The shallow live surface light remains on by default. Added moving shafts are available on G for comparison. Overall look and walking style remain open for the owner’s review. [Study and matched evidence](CANYON_APPROACH_3_HANDOFF.md#implementation-and-verification)
+
+## 2026-11-25 · 2D Painted Forest Fight 2 uses explicit 2.5D depth lanes, a foreground cave lip, and HD close-up combat art
+Area: RPG 2D · Status: Verified in the playable study
+
+At *Streets of Rage 4* close-up framing (~36% of the 768-pixel viewport, ~275 pixels tall), enlarging the 149-pixel exploration sprite nearly doubled its pixels and exposed the two-frame combat walk. **2D Painted Forest Fight 2** keeps the existing exploration sheet on the forest trail, cuts through a foreground stone-arch lip and three-beat sunlit doorway transition into the cave, and switches to a six-pose HD painted profile sheet (idle, four-frame walk with passing poses, and recoil) anchored at the boots so left/right mirroring never shifts her feet. Inside the cave, the Commander, three diving alien-mutant bats, and horizontal rifle bolts track separate ground-plane `depth_y` lanes and vertical `altitude`, keeping floor shadows grounded and ensuring horizontal shots hit only in-lane targets at barrel height. Evidence: experiment log §25.

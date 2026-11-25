@@ -1,0 +1,61 @@
+{
+ "density": 64.0,
+ "sprites": [
+  {
+   "name": "bush_large_a",
+   "kind": "bush",
+   "metres": [
+    1.047,
+    0.828
+   ]
+  },
+  {
+   "name": "bush_large_b",
+   "kind": "bush",
+   "metres": [
+    1.0,
+    0.828
+   ]
+  },
+  {
+   "name": "bush_med_a",
+   "kind": "bush",
+   "metres": [
+    0.719,
+    0.531
+   ]
+  },
+  {
+   "name": "bush_med_b",
+   "kind": "bush",
+   "metres": [
+    0.688,
+    0.531
+   ]
+  },
+  {
+   "name": "grass_large",
+   "kind": "grass",
+   "metres": [
+    0.547,
+    0.359
+   ]
+  },
+  {
+   "name": "grass_med",
+   "kind": "grass",
+   "metres": [
+    0.422,
+    0.281
+   ]
+  },
+  {
+   "name": "grass_small",
+   "kind": "grass",
+   "metres": [
+    0.312,
+    0.188
+   ]
+  }
+ ]
+}

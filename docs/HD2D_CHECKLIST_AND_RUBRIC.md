@@ -9,12 +9,49 @@
 
 [Art pass and matched captures](RTS_DESERT_CROSSING.md)
 
+## RTS Desert Crossing · 2026-11-25
+
+- [x] Match the two looks at a 15 × 10½-cell opening field with a minimap and selection in the sidebar. See a building, the squad, a tank and the resource in the same view.
+- [x] Verify a squad slowing on the incline and darkening under the cliff. Follow with a tank. Inspect the two lanes, switch styles, and verify restart and Play/Esc.
+- [ ] Owner plays the crossing and judges the modular detailed direction next to the pixel treatment.
+
+[Desert Crossing evidence](RTS_DESERT_CROSSING.md)
+
+## 2D Painted Forest Fight · 2026-11-25
+
+- [x] Stop and reverse before the sill with the forest trail, buttress trees and mossy boulder visible. Crossing the sill once hides the boots first, then the silhouette, before showing daylight from inside.
+- [x] The inside shot leads into a fixed side-on chamber and automatic rifle stance. Holding forward continues into depth after the change, with time to move before contact.
+- [x] Read the Commander at 277 rendered pixels (36.1%) at middle depth in 1376 × 768 Forward+. Compare the broad shallow floor and visible rear wall with the supplied first image.
+- [x] Verify three distinct approaches, a clear rifle-height pass in each depth lane, harmless repeat contact, three one-shot kills and free movement after the clear message.
+- [ ] Owner judges the doorway timing and side-on composition in play.
+
+[Experiment and evidence](EXPERIMENT_LOG_AND_LESSONS.md#2d-painted-forest-fight--2026-11-25)
+
+## RTS Units in Motion · 2026-11-24
+
+- [x] Original, Painted HD and Pixel art share the desert route and the camera framing. Matched 1080p stills cover the opening, open sand, northwest cliff, Orichalcum shadow and first hit.
+- [x] Inspect both teams at playing size, including Blue in boulder shade and Red against orange sand. At 640 × 360, selection stays clear and fine rifle and scarf detail drops.
+- [x] Switch during travel, stop and reissue, verify a tight turn and opposing traffic, and check selection and orders after resizing. Both exported Play cards and Esc passed.
+- [x] Owner compares the two looks in play and picks the RTS direction.
+
+[RTS captures and clip](RTS_UNITS_IN_MOTION.md)
+
+## 2D painted tropical forest · 2026-11-24
+
+- [x] Verify the four connected stretches in a 1376 × 768 Forward+ viewport. The Commander fits in the clearing with its landmark visible.
+- [x] Check a full round trip, both sides of the trail, stops and reversals inside all three blend bands. Size stays fixed while the camera settles at a stop.
+- [ ] Owner chooses the painting and judges the guide-free motion. Some sole drift remains in the four existing walk poses.
+
+[Matched stills, recording and fit overlay](../assets/scenes/forest_test/REPORT.md) · [Independent comparison with the canyon and the fixed-camera arch experiment](../output/pdf/painted-forest-walk-assessment.pdf)
+
 ## 2D canyon · Approach 3 assessment · 2026-11-22
 
 - [x] Captured both 2D baselines at the entrance, bend, upper pass and north barrier. Compared the standing commander across two art sources and two rendering sizes at matched framing.
-- [ ] Carry the clearer idle through the walk, back view and combat poses. Keep her fully framed at the north barrier and give the exit a distinct silhouette.
+- [x] Verified the proof-sized front, rear and mirrored rifle poses on pale stones and in shade. Kept the commander fully framed below the one gate when the north barrier stopped her.
+- [x] Walked around the same foreground boulder in both directions, with its base and the edge of its shadow fixed to the painting.
+- [ ] Owner reviews the walking motion and chooses how Approach 3 compares with the earlier studies.
 
-[Matched frames and acceptance checks](CANYON_APPROACH_3_HANDOFF.md)
+[Matched frames and acceptance checks](CANYON_APPROACH_3_HANDOFF.md) · [Independent assessment with four matched views per study, 23 November 2026](../output/pdf/painted-canyon-approach-3-review.pdf)
 
 ## Sculpted Bend · camera comparison · 2026-11-22
 
@@ -39,7 +76,8 @@
 - [x] Standalone playable scene (`scenes/maps/canyon_v3_kit_v2.tscn`) with all debug HUD labels and switching hotkeys removed (`WASD`/Arrows walk, `Esc` returns).
 - [x] `img1` cobble road (`28` colours), `art_gemini` sand & dunes (`24` colours each), and `art_road_goal` cliff look (`<= 29` colours per object across every rock, curb, plant, commander and crater).
 - [x] Uniform `64.0 texels/m` across every surface, unscaled `1:1` metric meshes (`cliff_rock_0..5`, `rubble_0..3`, `road_boulder_0..2`, `curb_0..5`) and sprites (`40×82` Blue Commander, `384×256` Orichalcum crater), with cyclic minimum-error seam cuts (`<= 1.20`) on all tiling textures.
-- [x] Organic sculpted bedrock tiers (horizontal world-Y strata, weathered sandstone shelves instead of concrete paving) with `114` cliff rocks, `35` rubble, `54` curbs, `7` boulders and `71` plants seated flush with zero interpenetration (`tests/test_canyon_v3_kit_v2.gd` `PASS`).
+- [x] Organic sculpted bedrock tiers (horizontal world-Y strata, weathered sandstone shelves instead of concrete paving) with `111` cliff rocks, `42` rubble, `54` curbs, `7` boulders and `74` plants seated flush with zero interpenetration (`tests/test_canyon_v3_kit_v2.gd` `PASS`).
+- [x] `-42.0°` oblique near-parallel camera (`fov = 22.0°`, offset `(0, 11.83, 12.13)`, `~17.0 m` hero distance, `42°` boot-anchored commander pitch tilt) matching `2D Parallel-Projection · Approach 1 vs 2` framing, plus flared cliff exit jaws (`Z = -24.0`) framing the full `OrichalcumCraterGround` at `Z = -18.0` (`InFrustum=true`).
 - [x] `4× MSAA`, `8×` anisotropic filtering, derivative sharp-pixel AA and sprite edge AA verified in `1376×768` Forward+ captures ([KV2_pos1_start.png](../render_captures/kit_v2/KV2_pos1_start.png) · [KV2_pos2_midway.png](../render_captures/kit_v2/KV2_pos2_midway.png) · [KV2_pos3_exit.png](../render_captures/kit_v2/KV2_pos3_exit.png)).
 
 ## Pixel Canyon · Painted Bend · 2026-11-21
@@ -227,3 +265,10 @@ Play `res://scenes/maps/desert_canyon_crisp_road_patch.tscn` for this experiment
 - [x] Assemble and verify **3D Canyon · Way 1B Free 3D Modules** (`scenes/maps/canyon_way1b_free_3d.tscn`) using real photogrammetry cliffs (`Namaqualand Cliff 01/02`, `Rock Face 01/02`), 3D curb blocks (`Rock 07`, `Namaqualand Boulder 03/05`), 3D cobblestones (`Namaqualand Stones 01`, `Moon Rock 04`), 3D `Cheiridopsis Succulent` plants and `Sand Rocks Small 01` verge banks, and exit arch/gorge (`Mountain Desert 009`, `Canyon River Terrain`) alongside the kept Trellis boulders and pale Grand Canyon rock, with verified spawn occlusion (`25.94 m`) and midway/exit reveal. [Study and captures](CANYON_WAY1B_FREE_3D.md)
 - [ ] Conceal the far road end at spawn with one right-hand gateway outcrop and reveal the crater on approach. Preserve clearance, landmark timing and the grounded exit.
 - [ ] Measure localized shafts against the accepted gateway control, then prove selection and a reachable move order at tactical framing.
+
+## 7. 2D Painted Forest Fight 2 — Exploration-to-Cave Transition & 2.5D Bat Arena
+
+- [x] Reuse `2D Painted Forest Walk` route and clearing landmarks while integrating an approachable cave mouth (`Y = 332` stop and back-away verified before `Y <= 312` threshold).
+- [x] Three-beat transition: Beat 1 walks visibly under the foreground stone arch lip into doorway shadow; Beat 2 cuts inside the sunlit left archway and settles into side-profile rifle stance; Beat 3 eases out to stable chamber framing with `>= 1.15 s` grace before any bat dives (continuous held `W`/`Up` verified).
+- [x] Match *Streets of Rage 4* cave framing at `1376×768` Forward+: middle-depth Commander measures `275 px` raster height (`35.81%` of `768 px`), back wall base at `~54%`, broad uncluttered floor (`54%–92%`), low foreground rock rim (`92%–100%`).
+- [x] Strictly horizontal rifle (`Space`/`J`/`Click`) and left/right profile across free 2.5D `(x, depth_y, altitude)` floor movement; off-lane rear bats survive shots passing in front, diving bats signal with tucked-wing silhouette + tightening floor shadow, contact triggers harmless cyan armour spark (`1` per pass), and three one-shot kills display `"Cave clear"`. [Log §25](EXPERIMENT_LOG_AND_LESSONS.md#25-2d-painted-forest-fight-2-2026-11-25)

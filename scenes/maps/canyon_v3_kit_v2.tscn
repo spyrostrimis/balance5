@@ -61,12 +61,12 @@ script = ExtResource("5_corr")
 navigation_sources = Array[NodePath]([NodePath("../GroundFloor"), NodePath("../RoadsideBoulders")])
 
 [node name="OrichalcumCraterGround" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.25, 0.015, -22.2)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.1, 0.015, -18.0)
 mesh = SubResource("QuadMesh_crater")
 surface_material_override/0 = ExtResource("6_cmat")
 
 [node name="CraterOrichalcumGlow" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.65, -22.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.65, -18.0)
 light_color = Color(1, 0.74, 0.26, 1)
 light_energy = 1.15
 omni_range = 4.5
@@ -75,4 +75,9 @@ omni_range = 4.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 6)
 
 [node name="CameraRig" parent="." instance=ExtResource("8_cam")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 17.9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.83, 18.13)
+composition_pitch_deg = -42.0
+composition_offset = Vector3(0, 11.83, 12.13)
+route_follow = 0.7
+yaw_follow = 0.0
+x_follow_factor = 0.3

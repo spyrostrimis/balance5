@@ -1,0 +1,213 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rpg_2d/canyon_approach3.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/rpg_2d/approach3_camera.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/rpg_2d/approach3_commander.gd" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/canyon.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/canyon_n.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/commander_765.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/commander_720.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/sprites/contact_shadow.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/lookout_boulder.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/lookout_boulder_n.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/bend_rocks.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/textures/rpg_2d/approach3/bend_rocks_n.png" id="12"]
+[ext_resource type="Shader" path="res://assets/shaders/rpg_2d/god_rays_2d.gdshader" id="13"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_plate"]
+diffuse_texture = ExtResource("4")
+normal_texture = ExtResource("5")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_boulder"]
+diffuse_texture = ExtResource("9")
+normal_texture = ExtResource("10")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bend"]
+diffuse_texture = ExtResource("11")
+normal_texture = ExtResource("12")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hero"]
+light_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
+size = Vector2(22, 10)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shafts"]
+shader = ExtResource("13")
+shader_parameter/intensity = 0.07
+shader_parameter/speed = 0.10
+shader_parameter/pixel_steps = 680.0
+
+[node name="CanyonApproach3" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.035, 0.026, 0.023, 1)
+
+[node name="Picture" type="TextureRect" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 0
+
+[node name="WorldViewport" type="SubViewport" parent="."]
+unique_name_in_owner = true
+disable_3d = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(1360, 765)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="WorldViewport"]
+texture_filter = 1
+
+[node name="Plate" type="Sprite2D" parent="WorldViewport/World"]
+position = Vector2(0, -182)
+scale = Vector2(0.70588235, 0.70588235)
+texture = SubResource("CanvasTexture_plate")
+centered = false
+
+[node name="Corridor" type="StaticBody2D" parent="WorldViewport/World"]
+unique_name_in_owner = true
+collision_mask = 0
+
+[node name="Camera" type="Camera2D" parent="WorldViewport/World"]
+unique_name_in_owner = true
+position = Vector2(495, 1720)
+script = ExtResource("2")
+target_path = NodePath("../Depth/Commander")
+map_bounds = Rect2(0, -182, 960, 2149)
+
+[node name="Depth" type="Node2D" parent="WorldViewport/World"]
+unique_name_in_owner = true
+y_sort_enabled = true
+
+[node name="LookoutBoulder" type="StaticBody2D" parent="WorldViewport/World/Depth"]
+unique_name_in_owner = true
+position = Vector2(590, 565)
+collision_mask = 0
+
+[node name="Art" type="Sprite2D" parent="WorldViewport/World/Depth/LookoutBoulder"]
+position = Vector2(-43.647059, -60.176471)
+scale = Vector2(0.70588235, 0.70588235)
+texture = SubResource("CanvasTexture_boulder")
+centered = false
+
+[node name="Footprint" type="CollisionPolygon2D" parent="WorldViewport/World/Depth/LookoutBoulder"]
+polygon = PackedVector2Array(-30, -20, 18, -23, 26, -10, 20, 0, -18, 0, -31, -7)
+
+[node name="BendRocks" type="Sprite2D" parent="WorldViewport/World/Depth"]
+position = Vector2(354, 1127)
+scale = Vector2(0.70588235, 0.70588235)
+texture = SubResource("CanvasTexture_bend")
+centered = false
+offset = Vector2(-51.5, -98.4167)
+
+[node name="Commander" type="CharacterBody2D" parent="WorldViewport/World/Depth"]
+unique_name_in_owner = true
+position = Vector2(495, 1720)
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("3")
+atlas_720 = ExtResource("7")
+
+[node name="Shadow" type="Sprite2D" parent="WorldViewport/World/Depth/Commander"]
+material = SubResource("CanvasItemMaterial_hero")
+position = Vector2(0, -2)
+scale = Vector2(0.86, 0.8)
+texture = ExtResource("8")
+
+[node name="Sprite" type="Sprite2D" parent="WorldViewport/World/Depth/Commander"]
+material = SubResource("CanvasItemMaterial_hero")
+scale = Vector2(0.70588235, 0.70588235)
+texture = ExtResource("6")
+offset = Vector2(0, -76)
+hframes = 5
+vframes = 4
+
+[node name="Feet" type="CollisionShape2D" parent="WorldViewport/World/Depth/Commander"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_feet")
+
+[node name="MuzzleRight" type="Marker2D" parent="WorldViewport/World/Depth/Commander"]
+
+[node name="Shade" type="Node2D" parent="WorldViewport/World"]
+unique_name_in_owner = true
+visible = false
+
+[node name="CliffShelf" type="Polygon2D" parent="WorldViewport/World/Shade"]
+polygon = PackedVector2Array(362, 845, 452, 885, 505, 927, 527, 997, 505, 1053, 465, 1095, 410, 1116, 384, 1068)
+
+[node name="EntranceOverhang" type="Polygon2D" parent="WorldViewport/World/Shade"]
+polygon = PackedVector2Array(160, 1480, 313, 1470, 373, 1529, 347, 1562, 302, 1584, 243, 1574)
+
+[node name="Ambient" type="CanvasModulate" parent="WorldViewport/World"]
+unique_name_in_owner = true
+
+[node name="Sun" type="DirectionalLight2D" parent="WorldViewport/World"]
+unique_name_in_owner = true
+rotation = 0.66
+color = Color(1, 0.94, 0.85, 1)
+energy = 0.13
+height = 0.45
+
+[node name="Atmosphere" type="CanvasLayer" parent="WorldViewport"]
+layer = 2
+
+[node name="Shafts" type="ColorRect" parent="WorldViewport/Atmosphere"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_shafts")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Controls" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -34.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.86, 0.93)
+theme_override_colors/font_shadow_color = Color(0.15, 0.08, 0.06, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "WASD / Arrows  Walk     ·     C  Rifle stance     ·     Space  Fire     ·     Esc  Developers Page"
+horizontal_alignment = 1
+
+[node name="Arrival" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 26.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.86, 0.98)
+theme_override_colors/font_shadow_color = Color(0.15, 0.08, 0.06, 0.91)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 6
+theme_override_font_sizes/font_size = 21
+text = "Reached the canyon gate"
+horizontal_alignment = 1

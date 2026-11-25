@@ -1,0 +1,59 @@
+{
+  "categories": {
+    "rocks": 0.9,
+    "shrubs": 1.2,
+    "grass": 0.6,
+    "flowers": 0.7
+  },
+  "default_height_m": 0.9,
+  "props": {
+    "prop_01.png": {
+      "category": "rocks",
+      "height_m": 0.9
+    },
+    "prop_02.png": {
+      "category": "rocks",
+      "height_m": 0.9
+    },
+    "prop_03.png": {
+      "category": "rocks",
+      "height_m": 0.9
+    },
+    "prop_04.png": {
+      "category": "rocks",
+      "height_m": 0.9
+    },
+    "prop_05.png": {
+      "category": "shrubs",
+      "height_m": 1.2
+    },
+    "prop_06.png": {
+      "category": "shrubs",
+      "height_m": 1.2
+    },
+    "prop_07.png": {
+      "category": "shrubs",
+      "height_m": 1.2
+    },
+    "prop_08.png": {
+      "category": "grass",
+      "height_m": 0.6
+    },
+    "prop_09.png": {
+      "category": "grass",
+      "height_m": 0.6
+    },
+    "prop_10.png": {
+      "category": "flowers",
+      "height_m": 0.7
+    },
+    "prop_11.png": {
+      "category": "flowers",
+      "height_m": 0.7
+    },
+    "prop_12.png": {
+      "category": "rocks",
+      "height_m": 0.9
+    }
+  }
+}

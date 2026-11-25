@@ -83,6 +83,16 @@ SCALE_UNIFORMS = {
         ("world_pos.xz * 0.24", "world_pos.xz * desert_scale", "uniform float desert_scale = 0.24; // open dunes"),
         ("void vertex() {\n\tworld_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;\n}", RELIEF_VERTEX, RELIEF_UNIFORMS),
         ("\tALBEDO = base_col;", "\tALBEDO = base_col * (1.0 - relief_side_shade * relief_side);", None),
+        # 3D kit: move the painted ledge shading out with the cliffs, and darken the sand just outside the curbs.
+        ("smoothstep(1.35, 2.65, abs(world_pos.x - path_cx))", "smoothstep(cliff_ao_range.x, cliff_ao_range.y, abs(world_pos.x - path_cx))",
+         "uniform vec2 cliff_ao_range = vec2(1.35, 2.65); // painted shading toward the walls (from, to), metres from the route\n"
+         "uniform float curb_dust = 0.0; // darkening of the sand just outside the curbs; 0 = off (source behaviour)\n"
+         "uniform vec2 curb_dust_range = vec2(1.45, 2.1); // darkest at x, gone by y, metres from the route"),
+        ("\tbase_col *= (1.0 - cliff_ao) * (1.0 - right_shadow);",
+         "\tbase_col *= (1.0 - cliff_ao) * (1.0 - right_shadow);\n"
+         "\tfloat curb_d = abs(world_pos.x - path_cx);\n"
+         "\tbase_col *= 1.0 - curb_dust * smoothstep(curb_dust_range.y, curb_dust_range.x, curb_d)\n"
+         "\t\t* smoothstep(curb_dust_range.x - 0.15, curb_dust_range.x, curb_d) * (1.0 - dune_t);", None),
     ],
     "hd2d_chatgpt_boulder": [],
 }

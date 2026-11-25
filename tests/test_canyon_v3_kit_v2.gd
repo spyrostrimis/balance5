@@ -194,6 +194,14 @@ func _run() -> void:
 		return _fail("Navigation path missing or short")
 	print("Corridor & navigation verified (%d path points)." % path.size())
 
+	# 5b. Camera angle & telephoto framing matching 2D Parallel-Projection study (-42 deg, yaw 0, fov 22)
+	var cam := _scene.get_node("CameraRig") as Camera3D
+	if absf(cam.fov - 22.0) > 0.01:
+		return _fail("Camera FOV=%f != 22.0" % cam.fov)
+	if absf(cam.rotation_degrees.x + 42.0) > 0.5 or absf(cam.rotation_degrees.y) > 0.5:
+		return _fail("Camera rotation=%s != (-42, 0, 0)" % cam.rotation_degrees)
+	print("Camera verified: FOV=%.1f, rot=%s" % [cam.fov, cam.rotation_degrees])
+
 	# 6. Opening screen catalog entry
 	var opening := (load(OPENING) as PackedScene).instantiate()
 	var found := false

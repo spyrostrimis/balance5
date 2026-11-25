@@ -39,6 +39,9 @@ uniform sampler2D cobble_height : hint_default_black, filter_linear_mipmap, repe
 uniform float relief_depth = 0.0; // metres a stone top rises above its joints; 0 = flat (source behaviour)
 uniform float relief_side_shade : hint_range(0.0, 1.0) = 0.55; // darken stone sides like the painted joints
 varying float relief_side;
+uniform vec2 cliff_ao_range = vec2(1.35, 2.65); // painted shading toward the walls (from, to), metres from the route
+uniform float curb_dust = 0.0; // darkening of the sand just outside the curbs; 0 = off (source behaviour)
+uniform vec2 curb_dust_range = vec2(1.45, 2.1); // darkest at x, gone by y, metres from the route
 
 float route_center(float z) {
 	if (route_mode == 0) {
@@ -160,10 +163,13 @@ void fragment() {
 	vec3 base_col = mix(canyon_ground, d_col * 1.02, dune_t);
 
 	// Grounded ambient occlusion under ledges + organic diagonal right-edge wall shadow matching Concept road detail
-	float cliff_ao = smoothstep(1.35, 2.65, abs(world_pos.x - path_cx)) * (1.0 - dune_t) * 0.46;
+	float cliff_ao = smoothstep(cliff_ao_range.x, cliff_ao_range.y, abs(world_pos.x - path_cx)) * (1.0 - dune_t) * 0.46;
 	float shadow_wobble = sin(world_pos.z * 1.45) * 0.22 + sin(world_pos.z * 3.7) * 0.09;
 	float right_shadow = smoothstep(0.42 + shadow_wobble, 1.35 + shadow_wobble, world_pos.x - path_cx) * (1.0 - dune_t) * painted_right_shadow_strength;
 	base_col *= (1.0 - cliff_ao) * (1.0 - right_shadow);
+	float curb_d = abs(world_pos.x - path_cx);
+	base_col *= 1.0 - curb_dust * smoothstep(curb_dust_range.y, curb_dust_range.x, curb_d)
+		* smoothstep(curb_dust_range.x - 0.15, curb_dust_range.x, curb_d) * (1.0 - dune_t);
 
 	vec2 p_delta = world_pos.xz - player_pos.xz;
 	p_delta.x *= 1.15;

@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://experiments/camera_slice/camera_slice.gd" id="1_camslice"]
+
+[node name="CameraSlice" type="Node3D"]
+script = ExtResource("1_camslice")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+far = 1000.0
+
+[node name="GroundRoot" type="Node3D" parent="."]
+
+[node name="CliffsRoot" type="Node3D" parent="."]
+
+[node name="PropsRoot" type="Node3D" parent="."]
+
+[node name="Hero" type="Node3D" parent="."]
+
+[node name="HeroSprite" type="Sprite3D" parent="Hero"]
+
+[node name="FootShadow" type="MeshInstance3D" parent="Hero"]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="StatusLabel" type="Label" parent="HUD"]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 560.0
+offset_bottom = 42.0
+text = "A pitch 25 fov 30"

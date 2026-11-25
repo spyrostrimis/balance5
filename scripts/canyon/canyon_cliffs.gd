@@ -18,6 +18,8 @@ const ROCK_SHADER := preload("res://assets/shaders/canyon_kit_rock.gdshader")
 const STRATA := {
 	"gpt": ["res://assets/textures/pixel_ab/art_gpt/d_sandstone_strata_albedo.png",
 		"res://assets/textures/pixel_ab/art_gpt/d_sandstone_strata_normal.png", 3.7188, 2.5469],
+	"ramp": ["res://assets/textures/pixel_ab/art_road_ramp/d_sandstone_strata_albedo.png",
+		"res://assets/textures/pixel_ab/art_road_ramp/d_sandstone_strata_normal.png", 3.7188, 2.5469],
 	"goal": ["res://assets/textures/pixel_ab/d64/d_sandstone_strata_albedo.png",
 		"res://assets/textures/pixel_ab/d64/d_sandstone_strata_normal.png", 2.9412, 1.3889],
 }

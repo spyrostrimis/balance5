@@ -24,6 +24,8 @@ Open the folder in **Godot 4.7.2** and press Play, or run:
 
 The opening screen leads to the **Developers Page**, which lists every playable build and study. Esc returns to it.
 
+Under **Forest builds**, **2D Painted Forest Walk** follows the Blue Commander through a buttress-root entrance, fern grove, wooded rise and sunlit clearing. [Study, paintings and recording](assets/scenes/forest_test/REPORT.md)
+
 The experimental **Pixel Canyon** builds are listed under Canyon builds. [Two-Room Study](docs/PIXEL_CANYON_STUDY.md) introduces the painted rooms and combat test. [Camera and Depth](docs/PIXEL_CANYON_CAMERA_STUDY.md) compares three ways to frame the first room. [Through the Bend](docs/PIXEL_CANYON_FOLLOW_STUDY.md) proves a continuous two-way walk and records why the moving cutout scenery failed.
 
 [Session B](docs/PIXEL_CANYON_SESSION_B.md) tests a fixed-angle bend with a foreground wall. [Painted Bend](docs/PIXEL_CANYON_SESSION_B_PAINTED.md) compares three paintings and puts the selected art on the same playable route.

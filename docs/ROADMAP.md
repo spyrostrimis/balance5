@@ -71,6 +71,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Build playable **RTS Reusable 2 Carbon** (`scenes/maps/rts_reusable_2_carbon.tscn`) from reusable ChatGPT landmarks, dune clusters, limestone road, stone outposts, 4-soldier squads, commanders, 8-facing tanks, Mend healing, Orichalcum hold timer and Dune II HUD, with live `V` Detailed Painted / `960×540` Pixel and `Z` `21×14` / `15×10` zoom comparison ([Study](RTS_REUSABLE_2_CARBON.md))
 - [x] Build and export **RTS Reusable 2 Carbon — Miasaki** as a separate Play card. Verify the northeast comparison, live Pixel, tank tracks and shade, and the squad route around Orichalcum. [Matched frames and recording](RTS_REUSABLE_2_CARBON_MIASAKI.md)
 - [ ] Owner compares Miasaki with original Carbon and Forest Fight 4 at both zoom stops.
+- [x] Build and export **RTS Isometric 2— Forest Claim Carbon** (`scenes/maps/rts_isometric_2_forest_claim_carbon.tscn`) in Fight 4's `35.264°` isometric view from a reusable painted forest/cliff/canopy kit across Layouts A and B, verifying 4-corner/cliff picking, canopy fade, tank rerouting, minimap cliff-side orders, Mend, hold timer and catalog loop. [Study, layouts and clip](RTS_ISOMETRIC_2_FOREST_CLAIM_CARBON.md)
+- [ ] Owner reviews **RTS Isometric 2— Forest Claim Carbon** (Layouts A and B) alongside Codex's isometric study and judges the painted modular look at Command zoom.
 - [x] Owner plays Units in Motion / Desert Crossing and chooses modular Painted HD 2D as the RTS art direction.
 - [x] Bring Desert Crossing and Carbon into the main Developers Page. Paint the connected terraces, dune fields and Orichalcum plaza for the Desert Crossing reference pass. [Desert Crossing](RTS_DESERT_CROSSING.md)
 - [ ] Compare mission-scale visibility and zoom with the modular painted terrain in play.
@@ -128,6 +130,7 @@ The HD-2D walking sequence. If it fails, the RTS alone is the game.
 - [ ] Fix the slate cap material, bush scale and exit vista
 - [ ] Atmosphere: a local FogVolume with light shafts at a wall opening, measured for GPU cost
 - [x] RPG fight test in the Streets of Rage 4 style (free depth, face left or right): verified in **2D Painted Forest Fight** (`scenes/rpg_2d/forest_fight.tscn`) and **2D Painted Forest Fight 2** (`scenes/forest_fight_2/forest_fight_2.tscn`, §25)
+- [x] Strictly-isometric unified single-mode forest-to-cavern exploration and 360° shooting study: verified in **2D Painted Forest Fight 3** (`scenes/forest_fight_3/forest_fight_3.tscn`, §27) and **2D Painted Forest Fight 4** (`scenes/forest_fight_4/forest_fight_4.tscn`, §26)
 
 ## Story and presentation
 

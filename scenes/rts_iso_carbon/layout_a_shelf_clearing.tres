@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="RtsIsoLayoutData" format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_iso_carbon/rts_iso_layout_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+layout_id = "layout_a"
+display_name = "Layout A · Shelf"
+summary = "Sunlit cliff-shelf clearing with twin NW canopy and SE cliff-road approaches."
+terrain_rows = PackedStringArray("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......", "FFFFFFFFFFFFFFFFFFFFFFFMMMMMF.......", "FFFFFFFFFFFFFFFFFFFFFFMMOOOMM.......", "FFFFFFFFFFFFFFFFFFFFFMMOTTTOM.......", "FFFFFFFFFFFFFFFFFFFFMMOTTTTOM.......", "FFFFFFFFFFFFFMMMMMMMMOTTTTTOM.......", "FFFFFFFFFFFMMMOOOMOMOTTTTTOMM.......", "FFFFFFFFFMMMOOTTTOOOTTTTTOMMF.......", "FFFFFFFFMMOOTTTTTTTTTTTTOMMFF.......", "FFFFFFFFMOTTTTTTTTTTTTTOMMFFF.......", "FFFFFFFMMOTTTTTTTTTTTTOMMFFFF.......", "FFFFFFFMMOTTTOOTTTTTTTTOMFFFF.......", "FFFFFFFMOTTTOMOTTTTTTTTOMMFFF.......", "FFFFFFFMOTTTOMOOTTTTTTTOMMFFF.......", "FFFFFFMMOTTTOMOOOTTTOTTOOMFFF.......", "FFFFFMMMOTTTOMMOOOOOOTTTOMFFF.......", "FFFFMMMOTTTOMMMMMMOOTTTTOMFFF.......", "FFFMMOOTTTTOOOOOOOTTTTTTOMFFF.......", "FFFMOTTTTTTTTTTTTTTTTTOOMMFFF.......", "FFFMOTTTTTTTTTTTTTTTOOMMMFFFF.......", "FFFMOTTTTTTTTTTTTTTOOMMFFFFFF.......", "FFFMMOOOOOOOOOOOOOOMMMFFFFFFF.......", "....................................", "....................................", "....................................", "....................................", "....................................", "....................................", "....................................")
+placements = [
+	{"id": "tree_canopy_cool", "cell": Vector2i(7, 36), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(0.38, 0.58, 0.72, 0.72), "valley_below": true},
+	{"id": "tree_canopy_cool", "cell": Vector2i(17, 37), "offset": Vector2(0.0, 0.0), "flip_x": true, "tag": "", "tint": Color(0.38, 0.58, 0.72, 0.72), "valley_below": true},
+	{"id": "tree_canopy_cool", "cell": Vector2i(36, 26), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(0.38, 0.58, 0.72, 0.72), "valley_below": true},
+	{"id": "tree_canopy_cool", "cell": Vector2i(36, 16), "offset": Vector2(0.0, 0.0), "flip_x": true, "tag": "", "tint": Color(0.38, 0.58, 0.72, 0.72), "valley_below": true},
+	{"id": "shelf_rim_u", "cell": Vector2i(4, 28), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Rim 0", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_u", "cell": Vector2i(9, 28), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Rim 1", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_u", "cell": Vector2i(14, 28), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Rim 2", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_u", "cell": Vector2i(19, 28), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Rim 3", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_u", "cell": Vector2i(24, 28), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Rim 4", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_corner_s", "cell": Vector2i(28, 28), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "South Cliff Point", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_v", "cell": Vector2i(28, 24), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Rim 1", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_v", "cell": Vector2i(28, 19), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Rim 2", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_v", "cell": Vector2i(28, 14), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Rim 3", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_v", "cell": Vector2i(28, 9), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Rim 4", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "shelf_rim_v", "cell": Vector2i(28, 4), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Rim 0", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "clearing_stone_arc", "cell": Vector2i(17, 16), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "Clearing Ring", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "step_slabs_moss", "cell": Vector2i(10, 22), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "step_slabs_moss", "cell": Vector2i(20, 22), "offset": Vector2(0.0, 0.0), "flip_x": true, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "step_slabs_moss", "cell": Vector2i(21, 14), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "orichalcum_outcrop", "cell": Vector2i(18, 18), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "Orichalcum Vein", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "tree_hero_buttress", "cell": Vector2i(7, 15), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "Hero Buttress Tree", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "boulder_moss_pair", "cell": Vector2i(8, 18), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "Root Boulder", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "undergrowth_red_shoot", "cell": Vector2i(6, 17), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "fence_rail_u", "cell": Vector2i(6, 27), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Cliff Fence 1", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "fence_rail_u", "cell": Vector2i(15, 27), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SW Cliff Fence 2", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "fence_rail_v", "cell": Vector2i(27, 23), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Cliff Fence", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "cliff_end_u", "cell": Vector2i(12, 21), "offset": Vector2(-4.0, 2.0), "flip_x": false, "tag": "Bluff End W", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "cliff_bluff_u", "cell": Vector2i(14, 21), "offset": Vector2(4.0, 0.0), "flip_x": false, "tag": "Bluff Wall U", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "cliff_outer_corner", "cell": Vector2i(15, 22), "offset": Vector2(6.0, -4.0), "flip_x": false, "tag": "Bluff Nose", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "boulder_moss_pair", "cell": Vector2i(16, 23), "offset": Vector2(0.0, 0.0), "flip_x": true, "tag": "Bluff Foot Boulder", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "undergrowth_fern", "cell": Vector2i(13, 23), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "cave_alcove_bluff", "cell": Vector2i(24, 6), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "NE Cave Alcove", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "cliff_bluff_u", "cell": Vector2i(19, 5), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "North Ridge Wall", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "cliff_end_u", "cell": Vector2i(15, 5), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "North Ridge End", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "boulder_moss_pair", "cell": Vector2i(27, 8), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "tree_canopy_warm", "cell": Vector2i(11, 9), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "North Canopy Warm", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "tree_canopy_cool", "cell": Vector2i(4, 10), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "NW Border Tree", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "tree_canopy_cool", "cell": Vector2i(3, 21), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "West Woods Tree", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "tree_canopy_warm", "cell": Vector2i(26, 19), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "SE Border Tree", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "fallen_moss_log", "cell": Vector2i(15, 8), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "North Moss Log", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "undergrowth_fern", "cell": Vector2i(9, 11), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "undergrowth_red_shoot", "cell": Vector2i(23, 25), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "undergrowth_fern", "cell": Vector2i(26, 16), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false},
+	{"id": "undergrowth_red_shoot", "cell": Vector2i(20, 7), "offset": Vector2(0.0, 0.0), "flip_x": false, "tag": "", "tint": Color(1.00, 1.00, 1.00, 1.00), "valley_below": false}
+]
+unit_spawns = [
+	{"node_name": "BlueCommander", "team": 0, "role": 1, "cell": Vector2i(9, 24)},
+	{"node_name": "BlueSquad1", "team": 0, "role": 0, "cell": Vector2i(8, 22)},
+	{"node_name": "BlueSquad2", "team": 0, "role": 0, "cell": Vector2i(11, 25)},
+	{"node_name": "BlueTank", "team": 0, "role": 2, "cell": Vector2i(10, 26)},
+	{"node_name": "RedCommander", "team": 1, "role": 1, "cell": Vector2i(23, 12)},
+	{"node_name": "RedSquad1", "team": 1, "role": 0, "cell": Vector2i(22, 10)},
+	{"node_name": "RedSquad2", "team": 1, "role": 0, "cell": Vector2i(25, 13)},
+	{"node_name": "RedTank", "team": 1, "role": 2, "cell": Vector2i(25, 11)}
+]
+camera_start_cell = Vector2(16.8, 19.4)
+camera_poi_north = Vector2(16.0, 12.0)
+camera_poi_east = Vector2(22.5, 14.5)

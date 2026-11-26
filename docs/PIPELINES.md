@@ -519,3 +519,30 @@ Area: RPG 2D · Status: In use · Tools: ChatGPT Images, Python (Pillow + NumPy)
    - Forward+ `1376×768` stills: `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --path . --rendering-method forward_plus --resolution 1376x768 --script res://tests/test_forest_fight_2.gd -- --stills --catalog`
    - Uninterrupted real-time `30 fps` recording + MP4 encode: run with `-- --record-clip`, then encode `render_captures/forest_fight_2/live_frames/%05d.jpg` with `C:\ffmpeg\bin\ffmpeg.exe` into `render_captures/forest_fight_2/forest_fight_2_sequence.mp4`.
 4. **Re-export `builds/Balance.exe`** after adding or updating the Developers Page card.
+
+## 2D Painted Forest Fight 3 (unified single-mode strictly-isometric trail & Miyazaki cavern)
+Area: RPG 2D · Status: In use · Tools: ChatGPT Images, Python (Pillow + NumPy), Godot 4.7.2, FFmpeg
+
+1. **Author native PNG source plates in `assets/source_inputs/forest_fight_3/`**:
+   - `forest_trail.png` (`1536×1024`) and `forest_cave.png` (`1536×1024`) locked to the same `~30°` parallel isometric projection and scale.
+   - `forest_commander_sheet1.png` (`3×2` diagonal `SE`/`NE`), `forest_commander_sheet2.png` (`3×3` cardinal `E`/`S`/`N`), and `forest_bats.png` (`2×2` front-iso & dorsal `NW` flight).
+2. **Build normalized 8-way atlas, hanging bat frame, and foreground arch lips**:
+   `python tools/python/build_forest_fight_3_art.py`
+   Writes `assets/textures/forest_fight_3/` (`iso_forest_bg.png`, `iso_forest_cave_lip.png`, `iso_cavern_bg.png`, `iso_cavern_entry_lip.png`, `commander_iso_8way.png` normalized to `256 px` idle across all 5 rows, and `bat_iso_sheet.png` including Frame 4 upside-down branch roost).
+3. **Verify and capture (`1376×768` Forward+)**:
+   - Headless + catalog: `C:\Godot\Godot_v4.7.2-stable_win64_console.exe --headless --path . --script res://tests/test_forest_fight_3.gd -- --catalog`
+   - Stills + live `30 fps` MP4: run `tests/test_forest_fight_3.gd` with `-- --stills` and `-- --record-clip`, encode `render_captures/forest_fight_3/forest_fight_3_sequence.mp4` via FFmpeg, and re-export `builds/Balance.exe`.
+
+## RTS Isometric 2— Forest Claim Carbon (modular painted 35.264° isometric RTS kit & data-driven layouts)
+Area: RTS · Status: In use · Tools: ChatGPT Images, Python 3.12 (OpenCV + Pillow + NumPy), Godot 4.7.2, FFmpeg
+
+1. **Author 10 isolated source sheets in `assets/source_inputs/rts_forest_carbon/`** (`PROMPTS.md`):
+   - Attach `render_captures/forest_fight_4/forest.png` (and `cave.png` / `commander.png`) at strict `35.264°` orthographic true isometry (`±30°` axes, upper-left warm sun, zero baked drop shadows on transparent PNGs): `01_ochre_earth.png`, `02_forest_moss_turf.png`, `03_cliff_bluff_kit.png` (`3×2` raised bluffs), `04_shelf_dropoff_and_props.png` (foreground cliff rims, boulders, slabs, rail fences), `05_trees_and_undergrowth.png`, `06_orichalcum_and_landmarks.png`, and `5×2` isometric pose sheets `07`–`10` for Blue/Red squads, Commanders, and separated Tank hulls + turrets.
+2. **Extract modular pieces, split trunk/crown layers, and pack 8-way unit/tank atlases**:
+   `C:/Python312/python.exe tools/python/make_rts_iso_forest_carbon.py`
+   Writes `assets/textures/rts/forest_carbon/` + `kit_catalog.json` (connected-component island extraction, raised-cosine seamless ground tiles, exact Porter-Duff complementary `*_trunk.png` + `*_crown.png` tree layers, eroded turret-dome pivot registration onto hull mounting rings, and 8-direction atlases with upper-left relit horizontal mirrors).
+3. **Generate or hand-edit `.tres` layouts (`Layout A` & `Layout B`)**:
+   `C:/Python312/python.exe tools/python/build_rts_iso_forest_layouts.py`
+   Writes `scenes/rts_iso_carbon/layout_a_shelf_clearing.tres`, `layout_b_split_bluff.tres`, and launchable scenes `scenes/maps/rts_isometric_2_forest_claim_carbon*.tscn`.
+4. **Verify regressions, Forward+ stills, annotated comparison plates, MP4 clip, and Windows export**:
+   Run `tests/test_rts_iso_forest_carbon.gd` headless, with `-- --stills`, `-- --clip` + FFmpeg (`forest_claim_carbon_playtest.mp4`), `make_rts_iso_handoff_sheets.py`, and `--main-pack builds/Balance.exe -- --catalog`.

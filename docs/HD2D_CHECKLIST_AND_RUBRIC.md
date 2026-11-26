@@ -297,3 +297,10 @@ Play `res://scenes/maps/desert_canyon_crisp_road_patch.tscn` for this experiment
 - [x] Three-beat transition: Beat 1 walks visibly under the foreground stone arch lip into doorway shadow; Beat 2 cuts inside the sunlit left archway and settles into side-profile rifle stance; Beat 3 eases out to stable chamber framing with `>= 1.15 s` grace before any bat dives (continuous held `W`/`Up` verified).
 - [x] Match *Streets of Rage 4* cave framing at `1376×768` Forward+: middle-depth Commander measures `275 px` raster height (`35.81%` of `768 px`), back wall base at `~54%`, broad uncluttered floor (`54%–92%`), low foreground rock rim (`92%–100%`).
 - [x] Strictly horizontal rifle (`Space`/`J`/`Click`) and left/right profile across free 2.5D `(x, depth_y, altitude)` floor movement; off-lane rear bats survive shots passing in front, diving bats signal with tucked-wing silhouette + tightening floor shadow, contact triggers harmless cyan armour spark (`1` per pass), and three one-shot kills display `"Cave clear"`. [Log §25](EXPERIMENT_LOG_AND_LESSONS.md#25-2d-painted-forest-fight-2-2026-11-25)
+
+## 8. 2D Painted Forest Fight 3 — Unified Strictly-Isometric Trail & Miyazaki Pastel Cavern
+
+- [x] Single unified mode across forest and cavern: locked `~30°` parallel isometric projection, `zoom = 1.0`, constant `144.6 px` (`18.8%`) Commander height, and 360° movement + aiming live from frame one.
+- [x] Sleeping bat hanging beneath the painted oak canopy (`(1015, 468)`, `altitude = 232`) clearly visible on approach, startling awake (`<= 175 px`) into an on-trail ambush before the cave mouth.
+- [x] Both doorways (`NE` forest cave arch and `SW` cavern moss arch) occlude the Commander via foreground stone-lip layers across a soft pastel-mist dissolve into the Miyazaki crystal cavern.
+- [x] Normalized 8-direction Commander atlas (`SE, NE, E, S, N` + `flip_h`) and 4-quadrant isometric bats (including dorsal `NW`/`NE` flight) verified across 360° cursor/key shots, altitude misses, harmless armour sparks, and `"Cavern clear"`. [Log §27](EXPERIMENT_LOG_AND_LESSONS.md#27-2d-painted-forest-fight-3--unified-strictly-isometric-trail--miyazaki-cavern-2026-11-25)

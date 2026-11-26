@@ -994,3 +994,15 @@ In a *Streets of Rage*-style side-view arena, every character, flying creature a
 ### Foreground lip
 Area: 2D
 A cutout piece of scenery—such as the stone arch and hanging vines over a cave mouth—drawn on a layer *in front of* the character while the dark cave floor stays *behind* her. When she walks north across the threshold, her head, shoulders and boots genuinely pass underneath the stone arch instead of walking on top of a flat background painting.
+
+### Unified single-mode isometric
+Area: 2D
+Keeping one fixed parallel isometric camera angle, zoom and character pixel height across both exploration and combat, with all-around 360° movement and aiming active from the first step (`scenes/forest_fight_3/forest_fight_3.tscn`). Walking up to a sleeping bat on the trail or crossing into a cavern requires no camera cut or control switch.
+
+### Splat terrain mask
+Area: Rendering
+A small colour-coded control picture built from a map's logical tile grid—for example, red for solid cliff shelf versus misty valley, green for sunlit ochre dirt versus mossy grass, and blue for tree and cliff shade. A ground shader reads those channels together with painted surface grain so trails blend into moss with organic tufts instead of showing diamond grid seams.
+
+### Canopy peek (split trunk and crown)
+Area: 2D
+Splitting a painted tree sprite into two layers that add back up to the exact original tree at full opacity: an always-solid **trunk and root base** that blocks tanks on the ground grid, and an **overhanging leafy crown** that smoothly turns translucent (`~40%` opacity) whenever friendly troops or the player's selection cursor pass underneath it.

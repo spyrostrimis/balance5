@@ -1,0 +1,930 @@
+{
+  "cliff_bluff_u": {
+    "piece_id": "cliff_bluff_u",
+    "size": [
+      190,
+      184
+    ],
+    "anchor_px": [
+      95.0,
+      114.1
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "shade_radius": [
+      92.0,
+      56.0
+    ],
+    "shade_offset": [
+      22.0,
+      16.0
+    ],
+    "shade_strength": 0.38,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "cliff_bluff_v": {
+    "piece_id": "cliff_bluff_v",
+    "size": [
+      205,
+      186
+    ],
+    "anchor_px": [
+      102.5,
+      115.3
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "shade_radius": [
+      92.0,
+      56.0
+    ],
+    "shade_offset": [
+      24.0,
+      16.0
+    ],
+    "shade_strength": 0.4,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "cliff_outer_corner": {
+    "piece_id": "cliff_outer_corner",
+    "size": [
+      174,
+      150
+    ],
+    "anchor_px": [
+      87.0,
+      96.0
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        -1
+      ]
+    ],
+    "shade_radius": [
+      84.0,
+      52.0
+    ],
+    "shade_offset": [
+      22.0,
+      15.0
+    ],
+    "shade_strength": 0.38,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "cliff_inner_corner": {
+    "piece_id": "cliff_inner_corner",
+    "size": [
+      189,
+      153
+    ],
+    "anchor_px": [
+      94.5,
+      94.9
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "shade_radius": [
+      82.0,
+      50.0
+    ],
+    "shade_offset": [
+      20.0,
+      14.0
+    ],
+    "shade_strength": 0.36,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "cliff_end_u": {
+    "piece_id": "cliff_end_u",
+    "size": [
+      194,
+      177
+    ],
+    "anchor_px": [
+      97.0,
+      120.4
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "shade_radius": [
+      78.0,
+      48.0
+    ],
+    "shade_offset": [
+      20.0,
+      14.0
+    ],
+    "shade_strength": 0.34,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "cliff_end_v": {
+    "piece_id": "cliff_end_v",
+    "size": [
+      192,
+      178
+    ],
+    "anchor_px": [
+      96.0,
+      121.0
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "shade_radius": [
+      78.0,
+      48.0
+    ],
+    "shade_offset": [
+      20.0,
+      14.0
+    ],
+    "shade_strength": 0.34,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "shelf_rim_u": {
+    "piece_id": "shelf_rim_u",
+    "size": [
+      194,
+      202
+    ],
+    "anchor_px": [
+      100.9,
+      56.6
+    ],
+    "role": "shelf_rim",
+    "blocked_cells": [
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "shade_radius": [
+      0.0,
+      0.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.0,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "shelf_rim_v": {
+    "piece_id": "shelf_rim_v",
+    "size": [
+      201,
+      201
+    ],
+    "anchor_px": [
+      96.5,
+      56.3
+    ],
+    "role": "shelf_rim",
+    "blocked_cells": [
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "shade_radius": [
+      0.0,
+      0.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.0,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "shelf_rim_corner_s": {
+    "piece_id": "shelf_rim_corner_s",
+    "size": [
+      189,
+      171
+    ],
+    "anchor_px": [
+      94.5,
+      51.3
+    ],
+    "role": "shelf_rim",
+    "blocked_cells": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "shade_radius": [
+      0.0,
+      0.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.0,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "boulder_moss_pair": {
+    "piece_id": "boulder_moss_pair",
+    "size": [
+      151,
+      115
+    ],
+    "anchor_px": [
+      75.5,
+      89.7
+    ],
+    "role": "obstacle",
+    "blocked_cells": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "shade_radius": [
+      54.0,
+      34.0
+    ],
+    "shade_offset": [
+      14.0,
+      10.0
+    ],
+    "shade_strength": 0.32,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "step_slabs_moss": {
+    "piece_id": "step_slabs_moss",
+    "size": [
+      142,
+      78
+    ],
+    "anchor_px": [
+      71.0,
+      43.7
+    ],
+    "role": "ground_decal",
+    "blocked_cells": [],
+    "shade_radius": [
+      0.0,
+      0.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.0,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "fence_rail_u": {
+    "piece_id": "fence_rail_u",
+    "size": [
+      88,
+      85
+    ],
+    "anchor_px": [
+      44.0,
+      64.6
+    ],
+    "role": "obstacle",
+    "blocked_cells": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "shade_radius": [
+      32.0,
+      20.0
+    ],
+    "shade_offset": [
+      8.0,
+      6.0
+    ],
+    "shade_strength": 0.18,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "fence_rail_v": {
+    "piece_id": "fence_rail_v",
+    "size": [
+      84,
+      84
+    ],
+    "anchor_px": [
+      42.0,
+      63.8
+    ],
+    "role": "obstacle",
+    "blocked_cells": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "shade_radius": [
+      32.0,
+      20.0
+    ],
+    "shade_offset": [
+      8.0,
+      6.0
+    ],
+    "shade_strength": 0.18,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "tree_hero_buttress": {
+    "piece_id": "tree_hero_buttress",
+    "size": [
+      267,
+      359
+    ],
+    "anchor_px": [
+      128.2,
+      315.9
+    ],
+    "role": "tree",
+    "blocked_cells": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "shade_radius": [
+      135.0,
+      84.0
+    ],
+    "shade_offset": [
+      24.0,
+      16.0
+    ],
+    "shade_strength": 0.34,
+    "has_canopy": true,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "tree_canopy_warm": {
+    "piece_id": "tree_canopy_warm",
+    "size": [
+      167,
+      194
+    ],
+    "anchor_px": [
+      83.5,
+      172.7
+    ],
+    "role": "tree",
+    "blocked_cells": [
+      [
+        0,
+        0
+      ]
+    ],
+    "shade_radius": [
+      82.0,
+      50.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.28,
+    "has_canopy": true,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "tree_canopy_cool": {
+    "piece_id": "tree_canopy_cool",
+    "size": [
+      185,
+      210
+    ],
+    "anchor_px": [
+      92.5,
+      189.0
+    ],
+    "role": "tree",
+    "blocked_cells": [
+      [
+        0,
+        0
+      ]
+    ],
+    "shade_radius": [
+      84.0,
+      52.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.3,
+    "has_canopy": true,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "undergrowth_fern": {
+    "piece_id": "undergrowth_fern",
+    "size": [
+      115,
+      78
+    ],
+    "anchor_px": [
+      57.5,
+      62.4
+    ],
+    "role": "prop",
+    "blocked_cells": [],
+    "shade_radius": [
+      28.0,
+      18.0
+    ],
+    "shade_offset": [
+      6.0,
+      4.0
+    ],
+    "shade_strength": 0.14,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "undergrowth_red_shoot": {
+    "piece_id": "undergrowth_red_shoot",
+    "size": [
+      101,
+      75
+    ],
+    "anchor_px": [
+      50.5,
+      61.5
+    ],
+    "role": "prop",
+    "blocked_cells": [],
+    "shade_radius": [
+      26.0,
+      16.0
+    ],
+    "shade_offset": [
+      6.0,
+      4.0
+    ],
+    "shade_strength": 0.14,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "orichalcum_outcrop": {
+    "piece_id": "orichalcum_outcrop",
+    "size": [
+      243,
+      162
+    ],
+    "anchor_px": [
+      121.5,
+      110.2
+    ],
+    "role": "obstacle",
+    "blocked_cells": [
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "shade_radius": [
+      96.0,
+      60.0
+    ],
+    "shade_offset": [
+      20.0,
+      14.0
+    ],
+    "shade_strength": 0.36,
+    "has_canopy": false,
+    "is_orichalcum": true,
+    "tall_occluder": true
+  },
+  "clearing_stone_arc": {
+    "piece_id": "clearing_stone_arc",
+    "size": [
+      280,
+      125
+    ],
+    "anchor_px": [
+      140.0,
+      70.0
+    ],
+    "role": "ground_decal",
+    "blocked_cells": [],
+    "shade_radius": [
+      0.0,
+      0.0
+    ],
+    "shade_offset": [
+      18.0,
+      12.0
+    ],
+    "shade_strength": 0.0,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  },
+  "cave_alcove_bluff": {
+    "piece_id": "cave_alcove_bluff",
+    "size": [
+      279,
+      171
+    ],
+    "anchor_px": [
+      139.5,
+      123.1
+    ],
+    "role": "cliff",
+    "blocked_cells": [
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "shade_radius": [
+      104.0,
+      64.0
+    ],
+    "shade_offset": [
+      22.0,
+      16.0
+    ],
+    "shade_strength": 0.4,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": true
+  },
+  "fallen_moss_log": {
+    "piece_id": "fallen_moss_log",
+    "size": [
+      229,
+      141
+    ],
+    "anchor_px": [
+      114.5,
+      93.1
+    ],
+    "role": "obstacle",
+    "blocked_cells": [
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "shade_radius": [
+      64.0,
+      38.0
+    ],
+    "shade_offset": [
+      12.0,
+      9.0
+    ],
+    "shade_strength": 0.26,
+    "has_canopy": false,
+    "is_orichalcum": false,
+    "tall_occluder": false
+  }
+}

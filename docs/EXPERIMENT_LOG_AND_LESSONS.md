@@ -732,7 +732,19 @@ The review favours Approach 3 for a short painted walk. It recommends comparing 
 
 **Verified.** 1376 × 768 Forward+ on RTX 4060 Ti. Standing figure height measures 130 px at the near forest point, far forest point and cave. The rendered fence, lip and boulder hide 54, 2,161 and 2,340 body pixels at their tested overlap points. Tests covered WASD and arrows across the doorway, fire through the join and in both directions, eight principal headings and two in-between angles, cliff and wall collision, rock stopping a bolt ahead of a bat, a diagonal miss, harmless contact and three one-shot kills. The 260-frame live clip shows the crossing and clear at 30 fps with no repeated capture slots. The source project and embedded Windows export both pass the Fight 4 gameplay and catalog checks. [Play, evidence and remaining mismatch](FOREST_FIGHT_4.md)
 
-## 27. RTS Isometric — Forest Claim · 2026-11-26
+## 27. 2D Painted Forest Fight 3 — Unified Strictly-Isometric Trail & Miyazaki Cavern (2026-11-25)
+
+**Goal.** Unify exploration and combat into a single strictly-isometric mode (`scenes/forest_fight_3/forest_fight_3.tscn`) loyal to the cliff-top reference image, pairing the sunlit forest ridge (including a sleeping bat hanging beneath the oak bough that startles awake when approached) with a dreamy Miyazaki pastel crystal cavern at the exact same isometric angle, zoom (`1.0`), constant hero scale (`144.6 px` / `18.8%` of `768 px`), and 360° all-around shooting.
+
+**Art & Pipeline (`tools/python/build_forest_fight_3_art.py` -> `assets/textures/forest_fight_3/`).**
+- **Isometric Plates & Dual Foreground Arch Lips:** Scaled native `1536×1024` `forest_trail.png` and `forest_cave.png` uniformly (`1.25×` -> `1920×1280`) and extracted both `iso_forest_cave_lip.png` (`NE` stone slab arch + hanging vines) and `iso_cavern_entry_lip.png` (`SW` sunlit moss archway) so the Commander passes underneath real foreground stone on both entry and emergence.
+- **Normalized 8-Way Commander & 5-Frame Isometric Bat:** Combined `forest_commander_sheet1.png` (`SE`, `NE`) and `forest_commander_sheet2.png` (`E`, `S`, `N`) into `commander_iso_8way.png` (`960×1600`, `15` cells of `320×320` normalized to `256 px` idle height at boot anchor `(160, 296)`). Built `bat_iso_sheet.png` (`2100×420`, front-iso `SW`/`SE` flap & tucked dive, `NW`/`NE` dorsal flight, plus Frame 4 upside-down folded branch roost).
+
+**Verification (`1376×768` Vulkan Forward+ on RTX 4060 Ti).**
+- `tests/test_forest_fight_3.gd -- --stills --catalog`: `PASS` — verified locked `zoom = 1.0` and constant `144.6 px` height across forest and cavern, all 8 aiming octants firing live on the trail, sleeping branch bat (`(1015, 468)`, `altitude = 232`) waking inside `175 px` and dying in one aimed 360° shot, cave mouth stop/back-away, pastel-mist dissolve into the Miyazaki cavern, high-orbit bolt miss (`altitude = 205` vs `84`), harmless armour-spark contact, three 360° cavern kills triggering `"Cavern clear"`, `R` reset, and Developers Page Play + `Esc` round-trips from both stages.
+- **Real-time capture (`--record-clip`):** Encoded `render_captures/forest_fight_3/forest_fight_3_sequence.mp4` (`30 fps`) and stills `01_iso_forest_start.png` through `06_cavern_clear.png`.
+
+## 28. RTS Isometric — Forest Claim · 2026-11-26
 
 **Direction.** Attach the actual Fight 4 game capture for the two ImageGen sheets. Place the trees, undergrowth and stones around warm paths, with the shared cliff paint drawn on the raised tile faces. Compare the whole playable shelf at command zoom with the HUD on.
 

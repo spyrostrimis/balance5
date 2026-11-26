@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## Original Carbon opening · 2026-11-26
+
+Both Carbon checks passed and all ten frames were inspected. One Blue group move to the west edge of the plaza won by hold against Guard in 31.6 seconds and by elimination against Active in 20.3. With Blue idle, Guard left the plaza empty for 90 seconds and Active won by hold in 31.6. Use the same opening orders to judge whether the next encounter rewards a tactical choice. [Setup, findings and frames](RTS_REUSABLE_2_CARBON.md#what-happened-in-play)
+
 ## RTS Reusable 2 Carbon — Miasaki · 2026-11-25
 
 The first matched northeast frames showed that warm limestone, soft reflected turquoise and cool ledge shade could tie the desert to Forest Fight 4. The new field also exposed diagonal steps in the original sand lighting. A continuous wind-light pattern removed those steps in Detailed, and deeper shade under the painted ledges kept the cliff grounded. Four Red soldiers remained countable on the quieter sand at Command. The blocked tiles follow Carbon's stepped grid, with a little walkable rubble and shallow water at the rim.

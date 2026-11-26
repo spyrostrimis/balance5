@@ -82,11 +82,11 @@ The commander script defaults to D4b. With a `route` object assigned it clamps t
 
 ## Next steps
 
-**RTS (priority)** — Mission 1, *The First Claim* (`docs/GAME_DESIGN.md` §5), as a playable vertical slice:
+**RTS (priority)** — Start future RTS work from the original **RTS Reusable 2 Carbon** (`scenes/maps/rts_reusable_2_carbon.tscn`). For Mission 1, follow the [Carbon assessment and plan](docs/RTS_REUSABLE_2_CARBON.md#proposed-order-of-work) and [campaign design](docs/GAME_DESIGN.md).
 
 1. ~~Select, move and attack with four troops plus the commander per side.~~ Done on `scenes/maps/rts_test_map.tscn` (2D, 32 px grid, AStarGrid2D, one unit per tile, placeholder discs). Run `tests/test_rts_test_map.gd` headless and `tests/capture_rts_test_map.gd` windowed after RTS changes.
-2. A commander active ability (Blue: Mend / healing first), the control-point hold timer around the central Orichalcum rock, and win/lose on hold or elimination.
-3. A simple Red AI opponent, and the HUD from `docs/references/rts_mission1_hud_goal.webp` (top bar, minimap, unit card, Move/Attack/Hold/Mend, objective panel).
+2. Tune Carbon's existing opponent, Mend and hold timer into a contested opening. Run `tests/test_rts_reusable_2_carbon.gd` headless and with `-- --capture` for Carbon checks.
+3. Improve unit and objective visibility at Command zoom. Finish the briefing, result and retry, and verify both victory conditions for each side.
 4. Both settings from one layout: Red's desert and Blue's tropical forest (`docs/references/rts_mission1_*.webp`). Build maps from tiles (the kitbash/Tiled work), not a single painted image, so maps, fog and pathfinding scale.
 
 **RPG canyon (secondary)**

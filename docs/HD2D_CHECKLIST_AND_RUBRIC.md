@@ -1,5 +1,10 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## Original Carbon as the RTS model · 2026-11-26
+
+- [x] Inspect the opening, both zooms, dune tracks, oasis and fight in both Detailed and Pixel. The road leads to the crystal and the tank leaves a readable pair of tracks.
+- [ ] Have a new player identify the commander and a wounded squad and explain who holds the plaza during combat at Command zoom. [Assessment and opening frames](RTS_REUSABLE_2_CARBON.md#assessment--26-november-2026)
+
 ## RTS Isometric — Forest Claim · 2026-11-26
 
 - [x] Review Blue, Red, the outcrop and both approaches in the Forward+ command view with the HUD on.

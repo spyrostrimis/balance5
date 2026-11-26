@@ -95,7 +95,7 @@ Orichalcum is the game's **only resource**. It is scarce and mined from small ro
 
 ## 7. Look and feel
 
-**RTS art direction.** Build the battlefield from reusable modular Painted HD 2D art. Use the painted reference to guide the camera, terrain composition and material treatment.
+**RTS direction.** The original **RTS Reusable 2 Carbon** is the owner's model for future RTS work. Build the battlefield from reusable modular Painted HD 2D art. Use Carbon in play and the painted reference to guide the camera, terrain composition and material treatment. [Playable model and assessment](RTS_REUSABLE_2_CARBON.md)
 
 | Reference | File | What it sets |
 | --- | --- | --- |

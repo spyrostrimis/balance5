@@ -27,6 +27,14 @@ What we are building, in order. The RTS comes first (`docs/GAME_DESIGN.md` §1).
 
 The first playable vertical slice: four troops plus a field commander per side fight over the Orichalcum rock in the centre of the map (`docs/GAME_DESIGN.md` §5).
 
+### Next playable build from Carbon
+
+- [x] Owner chose the original **RTS Reusable 2 Carbon** as the RTS model. [Assessment, opening results and plan](RTS_REUSABLE_2_CARBON.md#assessment--26-november-2026)
+- [ ] Tune the first fight. Compare one group move, a split approach and a retreat to Mend. Record who survives and who controls the rock.
+- [ ] At Command zoom, have a new player identify the commander, a wounded squad and which side is holding the plaza.
+- [ ] Play from briefing to result and retry. Verify hold and elimination for each side, a contested timer, and Mend from the sidebar.
+- [ ] Play the same encounter as Red in the desert and Blue in the tropical forest. Check both tank routes and infantry visibility.
+
 ### Units and control
 - [x] A Blue tank that drives on the desert map with obstacle collision
 - [x] Choose the battlefield foundation: grid or navmesh, and the tile size (32 px grid, A*)
@@ -35,21 +43,21 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Attack: units fire at enemies in range and take damage
 - [x] Four Blue troops and the Blue Commander on the map (placeholder discs)
 - [x] Four Red troops and the Red Commander on the map (placeholder discs)
-- [ ] Real unit sprites replace the placeholder discs
-- [ ] First balance pass on unit numbers (Red's melee troops currently beat Blue)
+- [x] Play with painted squads, tanks and commanders in Carbon.
+- [ ] Balance Carbon's rifle squads, tanks and commanders around the first contested approach.
 
 ### Mission rules
-- [ ] Control area around the central Orichalcum rock with a hold timer
-- [ ] Win by holding the rock uncontested, or by eliminating the enemy
-- [ ] Lose when Blue is eliminated or Red holds the rock
-- [ ] Blue Commander ability: Mend (heal nearby units)
+- [x] Hold the central Orichalcum rock for 30 seconds in Carbon.
+- [x] Win as Blue by holding the rock or by eliminating Red in Carbon.
+- [x] Lose as Blue when Red holds the rock in Carbon.
+- [ ] Verify defeat when Blue is eliminated in the finished mission.
+- [x] Heal a wounded squad with the Blue Commander's Mend in Carbon.
 
 ### Opponent and interface
-- [ ] Simple Red AI: advance, contest the rock, attack in range
+- [x] Red's Active setting advances to the rock and engages Blue in Carbon.
 - [ ] HUD top bar: logo, mission name, Orichalcum, squad count, objective timer, Menu
-- [ ] Minimap
-- [ ] Selected-unit card and the Move / Attack / Hold / Mend buttons
-- [ ] Objective panel with progress bar ("Hold the Orichalcum rock")
+- [x] Show the minimap, selected-unit card and four command buttons in Carbon.
+- [x] Show the objective, progress bar and hold state in Carbon.
 
 ### Painted forest study
 - [x] Build and export both **RTS Isometric — Forest Claim** cards. Verify both tank routes, the minimap orders, camera picks and Play/Esc. [Playable layouts and route evidence](RTS_FOREST_CLAIM.md)

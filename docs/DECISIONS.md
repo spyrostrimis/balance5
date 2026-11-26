@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-26 · Use the original RTS Reusable 2 Carbon as the RTS model
+
+Area: RTS · Status: Decided
+
+The owner likes the original playable desert build and chose it as the reference for future RTS work. Use its battlefield, unit scale, camera and command interface as the starting point for The First Claim. The Miasaki repaint and isometric forest studies remain comparisons. The proposed encounter changes are ready for playtesting. [Assessment and plan](RTS_REUSABLE_2_CARBON.md#assessment--26-november-2026)
+
 ### 2026-11-26 · Try a reusable isometric forest battlefield
 
 Area: RTS · Status: Trying

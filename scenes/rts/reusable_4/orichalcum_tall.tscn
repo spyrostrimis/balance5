@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="piece"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_base_hd.png" id="base_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_base_pixel.png" id="base_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_tall_hd.png" id="tall_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_tall_pixel.png" id="tall_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_gravel_hd.png" id="gravel_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_gravel_pixel.png" id="gravel_px"]
+
+[node name="TallOrichalcum" type="Node2D"]
+y_sort_enabled = true
+
+[node name="GravelSkirt" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(0, 34)
+script = ExtResource("piece")
+piece_id = "crystal_gravel"
+world_size = Vector2(72, 48)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("gravel_hd")
+pixel_texture_override = ExtResource("gravel_px")
+shadow_alpha = 0.0
+
+[node name="RockBase" type="Node2D" parent="."]
+script = ExtResource("piece")
+piece_id = "crystal_base"
+world_size = Vector2(126, 90)
+detailed_texture_override = ExtResource("base_hd")
+pixel_texture_override = ExtResource("base_px")
+blocked_poly = PackedVector2Array(-56, -8, -20, -38, 30, -36, 58, -4, 46, 32, -10, 40, -52, 24)
+shadow_offset = Vector2(12, 10)
+shadow_size = Vector2(134, 96)
+shadow_alpha = 0.38
+shade_offset = Vector2(18, 14)
+shade_radii = Vector2(72, 54)
+shade_strength = 0.44
+
+[node name="TallSpire" type="Node2D" parent="."]
+position = Vector2(0, 6)
+script = ExtResource("piece")
+piece_id = "crystal_tall"
+world_size = Vector2(66, 70)
+draw_offset = Vector2(0, -20)
+layer_role = "prop"
+detailed_texture_override = ExtResource("tall_hd")
+pixel_texture_override = ExtResource("tall_px")
+shadow_alpha = 0.0

@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-26 · Build RTS Reusable 4 with front-and-rear unit paintings, flat-sand dune deltas and seamless road joins
+
+Area: RTS · Status: Trying
+
+Painted both front-SE and rear-NE poses for Blue and Red infantry and commanders so connected cobalt shoulders, the Blue Commander's broad ivory scarf, and Red's deep crimson with a brighter scarlet upper edge hold across all eight walking facings, paired with `1.20×` visual squad spacing on the same single-tile claim. Generated the four new dune shapes on flat `#E48728` sand to match Carbon's signed-delta tread shader, built `sheltered_spring.tscn` and `roadside_pool.tscn` from one modular oasis kit with verified `PassCliff` tank clearance, added the steeper-angle Blue Field Headquarters beside the road, and bridged the road fork and plaza entrances from Carbon's limestone plates. Encounter balancing and final art approval remain open for the owner. [Matched comparisons, clip and layout guide](RTS_REUSABLE_4.md)
+
 ### 2026-11-26 · Test Reusable 3 with original Carbon’s encounter
 
 Area: RTS · Status: Decided by owner

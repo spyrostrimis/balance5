@@ -1,0 +1,173 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="piece"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_cliff_ledge_hd.png" id="cliff_ledge_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_cliff_ledge_pixel.png" id="cliff_ledge_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_cliff_end_hd.png" id="cliff_end_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_cliff_end_pixel.png" id="cliff_end_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_outcrop_low_hd.png" id="outcrop_low_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_outcrop_low_pixel.png" id="outcrop_low_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_water_hd.png" id="water_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_water_pixel.png" id="water_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_bank_sand_hd.png" id="bank_sand_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_bank_sand_pixel.png" id="bank_sand_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_bank_rock_hd.png" id="bank_rock_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_bank_rock_pixel.png" id="bank_rock_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_tree_hd.png" id="tree_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_tree_pixel.png" id="tree_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_reeds_hd.png" id="reeds_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/oasis_reeds_pixel.png" id="reeds_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_gravel_hd.png" id="gravel_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/reusable_4/crystal_gravel_pixel.png" id="gravel_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/scrub_small_hd.png" id="scrub_sm_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/scrub_small_pixel.png" id="scrub_sm_px"]
+
+[node name="ShelteredSpring" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Water" type="Node2D" parent="."]
+z_index = -2
+position = Vector2(-28, 44)
+script = ExtResource("piece")
+piece_id = "oasis_water"
+world_size = Vector2(156, 114)
+layer_role = "water"
+detailed_texture_override = ExtResource("water_hd")
+pixel_texture_override = ExtResource("water_px")
+blocked_poly = PackedVector2Array(-66, 6, -42, -26, 12, -46, 58, -34, 64, -2, 26, 26, -24, 34, -60, 26)
+shadow_alpha = 0.0
+
+[node name="SandyBank" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-2, 54)
+script = ExtResource("piece")
+piece_id = "oasis_bank_sand"
+world_size = Vector2(130, 96)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("bank_sand_hd")
+pixel_texture_override = ExtResource("bank_sand_px")
+shadow_alpha = 0.0
+
+[node name="ShoreGravel" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-58, 92)
+script = ExtResource("piece")
+piece_id = "crystal_gravel"
+world_size = Vector2(56, 40)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("gravel_hd")
+pixel_texture_override = ExtResource("gravel_px")
+shadow_alpha = 0.0
+
+[node name="MainCliffLedge" type="Node2D" parent="."]
+position = Vector2(26, -34)
+script = ExtResource("piece")
+piece_id = "oasis_cliff_ledge"
+world_size = Vector2(212, 168)
+detailed_texture_override = ExtResource("cliff_ledge_hd")
+pixel_texture_override = ExtResource("cliff_ledge_px")
+blocked_poly = PackedVector2Array(-98, -22, -46, -74, 32, -74, 96, -16, 94, 48, 34, 76, -36, 46, -94, 18)
+shadow_offset = Vector2(16, 12)
+shadow_size = Vector2(220, 170)
+shadow_alpha = 0.36
+shade_offset = Vector2(24, 18)
+shade_radii = Vector2(114, 88)
+shade_strength = 0.44
+
+[node name="EastCliffEnd" type="Node2D" parent="."]
+position = Vector2(116, 36)
+script = ExtResource("piece")
+piece_id = "oasis_cliff_end"
+world_size = Vector2(118, 108)
+detailed_texture_override = ExtResource("cliff_end_hd")
+pixel_texture_override = ExtResource("cliff_end_px")
+blocked_poly = PackedVector2Array(-48, -14, -8, -46, 42, -26, 48, 22, 14, 46, -42, 32)
+shadow_offset = Vector2(12, 10)
+shadow_size = Vector2(124, 110)
+shadow_alpha = 0.34
+shade_offset = Vector2(18, 14)
+shade_radii = Vector2(64, 54)
+shade_strength = 0.38
+
+[node name="WestShoulderRock" type="Node2D" parent="."]
+position = Vector2(-88, -4)
+script = ExtResource("piece")
+piece_id = "rock_outcrop_low"
+world_size = Vector2(108, 60)
+detailed_texture_override = ExtResource("outcrop_low_hd")
+pixel_texture_override = ExtResource("outcrop_low_px")
+blocked_poly = PackedVector2Array(-44, -18, 42, -20, 46, 18, -42, 20)
+shadow_offset = Vector2(9, 7)
+shadow_size = Vector2(112, 64)
+shadow_alpha = 0.28
+shade_offset = Vector2(12, 10)
+shade_radii = Vector2(56, 34)
+shade_strength = 0.28
+
+[node name="RockyBank" type="Node2D" parent="."]
+position = Vector2(18, 62)
+script = ExtResource("piece")
+piece_id = "oasis_bank_rock"
+world_size = Vector2(124, 110)
+detailed_texture_override = ExtResource("bank_rock_hd")
+pixel_texture_override = ExtResource("bank_rock_px")
+blocked_poly = PackedVector2Array(18, -42, 48, -34, 56, 2, 28, 34, -6, 38, -12, 24, 16, 10, 28, -12)
+shadow_offset = Vector2(6, 5)
+shadow_size = Vector2(108, 86)
+shadow_alpha = 0.22
+
+[node name="SpringTree" type="Node2D" parent="."]
+position = Vector2(-94, 56)
+script = ExtResource("piece")
+piece_id = "oasis_tree"
+world_size = Vector2(96, 62)
+draw_offset = Vector2(0, -20)
+detailed_texture_override = ExtResource("tree_hd")
+pixel_texture_override = ExtResource("tree_px")
+blocked_poly = PackedVector2Array(-10, -6, 10, -6, 11, 7, -11, 7)
+shadow_offset = Vector2(14, -8)
+shadow_size = Vector2(86, 46)
+shadow_alpha = 0.30
+shade_offset = Vector2(14, -8)
+shade_radii = Vector2(46, 28)
+shade_strength = 0.38
+
+[node name="WestReeds" type="Node2D" parent="."]
+position = Vector2(-78, 76)
+script = ExtResource("piece")
+piece_id = "oasis_reeds"
+world_size = Vector2(30, 24)
+layer_role = "prop"
+detailed_texture_override = ExtResource("reeds_hd")
+pixel_texture_override = ExtResource("reeds_px")
+shadow_alpha = 0.0
+
+[node name="SouthReeds" type="Node2D" parent="."]
+position = Vector2(-30, 90)
+script = ExtResource("piece")
+piece_id = "oasis_reeds"
+world_size = Vector2(34, 28)
+layer_role = "prop"
+detailed_texture_override = ExtResource("reeds_hd")
+pixel_texture_override = ExtResource("reeds_px")
+shadow_alpha = 0.0
+
+[node name="InnerReeds" type="Node2D" parent="."]
+position = Vector2(28, 22)
+script = ExtResource("piece")
+piece_id = "oasis_reeds"
+world_size = Vector2(28, 22)
+layer_role = "prop"
+detailed_texture_override = ExtResource("reeds_hd")
+pixel_texture_override = ExtResource("reeds_px")
+shadow_alpha = 0.0
+
+[node name="CliffScrub" type="Node2D" parent="."]
+position = Vector2(88, 92)
+script = ExtResource("piece")
+piece_id = "scrub_small"
+world_size = Vector2(20, 16)
+layer_role = "prop"
+detailed_texture_override = ExtResource("scrub_sm_hd")
+pixel_texture_override = ExtResource("scrub_sm_px")
+shadow_alpha = 0.0

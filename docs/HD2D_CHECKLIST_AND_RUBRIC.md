@@ -1,5 +1,13 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Reusable 4 · 2026-11-26
+
+- [x] Capture original Carbon vs colour-only (`1.0×` spacing) vs Reusable 4 (`1.20×` spacing) at Command zoom on pale road and calm sand with selection brackets off. Verify painted front-and-rear cobalt/crimson silhouettes, ivory-scarfed Blue Commander, wounded 3-of-4 countability, and all eight walking facings (`1376 × 768` requested, `1365 × 768` saved).
+- [x] Enrich outer sand with signed-delta forked dune, fading dune end, low shoulder, shallow ripples, sparse pebbles, and road-edge sand spill while leaving calm fighting ground around the central Orichalcum plaza. Verify paired compressed tank tracks across the forked dune crest.
+- [x] Build two editable oasis scene groups (`sheltered_spring.tscn` and `roadside_pool.tscn`) from shared water, sandy/rocky bank, cliff ledge/end, reed, and rooted-tree pieces. Verify tree canopy fade over selected troops, passage closure when `PassCliff` moves inward, and clean tank transit in the published layout.
+- [x] Place the steeper-angle Blue Field Headquarters beside the road with a stationed tank and squad clearance while keeping Carbon's smaller outpost distinct; bridge road fork and plaza joins seamlessly; preview low/wide and compact/tall Orichalcum deposits; and verify Play, View, Carbon, and `Esc` return in `builds/Balance.exe`.
+- [ ] Owner judges battlefield readability in motion and approves the Reusable 4 art and kit at Command zoom. [Matched comparisons, clip and layout guide](RTS_REUSABLE_4.md)
+
 ## RTS Reusable 3 · 2026-11-26
 
 - [x] Compare the original and new colours without selection on sand and pale paving at Command zoom, with matched framing, scale and positions. Inspect eight directions, moving soldiers and a wounded three-person squad.

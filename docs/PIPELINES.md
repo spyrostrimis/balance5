@@ -1,5 +1,14 @@
 # Pipelines
 
+## Extend Carbon with modular ChatGPT landmarks, dunes and unit sheets (RTS Reusable 4)
+
+Area: RTS art · Status: In use · Tools: ChatGPT Images, Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+, FFmpeg
+
+1. Stage Carbon's opening, oasis, dune, crystal and unit references in `assets/source_inputs/rts_reusable_4/refs/`. Generate transparent cutouts for front-and-rear units (`01_units_readability.png`), the 6-piece oasis kit (`03_oasis_kit.png`), freestanding tree (`04_oasis_tree.png`), steeper-angle Blue Field HQ (`05_blue_headquarters.png`), and crystal/gravel kit (`06_orichalcum_and_scatter.png`), while generating new dune shapes (`02_dune_kit.png`) on flat `#E48728` orange sand so Gaussian background subtraction feeds Carbon's [signed-delta dune](GLOSSARY.md#signed-delta-dune) shader seamlessly.
+2. Run `C:/Python312/python.exe tools/python/make_rts_reusable_4.py` to slice each sheet along verified empty channels, decontaminate outer rims, synthesize 8 walking facings with non-wrapping `cv2.remap` leg strides, and derive matching road-fork, plaza-join, and sand-fade end pieces from `05_road_and_outpost.png`.
+3. Assemble reusable arrangements (`sheltered_spring.tscn`, `roadside_pool.tscn`, `orichalcum_wide.tscn`, `orichalcum_tall.tscn`) as [editable groups](GLOSSARY.md#editable-group) in `scenes/rts/reusable_4/`, keeping ground layers at `z_index <= -5` so `Water` (`-2`) and `SandyBank` (`-1`) layer cleanly beneath `YSortWorld` cliffs and trees.
+4. Run `capture_rts_reusable_4_units.gd` (`--original`, `--color-only`, `--facings`) and `test_rts_reusable_4.gd` (headless and `1376 × 768` Forward+ `--capture --record`), encode the 30 fps MP4 clip, export `builds/Balance.exe`, and verify Play, View, and `Esc` return in the exported build. [Commands and evidence](RTS_REUSABLE_4.md)
+
 ## Build and rearrange a painted Forest Claim map
 
 Area: RTS art · Status: In use · Tools: built-in ImageGen, Python with Pillow and NumPy, Godot 4.7.2 Forward+, FFmpeg

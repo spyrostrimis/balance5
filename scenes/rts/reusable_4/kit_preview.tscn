@@ -1,0 +1,115 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_reusable_4/kit_preview.gd" id="preview"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/sand_tile_hd.png" id="sand"]
+[ext_resource type="PackedScene" path="res://scenes/rts/reusable_4/sheltered_spring.tscn" id="spring"]
+[ext_resource type="PackedScene" path="res://scenes/rts/reusable_4/roadside_pool.tscn" id="roadside"]
+[ext_resource type="PackedScene" path="res://scenes/rts/reusable_4/orichalcum_wide.tscn" id="wide"]
+[ext_resource type="PackedScene" path="res://scenes/rts/reusable_4/orichalcum_tall.tscn" id="tall"]
+
+[node name="DesertKitPreview" type="Node2D"]
+script = ExtResource("preview")
+
+[node name="Sand" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("sand")
+region_enabled = true
+region_rect = Rect2(0, 0, 2400, 1600)
+
+[node name="CastShadows" type="Node2D" parent="."]
+z_index = -3
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(1.49, 1.49)
+
+[node name="ShelteredSpring" parent="." instance=ExtResource("spring")]
+position = Vector2(-235, -62)
+
+[node name="RoadsidePool" parent="." instance=ExtResource("roadside")]
+position = Vector2(228, -46)
+
+[node name="WideOrichalcum" parent="." instance=ExtResource("wide")]
+position = Vector2(-196, 134)
+
+[node name="TallOrichalcum" parent="." instance=ExtResource("tall")]
+position = Vector2(196, 134)
+
+[node name="Title" type="Label" parent="."]
+z_index = 4
+offset_left = -280.0
+offset_top = -232.0
+offset_right = 280.0
+offset_bottom = -200.0
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.09, 0.04, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "RTS Reusable 4 · Desert Kit (Command scale)"
+horizontal_alignment = 1
+
+[node name="SpringLabel" type="Label" parent="."]
+z_index = 4
+offset_left = -396.0
+offset_top = 48.0
+offset_right = -72.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.09, 0.04, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 15
+text = "Sheltered spring (cliff + modular banks)"
+horizontal_alignment = 1
+
+[node name="RoadsideLabel" type="Label" parent="."]
+z_index = 4
+offset_left = 12.0
+offset_top = 48.0
+offset_right = 412.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.09, 0.04, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 15
+text = "Roadside pool (with PassCliff tank passage)"
+horizontal_alignment = 1
+
+[node name="WideLabel" type="Label" parent="."]
+z_index = 4
+offset_left = -364.0
+offset_top = 188.0
+offset_right = -28.0
+offset_bottom = 212.0
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.09, 0.04, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 15
+text = "Low, wide Orichalcum"
+horizontal_alignment = 1
+
+[node name="TallLabel" type="Label" parent="."]
+z_index = 4
+offset_left = 28.0
+offset_top = 188.0
+offset_right = 364.0
+offset_bottom = 212.0
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.09, 0.04, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 15
+text = "Compact, tall Orichalcum"
+horizontal_alignment = 1
+
+[node name="ModeHint" type="Label" parent="."]
+z_index = 4
+offset_left = -260.0
+offset_top = 218.0
+offset_right = 260.0
+offset_bottom = 240.0
+theme_override_colors/font_color = Color(0.94, 0.84, 0.66, 0.92)
+theme_override_colors/font_outline_color = Color(0.16, 0.08, 0.03, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 12
+text = "[V] Mode: Detailed Painted HD  ·  [Esc] Developers Page"
+horizontal_alignment = 1

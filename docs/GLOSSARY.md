@@ -28,6 +28,18 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 
 ## Terms
 
+### Editable group
+Area: Godot scenes
+
+A small saved scene (such as an oasis or crystal outcrop) made of several separate child pieces that you can drop onto a map as one unit, or open in Godot to move, scale, or swap any individual rock, water pool, bank, or tree inside it.
+*In Balance:* `scenes/rts/reusable_4/roadside_pool.tscn` and `sheltered_spring.tscn` are editable groups placed inside `scenes/maps/rts_reusable_4.tscn`.
+
+### Signed-delta dune
+Area: RTS terrain
+
+A dune texture that stores only how much brighter (sunlit crest) or darker (shaded trough) each pixel is relative to neutral grey (`128`), instead of storing flat sand colour. The ground shader adds those light and dark waves onto the live desert sand underneath and flattens them wherever a tank's twin treads pass.
+*In Balance:* `tools/python/make_rts_reusable_4.py` extracts signed-delta dunes from `02_dune_kit.png` for `assets/shaders/rts_carbon_dune.gdshader`.
+
 ### Blocked footprint
 Area: RTS movement
 

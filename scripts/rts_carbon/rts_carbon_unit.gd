@@ -76,6 +76,7 @@ var _moving_now := false
 var _tex_main: Texture2D
 var _tex_turret: Texture2D
 var _detailed_art_directory := ""
+var _squad_spacing := 1.0
 
 # Staggered diamond offsets for 4-soldier squads (in local rotated space)
 const SQUAD_SLOTS := [
@@ -86,10 +87,12 @@ const SQUAD_SLOTS := [
 ]
 
 
-func setup(p_battlefield: Node2D, p_grid: RtsGrid, use_pixel: bool, detailed_art_directory := "") -> void:
+func setup(p_battlefield: Node2D, p_grid: RtsGrid, use_pixel: bool, detailed_art_directory := "",
+		squad_spacing := 1.0) -> void:
 	battlefield = p_battlefield
 	grid = p_grid
 	_detailed_art_directory = detailed_art_directory
+	_squad_spacing = squad_spacing
 	health = max_health
 	cell = grid.cell_of(position)
 	if not grid.is_free(cell, self):
@@ -608,7 +611,7 @@ func _draw_squad(snap_off: Vector2, tint: Color) -> void:
 	var rot := facing.angle() - PI * 0.5
 	var members: Array[Dictionary] = []
 	for i in range(count):
-		var slot := _draw_slot((SQUAD_SLOTS[i] as Vector2).rotated(rot * 0.35))
+		var slot := _draw_slot((SQUAD_SLOTS[i] as Vector2).rotated(rot * 0.35) * _squad_spacing)
 		if pixel_mode:
 			slot = slot.round()
 		var row := (int((_stride_dist + float(i) * 3.7) / 4.8) % 4) if _moving_now else 0

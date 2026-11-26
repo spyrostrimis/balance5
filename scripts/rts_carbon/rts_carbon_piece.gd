@@ -1,3 +1,4 @@
+@tool
 class_name RtsCarbonPiece
 extends Node2D
 ## One reusable placed RTS battlefield module (cliff, oasis, Orichalcum rock, outpost pad,
@@ -6,10 +7,26 @@ extends Node2D
 ## while sharing the exact same blocked footprint, cast shadow, lee shade, and dune relief.
 
 @export var piece_id := "rock_mesa"
-@export var world_size := Vector2(196.0, 140.0)
-## "obstacle", "dune", "ground_decal", or "prop"
+@export var world_size := Vector2(196.0, 140.0):
+	set(value):
+		world_size = value
+		queue_redraw()
+## "obstacle", "water", "dune", "ground_decal", or "prop"
 @export var layer_role := "obstacle"
-@export var flip_x := false
+@export var flip_x := false:
+	set(value):
+		flip_x = value
+		queue_redraw()
+## Lift the painting above its ground pivot (e.g. a canopy above its trunk).
+@export var draw_offset := Vector2.ZERO:
+	set(value):
+		draw_offset = value
+		queue_redraw()
+@export var detailed_texture_override: Texture2D:
+	set(value):
+		detailed_texture_override = value
+		queue_redraw()
+@export var pixel_texture_override: Texture2D
 ## Local-space collision polygon (relative to node position). Automatically blocks 32px grid cells.
 @export var blocked_poly := PackedVector2Array()
 ## Top-left directional light casts shadows down-right.
@@ -31,10 +48,10 @@ var pixel_mode := false
 
 func apply_visual_mode(use_pixel: bool, dune_shader: Shader = null, sand_tex: Texture2D = null,
 		calm_tex: Texture2D = null, tread_tex: Texture2D = null, map_world_size := Vector2(1408, 896),
-		show_treads := true, detailed_art_directory := "") -> void:
+		show_treads := true, detailed_art_directory := "", use_painted_sand := false) -> void:
 	pixel_mode = use_pixel
-	texture = null
-	if flip_x and not use_pixel:
+	texture = pixel_texture_override if use_pixel else detailed_texture_override
+	if texture == null and flip_x and not use_pixel:
 		texture = RtsCarbonArt.detailed_texture(piece_id + "_mirrored", detailed_art_directory)
 	if texture == null:
 		texture = RtsCarbonArt.texture(piece_id, use_pixel, detailed_art_directory)
@@ -53,18 +70,19 @@ func apply_visual_mode(use_pixel: bool, dune_shader: Shader = null, sand_tex: Te
 		sm.set_shader_parameter("piece_origin", global_position)
 		sm.set_shader_parameter("piece_size", world_size)
 		sm.set_shader_parameter("pixel_mode", use_pixel)
-		sm.set_shader_parameter("painted_sand", not use_pixel and not detailed_art_directory.is_empty())
+		sm.set_shader_parameter("painted_sand", use_painted_sand)
 		sm.set_shader_parameter("show_treads", show_treads)
 	queue_redraw()
 
 
 func _draw() -> void:
-	if texture == null:
+	var painting := detailed_texture_override if Engine.is_editor_hint() else texture
+	if painting == null:
 		return
 	var draw_size := world_size
 	if flip_x:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1.0, 1.0))
-	draw_texture_rect(texture, Rect2(-draw_size * 0.5, draw_size), false)
+	draw_texture_rect(painting, Rect2(draw_offset - draw_size * 0.5, draw_size), false)
 	if flip_x:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 

@@ -21,6 +21,8 @@ const HOLD_DURATION := 30.0
 @export var start_pixel_mode := false
 @export var start_close_zoom := false
 @export_dir var detailed_art_directory := ""
+@export var art_directory_has_painted_sand := true
+@export_range(1.0, 1.4) var visual_squad_spacing := 1.0
 
 var pixel_mode := false
 var close_zoom := false
@@ -136,17 +138,40 @@ func _collect_pieces() -> void:
 	_dune_pieces.clear()
 	_shade_pieces.clear()
 	for container in [dune_layer, decal_layer, world_ysort]:
-		for child in container.get_children():
-			var p := child as RtsCarbonPiece
-			if p == null:
-				continue
+		_collect_pieces_in(container)
+
+
+func _collect_pieces_in(container: Node) -> void:
+	for child in container.get_children():
+		var p := child as RtsCarbonPiece
+		if p != null:
 			_pieces.append(p)
 			if p.layer_role == "dune":
 				_dune_pieces.append(p)
 			if p.shade_strength > 0.0:
 				_shade_pieces.append(p)
 			if p.is_orichalcum:
-				_orichalcum_pos = p.position
+				_orichalcum_pos = p.global_position
+		else:
+			_collect_pieces_in(child)
+
+
+func _road_paths() -> Array[Line2D]:
+	var lines: Array[Line2D] = []
+	for child in road_line.get_parent().get_children():
+		if child is Line2D:
+			lines.append(child)
+	return lines
+
+
+func _road_segments() -> Array[Vector4]:
+	var segments: Array[Vector4] = []
+	for line in _road_paths():
+		for i in range(line.get_point_count() - 1):
+			var a := line.to_global(line.get_point_position(i))
+			var b := line.to_global(line.get_point_position(i + 1))
+			segments.append(Vector4(a.x, a.y, b.x, b.y))
+	return segments
 
 
 func _build_blocked_and_calm_masks() -> void:
@@ -168,13 +193,13 @@ func _build_blocked_and_calm_masks() -> void:
 	var cw := 176
 	var ch := 112
 	var calm_img := Image.create_empty(cw, ch, false, Image.FORMAT_L8)
-	var pts := road_line.points
+	var segments := _road_segments()
 	for y in range(ch):
 		for x in range(cw):
 			var wpt := Vector2((float(x) + 0.5) / float(cw) * WORLD_SIZE.x, (float(y) + 0.5) / float(ch) * WORLD_SIZE.y)
 			var min_d := wpt.distance_to(_orichalcum_pos) - 90.0
-			for i in range(pts.size() - 1):
-				var seg_pt := Geometry2D.get_closest_point_to_segment(wpt, pts[i], pts[i + 1])
+			for seg in segments:
+				var seg_pt := Geometry2D.get_closest_point_to_segment(wpt, Vector2(seg.x, seg.y), Vector2(seg.z, seg.w))
 				min_d = minf(min_d, wpt.distance_to(seg_pt))
 			var calm := 1.0 - smoothstep(38.0, 145.0, min_d)
 			calm_img.set_pixel(x, y, Color(calm, calm, calm, 1.0))
@@ -226,7 +251,7 @@ func _setup_units() -> void:
 	for child in world_ysort.get_children():
 		var u := child as RtsCarbonUnit
 		if u != null:
-			u.setup(self, grid, pixel_mode, detailed_art_directory)
+			u.setup(self, grid, pixel_mode, detailed_art_directory, visual_squad_spacing)
 
 
 func _select_initial_group() -> void:
@@ -250,18 +275,20 @@ func get_living_units() -> Array[RtsCarbonUnit]:
 func apply_visual_mode(use_pixel: bool) -> void:
 	pixel_mode = use_pixel
 	var stex := _sand_px if use_pixel else _sand_hd
+	var use_painted_sand := not use_pixel and art_directory_has_painted_sand and not detailed_art_directory.is_empty()
 	_ground_mat.set_shader_parameter("sand_tex", stex)
 	_ground_mat.set_shader_parameter("pixel_mode", use_pixel)
-	_ground_mat.set_shader_parameter("painted_sand", not use_pixel and not detailed_art_directory.is_empty())
+	_ground_mat.set_shader_parameter("painted_sand", use_painted_sand)
 	_ground_mat.set_shader_parameter("show_treads", show_treads)
 
-	road_line.texture = _road_px if use_pixel else _road_hd
-	road_line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-	road_line.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if use_pixel else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	for line in _road_paths():
+		line.texture = _road_px if use_pixel else _road_hd
+		line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		line.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if use_pixel else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 	for p in _pieces:
 		p.apply_visual_mode(use_pixel, DUNE_SHADER, stex, _calm_tex, _tread_tex, WORLD_SIZE,
-				show_treads, detailed_art_directory)
+				show_treads, detailed_art_directory, use_painted_sand)
 
 	for u in get_living_units():
 		u.apply_visual_mode(use_pixel)
@@ -870,7 +897,7 @@ func reset_encounter() -> void:
 		nu.turn_rate = float(sp["turn_rate"])
 		nu.position = sp["pos"] as Vector2
 		world_ysort.add_child(nu)
-		nu.setup(self, grid, pixel_mode, detailed_art_directory)
+		nu.setup(self, grid, pixel_mode, detailed_art_directory, visual_squad_spacing)
 
 	set_camera_focus(Vector2(548.0, 432.0))
 	_select_initial_group()
@@ -891,8 +918,9 @@ func _draw_cast_shadows() -> void:
 	for p in _pieces:
 		if p.shadow_alpha <= 0.01 or p.shadow_size == Vector2.ZERO:
 			continue
-		var c := p.position + p.shadow_offset
-		shadow_layer.draw_texture_rect(_shadow_tex, Rect2(c - p.shadow_size * 0.5, p.shadow_size),
+		var c := p.to_global(p.shadow_offset)
+		var size := p.shadow_size * p.global_scale.abs()
+		shadow_layer.draw_texture_rect(_shadow_tex, Rect2(c - size * 0.5, size),
 			false, Color(1.0, 1.0, 1.0, p.shadow_alpha))
 
 
@@ -949,7 +977,7 @@ func _build_minimap_texture() -> ImageTexture:
 	var mw := 184
 	var mh := 118
 	var img := Image.create_empty(mw, mh, false, Image.FORMAT_RGBA8)
-	var pts := road_line.points
+	var segments := _road_segments()
 	for y in range(mh):
 		for x in range(mw):
 			var wpt := Vector2((float(x) + 0.5) / float(mw) * WORLD_SIZE.x, (float(y) + 0.5) / float(mh) * WORLD_SIZE.y)
@@ -961,8 +989,9 @@ func _build_minimap_texture() -> ImageTexture:
 			if rd < 126.0:
 				col = Color(0.78, 0.63, 0.46)
 			else:
-				for i in range(pts.size() - 1):
-					if wpt.distance_to(Geometry2D.get_closest_point_to_segment(wpt, pts[i], pts[i + 1])) < 24.0:
+				for seg in segments:
+					var nearest := Geometry2D.get_closest_point_to_segment(wpt, Vector2(seg.x, seg.y), Vector2(seg.z, seg.w))
+					if wpt.distance_to(nearest) < 24.0:
 						col = Color(0.76, 0.60, 0.44)
 						break
 			# Cliffs & rocks
@@ -971,14 +1000,16 @@ func _build_minimap_texture() -> ImageTexture:
 					col = Color(0.34, 0.23, 0.17)
 					if p.piece_id == "outpost_pad":
 						col = Color(0.52, 0.54, 0.58)
+					elif p.layer_role == "water":
+						col = Color(0.18, 0.78, 0.74)
 					break
 			# Highlight NE Oasis turquoise spring & central golden Orichalcum!
 			for p in _pieces:
 				if p.piece_id == "cliff_oasis":
-					var oasis_pool := p.position + Vector2(-78.0, 68.0)
+					var oasis_pool := p.global_position + Vector2(-78.0, 68.0)
 					if wpt.distance_to(oasis_pool) < 42.0:
 						col = Color(0.18, 0.78, 0.74)
-				elif p.is_orichalcum and wpt.distance_to(p.position) < 42.0:
+				elif p.is_orichalcum and wpt.distance_to(p.global_position) < 42.0:
 					col = Color(0.98, 0.78, 0.20)
 			img.set_pixel(x, y, col)
 	return ImageTexture.create_from_image(img)

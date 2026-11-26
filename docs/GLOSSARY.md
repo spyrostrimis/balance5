@@ -1006,3 +1006,8 @@ A small colour-coded control picture built from a map's logical tile grid—for 
 ### Canopy peek (split trunk and crown)
 Area: 2D
 Splitting a painted tree sprite into two layers that add back up to the exact original tree at full opacity: an always-solid **trunk and root base** that blocks tanks on the ground grid, and an **overhanging leafy crown** that smoothly turns translucent (`~40%` opacity) whenever friendly troops or the player's selection cursor pass underneath it.
+
+### Blocked ground (footprint)
+Area: RTS
+The outline around the part of a painted piece that units have to walk around. Moving or scaling the piece moves its outline too. Godot checks which 32-unit tile centres fall inside when the match loads. **F1** shows those blocked tiles in red.
+*In Balance:* the water, rocks, cliff and tree trunk in [RTS Reusable 3](RTS_REUSABLE_3.md#move-your-first-oasis-piece).

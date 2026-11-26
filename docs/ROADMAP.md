@@ -30,6 +30,8 @@ The first playable vertical slice: four troops plus a field commander per side f
 ### Next playable build from Carbon
 
 - [x] Owner chose the original **RTS Reusable 2 Carbon** as the RTS model. [Assessment, opening results and plan](RTS_REUSABLE_2_CARBON.md#assessment--26-november-2026)
+- [x] Build and export **RTS Reusable 3** with matched infantry comparisons, two editable oasis layouts and a driveable roadside passage. [Play and mapmaking](RTS_REUSABLE_3.md)
+- [ ] Owner judges infantry count and faction colours in motion at Command zoom and reviews the desert kit.
 - [ ] Tune the first fight. Compare one group move, a split approach and a retreat to Mend. Record who survives and who controls the rock.
 - [ ] At Command zoom, have a new player identify the commander, a wounded squad and which side is holding the plaza.
 - [ ] Play from briefing to result and retry. Verify hold and elimination for each side, a contested timer, and Mend from the sidebar.

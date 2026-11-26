@@ -546,3 +546,12 @@ Area: RTS · Status: In use · Tools: ChatGPT Images, Python 3.12 (OpenCV + Pill
    Writes `scenes/rts_iso_carbon/layout_a_shelf_clearing.tres`, `layout_b_split_bluff.tres`, and launchable scenes `scenes/maps/rts_isometric_2_forest_claim_carbon*.tscn`.
 4. **Verify regressions, Forward+ stills, annotated comparison plates, MP4 clip, and Windows export**:
    Run `tests/test_rts_iso_forest_carbon.gd` headless, with `-- --stills`, `-- --clip` + FFmpeg (`forest_claim_carbon_playtest.mp4`), `make_rts_iso_handoff_sheets.py`, and `--main-pack builds/Balance.exe -- --catalog`.
+
+## RTS Reusable 3 desert kit
+
+Area: RTS · Status: Verified in play · Tools: ChatGPT Images, Godot 4.7.2, Python 3.12 (Pillow, NumPy, OpenCV), FFmpeg
+
+1. Keep the isolated original paintings and exact [prompts](../assets/source_inputs/rts_reusable_3/PROMPTS.md) in `assets/source_inputs/rts_reusable_3/`. The art tool crops the sheets, preserves paint detail and prepares HD and Pixel textures. It paints the faction colours on the original Carbon walk frames.
+2. Run `C:/Python312/python.exe tools/python/make_rts_reusable_3.py` and import the project in Godot. Dune paintings store light and dark relief around neutral grey so Carbon can flatten their crests in both tread lanes.
+3. Place or edit the oasis and crystal groups in `scenes/rts/reusable_3/`. Move or scale the piece node to carry its ground footprint with it. In the map, reshape the road with the MainRoad and RoadsideSpur grips. Run the scene again after saving the layout so the movement grid and minimap rebuild.
+4. Use the [capture and export commands](RTS_REUSABLE_3.md#reproduce) to verify the map in the game window and in the Windows export.

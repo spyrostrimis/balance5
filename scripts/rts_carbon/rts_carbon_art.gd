@@ -1,16 +1,16 @@
 class_name RtsCarbonArt
 extends RefCounted
-## Carbon's Pixel art is shared by every battlefield variant.
+## Variants can supply local art and inherit the rest from Carbon.
 
 const BASE_DIR := "res://assets/textures/rts/carbon/"
 
 
 static func texture(key: String, pixel: bool, detailed_dir := "") -> Texture2D:
 	var filename := key + ("_pixel.png" if pixel else "_hd.png")
-	if not pixel:
-		var painted := detailed_texture(key, detailed_dir)
-		if painted != null:
-			return painted
+	if not detailed_dir.is_empty():
+		var local_path := detailed_dir.path_join(filename)
+		if ResourceLoader.exists(local_path, "Texture2D"):
+			return load(local_path) as Texture2D
 	return load(BASE_DIR + filename) as Texture2D
 
 

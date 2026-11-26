@@ -1,5 +1,13 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Reusable 3 · 2026-11-26
+
+- [x] Compare the original and new colours without selection on sand and pale paving at Command zoom, with matched framing, scale and positions. Inspect eight directions, moving soldiers and a wounded three-person squad.
+- [x] Drive a tank across the forked dune and inspect the matched track-on and track-off views. Keep the centre quiet beside the new edge detail.
+- [x] Build two arrangements from editable oasis pieces. Move the roadside cliff to close the straight tank lane, then drive through the published opening and check the visible banks.
+- [x] Inspect the squad passing the headquarters, paving at the road fork and plaza, and both crystal arrangements. Verify Play, View and Esc in the Windows export.
+- [ ] Owner judges readability in motion and approves the painting at Command zoom. [Native captures, clip and layout](RTS_REUSABLE_3.md)
+
 ## Original Carbon as the RTS model · 2026-11-26
 
 - [x] Inspect the opening, both zooms, dune tracks, oasis and fight in both Detailed and Pixel. The road leads to the crystal and the tank leaves a readable pair of tracks.

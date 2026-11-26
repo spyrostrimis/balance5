@@ -1,5 +1,23 @@
 # Decisions
 
+### 2026-11-26 · Test Reusable 3 with original Carbon’s encounter
+
+Area: RTS · Status: Decided by owner
+
+The art comparison uses original Carbon’s camera, Detailed view and encounter. Reusable 3 adds a landmark headquarters and a desert kit. The owner will judge the art in play. Encounter balancing is a separate experiment.
+
+### 2026-11-26 · Use wider painted squad spacing in Reusable 3
+
+Area: RTS · Status: Verified for this build
+
+The colour-only comparison made both factions distinct from the ground at all eight facings. Diagonal squads still touched in places. An 18% increase in drawn offsets opens gaps between the four figures while the squad uses its original movement and ground claim. [Matched comparison](RTS_REUSABLE_3.md#captures-and-checks)
+
+### 2026-11-26 · Reuse the same oasis pieces in both arrangements
+
+Area: RTS · Status: Verified for this build
+
+Each blocker owns a ground outline. The roadside tank crosses with PassCliff in its published position. Moving that piece 42 units inward closes the tested straight lane. This gives the mapmaker a single visible piece to move when tuning the passage. [Two layouts and evidence](RTS_REUSABLE_3.md)
+
 ### 2026-11-26 · Use the original RTS Reusable 2 Carbon as the RTS model
 
 Area: RTS · Status: Decided

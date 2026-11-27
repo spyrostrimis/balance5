@@ -4,19 +4,19 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/tree_cluster_small_hd.png" id="2_byy7l"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/tree_cluster_small_pixel.png" id="3_i5ndw"]
 
-[node name="TreeClusterSmall" type="Node2D" unique_id=318056948]
+[node name="TreeClusterSmall" type="Node2D" unique_id=343843560]
 script = ExtResource("1_8qsgh")
 piece_id = "tree_cluster_small"
-world_size = Vector2(128, 108)
+world_size = Vector2(157, 119)
 draw_offset = Vector2(0, -36)
 detailed_texture_override = ExtResource("2_byy7l")
 pixel_texture_override = ExtResource("3_i5ndw")
-blocked_poly = PackedVector2Array(46, -36, 42, -20, 27, -8, 9, -3, -10, -1, -29, -6, -41, -20, -42, -36, -38, -51, -28, -65, -10, -73, 10, -72, 26, -63, 38, -51)
+blocked_poly = PackedVector2Array(-50, -56, -50, -40, -30, -26, -34, -8, -19, -10, -8, 0, 28, -7, 38, -28, 57, -32, 48, -48, 14, -46, -3, -66, -17, -60, -31, -68)
 shadow_offset = Vector2(16, -22)
-shadow_size = Vector2(130.56, 110.159996)
+shadow_size = Vector2(160.14, 121.38)
 shadow_alpha = 0.4
 shade_offset = Vector2(12, -28)
-shade_radii = Vector2(66.56, 56.159996)
+shade_radii = Vector2(81.64, 61.879997)
 shade_strength = 0.34
 minimap_color = Color(0.09, 0.24, 0.13, 1)
 canopy_fade = true

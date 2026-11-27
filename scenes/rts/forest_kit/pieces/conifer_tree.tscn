@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/conifer_tree_hd.png" id="2_2v2vx"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/conifer_tree_pixel.png" id="3_bla0e"]
 
-[node name="ConiferTree" type="Node2D" unique_id=1149490317]
+[node name="ConiferTree" type="Node2D" unique_id=968056917]
 script = ExtResource("1_lkqxp")
 piece_id = "conifer_tree"
 world_size = Vector2(64, 64)

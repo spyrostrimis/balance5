@@ -2,7 +2,7 @@
 
 **RTS Mission 1 – Forest** (`scenes/maps/rts_mission_1_forest.tscn`) is Blue's first mission, *The First Claim*, on a tropical forest world. It is the mirror of [RTS Mission 1 – Desert](RTS_MISSION_1_DESERT.md): the same Blue and Red forces with the same numbers, the same Orichalcum rock, HQ, outposts, HUDs, camera, rules, Mend and hold timer. Only the map is new. It is built from a new **forest kit** (`scenes/rts/forest_kit/`) the same way the desert map is built from the desert kit. The plan it follows is [RTS_MISSION_1_FOREST_PLAN.md](RTS_MISSION_1_FOREST_PLAN.md).
 
-**The art is stand-in art.** The trees, river, ground and rocks are drawn by a script so the map and the rules could be built before your paintings exist. The prompts for the real paintings are in [`assets/source_inputs/forest_kit/PROMPTS.md`](../assets/source_inputs/forest_kit/PROMPTS.md). Art approval stays with you.
+**The art is your ChatGPT paintings** (2026-11-27), cut into kit pieces by `tools/python/make_forest_kit.py`. The prompts are in [`assets/source_inputs/forest_kit/PROMPTS.md`](../assets/source_inputs/forest_kit/PROMPTS.md). Art approval stays with you.
 
 ![Opening at Command zoom](../render_captures/rts_mission_1_forest/01_opening_command_hd.png)
 
@@ -37,22 +37,39 @@ The reference painting's composition, with much more room. Blue's base sits on a
 
 The lane widths are tested, so the reference's crowded feel cannot creep back while dressing the map.
 
+## Your paintings in the kit
+
+| Painting | Became | How it was fitted |
+| --- | --- | --- |
+| `grass_tile.png` | the forest's ground | Seam softened at the edges; one repeat now covers 16 × 16 cells instead of 8 × 8 (`ground_tile_world = 512`), so the yellow patches repeat less often |
+| `dirt_road_strip.png`, `river_strip.png` | the road and the river | Cropped to the painted band, seam softened, repeated along the line. The river's blue water is 62 px (about 2 cells) wide and blocks; its banks stay walkable |
+| `tree_clusters.png` | the three tree clusters | Kept their painted proportions at one shared scale (crowns about 1.2 cells). Each one's **blocked ground is measured from the painting**: its outline shrunk by half to two thirds of a cell, so crowns overhang open ground |
+| `trees_single_and_verge.png` | conifer, two broadleafs, forest verge | Fitted to the pieces' sizes |
+| `trees_single_and_verge_and_maple_red.png` | **`maple_tree_red`** (new piece) | The reddest tree on the sheet. Three on the map: one in the middle of the north wood, one on its south edge, one on the south wood's edge |
+| `river_crossings.png` | ford and bridge | Scaled so their water matches the river's. The painted ford's stepping stones are one cell wide, too narrow for the tank, so the tool lays the stone band **three times side by side** (the middle copy mirrored) to make a 4-cell ford. The bridge is for infantry |
+| `rocks_logs_details.png` | boulders, slab, log, stump, flowers, stones, ferns | Rocks and logs block their painted outline |
+| `dirt_clearings.png`, `gravel_pads.png` | clearings and gravel pads | Fitted to the pieces' sizes |
+
+The measured sizes and outlines are saved in `assets/textures/rts/forest_kit/kit_shapes.json`, which the kit's bootstrap reads. The second sheet's other trees and verge are not used yet.
+
+![Whole map with the paintings](../render_captures/rts_mission_1_forest/00_whole_map.png)
+
 ## The river, the ford and the bridge
 
 The river is one kit piece, `river`, that follows a path. Its child line **Course** draws the painted river strip (water in the middle, banks on both sides) along its points, and the same points decide which cells are water. So the water you see and the ground units cannot enter always agree, and **bending the river is just dragging the Course points** in the 2D view. Nothing is repainted.
 
-Fords and bridges are separate pieces laid on the river (`river_ford`, `river_bridge`). Their footprint reopens the water under them. The ford is wide enough for the tank (3 cells, tested). The bridge is for infantry. Both lead to a small meadow beyond the river. You asked for "a bridge or a ford"; the map has both so you can judge them in play. Delete the one you don't want.
+Fords and bridges are separate pieces laid on the river (`river_ford`, `river_bridge`). Their footprint reopens the water under them. The ford is wide enough for the tank (4 cells; the test needs 3). The bridge is for infantry (2 cells). Both lead to a small meadow beyond the river. You asked for "a bridge or a ford"; the map has both so you can judge them in play. Delete the one you don't want.
 
 [Ford and bridge](../render_captures/rts_mission_1_forest/02_river_ford_hd.png) · [same view with F1](../render_captures/rts_mission_1_forest/02_river_ford_f1_blocked.png)
 
 ## The forest kit
 
-`scenes/rts/forest_kit/` holds 23 pieces, 3 groups and the kit preview. Every piece carries its Detailed and Pixel art, its blocked footprint, shadow, shade, a minimap colour and `tags`. All of them appear in the **Kit Palette** dock (filter by the **forest** tag) over grass instead of sand.
+`scenes/rts/forest_kit/` holds 24 pieces, 3 groups and the kit preview. Every piece carries its Detailed and Pixel art, its blocked footprint, shadow, shade, a minimap colour and `tags`. All of them appear in the **Kit Palette** dock (filter by the **forest** tag) over grass instead of sand.
 
 | Kind | Pieces |
 | --- | --- |
 | Ground (flat) | `dirt_clearing_plaza`, `dirt_patch_round`, `dirt_patch_long`, `gravel_pad_base`, `gravel_field`, `grass_flowers`, `grass_stones`, `fern_patch` |
-| Forest masses | `tree_cluster_large`, `tree_cluster_medium`, `tree_cluster_small`, `conifer_tree`, `broadleaf_tree`, `broadleaf_tree_tall`, `forest_verge` |
+| Forest masses | `tree_cluster_large`, `tree_cluster_medium`, `tree_cluster_small`, `conifer_tree`, `broadleaf_tree`, `broadleaf_tree_tall`, `maple_tree_red`, `forest_verge` |
 | Water | `river`, `river_ford`, `river_bridge` |
 | Rocks and logs | `mossy_boulder`, `mossy_boulder_pair`, `mossy_slab`, `fallen_log`, `tree_stump` |
 | Groups | `woodland_copse`, `forest_corner`, `mossy_cover` |
@@ -77,11 +94,12 @@ The forest's grass and dirt road are `sand_tile_*.png` and `road_strip_*.png` in
 
 `tools/godot/bootstrap_forest_kit.gd` made the kit and the first layout. It was a one-time step: rerunning it with `-- --force` overwrites your hand edits.
 
-## Your paintings
+## Replace or add a painting
 
-1. Generate the nine paintings in [`PROMPTS.md`](../assets/source_inputs/forest_kit/PROMPTS.md) with ChatGPT Images, attaching the images it names from `refs\`. Save them with the exact file names into `D:\Games\Balance5\assets\source_inputs\forest_kit\`.
+1. Generate the paintings in [`PROMPTS.md`](../assets/source_inputs/forest_kit/PROMPTS.md) with ChatGPT Images, attaching the images it names from `refs\`. Save them with the exact file names into `D:\Games\Balance5\assets\source_inputs\forest_kit\`.
 2. Ask any agent to run `C:/Python312/python.exe tools/python/make_forest_kit.py`. It cuts each painting into its pieces (by transparency), fits them to the pieces' sizes, writes the Detailed and Pixel versions and keeps the stand-ins for anything not painted yet. It prints which pieces came from your paintings.
-3. Run `tests/test_rts_mission_1_forest.gd` and check the woods with F1: a painting with a different outline may need its piece's **Blocked Poly** adjusted.
+3. If a cluster, rock, river or crossing painting changed shape, its new size and outline are in `kit_shapes.json`. Until you hand-edit the map, an agent can rebuild the kit and map from it with `tools/godot/bootstrap_forest_kit.gd -- --force`; after you have edited the map, it should copy only the new `world_size`, `draw_offset` and `blocked_poly` into the piece scenes instead.
+4. Run `tests/test_rts_mission_1_forest.gd` and check the woods with F1.
 
 ## What changed in the shared code
 
@@ -96,6 +114,7 @@ New behaviour is switched on per scene, so the desert map and the older builds a
 | Blocked-ground test moved into one overridable function `is_point_blocked` | `rts_carbon_battlefield.gd` | Same result |
 | Pixel view takes the map's own ground and road (`pixel_ground_from_kit`) | `RtsMissionBattlefield` | Off |
 | Minimap tint under tree crowns (`minimap_canopy_color`) | same | Off |
+| Ground texture repeat size (`ground_tile_world`, shader `tile_world`) | `RtsMissionBattlefield`, `rts_carbon_ground.gdshader` | 256, as before |
 | Kit Palette lists the forest kit and shows its thumbnails over grass | `addons/balance_kit_palette` | Desert entries unchanged |
 | Kit preview title and painting centring (`kit_title`, `centre_paintings`) | `desert_kit_preview.gd` | Defaults keep the desert preview as it was |
 
@@ -107,7 +126,7 @@ New behaviour is switched on per scene, so the desert map and the older builds a
 | Same test at 1920 × 1080 fullscreen Forward+ with `--capture --record`: every HUD style keeps the battlefield scale, takes clicks on Attack and the minimap, and leaves the centre clickable | All passed |
 | Same test against the exported build (`--main-pack builds/Balance.exe`), headless and in a fullscreen window | All passed |
 | `test_rts_mission_1_desert.gd` (headless, windowed, and against the export), `test_rts_test_map.gd`, `test_rts_reusable_2_carbon.gd` (and `--miasaki`), `test_rts_reusable_3.gd`, `test_rts_reusable_4.gd` | All passed |
-| `tests/capture_kit_palette.gd`: 66 entries with thumbnails; the forest tag shows 26 | Passed |
+| `tests/capture_kit_palette.gd`: 67 entries with thumbnails; the forest tag shows 27 | Passed |
 
 Captures (1920 × 1080): [opening](../render_captures/rts_mission_1_forest/01_opening_command_hd.png) · [opening Pixel](../render_captures/rts_mission_1_forest/01_opening_command_pixel.png) · [opening F1](../render_captures/rts_mission_1_forest/01_opening_f1_blocked.png) · [ford and bridge](../render_captures/rts_mission_1_forest/02_river_ford_hd.png) · [ford close](../render_captures/rts_mission_1_forest/02b_river_ford_close_hd.png) · [north lane](../render_captures/rts_mission_1_forest/03_north_lane_hd.png) · [south lane](../render_captures/rts_mission_1_forest/04_south_lane_hd.png) · [Blue base](../render_captures/rts_mission_1_forest/05_blue_base_hd.png) · [plaza fight](../render_captures/rts_mission_1_forest/06_plaza_fight_hd.png) · [gravel field](../render_captures/rts_mission_1_forest/07_gravel_field_hd.png) · [Red's road](../render_captures/rts_mission_1_forest/08_red_road_hd.png) · HUDs: [Mockup E](../render_captures/rts_mission_1_forest/09_hud_mockup_e_hd.png), [Classic](../render_captures/rts_mission_1_forest/09_hud_classic_hd.png), [Holo](../render_captures/rts_mission_1_forest/09_hud_holo_hd.png), [Carbon](../render_captures/rts_mission_1_forest/09_hud_placeholder_hd.png) · [12 s clip](../render_captures/rts_mission_1_forest/mission_1_forest_in_motion.mp4)
 
@@ -127,7 +146,7 @@ C:/ffmpeg/bin/ffmpeg.exe -y -framerate 30 -i 'tmp/rts_mission_1_forest/frames/%0
 
 ## Open
 
-- Your paintings (nine prompts), then your verdict on the look.
+- Your verdict on the look with your paintings. On the bright grass, the small Blue and Red squads stand out less than on sand; worth judging at Command zoom.
 - Ford, bridge or both.
 - A name for Blue's forest planet. The planet switch (P) only lists "Forest" for now.
 - Making the player Red in the desert map is still separate work.

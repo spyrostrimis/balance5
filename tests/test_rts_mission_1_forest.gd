@@ -166,6 +166,27 @@ func _pieces(map: RtsCarbonBattlefield) -> Array[RtsCarbonPiece]:
 	return out
 
 
+## The point inside a (possibly concave) outline farthest from its edges.
+func _deepest_point(poly: PackedVector2Array) -> Vector2:
+	var box := Rect2(poly[0], Vector2.ZERO)
+	for q in poly:
+		box = box.expand(q)
+	var best := box.get_center()
+	var best_d := -1.0
+	for y in range(int(box.position.y), int(box.end.y), 4):
+		for x in range(int(box.position.x), int(box.end.x), 4):
+			var q := Vector2(x, y)
+			if not Geometry2D.is_point_in_polygon(q, poly):
+				continue
+			var d := INF
+			for i in poly.size():
+				d = minf(d, q.distance_to(Geometry2D.get_closest_point_to_segment(q, poly[i], poly[(i + 1) % poly.size()])))
+			if d > best_d:
+				best_d = d
+				best = q
+	return best
+
+
 func _in_world(p: Vector2) -> bool:
 	return p.x > 0.0 and p.y > 0.0 and p.x < 1408.0 and p.y < 896.0
 
@@ -204,7 +225,7 @@ func _verify_mission(capture: bool) -> void:
 	var mass_ok := true
 	for p in _pieces(map):
 		if p.canopy_fade and p.blocked_poly.size() >= 3 and p.piece_id.begins_with("tree_cluster"):
-			var core := p.to_global(p.draw_offset)
+			var core := p.to_global(_deepest_point(p.blocked_poly))
 			if _in_world(core):
 				masses += 1
 				if grid.is_walkable(grid.cell_of(core)):

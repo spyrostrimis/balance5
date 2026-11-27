@@ -4,14 +4,14 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/river_bridge_hd.png" id="2_cs63p"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/river_bridge_pixel.png" id="3_no5h7"]
 
-[node name="RiverBridge" type="Node2D" unique_id=1613437057]
+[node name="RiverBridge" type="Node2D" unique_id=816442410]
 script = ExtResource("1_uqei2")
 piece_id = "river_bridge"
-world_size = Vector2(104, 144)
+world_size = Vector2(137, 135)
 layer_role = "crossing"
 detailed_texture_override = ExtResource("2_cs63p")
 pixel_texture_override = ExtResource("3_no5h7")
-blocked_poly = PackedVector2Array(-48, -72, 48, -72, 48, 72, -48, 72)
+blocked_poly = PackedVector2Array(-31, -58, 31, -58, 31, 58, -31, 58)
 shadow_alpha = 0.0
 minimap_color = Color(0.42, 0.29, 0.16, 1)
 metadata/tags = PackedStringArray("forest", "water", "river", "crossing", "building")

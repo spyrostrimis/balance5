@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/dirt_patch_round_hd.png" id="2_cx12v"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/dirt_patch_round_pixel.png" id="3_mulo1"]
 
-[node name="DirtPatchRound" type="Node2D" unique_id=1107594603]
+[node name="DirtPatchRound" type="Node2D" unique_id=1514807495]
 script = ExtResource("1_joxgl")
 piece_id = "dirt_patch_round"
 world_size = Vector2(112, 96)

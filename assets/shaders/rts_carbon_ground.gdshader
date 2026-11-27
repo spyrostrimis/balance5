@@ -10,6 +10,8 @@ uniform bool painted_sand = false;
 // Desert kit / Mission 1: gradient noise with quintic fade. Value noise leaves straight light seams
 // along its cell borders (visible as long diagonals in open sand); this keeps the same swell scale.
 uniform bool smooth_wind = false;
+// World pixels one repeat of the ground texture covers (forest: 512, a larger painted meadow).
+uniform float tile_world = 256.0;
 
 float hash21(vec2 p) {
 	p = fract(p * vec2(123.34, 456.21));
@@ -47,7 +49,7 @@ float gradient_noise(vec2 p) {
 
 vec3 eval_desert_sand(vec2 wpos, float calm) {
 	vec2 sample_pos = pixel_mode ? (floor(wpos) + vec2(0.5)) : wpos;
-	vec3 base = texture(sand_tex, sample_pos / 256.0).rgb;
+	vec3 base = texture(sand_tex, sample_pos / tile_world).rgb;
 
 	// Wind-aligned broad swells (SW to NE, calm near roads & infantry lanes)
 	vec2 wind_uv = vec2(

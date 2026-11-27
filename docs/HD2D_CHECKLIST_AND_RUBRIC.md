@@ -10,7 +10,7 @@ Same acceptance view as the desert: 1920 × 1080 fullscreen Forward+, Detailed H
 - [x] Woods block only their trunks' core; crowns fade over a selected squad beneath them.
 - [x] Minimap shows woods dark green, the river blue and the clearing as dirt.
 - [x] All four HUD styles keep the battlefield scale and take clicks.
-- [ ] Owner's paintings replace the stand-in art.
+- [x] Owner's paintings replace the stand-in art; woods and rocks block outlines measured from them; the tank ford is 4 cells.
 - [ ] Owner approves the forest's look at 1080p.
 
 ## RTS Mission 1 · 2026-11-27

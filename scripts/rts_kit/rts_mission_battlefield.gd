@@ -31,6 +31,8 @@ extends RtsCarbonBattlefield
 @export var pixel_ground_from_kit := false
 ## Minimap colour of open ground that a tree canopy overhangs (forest). Transparent = not drawn.
 @export var minimap_canopy_color := Color(0.0, 0.0, 0.0, 0.0)
+## World pixels one repeat of the ground texture covers. 256 = Carbon's sand.
+@export var ground_tile_world := 256.0
 
 var skin_index := 0
 var _skin_dirs := PackedStringArray()
@@ -232,6 +234,7 @@ func apply_visual_mode(use_pixel: bool) -> void:
 		p.skin_directories = _skin_dirs
 	super.apply_visual_mode(use_pixel)
 	_ground_mat.set_shader_parameter("smooth_wind", smooth_wind)
+	_ground_mat.set_shader_parameter("tile_world", ground_tile_world)
 	for d in _dune_pieces:
 		var sm := d.material as ShaderMaterial
 		if sm != null:

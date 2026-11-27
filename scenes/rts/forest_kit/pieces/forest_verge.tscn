@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/forest_verge_hd.png" id="2_tuue5"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/forest_verge_pixel.png" id="3_ql4x3"]
 
-[node name="ForestVerge" type="Node2D" unique_id=975854636]
+[node name="ForestVerge" type="Node2D" unique_id=134327441]
 script = ExtResource("1_c15ei")
 piece_id = "forest_verge"
 world_size = Vector2(192, 56)

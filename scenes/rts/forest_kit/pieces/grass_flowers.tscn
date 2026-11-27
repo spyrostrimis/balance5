@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/grass_flowers_hd.png" id="2_2tqo1"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/grass_flowers_pixel.png" id="3_wnvu4"]
 
-[node name="GrassFlowers" type="Node2D" unique_id=1434772785]
+[node name="GrassFlowers" type="Node2D" unique_id=751541024]
 script = ExtResource("1_6v2b4")
 piece_id = "grass_flowers"
 world_size = Vector2(40, 30)

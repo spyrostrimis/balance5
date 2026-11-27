@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-27 · Forest blocked ground comes from the paintings
+
+Area: RTS maps · Forest kit · Status: Verified
+
+Tree clusters and rocks block an outline measured from their painting (the canopy shrunk by about two thirds of a cell), not a hand-drawn oval, so F1 matches what the player sees. The painted ford was one cell wide; its stone band is laid three times to make a 4-cell tank ford, and the bridge stays infantry-only. The owner asked for three red maples: one inside the north wood, two on wood edges. [Paintings in the kit](RTS_MISSION_1_FOREST.md#your-paintings-in-the-kit)
+
 ### 2026-11-27 · Forest river is a path piece; fords and bridges reopen it
 
 Area: RTS maps · Forest kit · Status: Verified

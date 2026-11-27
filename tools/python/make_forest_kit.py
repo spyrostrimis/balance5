@@ -4,7 +4,7 @@ Writes assets/textures/rts/forest_kit/<piece>_hd.png (2x, Detailed) and <piece>_
 for every forest piece, plus the forest's ground and road (sand_tile_*, road_strip_*; the battlefield
 loads its ground and road under those names from the kit's art folder).
 
-Two sources, per piece:
+Two sources, per piece (plus kit_shapes.json: sizes and blocked outlines measured from the paintings):
   1. The owner's ChatGPT paintings in assets/source_inputs/forest_kit/ (see PROMPTS.md there). When a
      sheet is present, it is cut into its pieces (by transparency), fitted to the piece's size and used.
   2. Otherwise a procedural STAND-IN drawn here at Carbon's camera (near-overhead, light from the
@@ -17,6 +17,7 @@ Idempotent; rerun after saving a painting:
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -45,6 +46,7 @@ SIZES = {
     "conifer_tree": (64, 64),
     "broadleaf_tree": (72, 66),
     "broadleaf_tree_tall": (84, 78),
+    "maple_tree_red": (80, 78),
     "forest_verge": (192, 56),
     "river": (256, 112),  # one tile of the river strip; the Line2D course repeats it
     "river_ford": (176, 136),
@@ -452,8 +454,18 @@ def bridge(w: int, h: int, rng) -> np.ndarray:
 
 # --- the owner's paintings ------------------------------------------------------------------------
 
-def components(sheet: Path) -> list[tuple[np.ndarray, tuple[int, int, int, int]]]:
-    """Cut a sheet into its separate pieces by transparency (or by keying out a flat background)."""
+CLUSTER_SCALE = 0.38  # world px per painting px for the tree clusters (crowns about 1.2 cells)
+CROSSING_WATER = 64.0  # world px of open water across the river (2 x the river's water_half_width)
+RIVER_WIDTH = 132  # the river Course line's width in world px (water plus both banks)
+FORD_REPEAT = 3  # the painted ford's stone band is laid side by side this often, so a tank fits
+## Shapes measured from the paintings (world size, blocked outline, pivot lift, crossing extents),
+## written to kit_shapes.json for tools/godot/bootstrap_forest_kit.gd.
+SHAPES: dict = {}
+
+
+def components(sheet: Path, dilate: int = 41) -> list[tuple[np.ndarray, tuple[int, int, int, int]]]:
+    """Cut a sheet into its separate pieces by transparency (or by keying out a flat background).
+    Parts closer than `dilate` px count as one piece (a scatter of stones stays one decal)."""
     rgba = np.asarray(Image.open(sheet).convert("RGBA")).copy()
     alpha = rgba[..., 3]
     if alpha.min() > 250:  # no transparency: key out the corner colour
@@ -462,7 +474,7 @@ def components(sheet: Path) -> list[tuple[np.ndarray, tuple[int, int, int, int]]
         dist = np.linalg.norm(rgba[..., :3].astype(np.float32) - bg, axis=2)
         alpha = np.clip((dist - 18) * 8, 0, 255).astype(np.uint8)
         rgba[..., 3] = alpha
-    mask = cv2.dilate((alpha > 40).astype(np.uint8), np.ones((9, 9), np.uint8))
+    mask = cv2.dilate((alpha > 40).astype(np.uint8), np.ones((dilate, dilate), np.uint8))
     n, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
     total = mask.shape[0] * mask.shape[1]
     out = []
@@ -472,7 +484,9 @@ def components(sheet: Path) -> list[tuple[np.ndarray, tuple[int, int, int, int]]
             continue
         crop = rgba[y:y + h, x:x + w].copy()
         crop[..., 3] = np.where(labels[y:y + h, x:x + w] == i, crop[..., 3], 0)
-        out.append((crop, (x, y, w, h)))
+        ys, xs = np.nonzero(crop[..., 3] > 8)
+        crop = crop[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+        out.append((crop, (x + xs.min(), y + ys.min(), crop.shape[1], crop.shape[0])))
     return out
 
 
@@ -486,26 +500,148 @@ def fit(crop: np.ndarray, size: tuple[int, int]) -> np.ndarray:
     return np.asarray(canvas)
 
 
+def resize_to(crop: np.ndarray, world: tuple[float, float]) -> np.ndarray:
+    """Resize to exactly 2x the world size (the Detailed scale)."""
+    size = (max(2, round(world[0] * 2)), max(2, round(world[1] * 2)))
+    return np.asarray(Image.fromarray(crop).resize(size, Image.LANCZOS))
+
+
+def seamless(img: np.ndarray, axes: tuple[int, ...], frac: float = 0.08) -> np.ndarray:
+    """Hide a painting's tile seam: near each edge, blend in the picture shifted by half a tile,
+    whose two edges continue each other. The middle of the painting is untouched."""
+    out = img.astype(np.float32)
+    for axis in axes:
+        n = out.shape[axis]
+        k = max(4, int(n * frac))
+        shifted = np.roll(out, n // 2, axis=axis)
+        t = np.ones(n, np.float32)
+        ramp_ = np.linspace(0.0, 1.0, k)
+        t[:k] = ramp_
+        t[-k:] = ramp_[::-1]
+        w = 0.5 * (1.0 - t)  # 0.5 at the edge, 0 inside
+        w = w.reshape([-1 if i == axis else 1 for i in range(out.ndim)])
+        out = out * (1 - w) + shifted * w
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
+def opaque_band(a: np.ndarray) -> np.ndarray:
+    rows = np.nonzero(a[..., 3].mean(axis=1) > 100)[0]
+    return a[rows.min():rows.max() + 1]
+
+
+def is_water(a: np.ndarray) -> np.ndarray:
+    rgb = a[..., :3].astype(int)
+    return (rgb[..., 2] > rgb[..., 0] + 30) & (rgb[..., 2] > 90) & (a[..., 3] > 200)
+
+
+def water_rows(a: np.ndarray, x0: int, x1: int) -> tuple[int, int]:
+    rows = np.nonzero(is_water(a)[:, x0:x1].mean(axis=1) > 0.5)[0]
+    return int(rows.min()), int(rows.max())
+
+
+def outline(hd: np.ndarray, erode_world: float, simplify: float = 0.012, threshold: int = 160) -> list[list[int]]:
+    """Blocked outline from a painting's opaque area, shrunk by erode_world, in world px about its centre."""
+    mask = (hd[..., 3] > threshold).astype(np.uint8)
+    k = int(round(erode_world * 2))
+    if k > 0:
+        mask = cv2.erode(mask, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * k + 1, 2 * k + 1)))
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    c = max(contours, key=cv2.contourArea)
+    approx = cv2.approxPolyDP(c, simplify * cv2.arcLength(c, True), True)[:, 0, :]
+    H, W = hd.shape[:2]
+    return [[round((x - W / 2) / 2), round((y - H / 2) / 2)] for x, y in approx]
+
+
+def band_columns(tile: np.ndarray, r0: int, r1: int) -> tuple[int, int]:
+    """The run of columns crossing the water (stones or deck) nearest the middle of the tile."""
+    cols = is_water(tile[r0:r1]).mean(axis=0) < 0.45
+    mid = tile.shape[1] // 2
+    runs = []
+    x = 0
+    while x < len(cols):
+        if cols[x]:
+            s0 = x
+            while x < len(cols) and cols[x]:
+                x += 1
+            runs.append((s0, x))
+        x += 1
+    runs = [r for r in runs if r[1] - r[0] > 8]
+    return min(runs, key=lambda r: abs((r[0] + r[1]) / 2 - mid))
+
+
+def feather_sides(a: np.ndarray, frac: float = 0.08) -> np.ndarray:
+    out = a.copy().astype(np.float32)
+    w = out.shape[1]
+    k = max(2, int(w * frac))
+    r = np.ones(w, np.float32)
+    r[:k] = np.linspace(0, 1, k)
+    r[-k:] = np.linspace(1, 0, k)
+    out[..., 3] *= r[None, :]
+    return out.astype(np.uint8)
+
+
+def crossings(sheet: Path) -> dict[str, np.ndarray]:
+    comps = sorted(components(sheet, 15), key=lambda c: c[1][0])
+    if len(comps) < 2:
+        print(f"  ! {sheet.name}: expected a ford and a bridge")
+        return {}
+    out = {}
+    for pid, (tile, _) in zip(["river_ford", "river_bridge"], comps[:2]):
+        w = tile.shape[1]
+        r0, r1 = water_rows(tile, 6, max(12, w // 12))
+        scale = CROSSING_WATER / float(r1 - r0)  # world px per painting px
+        b0, b1 = band_columns(tile, r0, r1)
+        if pid == "river_ford":
+            mid = tile[:, b0:b1]
+            parts = [tile[:, :b0]]
+            for i in range(FORD_REPEAT):
+                parts.append(mid if i % 2 == 0 else mid[:, ::-1])
+            parts.append(tile[:, b1:])
+            tile = np.concatenate(parts, axis=1)
+            along = (b1 - b0) * FORD_REPEAT * scale * 0.5
+        else:
+            along = max(24.0, (b1 - b0) * scale * 0.5 + 4.0)
+        tile = feather_sides(tile)
+        world = (tile.shape[1] * scale, tile.shape[0] * scale)
+        out[pid] = resize_to(tile, world)
+        SHAPES[pid] = {"world_size": [round(world[0]), round(world[1])],
+                       "cross": [round(along), round(CROSSING_WATER * 0.5 + 26)]}
+        print(f"  {pid}: band {b1 - b0} px, scale {scale:.3f}, opens {round(along) * 2} px along the river")
+    return out
+
+
 SHEETS = {
     # sheet file -> how to name its components
     "dirt_clearings.png": ("area_then_y", ["dirt_clearing_plaza", "dirt_patch_round", "dirt_patch_long"]),
     "gravel_pads.png": ("x", ["gravel_pad_base", "gravel_field"]),
     "tree_clusters.png": ("area", ["tree_cluster_large", "tree_cluster_medium", "tree_cluster_small"]),
     "trees_single_and_verge.png": ("verge_then_x", ["forest_verge", "conifer_tree", "broadleaf_tree", "broadleaf_tree_tall"]),
-    "river_crossings.png": ("x", ["river_ford", "river_bridge"]),
+    "trees_single_and_verge_and_maple_red.png": ("reddest", ["maple_tree_red"]),
     "rocks_logs_details.png": ("rows_3_2_3", ["mossy_boulder", "mossy_boulder_pair", "mossy_slab", "fallen_log",
                                               "tree_stump", "grass_flowers", "grass_stones", "fern_patch"]),
 }
+CLUSTERS = ["tree_cluster_large", "tree_cluster_medium", "tree_cluster_small"]
+ROCKS = ["mossy_boulder", "mossy_boulder_pair", "mossy_slab", "fallen_log", "tree_stump"]
+
+
+def _redness(c) -> float:
+    a = c[0]
+    m = a[..., 3] > 128
+    return float((a[..., 0].astype(int) - a[..., 1].astype(int))[m].mean())
 
 
 def cut_sheet(name: str, rule: str, ids: list[str]) -> dict[str, np.ndarray]:
     comps = components(SRC / name)
+    if rule == "reddest" and comps:
+        comps = [max(comps, key=_redness)]
     if len(comps) < len(ids):
         print(f"  ! {name}: found {len(comps)} pieces, expected {len(ids)}; keeping stand-ins")
         return {}
+    if len(comps) > len(ids):
+        print(f"  ! {name}: found {len(comps)} pieces, using the {len(ids)} largest")
     comps.sort(key=lambda c: -c[1][2] * c[1][3])
     comps = comps[:len(ids)]
-    if rule == "area":
+    if rule in ("area", "reddest"):
         ordered = comps
     elif rule == "x":
         ordered = sorted(comps, key=lambda c: c[1][0])
@@ -521,11 +657,29 @@ def cut_sheet(name: str, rule: str, ids: list[str]) -> dict[str, np.ndarray]:
                    + sorted(by_y[5:], key=lambda c: c[1][0]))
     else:
         raise ValueError(rule)
-    return {pid: fit(c[0], (SIZES[pid][0] * 2, SIZES[pid][1] * 2)) for pid, c in zip(ids, ordered)}
+    out = {}
+    for pid, c in zip(ids, ordered):
+        if pid in CLUSTERS:
+            # Clusters keep the painting's proportions at one shared scale. They block their trunks'
+            # core (the canopy shrunk by about two thirds of a cell) and stand on its bottom edge.
+            world = (c[0].shape[1] * CLUSTER_SCALE, c[0].shape[0] * CLUSTER_SCALE)
+            hd = resize_to(c[0], world)
+            core = outline(hd, float(np.clip(0.12 * min(world), 12.0, 22.0)))
+            bottom = max(p[1] for p in core)
+            SHAPES[pid] = {"world_size": [round(world[0]), round(world[1])], "lift": bottom,
+                           "poly": [[x, y - bottom] for x, y in core]}
+        else:
+            hd = fit(c[0], (SIZES[pid][0] * 2, SIZES[pid][1] * 2))
+            if pid in ROCKS:
+                SHAPES[pid] = {"world_size": list(SIZES[pid]), "poly": outline(hd, 3.0, 0.02, 200)}
+        out[pid] = hd
+    return out
 
 
 def strip_from_painting(path: Path, height: int) -> np.ndarray:
-    img = Image.open(path).convert("RGBA")
+    """A left-to-right tiling strip: cropped to its painted band, seam hidden, scaled to `height`."""
+    a = seamless(opaque_band(np.asarray(Image.open(path).convert("RGBA"))), (1,))
+    img = Image.fromarray(a)
     w = round(img.width * height / img.height)
     return np.asarray(img.resize((w, height), Image.LANCZOS))
 
@@ -549,6 +703,8 @@ def stand_ins() -> dict[str, np.ndarray]:
     art["conifer_tree"] = single_tree(*hd("conifer_tree"), "conifer", rng)
     art["broadleaf_tree"] = single_tree(*hd("broadleaf_tree"), "broad", rng)
     art["broadleaf_tree_tall"] = single_tree(*hd("broadleaf_tree_tall"), "emerald", rng)
+    art["maple_tree_red"] = single_tree(*hd("maple_tree_red"), "broad", rng)
+    art["maple_tree_red"][..., :3] *= np.array([1.9, 0.55, 0.45], np.float32)
     art["forest_verge"] = verge(*hd("forest_verge"), rng)
     art["river"] = strip(*hd("river"), rng, "river")
     art["river_ford"] = ford(*hd("river_ford"), rng)
@@ -573,15 +729,25 @@ def main() -> None:
                 for pid, img in cut_sheet(name, rule, ids).items():
                     art[pid] = img
                     source[pid] = name
+        if (SRC / "river_crossings.png").exists():
+            for pid, img in crossings(SRC / "river_crossings.png").items():
+                art[pid] = img
+                source[pid] = "river_crossings.png"
         if (SRC / "grass_tile.png").exists():
-            art["sand_tile"] = np.asarray(Image.open(SRC / "grass_tile.png").convert("RGBA").resize((512, 512), Image.LANCZOS))
+            g = seamless(np.asarray(Image.open(SRC / "grass_tile.png").convert("RGBA")), (0, 1))
+            art["sand_tile"] = np.asarray(Image.fromarray(g).resize((1024, 1024), Image.LANCZOS))
             source["sand_tile"] = "grass_tile.png"
+            SHAPES["ground"] = {"tile_world": 512}
         if (SRC / "dirt_road_strip.png").exists():
             art["road_strip"] = strip_from_painting(SRC / "dirt_road_strip.png", 96)
             source["road_strip"] = "dirt_road_strip.png"
         if (SRC / "river_strip.png").exists():
-            art["river"] = strip_from_painting(SRC / "river_strip.png", SIZES["river"][1] * 2)
+            band = opaque_band(np.asarray(Image.open(SRC / "river_strip.png").convert("RGBA")))
+            r0, r1 = water_rows(band, 0, band.shape[1])
+            art["river"] = strip_from_painting(SRC / "river_strip.png", RIVER_WIDTH * 2)
             source["river"] = "river_strip.png"
+            SHAPES["river"] = {"course_width": RIVER_WIDTH,
+                               "water_half_width": round((r1 - r0) / band.shape[0] * RIVER_WIDTH * 0.5, 1)}
     for pid, img in sorted(art.items()):
         opaque = pid == "sand_tile"
         hd = img.copy()
@@ -593,6 +759,8 @@ def main() -> None:
             Image.fromarray(hd).save(OUT / f"{pid}_hd.png")
             Image.fromarray(pixel_version(hd)).save(OUT / f"{pid}_pixel.png")
         print(f"{pid:22s} {hd.shape[1]}x{hd.shape[0]}  {source[pid]}")
+    (OUT / "kit_shapes.json").write_text(json.dumps(SHAPES, indent=1), encoding="utf-8")
+    print("kit_shapes.json:", ", ".join(sorted(SHAPES)))
     sheet_preview(art)
 
 

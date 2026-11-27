@@ -775,6 +775,14 @@ The review favours Approach 3 for a short painted walk. It recommends comparing 
 
 **Verified.** At 1376 × 768 Forward+, the same minimap click lands in cell (11, 10) in both maps. The tank crossed the ridge's longitude in row 13 on A and row 10 on B, with full clearance. A squad also reached A's high pass. The suite checked four corner picks and cliff-side orders at both zooms. Both Play cards, Esc, Mend, contested hold and elimination passed in the source and in the embedded Windows build. The art verdict remains open. [Command and close captures, annotated routes and clip](RTS_FOREST_CLAIM.md)
 
+## 31. RTS Mission 1 – Forest with the owner's paintings · 2026-11-27
+
+**Change.** The nine forest paintings and a red maple replace the stand-ins. `make_forest_kit.py` cuts each sheet by transparency, keeps the clusters' painted proportions at one scale, measures blocked outlines from the clusters and rocks, scales the ford and bridge so their water matches the river, and softens the tile seams of the grass, road and river.
+
+**What needed fixing.** The painted ford was a one-cell path of stepping stones, so the tank could not cross. Laying its stone band three times (middle copy mirrored) made a 4-cell ford that still reads as one painting. Small clusters shrunk by a fixed two thirds of a cell lost the centre of their blocked ground; the shrink now scales with the cluster. The bigger painted woods pushed the kit preview off screen; its first page now uses a wider camera.
+
+**Verified.** Forest test headless, fullscreen 1920 × 1080 and against the export; desert and older RTS tests unchanged. Inspected the whole map, opening, F1 at the ford, lanes, plaza fight, Pixel, kit pages and the clip. Lesson: paint a crossing as wide as the widest unit that must use it, or plan to widen it in the tool. [Paintings in the kit](RTS_MISSION_1_FOREST.md#your-paintings-in-the-kit)
+
 ## 30. RTS Mission 1 – Forest · 2026-11-27
 
 **Question.** Can the desert's kit method build Blue's forest map without forking the battlefield, with more room than the reference painting?

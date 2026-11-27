@@ -57,6 +57,7 @@ var PIECES := {
 	"conifer_tree": {"size": Vector2(64, 64), "trunk": true, "lift": 18.0, "tree": true, "tags": ["forest", "trees", "single"]},
 	"broadleaf_tree": {"size": Vector2(72, 66), "trunk": true, "lift": 18.0, "tree": true, "tags": ["forest", "trees", "single"]},
 	"broadleaf_tree_tall": {"size": Vector2(84, 78), "trunk": true, "lift": 22.0, "tree": true, "tags": ["forest", "trees", "single"]},
+	"maple_tree_red": {"size": Vector2(80, 78), "trunk": true, "lift": 22.0, "tree": true, "tags": ["forest", "trees", "single", "maple"]},
 	"forest_verge": {"size": Vector2(192, 56), "role": "prop", "lift": 14.0, "verge": true, "tags": ["forest", "trees", "plants", "edge"]},
 	# Water
 	"river": {"size": Vector2(256, 112), "role": "water", "river": true, "mm": C_WATER, "tags": ["forest", "water", "river"]},
@@ -71,6 +72,8 @@ var PIECES := {
 }
 
 var _scenes := {}  # piece_id -> PackedScene
+## Sizes and blocked outlines measured from the owner's paintings by make_forest_kit.py.
+var _shapes := {}
 
 
 func _initialize() -> void:
@@ -78,6 +81,9 @@ func _initialize() -> void:
 		return
 	for d in [PIECES_DIR, GROUPS_DIR]:
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(d))
+	if FileAccess.file_exists(KIT_ART + "kit_shapes.json"):
+		_shapes = JSON.parse_string(FileAccess.get_file_as_string(KIT_ART + "kit_shapes.json"))
+		print("Using painted shapes for: ", ", ".join(_shapes.keys()))
 	var ids := PIECES.keys()
 	ids.sort()
 	for id in ids:
@@ -117,12 +123,22 @@ func _oval(centre: Vector2, radii: Vector2, n := 14, wobble := 0.06) -> PackedVe
 	return pts
 
 
+func _poly(points: Array) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	for p in points:
+		out.append(Vector2(p[0], p[1]))
+	return out
+
+
 func _save_piece(id: String) -> void:
 	var d: Dictionary = PIECES[id]
 	var root := Node2D.new()
 	root.name = _pascal(id)
 	root.set_script(RIVER_SCRIPT if d.get("river", false) else PIECE_SCRIPT)
 	var size: Vector2 = d["size"]
+	var sh: Dictionary = _shapes.get(id, {})
+	if sh.has("world_size"):
+		size = Vector2(sh["world_size"][0], sh["world_size"][1])
 	root.set("piece_id", id)
 	root.set("world_size", size)
 	root.set("layer_role", d.get("role", "obstacle"))
@@ -132,11 +148,11 @@ func _save_piece(id: String) -> void:
 	root.set("shadow_alpha", 0.0)
 	if d.has("mm"):
 		root.set("minimap_color", d["mm"])
-	var lift: float = d.get("lift", 0.0)
+	var lift: float = float(sh.get("lift", d.get("lift", 0.0)))
 	root.set("draw_offset", Vector2(0, -lift))
 	if d.has("core"):
 		var core: Vector2 = d["core"]
-		root.set("blocked_poly", _oval(Vector2(0, -lift), core))
+		root.set("blocked_poly", _poly(sh["poly"]) if sh.has("poly") else _oval(Vector2(0, -lift), core))
 		root.set("shadow_offset", Vector2(16, -lift + 14))
 		root.set("shadow_size", size * 1.02)
 		root.set("shadow_alpha", 0.40)
@@ -159,21 +175,22 @@ func _save_piece(id: String) -> void:
 		root.set("shadow_alpha", 0.22)
 	elif d.has("rock"):
 		var r: Vector2 = d["rock"]
-		root.set("blocked_poly", _oval(Vector2.ZERO, r, 10, 0.04))
+		root.set("blocked_poly", _poly(sh["poly"]) if sh.has("poly") else _oval(Vector2.ZERO, r, 10, 0.04))
 		root.set("shadow_offset", Vector2(6, 5))
 		root.set("shadow_size", size * 1.08)
 		root.set("shadow_alpha", 0.34)
 	elif d.has("cross"):
-		var c: Vector2 = d["cross"]
+		var c: Vector2 = Vector2(sh["cross"][0], sh["cross"][1]) if sh.has("cross") else d["cross"]
 		root.set("blocked_poly", PackedVector2Array([Vector2(-c.x, -c.y), Vector2(c.x, -c.y), Vector2(c.x, c.y), Vector2(-c.x, c.y)]))
 	if d.get("tree", false):
 		root.set("canopy_fade", true)
 	if d.get("river", false):
-		root.set("water_half_width", 32.0)
+		var rs: Dictionary = _shapes.get("river", {})
+		root.set("water_half_width", float(rs.get("water_half_width", 32.0)))
 		var course := Line2D.new()
 		course.name = "Course"
 		course.points = PackedVector2Array([Vector2(-128, 0), Vector2(0, 8), Vector2(128, 0)])
-		course.width = 112.0
+		course.width = float(rs.get("course_width", 112.0))
 		course.texture = _tex(id, false)
 		course.texture_mode = Line2D.LINE_TEXTURE_TILE
 		course.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -197,7 +214,7 @@ func _inst(id: String, pos: Vector2, props := {}) -> Node2D:
 	var n := scene.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node2D
 	n.position = pos
 	for k in props:
-		n.set(k, props[k])
+		n.set(k, PackedVector2Array(props[k]) if props[k] is Array else props[k])
 	return n
 
 
@@ -280,10 +297,11 @@ func _save_preview() -> void:
 	root.set("pieces_directory", PIECES_DIR.trim_suffix("/"))
 	root.set("kit_title", "Forest Kit")
 	root.set("centre_paintings", true)
+	root.set("sand_area", Vector2(2400, 2700))
 	var grass := Sprite2D.new()
 	grass.z_index = -5
 	grass.centered = false
-	grass.position = Vector2(-832, -480)
+	grass.position = Vector2(-1200, -700)
 	grass.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	grass.region_enabled = true
 	grass.texture = _tex("sand_tile", false)
@@ -292,11 +310,11 @@ func _save_preview() -> void:
 	shadows.z_index = -3
 	_add(root, shadows, root, "CastShadows")
 	var cam := Camera2D.new()
-	cam.zoom = Vector2(1.49, 1.49)
+	cam.zoom = Vector2(0.6, 0.6)
 	_add(root, cam, root, "Camera")
 	var views := _add(root, Node2D.new(), root, "Views")
 	var page_a := Marker2D.new()
-	page_a.set_meta("zoom", 1.49)
+	page_a.set_meta("zoom", 0.6)
 	_add(views, page_a, root, "Arrangements")
 	var page_b := Marker2D.new()
 	page_b.position = Vector2(0, 896)
@@ -309,24 +327,24 @@ func _save_preview() -> void:
 	var river := _inst("river", Vector2.ZERO)
 	_add(decals, river, root, "River")
 	root.set_editable_instance(river, true)
-	(river.get_node("Course") as Line2D).points = PackedVector2Array([Vector2(-330, -150), Vector2(-120, -138), Vector2(80, -158), Vector2(330, -146)])
-	_add(decals, _inst("river_ford", Vector2(-150, -140), {"rotation": 0.0}), root, "RiverFord")
-	_add(decals, _inst("river_bridge", Vector2(170, -152), {"rotation": -0.02}), root, "RiverBridge")
-	_add(root, _label("River (drag the Course points) · ford · bridge", Vector2(0, -84), 520, 15), root)
+	(river.get_node("Course") as Line2D).points = PackedVector2Array([Vector2(-640, -330), Vector2(-220, -318), Vector2(160, -338), Vector2(640, -326)])
+	_add(decals, _inst("river_ford", Vector2(-260, -320), {"rotation": 0.0}), root, "RiverFord")
+	_add(decals, _inst("river_bridge", Vector2(300, -332), {"rotation": -0.02}), root, "RiverBridge")
+	_add(root, _label("River (drag the Course points) · ford · bridge", Vector2(0, -236), 800, 24), root)
 	var ysort := _add(root, Node2D.new(), root, "YSortWorld")
 	(ysort as Node2D).y_sort_enabled = true
 	var spots := {
-		"woodland_copse": [Vector2(-470, 140), "Woodland copse"],
-		"forest_corner": [Vector2(0, 150), "Forest corner"],
-		"mossy_cover": [Vector2(450, 110), "Mossy cover"],
+		"woodland_copse": [Vector2(-720, 230), "Woodland copse"],
+		"forest_corner": [Vector2(-60, 250), "Forest corner"],
+		"mossy_cover": [Vector2(700, 200), "Mossy cover"],
 	}
 	for g in spots:
 		var inst := (load(GROUPS_DIR + g + ".tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE) as Node2D
 		inst.position = spots[g][0]
 		_add(ysort, inst, root, _pascal(g))
-		_add(root, _label(spots[g][1], spots[g][0] + Vector2(0, 66), 260, 15), root)
-	_add(root, _label("Forest Kit · arrangements (Command scale) · 2 = every piece", Vector2(0, -232), 760, 20), root, "Title")
-	var hint := _label("[V] Detailed Painted  ·  [Esc] Developers Page", Vector2(0, 218), 520, 12)
+		_add(root, _label(spots[g][1], spots[g][0] + Vector2(0, 90), 360, 24), root)
+	_add(root, _label("Forest Kit · arrangements (Command scale) · 2 = every piece", Vector2(0, -540), 1200, 32), root, "Title")
+	var hint := _label("[V] Detailed Painted  ·  [Esc] Developers Page", Vector2(0, 450), 800, 20)
 	_add(root, hint, root, "ModeHint")
 	var palette := Node2D.new()
 	palette.y_sort_enabled = true
@@ -381,6 +399,10 @@ const LAYOUT := {
 		["forest_verge", "NorthForestVerge", Vector2(700, 196), {}],
 		["conifer_tree", "NorthEdgeConifer", Vector2(586, 176), {}],
 		["broadleaf_tree", "NorthEdgeBroadleaf", Vector2(826, 186), {}],
+		# Red maples (owner's request): one standing in the middle of the north wood's canopy (its
+		# trunk hidden in the wood's blocked core), two on wood edges.
+		["maple_tree_red", "MapleInNorthForest", Vector2(712, 151), {"draw_offset": Vector2(0, -64), "blocked_poly": []}],
+		["maple_tree_red", "MapleNorthEdge", Vector2(604, 206), {}],
 		# Northeast corner and the NE meadow's back wall.
 		["tree_cluster_large", "NortheastForest", Vector2(1334, 176), {}],
 		["tree_cluster_medium", "NortheastForestNorth", Vector2(1176, 58), {}],
@@ -401,6 +423,7 @@ const LAYOUT := {
 		["tree_cluster_small", "SouthWoodWest", Vector2(552, 906), {}],
 		["forest_verge", "SouthWoodVerge", Vector2(744, 764), {}],
 		["broadleaf_tree_tall", "SouthWoodEdgeTree", Vector2(624, 790), {}],
+		["maple_tree_red", "MapleSouthWoodEdge", Vector2(884, 770), {}],
 		# East wood between Red's road and the gravel field, and the SE corner.
 		["tree_cluster_medium", "EastWood", Vector2(1352, 610), {}],
 		["tree_cluster_small", "EastWoodWest", Vector2(1236, 566), {}],
@@ -492,6 +515,7 @@ func _save_mission() -> void:
 	root.set("visual_squad_spacing", desert.get("visual_squad_spacing"))
 	root.set("pixel_ground_from_kit", true)
 	root.set("minimap_canopy_color", Color(0.14, 0.34, 0.16, 0.75))
+	root.set("ground_tile_world", float(_shapes.get("ground", {}).get("tile_world", 256.0)))
 	root.set("skin_names", PackedStringArray(["Forest"]))
 	root.set("skin_paths", PackedStringArray([""]))
 	root.set("skin_painted_sand", [true] as Array[bool])

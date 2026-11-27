@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/broadleaf_tree_hd.png" id="2_tb4he"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/broadleaf_tree_pixel.png" id="3_lce8f"]
 
-[node name="BroadleafTree" type="Node2D" unique_id=2050244014]
+[node name="BroadleafTree" type="Node2D" unique_id=1725847289]
 script = ExtResource("1_ntvyd")
 piece_id = "broadleaf_tree"
 world_size = Vector2(72, 66)

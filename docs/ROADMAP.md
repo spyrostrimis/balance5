@@ -45,7 +45,7 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Rename to **RTS Mission 1 – Desert** (Red's mission) and plan **RTS Mission 1 – Forest** (Blue's). [Forest plan](RTS_MISSION_1_FOREST_PLAN.md)
 - [ ] Make Red the player's side in RTS Mission 1 – Desert.
 - [x] Build **RTS Mission 1 – Forest** (Blue's) from the plan with a forest kit: tree masses with canopy fade, a river that blocks along its course with a ford and a bridge, clearings, gravel pads, mossy rocks and logs, all in the Kit Palette. Lanes tested at 4 cells, tank routes at 3. Stand-in art. [Play, edit and evidence](RTS_MISSION_1_FOREST.md)
-- [ ] Owner generates the nine forest paintings from [the prompts](../assets/source_inputs/forest_kit/PROMPTS.md); an agent runs `make_forest_kit.py` to swap them in.
+- [x] Owner generated the forest paintings (plus a red maple); `make_forest_kit.py` cut them into the kit, measured the woods' blocked ground from the paintings and widened the ford for the tank. Three red maples placed. [Paintings in the kit](RTS_MISSION_1_FOREST.md#your-paintings-in-the-kit)
 - [ ] Owner plays RTS Mission 1 – Forest and judges the room, the river crossings (ford, bridge or both) and the look.
 - [ ] Owner names Blue's forest planet.
 - [x] Make Miasaki a switchable planet skin for Mission 1 (P), with palette-matched art for kit pieces Miasaki never painted. [Planet skins](RTS_MISSION_1_DESERT.md#planet-skins-p)

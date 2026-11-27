@@ -546,9 +546,9 @@ action = "Play"
 script = ExtResource("4")
 section = "Forest RTS builds"
 title = "RTS Forest Kit"
-summary = "The forest kit Blue's Mission 1 is built from: tree masses, single trees and verges, a river that blocks along its course with a ford and a bridge, clearings, gravel pads, mossy rocks and logs. Page 1 shows arrangements at Command scale; press 2 for every piece. Stand-in art until the ChatGPT paintings arrive. V switches Pixel, Esc returns."
+summary = "The forest kit Blue's Mission 1 is built from, painted with ChatGPT Images: tree masses, single trees, red maples and verges, a river that blocks along its course with a ford and a bridge, clearings, gravel pads, mossy rocks and logs. Page 1 shows arrangements at Command scale; press 2 for every piece. V switches Pixel, Esc returns."
 scene_path = "res://scenes/rts/forest_kit/kit_preview.tscn"
-credit = "Claude Code (stand-in art from tools/python/make_forest_kit.py)"
+credit = "Claude Code and ChatGPT Images"
 built_utc = "2026-11-27 18:00:00"
 action = "View"
 
@@ -556,9 +556,9 @@ action = "View"
 script = ExtResource("4")
 section = "Forest RTS builds"
 title = "RTS Mission 1 – Forest"
-summary = "Blue's first mission, The First Claim, on a tropical forest world: the desert map's forces, rules, camera and HUD on an open forest map with a river (ford and bridge), Blue's base in the southwest and Red coming from the east. Stand-in art. U switches HUD, 1–7 views, V Pixel, Z zoom, G Red AI, F1 blocked ground, Esc returns."
+summary = "Blue's first mission, The First Claim, on a tropical forest world: the desert map's forces, rules, camera and HUD on an open forest map painted with ChatGPT Images, with a river (ford and bridge), red maples, Blue's base in the southwest and Red coming from the east. U switches HUD, 1–7 views, V Pixel, Z zoom, G Red AI, F1 blocked ground, Esc returns."
 scene_path = "res://scenes/maps/rts_mission_1_forest.tscn"
-credit = "Claude Code (stand-in art; ChatGPT paintings pending)"
+credit = "Claude Code and ChatGPT Images"
 built_utc = "2026-11-27 18:00:00"
 action = "Play"
 

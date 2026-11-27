@@ -7,24 +7,24 @@
 [ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/mossy_boulder.tscn" id="5_5djw7"]
 [ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/fern_patch.tscn" id="6_ygn8f"]
 
-[node name="WoodlandCopse" type="Node2D" unique_id=1767419758]
+[node name="WoodlandCopse" type="Node2D" unique_id=1316280741]
 y_sort_enabled = true
 metadata/tags = PackedStringArray("forest", "group", "trees", "cluster", "plants", "edge", "rock", "cover", "ground", "detail")
 
-[node name="TreeClusterMedium0" parent="." unique_id=260385005 instance=ExtResource("1_ynssg")]
+[node name="TreeClusterMedium0" parent="." unique_id=1402680199 instance=ExtResource("1_ynssg")]
 
-[node name="ConiferTree1" parent="." unique_id=1149490317 instance=ExtResource("2_rf4db")]
+[node name="ConiferTree1" parent="." unique_id=968056917 instance=ExtResource("2_rf4db")]
 position = Vector2(-96, 6)
 
-[node name="BroadleafTree2" parent="." unique_id=2050244014 instance=ExtResource("3_b1tu2")]
+[node name="BroadleafTree2" parent="." unique_id=1725847289 instance=ExtResource("3_b1tu2")]
 position = Vector2(92, 10)
 
-[node name="ForestVerge3" parent="." unique_id=975854636 instance=ExtResource("4_ujjd6")]
+[node name="ForestVerge3" parent="." unique_id=134327441 instance=ExtResource("4_ujjd6")]
 position = Vector2(-6, 30)
 scale = Vector2(0.8, 0.8)
 
-[node name="MossyBoulder4" parent="." unique_id=1357637808 instance=ExtResource("5_5djw7")]
+[node name="MossyBoulder4" parent="." unique_id=661010787 instance=ExtResource("5_5djw7")]
 position = Vector2(64, 34)
 
-[node name="FernPatch5" parent="." unique_id=69701215 instance=ExtResource("6_ygn8f")]
+[node name="FernPatch5" parent="." unique_id=1909810871 instance=ExtResource("6_ygn8f")]
 position = Vector2(-58, 40)

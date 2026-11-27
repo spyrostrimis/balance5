@@ -19,10 +19,10 @@ Area: RTS maps · Status: In use · Tools: Godot 4.7.2, ChatGPT Images, Python (
 
 ## Make or change an RTS map from the forest kit
 
-Area: RTS maps · Status: Trying (stand-in art) · Tools: Godot 4.7.2, ChatGPT Images, Python (Pillow, NumPy, OpenCV), FFmpeg
+Area: RTS maps · Status: In use · Tools: Godot 4.7.2, ChatGPT Images, Python (Pillow, NumPy, OpenCV), FFmpeg
 
 1. Work in `scenes/maps/rts_mission_1_forest.tscn`. Place pieces from the Kit Palette (**forest** tag) or `scenes/rts/forest_kit/pieces/` under `YSortWorld` (trees, rocks, logs, buildings) or `GroundDecals` (clearings, gravel, details, fords, bridges). Bend the river by dragging `GroundDecals/River/Course` points; put a `river_ford` or `river_bridge` on the water, turned across it.
-2. Paintings: generate them from `assets/source_inputs/forest_kit/PROMPTS.md` into that folder, then run `C:/Python312/python.exe tools/python/make_forest_kit.py`. It cuts each sheet into pieces by transparency, writes `<piece>_hd.png` and `_pixel.png` into `assets/textures/rts/forest_kit/` and keeps stand-ins for anything unpainted.
+2. Paintings: generate them from `assets/source_inputs/forest_kit/PROMPTS.md` into that folder, then run `C:/Python312/python.exe tools/python/make_forest_kit.py`. It cuts each sheet into pieces by transparency, writes `<piece>_hd.png` and `_pixel.png` into `assets/textures/rts/forest_kit/`, keeps stand-ins for anything unpainted, and writes `kit_shapes.json` (cluster sizes and blocked outlines measured from the paintings, river and crossing widths, ground repeat). The piece scenes take those shapes from `tools/godot/bootstrap_forest_kit.gd` (`-- --force`, which also rewrites the map, so only before hand edits) or by copying them into the piece scenes.
 3. Run `tests/test_rts_mission_1_forest.gd` headless (lane widths, river, routes), then fullscreen with `-- --capture --record`, and inspect every PNG. Check woods with F1 after new paintings.
 4. Export and run the test with `--main-pack builds/Balance.exe`, headless and fullscreen. [Commands](RTS_MISSION_1_FOREST.md#reproduce)
 

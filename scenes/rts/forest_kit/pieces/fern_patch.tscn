@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/fern_patch_hd.png" id="2_ly4um"]
 [ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/fern_patch_pixel.png" id="3_q22qc"]
 
-[node name="FernPatch" type="Node2D" unique_id=69701215]
+[node name="FernPatch" type="Node2D" unique_id=1909810871]
 script = ExtResource("1_8er4q")
 piece_id = "fern_patch"
 world_size = Vector2(48, 36)

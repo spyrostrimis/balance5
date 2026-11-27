@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/scrub_small.tscn" id="28_fhtn6"]
 [ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_unit.gd" id="29_5a380"]
 [ext_resource type="Script" path="res://scripts/rts/rts_grid.gd" id="30_sjrrk"]
-[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_hud.gd" id="31_5fryn"]
+[ext_resource type="Script" path="res://scripts/rts_kit/rts_mission_hud.gd" id="31_5fryn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_varkf"]
 shader = ExtResource("9_x4sg6")

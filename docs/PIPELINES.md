@@ -1,5 +1,13 @@
 # Pipelines
 
+## Add a planet skin
+
+Area: RTS art · Status: In use · Tools: ChatGPT Images or an existing repaint, Python (Pillow, NumPy), Godot 4.7.2
+
+1. Repaint some kit pieces in the new world's palette at the same size as the originals (`<piece>_hd.png`), or reuse a full repaint like `assets/textures/rts/carbon_miasaki/`.
+2. For pieces left unpainted, copy `tools/python/make_planet_skin_miasaki.py`, point it at the new pairs and run it. It fits a smooth colour mapping from the matched pairs, restores their contrast, and writes the recoloured pieces into `assets/textures/rts/skins/<planet>/` plus a contact sheet.
+3. Add the planet's name and folders (`;`-separated, first match wins) to `skin_names`, `skin_paths` and `skin_painted_sand` on the Mission scene root. Press P in play, and run `test_rts_mission_1.gd` with `--capture` to inspect it.
+
 ## Make or change an RTS map from the desert kit
 
 Area: RTS maps · Status: In use · Tools: Godot 4.7.2, ChatGPT Images, Python (Pillow, NumPy, OpenCV), FFmpeg

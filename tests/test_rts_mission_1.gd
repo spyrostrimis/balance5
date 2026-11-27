@@ -185,6 +185,38 @@ func _verify_mission(capture: bool) -> void:
 		map.close_zoom = false
 		map.apply_zoom_framing()
 
+	if DisplayServer.get_name() != "headless":
+		await _verify_hud_styles(map, capture)
+
+	# Planet skin: terrain art changes, the ground units can use does not.
+	var rock := map.get_node("YSortWorld/CentralOrichalcum") as RtsCarbonPiece
+	var desert_tex := rock.texture
+	var walk_before := []
+	for cy in 28:
+		for cx in 44:
+			walk_before.append(grid.is_walkable(Vector2i(cx, cy)))
+	map.call("apply_skin", 1, false)
+	_check(map.call("skin_name") == "Miasaki", "P switches the planet skin to Miasaki")
+	_check(rock.texture != desert_tex and rock.texture.resource_path.contains("miasaki"), "Orichalcum outcrop uses Miasaki's painting (%s)" % rock.texture.resource_path)
+	var bank := map.get_node("YSortWorld/RoadsidePool/SandyBank") as RtsCarbonPiece
+	_check(bank.texture.resource_path.contains("skins/miasaki"), "Kit-only pieces use the palette-matched skin art")
+	var same := true
+	var i := 0
+	for cy in 28:
+		for cx in 44:
+			same = same and walk_before[i] == grid.is_walkable(Vector2i(cx, cy))
+			i += 1
+	_check(same, "Skin switch leaves blocked ground unchanged")
+	if capture:
+		map.call("focus_view", 0)
+		await _save_still("06_miasaki_opening_hd")
+		map.call("focus_view", 1)
+		await _save_still("06b_miasaki_northeast_hd")
+		map.call("focus_view", 2)
+		await _save_still("06c_miasaki_roadside_pool_hd")
+	map.call("apply_skin", 0, false)
+	_check(rock.texture == desert_tex, "Switching back restores the desert art")
+
 	# Roadside passage: moving PassCliff in the layout changes where tanks can go.
 	var pass_cliff := map.get_node("YSortWorld/RoadsidePool/PassCliff") as Node2D
 	var orig := pass_cliff.position
@@ -263,6 +295,54 @@ func _verify_mission(capture: bool) -> void:
 	_check(map.get_living_units().size() == UNIT_NAMES.size(), "Reset restores all ten forces")
 	map.queue_free()
 	await process_frame
+
+
+# --- HUD styles ------------------------------------------------------------------------------------
+
+func _click_hud(map: RtsCarbonBattlefield, virtual_pt: Vector2, button := MOUSE_BUTTON_LEFT) -> void:
+	var hud := map.hud
+	for pressed in [true, false]:
+		var mb := InputEventMouseButton.new()
+		mb.button_index = button
+		mb.pressed = pressed
+		mb.position = virtual_pt * hud.ui_scale()
+		hud._on_panel_gui_input(mb)
+
+
+func _verify_hud_styles(map: RtsCarbonBattlefield, capture: bool) -> void:
+	var hud := map.hud as RtsMissionHud
+	_check(hud != null, "Mission 1 uses the switchable RtsMissionHud")
+	if hud == null:
+		return
+	var commander := map.get_node("YSortWorld/BlueCommander") as RtsCarbonUnit
+	var zoom_ref := -1.0
+	for st in ["classic", "holo", "placeholder"]:
+		map.call("set_hud_style", st)
+		map.set_selection([commander])
+		map.call("focus_view", 0)
+		await process_frame
+		await process_frame
+		await RenderingServer.frame_post_draw
+		if zoom_ref < 0.0:
+			zoom_ref = map.camera.zoom.x
+		_check(absf(map.camera.zoom.x - zoom_ref) < 0.001, "%s HUD keeps the same battlefield scale" % st)
+		_check(hud._btn_rects.has("cmd_move") and hud._btn_rects.has("cmd_mend"), "%s HUD draws the four command buttons" % st)
+		if hud._btn_rects.has("cmd_attack"):
+			hud.command_cursor_mode = ""
+			_click_hud(map, (hud._btn_rects["cmd_attack"] as Rect2).get_center())
+			_check(hud.command_cursor_mode == "attack", "%s HUD: clicking Attack arms an attack order" % st)
+			hud.command_cursor_mode = ""
+		var before := map.hud.camera_world_rect.get_center()
+		_click_hud(map, hud._minimap_rect.position + hud._minimap_rect.size * Vector2(0.85, 0.2))
+		_check(map.hud.camera_world_rect.get_center().distance_to(before) > 60.0, "%s HUD: clicking the minimap pans the camera" % st)
+		map.call("focus_view", 0)
+		var centre := map.get_viewport().get_visible_rect().size * 0.5
+		_check(not hud.consumes_screen_point(centre), "%s HUD leaves the battlefield centre clickable" % st)
+		if capture:
+			await process_frame
+			await _save_still("07_hud_%s_hd" % st)
+	map.call("set_hud_style", "classic")
+	map.set_selection([])
 
 
 # --- Before/after against Reusable 4 --------------------------------------------------------------

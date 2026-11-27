@@ -64,6 +64,18 @@ Area: UI
 A way of storing letters as shapes rather than as small pictures, so text stays sharp however much it is scaled. Normal font rendering draws a letter at one size; enlarging that drawing makes it blurry.
 *In Balance:* turned on project-wide because the RTS HUD scales its text up.
 
+### Planet skin
+Area: RTS art
+
+A set of replacement paintings that redraws a map as another world without moving anything. The game checks the skin's folders first and falls back to the normal art.
+*In Balance:* press **P** in Mission 1 to switch between Desert and Miasaki.
+
+### Palette transfer
+Area: Art tools
+
+Teaching a program how one set of colours turns into another by showing it the same pictures painted both ways, then applying that change to new pictures. It recolours well but cannot invent new brushwork.
+*In Balance:* `make_planet_skin_miasaki.py` learned Miasaki's colours from Carbon's repainted rocks and applied them to the kit's road and bank pieces.
+
 ### Value noise and gradient noise
 Area: Shaders
 

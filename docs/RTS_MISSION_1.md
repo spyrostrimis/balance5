@@ -20,7 +20,28 @@ Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the m
 | Camera views are markers in the scene (`CameraViews`) | Each new map sets its own 1–9 views without code | — |
 | Captures at **1920 × 1080** fullscreen | Carbon's Detailed art is painted for 1080p. At 1376 × 768 we judged everything smaller than players see it | All PNGs and the clip measure 1920 × 1080 |
 
-**Not done yet: the HQ camera angle.** The building is still painted at the reference image's lower angle. The prompt and the script that installs the result are ready: [`assets/source_inputs/desert_kit/PROMPTS.md`](../assets/source_inputs/desert_kit/PROMPTS.md).
+**HQ at Carbon's camera angle.** The owner's repaint (`assets/source_inputs/desert_kit/blue_field_hq_steep.png`) is installed with `make_desert_kit_hq.py`. It now matches the outpost's near-overhead view, with the roof filling the footprint and the banner on the front edge. [HQ and squad](../render_captures/rts_mission_1/04_blue_headquarters_and_squad_hd.png)
+
+## Planet skins (P)
+
+**P** switches the whole map between **Desert** (Carbon) and **Miasaki** (pale peach sand, lavender-shadowed rock). Only the terrain art and the minimap colours change. The layout, blocked ground, units, water, plants and the HQ stay the same. To start on Miasaki, run with `-- --skin=miasaki`.
+
+- Miasaki's own repaints of Carbon's rocks, cliff oasis, crystal outcrop, plaza, outpost, dunes, scrub, sand and road come from `assets/textures/rts/carbon_miasaki/`.
+- Kit pieces Miasaki never painted (road joins, banks, cliff pieces, pebbles, crystal rock) are recoloured by `tools/python/make_planet_skin_miasaki.py`. It learns Miasaki's palette from the matched Carbon/Miasaki pairs ([palette transfer](GLOSSARY.md#palette-transfer)) and writes `assets/textures/rts/skins/miasaki/`.
+- To add a planet, put its paintings in a new folder under `assets/textures/rts/skins/` (named like the kit's, `<piece>_hd.png`) and add a name and path to `skin_names` / `skin_paths` on the Mission scene's root.
+- The Pixel view keeps the desert art on every skin, because Miasaki has no Pixel paintings yet.
+
+[Miasaki opening](../render_captures/rts_mission_1/06_miasaki_opening_hd.png) · [Miasaki northeast](../render_captures/rts_mission_1/06b_miasaki_northeast_hd.png) · [Miasaki roadside pool](../render_captures/rts_mission_1/06c_miasaki_roadside_pool_hd.png) · [palette transfer sheet](../render_captures/rts_mission_1/miasaki_skin_sheet.png)
+
+## HUD styles (U)
+
+**U** cycles three HUDs. Units stay the same size in all of them, because the camera keeps one scale.
+
+- **Classic** (default), from mockup E: a sandstone top bar with steel counters, plus a steel-and-bronze sidebar with the portrait card, Mend strip, 2×2 enamel command buttons, parchment objective and the minimap at the bottom, as in Dune II.
+- **Holo**, from mockup B: no sidebar. Glass panels float over the battlefield: status strip and objective at the top, minimap bottom-left, unit card bottom-centre, commands bottom-right. You see more of the map.
+- **Carbon**: the original placeholder, for comparison.
+
+Both new HUDs are drawn by `scripts/rts_kit/rts_mission_hud.gd` with sharp [MSDF](GLOSSARY.md#msdf-font) system fonts (Bahnschrift for Classic, Segoe UI for Holo). The top toggles (V, Z, G, U), command buttons and minimap all take clicks. The Mend button and strip now show the Blue commander's Mend whatever is selected, because pressing Mend always uses her. Run with `-- --hud=holo` to start on Holo. [Classic](../render_captures/rts_mission_1/07_hud_classic_hd.png) · [Holo](../render_captures/rts_mission_1/07_hud_holo_hd.png) · [Carbon](../render_captures/rts_mission_1/07_hud_placeholder_hd.png) · mockups in `assets/source_inputs/hud/`
 
 ## Make and edit maps
 
@@ -56,6 +77,7 @@ Art is in `assets/textures/rts/desert_kit/`. Pieces with no kit painting use ori
 | Same test, Forward+ fullscreen `--capture --compare --record` | All passed; stills and frames measure 1920 × 1080 |
 | Same test against the exported build (`--main-pack builds/Balance.exe`), headless and in a fullscreen window | All passed; both new cards launch and Esc returns |
 | `test_rts_test_map.gd`, `test_rts_reusable_2_carbon.gd` (and `--miasaki`), `test_rts_reusable_3.gd`, `test_rts_reusable_4.gd` | All passed, so the older builds are unchanged |
+| `test_rts_mission_1.gd` in a window: for each HUD style, same battlefield scale, Attack click arms an attack, minimap click pans, battlefield centre stays clickable; planet skin swaps art without changing blocked ground, then restores it | All passed, also against the exported build |
 | `tests/capture_kit_palette.gd` (windowed): the Kit Palette loads all 37 entries with thumbnails, filters by tag and hands the 2D view a scene file to drop | Passed. Dropping into the real editor still needs a manual check |
 
 Captures: [opening](../render_captures/rts_mission_1/01_opening_command_hd.png) · [opening Pixel](../render_captures/rts_mission_1/01_opening_command_pixel.png) · [spring](../render_captures/rts_mission_1/02_sheltered_spring_hd.png) · [roadside pool](../render_captures/rts_mission_1/03_roadside_pool_and_fork_hd.png) · [HQ and squad](../render_captures/rts_mission_1/04_blue_headquarters_and_squad_hd.png) · [tracks](../render_captures/rts_mission_1/05_forked_dune_treads_hd.png) · [kit page 1](../render_captures/rts_mission_1/kit_1_arrangements_hd.png) · [kit page 2](../render_captures/rts_mission_1/kit_2_pieces_hd.png) · [12 s clip](../render_captures/rts_mission_1/mission_1_in_motion.mp4)

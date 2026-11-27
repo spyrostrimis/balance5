@@ -1,5 +1,23 @@
 # Decisions
 
+### 2026-11-27 · Try Classic and Holo HUDs in play
+
+Area: UI · Status: Trying
+
+From five ChatGPT mockups the owner picked **E (Dune II remastered)** and **B (holo-glass field tablet)**. Both are built in Mission 1, switchable with U, beside the original Carbon HUD. Every style keeps the same battlefield scale, so the choice is about reading and feel, not unit size. Classic is the default until the owner chooses.
+
+### 2026-11-27 · Planet skins swap terrain art, not maps
+
+Area: RTS · Art direction · Status: Verified
+
+A planet skin is a list of art folders checked before the kit's own art. Layout, blocked ground and units stay the same, so one map can be played on several worlds. Miasaki is the first skin. Where Miasaki never painted a piece, a palette transfer learned from the matched Carbon/Miasaki pairs recolours the kit art.
+
+### 2026-11-27 · HQ repaint matches Carbon's camera
+
+Area: RTS art · Status: Verified
+
+The second HQ prompt named Carbon's outpost as the exact camera target and got a near-overhead building. It is not overdone: it now reads like the outpost beside it. The trade-off is that the arched front wall is reduced to a thin band, with the banner on the roof edge.
+
 ### 2026-11-27 · Use Carbon's own paintings wherever Carbon has one
 
 Area: RTS · Status: Decided by owner

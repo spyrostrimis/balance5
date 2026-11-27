@@ -7,7 +7,7 @@
 [node name="BlueFieldHq" type="Node2D" unique_id=1770656320]
 script = ExtResource("1_w8cgd")
 piece_id = "blue_field_hq"
-world_size = Vector2(140, 118)
+world_size = Vector2(140, 112)
 detailed_texture_override = ExtResource("2_l6k2y")
 pixel_texture_override = ExtResource("3_3f2vl")
 blocked_poly = PackedVector2Array(-58, -42, 58, -42, 60, 44, -60, 44)

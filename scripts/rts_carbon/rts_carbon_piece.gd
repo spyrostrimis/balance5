@@ -44,6 +44,8 @@ extends Node2D
 
 var texture: Texture2D
 var pixel_mode := false
+## Set by a battlefield's planet skin; empty = the piece's own art.
+var skin_directories := PackedStringArray()
 
 static var _editor_dune_material: ShaderMaterial
 
@@ -67,7 +69,18 @@ func apply_visual_mode(use_pixel: bool, dune_shader: Shader = null, sand_tex: Te
 		calm_tex: Texture2D = null, tread_tex: Texture2D = null, map_world_size := Vector2(1408, 896),
 		show_treads := true, detailed_art_directory := "", use_painted_sand := false) -> void:
 	pixel_mode = use_pixel
-	texture = pixel_texture_override if use_pixel else detailed_texture_override
+	texture = null
+	# Planet skin (Detailed only): the first skin folder holding this piece's painting wins.
+	if not use_pixel:
+		for dir in skin_directories:
+			if flip_x:
+				texture = RtsCarbonArt.detailed_texture(piece_id + "_mirrored", dir)
+			if texture == null:
+				texture = RtsCarbonArt.detailed_texture(piece_id, dir)
+			if texture != null:
+				break
+	if texture == null:
+		texture = pixel_texture_override if use_pixel else detailed_texture_override
 	if texture == null and flip_x and not use_pixel:
 		texture = RtsCarbonArt.detailed_texture(piece_id + "_mirrored", detailed_art_directory)
 	if texture == null:

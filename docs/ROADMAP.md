@@ -34,12 +34,14 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Build and export **RTS Reusable 4** from fresh ChatGPT front/rear unit paintings, flat-sand signed-delta dunes, two editable oasis groups, road fork/plaza joins, and a steeper-angle Blue Field Headquarters. [Play, kit and matched evidence](RTS_REUSABLE_4.md)
 - [ ] Owner judges infantry count, faction colours in motion, and the Reusable 4 desert kit at Command zoom.
 - [x] Consolidate into one canonical **RTS Mission 1** scene built only from a shared desert kit (one scene per piece), with brighter Blue uniforms, seam-free sand, the HQ joined to the road and a greener spring. Captured at 1920 × 1080. [Play, edit and evidence](RTS_MISSION_1.md)
-- [ ] Owner generates the steeper-angle Blue HQ painting with [prompt 1](../assets/source_inputs/desert_kit/PROMPTS.md), then an agent runs `make_desert_kit_hq.py` and checks its blocked ground.
+- [x] Owner generated the steeper-angle Blue HQ; installed with `make_desert_kit_hq.py` and checked in Mission 1. [HQ](RTS_MISSION_1.md#what-changed-from-reusable-4)
 - [ ] Owner builds a small second map from the desert kit without help, to prove the kit is reusable. [How to make maps](RTS_MISSION_1.md#make-and-edit-maps)
 - [x] Put Carbon's painted cliff oasis back in Mission 1, tag every kit piece, and add the **Kit Palette** editor dock (thumbnails, tag filters, drag to place). [Kit Palette](RTS_MISSION_1.md#make-and-edit-maps)
 - [ ] Owner drags a piece from the Kit Palette into Mission 1 in the editor and confirms it lands where dropped.
-- [ ] Owner generates the five HUD mockups ([prompts](../assets/source_inputs/hud/PROMPTS.md)) and picks one or two to build as switchable HUDs in Mission 1.
-- [ ] Make Miasaki's palette a switchable planet skin for the kit, so any map can be played on that world.
+- [x] Owner generated five HUD mockups and picked **Holo** (B) and **Classic** (E); both are built as switchable HUDs in Mission 1 (U). [HUD styles](RTS_MISSION_1.md#hud-styles-u)
+- [ ] Owner plays Mission 1 with Classic and Holo and chooses the HUD to keep (or what to change).
+- [x] Make Miasaki a switchable planet skin for Mission 1 (P), with palette-matched art for kit pieces Miasaki never painted. [Planet skins](RTS_MISSION_1.md#planet-skins-p)
+- [ ] Give planet skins Pixel art (Miasaki currently falls back to the desert Pixel set).
 - [ ] Tune the first fight. Compare one group move, a split approach and a retreat to Mend. Record who survives and who controls the rock.
 - [ ] At Command zoom, have a new player identify the commander, a wounded squad and which side is holding the plaza.
 - [ ] Play from briefing to result and retry. Verify hold and elimination for each side, a contested timer, and Mend from the sidebar.

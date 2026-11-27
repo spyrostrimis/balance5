@@ -6,9 +6,27 @@ extends RtsCarbonBattlefield
 ## - tree crowns fade over selected troops walking beneath them, with a small chevron
 ## - camera views come from the Marker2D children of CameraViews (keys 1-9, first = opening)
 ## - seam-free wind lighting on open sand (smooth_wind)
+## - planet skins: P cycles the terrain art (Desert, Miasaki, …) without touching the layout
+## - HUD styles: U cycles Classic, Holo and the original Carbon HUD (RtsMissionHud)
 ## Make a new map by copying the mission scene and moving or adding kit pieces.
 
 @export var smooth_wind := true
+## Planet skins. Each entry: display name, skin folders (";"-separated, first match wins) and whether
+## its sand uses the painted-sand lighting. Units, water, plants and buildings keep the kit's art.
+@export var skin_names := PackedStringArray(["Desert", "Miasaki"])
+@export var skin_paths := PackedStringArray(["", "res://assets/textures/rts/skins/miasaki;res://assets/textures/rts/carbon_miasaki"])
+@export var skin_painted_sand: Array[bool] = [false, true]
+@export var start_skin := 0
+## "classic", "holo" or "placeholder" (the original Carbon HUD).
+@export var start_hud_style := "classic"
+
+var skin_index := 0
+var _skin_dirs := PackedStringArray()
+var _mm_sand := Color(0.84, 0.52, 0.18)
+var _mm_dune := Color(0.92, 0.64, 0.24)
+var _mm_road := Color(0.76, 0.60, 0.44)
+var _skin_banner: Label
+var _skin_banner_time := 0.0
 
 @onready var camera_views: Node2D = get_node_or_null("CameraViews")
 
@@ -19,7 +37,132 @@ var _canopy_covered_units: Array[RtsCarbonUnit] = []
 func _ready() -> void:
 	super._ready()
 	_collect_trees()
+	_make_skin_banner()
+	var wanted := start_skin
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--skin="):
+			var idx := Array(skin_names).map(func(n: String) -> String: return n.to_lower()).find(arg.trim_prefix("--skin=").to_lower())
+			if idx >= 0:
+				wanted = idx
+	apply_skin(wanted, false)
+	var hud_style := start_hud_style
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--hud="):
+			hud_style = arg.trim_prefix("--hud=")
+	set_hud_style(hud_style)
 	focus_view(0)
+
+
+func set_hud_style(style_name: String) -> void:
+	if hud.has_method("framing_width"):
+		hud.set("style", style_name)
+	_sync_camera_transform()
+
+
+func cycle_hud_style() -> void:
+	if not hud.has_method("framing_width"):
+		return
+	var styles := RtsMissionHud.STYLES
+	set_hud_style(styles[(styles.find(hud.get("style")) + 1) % styles.size()])
+
+
+## Same as Carbon's, except the zoom comes from the HUD's framing width, so every HUD style shows
+## units at the same size (Holo simply shows more of the battlefield around them).
+func _sync_camera_transform() -> void:
+	if camera == null or hud == null:
+		return
+	var play_rect := hud.playable_screen_rect()
+	var frame_w: float = hud.call("framing_width") if hud.has_method("framing_width") else play_rect.size.x
+	var desired_world_w := (_target_cells_width() * float(CELL_SIZE)) / maxf(_custom_zoom_mult, 0.45)
+	var z := frame_w / maxf(desired_world_w, 128.0)
+	camera.zoom = Vector2(z, z)
+	var vis_world_size := play_rect.size / z
+	var half := vis_world_size * 0.5
+	_cam_center.x = clampf(_cam_center.x, half.x, maxf(half.x, WORLD_SIZE.x - half.x))
+	_cam_center.y = clampf(_cam_center.y, half.y, maxf(half.y, WORLD_SIZE.y - half.y))
+	var snapped_center := _cam_center.round() if pixel_mode else _cam_center
+	var vp_center := get_viewport().get_visible_rect().size * 0.5
+	var screen_shift := vp_center - play_rect.get_center()
+	camera.position = snapped_center + screen_shift / z
+	hud.camera_world_rect = Rect2(snapped_center - half, vis_world_size)
+	hud.request_repaint()
+
+
+func _on_hud_toggle(which: String) -> void:
+	if which == "hud":
+		cycle_hud_style()
+		return
+	super._on_hud_toggle(which)
+
+
+## Switch the planet skin: terrain art, sand lighting and minimap colours. Layout and units stay.
+func apply_skin(index: int, announce := true) -> void:
+	if skin_names.is_empty():
+		return
+	skin_index = posmod(index, skin_names.size())
+	_skin_dirs = PackedStringArray()
+	if skin_index < skin_paths.size():
+		for d in skin_paths[skin_index].split(";", false):
+			_skin_dirs.append(d.strip_edges())
+	_sand_hd = _skin_texture("sand_tile")
+	_road_hd = _skin_texture("road_strip")
+	art_directory_has_painted_sand = skin_index < skin_painted_sand.size() and skin_painted_sand[skin_index]
+	_measure_minimap_colours()
+	apply_visual_mode(pixel_mode)
+	hud.minimap_tex = _build_minimap_texture()
+	hud.request_repaint()
+	if announce:
+		_show_skin_banner()
+
+
+func skin_name() -> String:
+	return skin_names[skin_index] if skin_index < skin_names.size() else ""
+
+
+func _skin_texture(key: String) -> Texture2D:
+	for d in _skin_dirs:
+		var t := RtsCarbonArt.detailed_texture(key, d)
+		if t != null:
+			return t
+	return RtsCarbonArt.texture(key, false, detailed_art_directory)
+
+
+func _measure_minimap_colours() -> void:
+	var sand_img := _sand_hd.get_image() if _sand_hd != null else null
+	var road_img := _road_hd.get_image() if _road_hd != null else null
+	if sand_img != null:
+		if sand_img.is_compressed():
+			sand_img.decompress()
+		sand_img.resize(1, 1, Image.INTERPOLATE_BILINEAR)
+		_mm_sand = sand_img.get_pixel(0, 0)
+		_mm_dune = _mm_sand.lightened(0.16)
+	if road_img != null:
+		if road_img.is_compressed():
+			road_img.decompress()
+		road_img.resize(1, 1, Image.INTERPOLATE_BILINEAR)
+		_mm_road = road_img.get_pixel(0, 0)
+
+
+func _make_skin_banner() -> void:
+	_skin_banner = Label.new()
+	_skin_banner.add_theme_font_size_override("font_size", 22)
+	_skin_banner.add_theme_color_override("font_color", Color(1.0, 0.95, 0.85))
+	_skin_banner.add_theme_color_override("font_outline_color", Color(0.1, 0.06, 0.03))
+	_skin_banner.add_theme_constant_override("outline_size", 6)
+	_skin_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_skin_banner.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_skin_banner.position = Vector2(-200, 120)
+	_skin_banner.size = Vector2(400, 36)
+	_skin_banner.modulate.a = 0.0
+	_skin_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.add_child(_skin_banner)
+
+
+func _show_skin_banner() -> void:
+	if _skin_banner == null:
+		return
+	_skin_banner.text = "Planet: %s   [P]" % skin_name()
+	_skin_banner_time = 2.2
 
 
 func _collect_trees() -> void:
@@ -45,6 +188,8 @@ func focus_view(index: int) -> bool:
 
 
 func apply_visual_mode(use_pixel: bool) -> void:
+	for p in _pieces:
+		p.skin_directories = _skin_dirs
 	super.apply_visual_mode(use_pixel)
 	_ground_mat.set_shader_parameter("smooth_wind", smooth_wind)
 	for d in _dune_pieces:
@@ -71,6 +216,9 @@ func reset_encounter() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
+	if _skin_banner != null and _skin_banner_time > 0.0:
+		_skin_banner_time -= delta
+		_skin_banner.modulate.a = clampf(_skin_banner_time / 0.6, 0.0, 1.0)
 	_canopy_covered_units.clear()
 	for tree in _trees:
 		if not is_instance_valid(tree):
@@ -109,6 +257,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			if focus_view(int(ke.keycode - KEY_1)):
 				get_viewport().set_input_as_handled()
 			return
+		if ke.keycode == KEY_U:
+			cycle_hud_style()
+			get_viewport().set_input_as_handled()
+			return
+		if ke.keycode == KEY_P:
+			apply_skin(skin_index + 1)
+			get_viewport().set_input_as_handled()
+			return
 		if ke.keycode == KEY_ESCAPE:
 			var launcher := get_tree().root.get_node_or_null("BuildLauncher")
 			if launcher != null and bool(launcher.call("is_build_active")):
@@ -124,16 +280,16 @@ func _build_minimap_texture() -> ImageTexture:
 	for y in range(mh):
 		for x in range(mw):
 			var wpt := Vector2((float(x) + 0.5) / float(mw) * WORLD_SIZE.x, (float(y) + 0.5) / float(mh) * WORLD_SIZE.y)
-			var col := Color(0.84, 0.52, 0.18)
+			var col := _mm_sand
 			if height_at(wpt) > 0.12:
-				col = Color(0.92, 0.64, 0.24)
+				col = _mm_dune
 			if wpt.distance_to(_orichalcum_pos) < 126.0:
-				col = Color(0.78, 0.63, 0.46)
+				col = _mm_road
 			else:
 				for seg in segments:
 					var nearest := Geometry2D.get_closest_point_to_segment(wpt, Vector2(seg.x, seg.y), Vector2(seg.z, seg.w))
 					if wpt.distance_to(nearest) < 23.0:
-						col = Color(0.76, 0.60, 0.44)
+						col = _mm_road
 						break
 			for p in _pieces:
 				if p.blocks_world_point(wpt):

@@ -8,7 +8,9 @@ RTS acceptance view is now **1920 × 1080** (fullscreen Forward+), Detailed HD a
 - [x] Blue squads read as cobalt, not navy, on sand and road beside Red, with wounded 3-of-4 countable. Brackets off. [Before/after](RTS_MISSION_1.md#what-changed-from-reusable-4)
 - [x] HQ joins the road with a driveway; no loose paving oval. The sheltered spring has scrub and reeds at the waterline.
 - [x] Every placed piece in Mission 1 is a kit instance; moving PassCliff still closes and reopens the tank lane.
-- [ ] Blue HQ repainted at Carbon's camera angle ([prompt](../assets/source_inputs/desert_kit/PROMPTS.md)).
+- [x] Blue HQ repainted at Carbon's camera angle and installed; it sits beside the outpost at the same near-overhead view.
+- [x] Miasaki planet skin covers every terrain piece on the map; blocked ground is identical between skins.
+- [x] Classic and Holo HUDs keep the battlefield scale, text is sharp at 1080p, and every button, toggle and the minimap take clicks.
 - [ ] Owner approves Mission 1's look at 1080p.
 
 ## RTS Reusable 4 · 2026-11-26

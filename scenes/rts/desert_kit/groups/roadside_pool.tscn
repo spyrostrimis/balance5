@@ -11,6 +11,7 @@
 
 [node name="RoadsidePool" type="Node2D" unique_id=463338688]
 y_sort_enabled = true
+metadata/tags = PackedStringArray("desert", "group", "oasis", "water", "plants")
 
 [node name="Water" parent="." unique_id=1306154293 instance=ExtResource("1_8vtmx")]
 position = Vector2(10, 4)

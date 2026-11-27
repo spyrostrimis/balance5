@@ -16,3 +16,4 @@ shadow_size = Vector2(124, 110)
 shade_offset = Vector2(18, 14)
 shade_radii = Vector2(64, 54)
 shade_strength = 0.38
+metadata/tags = PackedStringArray("desert", "cliff", "rock")

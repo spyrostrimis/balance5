@@ -17,3 +17,4 @@ shadow_alpha = 0.36
 shade_offset = Vector2(18, 14)
 shade_radii = Vector2(84, 58)
 shade_strength = 0.42
+metadata/tags = PackedStringArray("desert", "crystal", "orichalcum", "rock")

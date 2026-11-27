@@ -1,5 +1,23 @@
 # Decisions
 
+### 2026-11-27 · Use Carbon's own paintings wherever Carbon has one
+
+Area: RTS · Status: Decided by owner
+
+Carbon's paintings are the quality bar. Mission 1 had inherited Reusable 4's modular spring in place of Carbon's painted cliff oasis; Carbon's oasis is back in its original spot. Reusable 4's art stays only where Carbon has no equivalent (newer dune shapes, the modular oasis parts, the tree, the HQ, the small crystal deposits, road joins) and for the more readable infantry. The `carbon-art` tag marks Carbon's paintings in the Kit Palette.
+
+### 2026-11-27 · Keep Miasaki's palette as another world
+
+Area: RTS · Art direction · Status: Decided by owner
+
+Balance spans many worlds, so Dune II's hot desert is a starting point, not a rule. Miasaki's pale peach sand and lavender-shadowed rock make a convincing second planet and stay in the project. Next step: make it a switchable "planet skin" for the kit rather than a separate copy of the map.
+
+### 2026-11-27 · Draw HUD text with MSDF fonts
+
+Area: UI · Status: Verified
+
+The HUD writes small text and then scales the drawing up, which blurred the letters at 1080p. Turning on MSDF for the default font (`gui/theme/default_font_multichannel_signed_distance_field`) keeps letters sharp at any scale, project-wide. The HUD layout itself is still a placeholder; five redesign directions are in `assets/source_inputs/hud/PROMPTS.md`.
+
 ### 2026-11-27 · Stop making Reusable copies; all RTS work goes into Mission 1 and the shared desert kit
 
 Area: RTS · Status: Decided by owner

@@ -15,3 +15,4 @@ blocked_poly = PackedVector2Array()
 shadow_alpha = 0.0
 relief_height = 1.0
 relief_radii = Vector2(120, 104)
+metadata/tags = PackedStringArray("desert", "dune", "sand", "carbon-art")

@@ -18,3 +18,4 @@ shadow_alpha = 0.3
 shade_offset = Vector2(14, -8)
 shade_radii = Vector2(46, 28)
 shade_strength = 0.38
+metadata/tags = PackedStringArray("desert", "plants", "tree")

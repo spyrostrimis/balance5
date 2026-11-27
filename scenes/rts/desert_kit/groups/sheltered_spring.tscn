@@ -14,6 +14,7 @@
 
 [node name="ShelteredSpring" type="Node2D" unique_id=1965367934]
 y_sort_enabled = true
+metadata/tags = PackedStringArray("desert", "group", "oasis", "water", "cliff", "plants")
 
 [node name="Water" parent="." unique_id=1306154293 instance=ExtResource("1_f3lml")]
 position = Vector2(-28, 44)

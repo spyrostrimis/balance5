@@ -2,7 +2,7 @@
 
 **RTS Mission 1** (`scenes/maps/rts_mission_1.tscn`) is now the one canonical RTS scene. It holds original Carbon's encounter (same forces, rules, camera and HUD) on Reusable 4's layout, rebuilt entirely from a shared **desert kit**. Future RTS work, visual or gameplay, edits this scene and the kit. It does not make another "Reusable N" copy. Carbon, Miasaki, Reusable 3 and Reusable 4 stay on the Developers Page unchanged as comparison baselines.
 
-Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the main **Play RTS Mission 1** button on the opening screen also starts it). **RTS Desert Kit → View** shows the kit. All Carbon controls apply. **1–4** jump to the opening, sheltered spring, roadside pool and forked dunes. **V** switches Detailed/Pixel, **Z** switches Command/Close, **G** turns on Red's AI, **F1** shows blocked ground and **Esc** returns.
+Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the main **Play RTS Mission 1** button on the opening screen also starts it). **RTS Desert Kit → View** shows the kit. All Carbon controls apply. **1–4** jump to the opening, the northeast oasis, the roadside pool and the forked dunes. **V** switches Detailed/Pixel, **Z** switches Command/Close, **G** turns on Red's AI, **F1** shows blocked ground and **Esc** returns.
 
 ![Reusable 4 and Mission 1 at the same camera](../render_captures/rts_mission_1/before_after.png)
 
@@ -14,13 +14,21 @@ Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the m
 | Blue uniforms brightened toward Reusable 3's cobalt, keeping Reusable 4's painted shading | Reusable 4's navy read as dark shapes on orange sand | [Before/after, top row](../render_captures/rts_mission_1/before_after.png) |
 | Seam-free sand lighting (`smooth_wind`) | The old wind lighting left long straight light seams across open sand | [Before/after, middle row](../render_captures/rts_mission_1/before_after.png) |
 | HQ joined to the road with a short driveway instead of a loose oval of paving | The oval read as a puddle of road | [Before/after, bottom row](../render_captures/rts_mission_1/before_after.png) |
-| Sheltered spring has a ring of scrub and reeds at the waterline | Carbon's original spring had greenery and Reusable 4's had lost it | [Close view](../render_captures/rts_mission_1/02b_sheltered_spring_close_hd.png) |
+| **Carbon's own painted cliff oasis is back in the northeast**, in its original spot | It is the best oasis painting we have; Reusable 4 had swapped it for the modular spring | [Northeast view](../render_captures/rts_mission_1/02_sheltered_spring_hd.png) |
+| The kit's modular sheltered spring got a ring of scrub and reeds at the waterline | It had lost the greenery Carbon's spring has. It stays in the kit for other maps | Kit page 1 |
+| HUD text drawn with MSDF fonts (project setting) | The HUD draws small text and then scales it up, which blurred it. MSDF letters stay sharp at any scale | [HUD prompts](../assets/source_inputs/hud/PROMPTS.md) |
 | Camera views are markers in the scene (`CameraViews`) | Each new map sets its own 1–9 views without code | — |
 | Captures at **1920 × 1080** fullscreen | Carbon's Detailed art is painted for 1080p. At 1376 × 768 we judged everything smaller than players see it | All PNGs and the clip measure 1920 × 1080 |
 
 **Not done yet: the HQ camera angle.** The building is still painted at the reference image's lower angle. The prompt and the script that installs the result are ready: [`assets/source_inputs/desert_kit/PROMPTS.md`](../assets/source_inputs/desert_kit/PROMPTS.md).
 
 ## Make and edit maps
+
+**Where the art comes from.** 13 of the 33 pieces are original Carbon paintings: the central Orichalcum outcrop and plaza, every rock and ridge, the cliff oasis, the three dune clusters, the outpost and the scrub. The sand, road and tanks are Carbon's too. Reusable 4's art is used only where Carbon had nothing: the newer dune shapes, the modular oasis parts, the tree, the HQ, the small crystal deposits, road joins and pebbles, plus the infantry (for readability). The **carbon-art** tag in the Kit Palette lists Carbon's paintings.
+
+**Kit Palette (in the Godot editor).** A dock next to FileSystem shows every piece and group as a thumbnail over sand. Click tag buttons (rock, dune, water, plants, building, crystal, road, group, carbon-art…) to filter, or type in the search box. Drag a thumbnail onto the 2D view to place it under the selected node. Double-click to open the piece's own scene. Tags are stored on each piece scene (Inspector → Metadata → `tags`); press **Reload** after changing them. If the dock doesn't appear, use **Project → Reload Current Project**, or turn on **Kit Palette** in **Project Settings → Plugins**. In the editor the pieces now draw with their real art, and dunes show as lit sand.
+
+`builds/rts_reusable_2_carbon_pieces/` is only an exported copy of `assets/textures/rts/carbon/` (byte-identical). The game doesn't use it, and `builds/` is now excluded from the export.
 
 **The kit** lives in `scenes/rts/desert_kit/`:
 
@@ -48,6 +56,7 @@ Art is in `assets/textures/rts/desert_kit/`. Pieces with no kit painting use ori
 | Same test, Forward+ fullscreen `--capture --compare --record` | All passed; stills and frames measure 1920 × 1080 |
 | Same test against the exported build (`--main-pack builds/Balance.exe`), headless and in a fullscreen window | All passed; both new cards launch and Esc returns |
 | `test_rts_test_map.gd`, `test_rts_reusable_2_carbon.gd` (and `--miasaki`), `test_rts_reusable_3.gd`, `test_rts_reusable_4.gd` | All passed, so the older builds are unchanged |
+| `tests/capture_kit_palette.gd` (windowed): the Kit Palette loads all 37 entries with thumbnails, filters by tag and hands the 2D view a scene file to drop | Passed. Dropping into the real editor still needs a manual check |
 
 Captures: [opening](../render_captures/rts_mission_1/01_opening_command_hd.png) · [opening Pixel](../render_captures/rts_mission_1/01_opening_command_pixel.png) · [spring](../render_captures/rts_mission_1/02_sheltered_spring_hd.png) · [roadside pool](../render_captures/rts_mission_1/03_roadside_pool_and_fork_hd.png) · [HQ and squad](../render_captures/rts_mission_1/04_blue_headquarters_and_squad_hd.png) · [tracks](../render_captures/rts_mission_1/05_forked_dune_treads_hd.png) · [kit page 1](../render_captures/rts_mission_1/kit_1_arrangements_hd.png) · [kit page 2](../render_captures/rts_mission_1/kit_2_pieces_hd.png) · [12 s clip](../render_captures/rts_mission_1/mission_1_in_motion.mp4)
 

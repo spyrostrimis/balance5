@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_mesa.tscn" id="19_a3qca"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/outpost_pad.tscn" id="20_yemtc"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/blue_field_hq.tscn" id="21_b3f2q"]
-[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/groups/sheltered_spring.tscn" id="22_iiwxo"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/cliff_oasis.tscn" id="90_cliffoasis"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/orichalcum_outcrop.tscn" id="23_65vjw"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_outcrop_low.tscn" id="24_ww5q8"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_boulders.tscn" id="25_je70i"]
@@ -224,8 +224,8 @@ position = Vector2(116, 192)
 [node name="BlueFieldHQ" parent="YSortWorld" unique_id=1770656320 instance=ExtResource("21_b3f2q")]
 position = Vector2(316, 232)
 
-[node name="ShelteredSpring" parent="YSortWorld" unique_id=1965367934 instance=ExtResource("22_iiwxo")]
-position = Vector2(1024, 196)
+[node name="NortheastCliffOasis" parent="YSortWorld" instance=ExtResource("90_cliffoasis")]
+position = Vector2(1016, 192)
 
 [node name="RedOutpostPad" parent="YSortWorld" unique_id=1499918559 instance=ExtResource("20_yemtc")]
 position = Vector2(1264, 336)
@@ -428,7 +428,7 @@ script = ExtResource("31_5fryn")
 [node name="1_Opening" type="Marker2D" parent="CameraViews" unique_id=1099439679]
 position = Vector2(520, 400)
 
-[node name="2_ShelteredSpring" type="Marker2D" parent="CameraViews" unique_id=162953743]
+[node name="2_NortheastOasis" type="Marker2D" parent="CameraViews" unique_id=162953743]
 position = Vector2(1040, 232)
 
 [node name="3_RoadsidePool" type="Marker2D" parent="CameraViews" unique_id=801506332]

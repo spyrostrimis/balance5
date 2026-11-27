@@ -14,3 +14,4 @@ detailed_texture_override = ExtResource("2_5rn1k")
 pixel_texture_override = ExtResource("3_7vu0q")
 blocked_poly = PackedVector2Array()
 shadow_alpha = 0.0
+metadata/tags = PackedStringArray("desert", "crystal", "orichalcum")

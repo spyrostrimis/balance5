@@ -45,6 +45,23 @@ extends Node2D
 var texture: Texture2D
 var pixel_mode := false
 
+static var _editor_dune_material: ShaderMaterial
+
+
+func _ready() -> void:
+	# Editor only: show dunes as lit sand instead of their raw grey relief map. Set on the canvas item
+	# directly (not the `material` property) so nothing is saved into scenes.
+	if Engine.is_editor_hint() and layer_role == "dune":
+		if _editor_dune_material == null:
+			_editor_dune_material = ShaderMaterial.new()
+			_editor_dune_material.shader = load("res://assets/shaders/rts_carbon_dune.gdshader")
+			var blank := ImageTexture.create_from_image(Image.create_empty(4, 4, false, Image.FORMAT_L8))
+			_editor_dune_material.set_shader_parameter("sand_tex", load("res://assets/textures/rts/carbon/sand_tile_hd.png"))
+			_editor_dune_material.set_shader_parameter("calm_mask_tex", blank)
+			_editor_dune_material.set_shader_parameter("tread_tex", blank)
+			_editor_dune_material.set_shader_parameter("show_treads", false)
+		RenderingServer.canvas_item_set_material(get_canvas_item(), _editor_dune_material.get_rid())
+
 
 func apply_visual_mode(use_pixel: bool, dune_shader: Shader = null, sand_tex: Texture2D = null,
 		calm_tex: Texture2D = null, tread_tex: Texture2D = null, map_world_size := Vector2(1408, 896),

@@ -46,6 +46,24 @@ Area: Godot scenes
 A copy of a saved scene placed inside another scene. It stays linked to the original, and Godot only stores what you changed on that copy (its position, say). Edit the original and every instance updates.
 *In Balance:* each rock in `rts_mission_1.tscn` is an instance of a kit piece.
 
+### Dock
+Area: Godot editor
+
+A panel inside the Godot editor, like FileSystem or Inspector, that you can move around. Plugins can add their own.
+*In Balance:* the **Kit Palette** dock shows every map piece with a thumbnail and tags.
+
+### Metadata
+Area: Godot scenes
+
+Extra labelled information you can attach to any node, shown at the bottom of the Inspector. The game ignores it unless a script reads it.
+*In Balance:* each kit piece stores its tags as metadata named `tags`, which the Kit Palette reads.
+
+### MSDF font
+Area: UI
+
+A way of storing letters as shapes rather than as small pictures, so text stays sharp however much it is scaled. Normal font rendering draws a letter at one size; enlarging that drawing makes it blurry.
+*In Balance:* turned on project-wide because the RTS HUD scales its text up.
+
 ### Value noise and gradient noise
 Area: Shaders
 

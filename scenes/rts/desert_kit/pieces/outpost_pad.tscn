@@ -17,3 +17,4 @@ shadow_alpha = 0.32
 shade_offset = Vector2(18, 15)
 shade_radii = Vector2(68, 64)
 shade_strength = 0.36
+metadata/tags = PackedStringArray("desert", "building", "carbon-art")

@@ -146,21 +146,24 @@ func _verify_mission(capture: bool) -> void:
 	_check(map.get("smooth_wind") == true, "Seam-free wind lighting is on")
 	_check(map.has_node("RoadNetwork/HQDriveway") and not map.has_node("GroundDecals/HQForecourt"),
 		"HQ joins the road with a driveway instead of a loose paving patch")
-	var spring := map.get_node("YSortWorld/ShelteredSpring")
+	var oasis := map.get_node_or_null("YSortWorld/NortheastCliffOasis") as RtsCarbonPiece
+	_check(oasis != null and oasis.piece_id == "cliff_oasis", "Carbon's painted cliff oasis holds the northeast")
+	var spring_kit := (load(GROUPS_DIR + "sheltered_spring.tscn") as PackedScene).instantiate()
 	var green := 0
-	for c in spring.get_children():
+	for c in spring_kit.get_children():
 		if String(c.get("piece_id")).begins_with("scrub") or String(c.get("piece_id")) == "oasis_reeds":
 			green += 1
-	_check(green >= 8, "Sheltered spring has a ring of green at the waterline (%d plants)" % green)
+	spring_kit.free()
+	_check(green >= 8, "Kit sheltered spring has a ring of green at the waterline (%d plants)" % green)
 
 	# Blocked ground agrees with the visible pieces.
 	var grid := map.grid
 	_check(not grid.is_walkable(grid.cell_of(Vector2(656, 444))), "Central Orichalcum blocks its cells")
 	_check(not grid.is_walkable(grid.cell_of(Vector2(316, 232))), "Blue Field HQ blocks its footprint")
 	_check(grid.is_walkable(grid.cell_of(Vector2(316, 312))), "Driveway in front of the HQ is walkable")
-	_check(not grid.is_walkable(grid.cell_of(Vector2(996, 240))), "Spring water blocks deep water")
-	_check(not grid.is_walkable(grid.cell_of(Vector2(1050, 162))), "Spring cliff blocks its cells")
-	_check(grid.is_walkable(grid.cell_of(Vector2(1008, 288))), "Spring sandy shore is walkable")
+	_check(not grid.is_walkable(grid.cell_of(Vector2(996, 240))), "Oasis pool blocks its cells")
+	_check(not grid.is_walkable(grid.cell_of(Vector2(1050, 162))), "Oasis cliff blocks its cells")
+	_check(grid.is_walkable(grid.cell_of(Vector2(1008, 352))), "Sand south of the oasis is walkable")
 	_check(map.height_at(Vector2(382, 654)) > 0.6, "Forked dune gives elevation")
 	map.close_zoom = false
 	map.apply_zoom_framing()
@@ -227,9 +230,18 @@ func _verify_mission(capture: bool) -> void:
 	red_tank.hull_angle = PI * 0.5
 	red_tank.turret_angle = PI * 0.5
 	red_tank.command_move(Vector2(1024, 848))
-	var tree := map.get_node("YSortWorld/ShelteredSpring/SpringTree") as RtsCarbonPiece
-	blue_sq3.position = tree.global_position + Vector2(-56, -16)
-	blue_sq3.command_move(tree.global_position + Vector2(-14, -16))
+	var tree := map.get_node("YSortWorld/RoadsidePool/BankTree") as RtsCarbonPiece
+	# Stand the squad on the nearest walkable cell under the crown (the trunk sits among boulders).
+	var under := tree.global_position + Vector2(0, -16)
+	var best := INF
+	for oy in range(-40, 4, 4):
+		for ox in range(-40, 41, 4):
+			var pt := tree.global_position + Vector2(ox, oy)
+			if grid.is_walkable(grid.cell_of(pt)) and Vector2(ox, oy).length() < best:
+				best = Vector2(ox, oy).length()
+				under = grid.center_of(grid.cell_of(pt))
+	blue_sq3.position = under
+	blue_sq3.command_stop()
 	map.set_selection([blue_sq3])
 	_advance_sim(map, 4.4)
 	_check(map.disturbed_tread_pixels > 110, "Tank leaves twin tracks across the forked dune (%d px)" % map.disturbed_tread_pixels)

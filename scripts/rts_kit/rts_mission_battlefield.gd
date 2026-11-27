@@ -148,5 +148,7 @@ func _build_minimap_texture() -> ImageTexture:
 			for p in _pieces:
 				if p.is_orichalcum and wpt.distance_to(p.global_position) < 42.0:
 					col = Color(0.98, 0.78, 0.20)
+				elif p.piece_id == "cliff_oasis" and wpt.distance_to(p.to_global(Vector2(-78.0, 68.0))) < 42.0:
+					col = Color(0.18, 0.78, 0.74)  # Carbon's painted pool inside its cliff
 			img.set_pixel(x, y, col)
 	return ImageTexture.create_from_image(img)

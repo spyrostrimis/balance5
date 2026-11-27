@@ -14,3 +14,4 @@ blocked_poly = PackedVector2Array(18, -42, 48, -34, 56, 2, 28, 34, -6, 38, -12, 
 shadow_offset = Vector2(6, 5)
 shadow_size = Vector2(108, 86)
 shadow_alpha = 0.22
+metadata/tags = PackedStringArray("desert", "oasis", "shore", "rock")

@@ -13,3 +13,4 @@ detailed_texture_override = ExtResource("2_44u51")
 pixel_texture_override = ExtResource("3_0pyg3")
 blocked_poly = PackedVector2Array()
 shadow_alpha = 0.0
+metadata/tags = PackedStringArray("desert", "plants", "carbon-art")

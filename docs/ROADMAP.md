@@ -36,6 +36,10 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Consolidate into one canonical **RTS Mission 1** scene built only from a shared desert kit (one scene per piece), with brighter Blue uniforms, seam-free sand, the HQ joined to the road and a greener spring. Captured at 1920 × 1080. [Play, edit and evidence](RTS_MISSION_1.md)
 - [ ] Owner generates the steeper-angle Blue HQ painting with [prompt 1](../assets/source_inputs/desert_kit/PROMPTS.md), then an agent runs `make_desert_kit_hq.py` and checks its blocked ground.
 - [ ] Owner builds a small second map from the desert kit without help, to prove the kit is reusable. [How to make maps](RTS_MISSION_1.md#make-and-edit-maps)
+- [x] Put Carbon's painted cliff oasis back in Mission 1, tag every kit piece, and add the **Kit Palette** editor dock (thumbnails, tag filters, drag to place). [Kit Palette](RTS_MISSION_1.md#make-and-edit-maps)
+- [ ] Owner drags a piece from the Kit Palette into Mission 1 in the editor and confirms it lands where dropped.
+- [ ] Owner generates the five HUD mockups ([prompts](../assets/source_inputs/hud/PROMPTS.md)) and picks one or two to build as switchable HUDs in Mission 1.
+- [ ] Make Miasaki's palette a switchable planet skin for the kit, so any map can be played on that world.
 - [ ] Tune the first fight. Compare one group move, a split approach and a retreat to Mend. Record who survives and who controls the rock.
 - [ ] At Command zoom, have a new player identify the commander, a wounded squad and which side is holding the plaza.
 - [ ] Play from briefing to result and retry. Verify hold and elimination for each side, a contested timer, and Mend from the sidebar.

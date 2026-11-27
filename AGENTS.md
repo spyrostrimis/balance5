@@ -17,6 +17,7 @@ This file is the single source of truth for how the project is built, for every 
 | `scenes/ui/` | Opening screen, Developers Page and build launcher. |
 | `scripts/` | Runtime GDScript only. Canyon systems live in `scripts/canyon/`, RTS systems in `scripts/rts/`, `scripts/rts_carbon/` (Carbon's battlefield, units, HUD, pieces) and `scripts/rts_kit/` (Mission 1 battlefield, road helpers, kit preview). |
 | `tests/` | Headless and windowed test harnesses, such as the walk captures. |
+| `addons/` | Editor plugins: `developer_catalog` (build dates in exports) and `balance_kit_palette` (the Kit Palette dock for placing tagged kit pieces). |
 | `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
 | `assets/` | Models, textures, shaders, `materials/` and `environments/` (`.tres`). `assets/source_inputs/` holds the original AI-generated images and GLBs the tools consume (ignored by Godot). |

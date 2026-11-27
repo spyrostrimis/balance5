@@ -18,3 +18,4 @@ shade_offset = Vector2(22, 18)
 shade_radii = Vector2(106, 78)
 shade_strength = 0.46
 is_orichalcum = true
+metadata/tags = PackedStringArray("desert", "crystal", "orichalcum", "objective", "carbon-art", "landmark")

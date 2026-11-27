@@ -5,7 +5,7 @@
 RTS acceptance view is now **1920 × 1080** (fullscreen Forward+), Detailed HD at Command zoom.
 
 - [x] Open sand shows no straight light seams at Command zoom (contrast-boosted check by the spring and HQ). Older builds keep the old noise unless `smooth_wind` is on.
-- [x] Blue squads read as cobalt, not navy, on sand and road beside Red, with wounded 3-of-4 countable. Brackets off. [Before/after](RTS_MISSION_1.md#what-changed-from-reusable-4)
+- [x] Blue squads read as cobalt, not navy, on sand and road beside Red, with wounded 3-of-4 countable. Brackets off. [Before/after](RTS_MISSION_1_DESERT.md#what-changed-from-reusable-4)
 - [x] HQ joins the road with a driveway; no loose paving oval. The sheltered spring has scrub and reeds at the waterline.
 - [x] Every placed piece in Mission 1 is a kit instance; moving PassCliff still closes and reopens the tank lane.
 - [x] Blue HQ repainted at Carbon's camera angle and installed; it sits beside the outpost at the same near-overhead view.

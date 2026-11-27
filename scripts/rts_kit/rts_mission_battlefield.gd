@@ -7,7 +7,7 @@ extends RtsCarbonBattlefield
 ## - camera views come from the Marker2D children of CameraViews (keys 1-9, first = opening)
 ## - seam-free wind lighting on open sand (smooth_wind)
 ## - planet skins: P cycles the terrain art (Desert, Miasaki, …) without touching the layout
-## - HUD styles: U cycles Classic, Holo and the original Carbon HUD (RtsMissionHud)
+## - HUD styles: U cycles Mockup E, Classic, Holo and the original Carbon HUD (RtsMissionHud)
 ## Make a new map by copying the mission scene and moving or adding kit pieces.
 
 @export var smooth_wind := true
@@ -17,8 +17,13 @@ extends RtsCarbonBattlefield
 @export var skin_paths := PackedStringArray(["", "res://assets/textures/rts/skins/miasaki;res://assets/textures/rts/carbon_miasaki"])
 @export var skin_painted_sand: Array[bool] = [false, true]
 @export var start_skin := 0
-## "classic", "holo" or "placeholder" (the original Carbon HUD).
-@export var start_hud_style := "classic"
+## Units rise by height² × this many world pixels, so low ripples barely lift them and a
+## sand hill (relief ≈ 2.4) raises them about 26 px. 0 = flat movement like Carbon.
+@export var unit_lift_px := 4.5
+## How strongly slopes facing the upper-left sun brighten units (and the far side darkens them).
+@export var slope_light := 2.6
+## "mockup_e", "classic", "holo" or "placeholder" (the original Carbon HUD).
+@export var start_hud_style := "mockup_e"
 
 var skin_index := 0
 var _skin_dirs := PackedStringArray()
@@ -86,6 +91,31 @@ func _sync_camera_transform() -> void:
 	camera.position = snapped_center + screen_shift / z
 	hud.camera_world_rect = Rect2(snapped_center - half, vis_world_size)
 	hud.request_repaint()
+
+
+## Screen lift for a unit standing at world point p (see unit_lift_px).
+func terrain_lift_at(p: Vector2) -> float:
+	var h := height_at(p)
+	return h * h * unit_lift_px
+
+
+## Light multiplier from the slope under p, relative to the upper-left sun.
+func terrain_light_at(p: Vector2) -> float:
+	var d := Vector2(0.7071, 0.7071)
+	var g := (height_at(p + d * 8.0) - height_at(p - d * 8.0)) / 16.0
+	return clampf(1.0 + g * slope_light * 10.0, 0.84, 1.14)
+
+
+## Click selection follows the raised sprite, not the ground point under it.
+func _unit_under(world_pt: Vector2) -> RtsCarbonUnit:
+	var best: RtsCarbonUnit = null
+	var best_d := INF
+	for u in get_living_units():
+		var d := (u.position - Vector2(0.0, terrain_lift_at(u.position))).distance_to(world_pt)
+		if d <= u.select_radius() + 5.0 and d < best_d:
+			best_d = d
+			best = u
+	return best
 
 
 func _on_hud_toggle(which: String) -> void:

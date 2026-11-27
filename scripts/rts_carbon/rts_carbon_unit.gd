@@ -533,6 +533,9 @@ func _draw() -> void:
 	if battlefield != null:
 		shade = float(battlefield.call("shade_at", position))
 	var light_mult := clampf(1.0 - shade * 0.68, 0.56, 1.0)
+	# Battlefields with tall terrain light the sunward slopes (upper left) and darken the far side.
+	if battlefield != null and battlefield.has_method("terrain_light_at"):
+		light_mult = clampf(light_mult * float(battlefield.call("terrain_light_at", position)), 0.5, 1.15)
 	var tint := Color(light_mult, light_mult * 0.99, minf(1.0, light_mult * 1.04), 1.0)
 	if _hit_flash > 0.0:
 		tint = tint.lerp(Color(1.0, 1.0, 1.0, 1.0), 0.72)
@@ -560,6 +563,9 @@ func _draw_slot(slot: Vector2) -> Vector2:
 
 
 func _draw_origin() -> Vector2:
+	# Battlefields with tall terrain (hills) raise units with the ground they stand on.
+	if battlefield != null and battlefield.has_method("terrain_lift_at"):
+		return Vector2(0.0, -float(battlefield.call("terrain_lift_at", position)))
 	return Vector2.ZERO
 
 

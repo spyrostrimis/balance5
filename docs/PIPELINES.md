@@ -6,16 +6,16 @@ Area: RTS art · Status: In use · Tools: ChatGPT Images or an existing repaint,
 
 1. Repaint some kit pieces in the new world's palette at the same size as the originals (`<piece>_hd.png`), or reuse a full repaint like `assets/textures/rts/carbon_miasaki/`.
 2. For pieces left unpainted, copy `tools/python/make_planet_skin_miasaki.py`, point it at the new pairs and run it. It fits a smooth colour mapping from the matched pairs, restores their contrast, and writes the recoloured pieces into `assets/textures/rts/skins/<planet>/` plus a contact sheet.
-3. Add the planet's name and folders (`;`-separated, first match wins) to `skin_names`, `skin_paths` and `skin_painted_sand` on the Mission scene root. Press P in play, and run `test_rts_mission_1.gd` with `--capture` to inspect it.
+3. Add the planet's name and folders (`;`-separated, first match wins) to `skin_names`, `skin_paths` and `skin_painted_sand` on the Mission scene root. Press P in play, and run `test_rts_mission_1_desert.gd` with `--capture` to inspect it.
 
 ## Make or change an RTS map from the desert kit
 
 Area: RTS maps · Status: In use · Tools: Godot 4.7.2, ChatGPT Images, Python (Pillow, NumPy, OpenCV), FFmpeg
 
-1. Work in `scenes/maps/rts_mission_1.tscn` (or a duplicate of it for a new map). Use the **Kit Palette** dock (tags, search, drag to place), or drag scenes from `scenes/rts/desert_kit/pieces/` or `groups/` under `YSortWorld` (upright), `Dunes` or `GroundDecals` (flat). Bend roads by dragging the `Line2D` points under `RoadNetwork`. Set the 1–9 camera views with the `CameraViews` markers.
+1. Work in `scenes/maps/rts_mission_1_desert.tscn` (or a duplicate of it for a new map). Use the **Kit Palette** dock (tags, search, drag to place), or drag scenes from `scenes/rts/desert_kit/pieces/` or `groups/` under `YSortWorld` (upright), `Dunes` or `GroundDecals` (flat). Bend roads by dragging the `Line2D` points under `RoadNetwork`. Set the 1–9 camera views with the `CameraViews` markers.
 2. A new piece is a new painting plus a scene in `pieces/` named after its `piece_id`, holding its art, [blocked footprint](GLOSSARY.md#blocked-footprint), shadow and shade. Give its root a `tags` metadata list. It appears in the Kit Palette (after Reload) and on the kit preview's page 2 on its own. Put new art in `assets/textures/rts/desert_kit/` as `<piece_id>_hd.png` (2×) and `_pixel.png` (1×). Prompts and source paintings go in `assets/source_inputs/desert_kit/`.
-3. Run `tests/test_rts_mission_1.gd` headless, then in Forward+ with `--fullscreen -- --capture --compare --record` for 1920 × 1080 stills, before/after against Reusable 4 and the clip. Inspect every PNG.
-4. Export, then run the test with `--main-pack builds/Balance.exe`, headless and in a fullscreen window. `Balance.exe` itself ignores `--script` and just opens the game, so window checks of the export go through the Godot runner. [Commands](RTS_MISSION_1.md#reproduce)
+3. Run `tests/test_rts_mission_1_desert.gd` headless, then in Forward+ with `--fullscreen -- --capture --compare --record` for 1920 × 1080 stills, before/after against Reusable 4 and the clip. Inspect every PNG.
+4. Export, then run the test with `--main-pack builds/Balance.exe`, headless and in a fullscreen window. `Balance.exe` itself ignores `--script` and just opens the game, so window checks of the export go through the Godot runner. [Commands](RTS_MISSION_1_DESERT.md#reproduce)
 
 ## Extend Carbon with modular ChatGPT landmarks, dunes and unit sheets (RTS Reusable 4)
 

@@ -1,5 +1,23 @@
 # Decisions
 
+### 2026-11-27 · Mission 1 has a Desert (Red) and a Forest (Blue) map
+
+Area: RTS · Campaign · Status: Decided by owner
+
+`RTS Mission 1 – Desert` is Red's first mission and `RTS Mission 1 – Forest` is Blue's. Both share units, buildings, the Orichalcum rock, the HUD and the rules; only the map and its kit differ. The forest map gets wider lanes than the reference painting so troops are not boxed in by trees. [Forest plan](RTS_MISSION_1_FOREST_PLAN.md)
+
+### 2026-11-27 · Use the HUD mockup itself as a HUD style
+
+Area: UI · Status: Trying
+
+The owner preferred mockup E as drawn over the code-drawn Classic. Its painted chrome is cut from the mockup and only the changing values are drawn live. It is the default; Classic, Holo and Carbon stay switchable with U.
+
+### 2026-11-27 · Units rise over hills
+
+Area: RTS movement · Status: Verified
+
+Units are drawn higher by the square of the terrain height and lit by the slope, so they visibly climb hills while low ripples barely move them. Ground position, pathing and blocking are unchanged; it only affects drawing and clicking. [Sand hills](RTS_MISSION_1_DESERT.md#sand-hills-units-go-up-and-down)
+
 ### 2026-11-27 · Try Classic and Holo HUDs in play
 
 Area: UI · Status: Trying
@@ -40,7 +58,7 @@ The HUD writes small text and then scales the drawing up, which blurred the lett
 
 Area: RTS · Status: Decided by owner
 
-Four builds in a row copied Carbon's scene, scripts and art to change a few pieces. **RTS Mission 1** (`scenes/maps/rts_mission_1.tscn`) is now the one RTS scene, built only from `scenes/rts/desert_kit/` (one scene per painted piece plus editable groups). Visual changes become edits to the kit, with a switch for A/B where needed (for example `smooth_wind`). Carbon, Miasaki, Reusable 3 and Reusable 4 stay as frozen comparison cards. [Mission 1 and the kit](RTS_MISSION_1.md)
+Four builds in a row copied Carbon's scene, scripts and art to change a few pieces. **RTS Mission 1** (`scenes/maps/rts_mission_1_desert.tscn`) is now the one RTS scene, built only from `scenes/rts/desert_kit/` (one scene per painted piece plus editable groups). Visual changes become edits to the kit, with a switch for A/B where needed (for example `smooth_wind`). Carbon, Miasaki, Reusable 3 and Reusable 4 stay as frozen comparison cards. [Mission 1 and the kit](RTS_MISSION_1_DESERT.md)
 
 ### 2026-11-27 · Judge the RTS at 1920 × 1080
 
@@ -52,7 +70,7 @@ The 1376 × 768 capture size came from the first RPG canyon reference image (`do
 
 Area: RTS terrain · Status: Verified
 
-The wind-lighting noise in Carbon's sand shaders drew straight light seams along its grid cells, visible as long diagonals by the spring. Gradient noise with a smoother blend keeps the same swell size without seams. It is an opt-in switch (`smooth_wind`) so the older builds are unchanged. [Before/after](RTS_MISSION_1.md#what-changed-from-reusable-4)
+The wind-lighting noise in Carbon's sand shaders drew straight light seams along its grid cells, visible as long diagonals by the spring. Gradient noise with a smoother blend keeps the same swell size without seams. It is an opt-in switch (`smooth_wind`) so the older builds are unchanged. [Before/after](RTS_MISSION_1_DESERT.md#what-changed-from-reusable-4)
 
 ### 2026-11-26 · Build RTS Reusable 4 with front-and-rear unit paintings, flat-sand dune deltas and seamless road joins
 

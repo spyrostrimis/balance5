@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_piece"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/sand_hill_hd.png" id="2_hd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/sand_hill_pixel.png" id="3_px"]
+
+[node name="SandHill" type="Node2D"]
+script = ExtResource("1_piece")
+piece_id = "sand_hill"
+world_size = Vector2(230, 101)
+layer_role = "dune"
+detailed_texture_override = ExtResource("2_hd")
+pixel_texture_override = ExtResource("3_px")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+relief_height = 2.4
+relief_radii = Vector2(96, 44)
+relief_offset = Vector2(-8, 6)
+metadata/tags = PackedStringArray("desert", "dune", "sand", "hill")

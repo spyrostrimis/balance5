@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/outpost_pad.tscn" id="20_yemtc"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/blue_field_hq.tscn" id="21_b3f2q"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/cliff_oasis.tscn" id="90_cliffoasis"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/sand_hill.tscn" id="91_sandhill"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/orichalcum_outcrop.tscn" id="23_65vjw"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_outcrop_low.tscn" id="24_ww5q8"]
 [ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_boulders.tscn" id="25_je70i"]
@@ -64,8 +65,9 @@ mouse_filter = 2
 [node name="Dunes" type="Node2D" parent="." unique_id=1483716686]
 z_index = -9
 
-[node name="DuneWestShoulder" parent="Dunes" unique_id=1276396850 instance=ExtResource("2_3gbx8")]
-position = Vector2(156, 548)
+[node name="SandHillWest" parent="Dunes" instance=ExtResource("91_sandhill")]
+position = Vector2(190, 572)
+scale = Vector2(1.3, 1.3)
 
 [node name="DuneSWBase" parent="Dunes" unique_id=1939312134 instance=ExtResource("3_efc1k")]
 position = Vector2(192, 744)

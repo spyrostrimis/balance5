@@ -12,7 +12,7 @@ extends SceneTree
 ##   scenes/rts/desert_kit/groups/*.tscn            sheltered spring, roadside pool, two Orichalcum deposits,
 ##                                                  each made of piece-scene instances
 ##   scenes/rts/desert_kit/kit_preview.tscn         arrangements page + labelled palette of every piece
-##   scenes/maps/rts_mission_1.tscn                 Reusable 4's layout rebuilt from kit instances
+##   scenes/maps/rts_mission_1_desert.tscn                 Reusable 4's layout rebuilt from kit instances
 
 const Guard := preload("res://tools/godot/tool_guard.gd")
 const PIECE_SCRIPT := preload("res://scripts/rts_carbon/rts_carbon_piece.gd")
@@ -27,7 +27,7 @@ const PIECES_DIR := KIT_DIR + "pieces/"
 const GROUPS_DIR := KIT_DIR + "groups/"
 const KIT_ART := "res://assets/textures/rts/desert_kit/"
 const CARBON_ART := "res://assets/textures/rts/carbon/"
-const MISSION_PATH := "res://scenes/maps/rts_mission_1.tscn"
+const MISSION_PATH := "res://scenes/maps/rts_mission_1_desert.tscn"
 const R4_MAP := "res://scenes/maps/rts_reusable_4.tscn"
 const CARBON_MAP := "res://scenes/maps/rts_reusable_2_carbon.tscn"
 const R4_GROUPS := {

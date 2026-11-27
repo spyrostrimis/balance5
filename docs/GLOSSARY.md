@@ -32,7 +32,7 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 Area: Godot scenes
 
 A small saved scene (such as an oasis or crystal outcrop) made of several separate child pieces that you can drop onto a map as one unit, or open in Godot to move, scale, or swap any individual rock, water pool, bank, or tree inside it.
-*In Balance:* `scenes/rts/desert_kit/groups/roadside_pool.tscn` and `sheltered_spring.tscn` are editable groups placed inside `scenes/maps/rts_mission_1.tscn`.
+*In Balance:* `scenes/rts/desert_kit/groups/roadside_pool.tscn` and `sheltered_spring.tscn` are editable groups placed inside `scenes/maps/rts_mission_1_desert.tscn`.
 
 ### Kit piece
 Area: RTS maps
@@ -44,7 +44,7 @@ One painted map part saved as its own small scene, such as a rock, dune, pool or
 Area: Godot scenes
 
 A copy of a saved scene placed inside another scene. It stays linked to the original, and Godot only stores what you changed on that copy (its position, say). Edit the original and every instance updates.
-*In Balance:* each rock in `rts_mission_1.tscn` is an instance of a kit piece.
+*In Balance:* each rock in `rts_mission_1_desert.tscn` is an instance of a kit piece.
 
 ### Dock
 Area: Godot editor
@@ -63,6 +63,18 @@ Area: UI
 
 A way of storing letters as shapes rather than as small pictures, so text stays sharp however much it is scaled. Normal font rendering draws a letter at one size; enlarging that drawing makes it blurry.
 *In Balance:* turned on project-wide because the RTS HUD scales its text up.
+
+### Unit lift
+Area: RTS movement
+
+How far a unit's picture is raised when it stands on high ground, so it looks like it walks up a hill instead of sliding across a flat painting. The unit's real position on the map does not change.
+*In Balance:* `unit_lift_px` on RTS Mission 1 – Desert; about 26 px on the sand hill's summit.
+
+### Inpainting
+Area: Art tools
+
+Filling a chosen part of a picture with what is probably behind it, using the surrounding pixels. We use it to remove baked-in text and numbers from a mockup so the game can draw live values there.
+*In Balance:* `make_hud_mockup_e.py` paints out the mockup's numbers before Godot draws real ones.
 
 ### Planet skin
 Area: RTS art

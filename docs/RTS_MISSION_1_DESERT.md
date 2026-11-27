@@ -1,8 +1,8 @@
-# RTS Mission 1 and the desert kit
+# RTS Mission 1 – Desert and the desert kit
 
-**RTS Mission 1** (`scenes/maps/rts_mission_1.tscn`) is now the one canonical RTS scene. It holds original Carbon's encounter (same forces, rules, camera and HUD) on Reusable 4's layout, rebuilt entirely from a shared **desert kit**. Future RTS work, visual or gameplay, edits this scene and the kit. It does not make another "Reusable N" copy. Carbon, Miasaki, Reusable 3 and Reusable 4 stay on the Developers Page unchanged as comparison baselines.
+**RTS Mission 1 – Desert** (`scenes/maps/rts_mission_1_desert.tscn`) is Red's first mission, in the desert. Blue's first mission is **RTS Mission 1 – Forest** ([plan](RTS_MISSION_1_FOREST_PLAN.md)). Both use the same units, buildings, Orichalcum rock, HUD and rules. The player still commands Blue here; switching this map to the Red player is on the roadmap. It is the canonical desert RTS scene. It holds original Carbon's encounter (same forces, rules, camera and HUD) on Reusable 4's layout, rebuilt entirely from a shared **desert kit**. Future RTS work, visual or gameplay, edits this scene and the kit. It does not make another "Reusable N" copy. Carbon, Miasaki, Reusable 3 and Reusable 4 stay on the Developers Page unchanged as comparison baselines.
 
-Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the main **Play RTS Mission 1** button on the opening screen also starts it). **RTS Desert Kit → View** shows the kit. All Carbon controls apply. **1–4** jump to the opening, the northeast oasis, the roadside pool and the forked dunes. **V** switches Detailed/Pixel, **Z** switches Command/Close, **G** turns on Red's AI, **F1** shows blocked ground and **Esc** returns.
+Open **Developers Page → Desert RTS builds → RTS Mission 1 – Desert → Play**. **RTS Desert Kit → View** shows the kit. All Carbon controls apply. **1–4** jump to the opening, the northeast oasis, the roadside pool and the forked dunes. **V** switches Detailed/Pixel, **Z** switches Command/Close, **G** turns on Red's AI, **F1** shows blocked ground and **Esc** returns.
 
 ![Reusable 4 and Mission 1 at the same camera](../render_captures/rts_mission_1/before_after.png)
 
@@ -10,7 +10,7 @@ Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the m
 
 | Change | Why | Evidence |
 | --- | --- | --- |
-| Every rock, dune, pool, tree, building and road piece is an instance of a kit scene | Move or add a piece without copying settings. Fixing a piece fixes every map that uses it. | `test_rts_mission_1.gd`: *every placed piece comes from the kit* |
+| Every rock, dune, pool, tree, building and road piece is an instance of a kit scene | Move or add a piece without copying settings. Fixing a piece fixes every map that uses it. | `test_rts_mission_1_desert.gd`: *every placed piece comes from the kit* |
 | Blue uniforms brightened toward Reusable 3's cobalt, keeping Reusable 4's painted shading | Reusable 4's navy read as dark shapes on orange sand | [Before/after, top row](../render_captures/rts_mission_1/before_after.png) |
 | Seam-free sand lighting (`smooth_wind`) | The old wind lighting left long straight light seams across open sand | [Before/after, middle row](../render_captures/rts_mission_1/before_after.png) |
 | HQ joined to the road with a short driveway instead of a loose oval of paving | The oval read as a puddle of road | [Before/after, bottom row](../render_captures/rts_mission_1/before_after.png) |
@@ -33,11 +33,24 @@ Open **Developers Page → Desert RTS builds → RTS Mission 1 → Play** (the m
 
 [Miasaki opening](../render_captures/rts_mission_1/06_miasaki_opening_hd.png) · [Miasaki northeast](../render_captures/rts_mission_1/06b_miasaki_northeast_hd.png) · [Miasaki roadside pool](../render_captures/rts_mission_1/06c_miasaki_roadside_pool_hd.png) · [palette transfer sheet](../render_captures/rts_mission_1/miasaki_skin_sheet.png)
 
+## Sand hills: units go up and down
+
+From Desert Crossing's painted swells, the kit now has `sand_hill` (the "small sand mountain"), `dune_swells` and `ripple_field`. `tools/python/make_desert_kit_hills.py` stores only their light and shade, so they take on whatever sand and planet skin they sit on, and tank treads flatten them like the other dunes. One sand hill replaces the west dune shoulder in this map.
+
+Units no longer move flat over them:
+- **They rise with the ground.** A unit is drawn higher by height² × `unit_lift_px` (4.5), so about 26 px on the hill's summit, about 4 px on a normal dune and nothing on flat sand. Clicking selects the raised figure.
+- **Slopes light them.** On the slope facing the upper-left sun, units brighten by up to 14 %. On the far side they darken by the same amount.
+- **Uphill is slower**, as before (Carbon's slope stride).
+
+`unit_lift_px` and `slope_light` on the scene root tune both; 0 turns them off. Each piece's `relief_height`, `relief_radii` and `relief_offset` (the summit) shape its hill. [Crossing stills](../render_captures/rts_mission_1/sand_hill_crossing.png) · [8 s clip](../render_captures/rts_mission_1/sand_hill_crossing.mp4)
+
 ## HUD styles (U)
 
-**U** cycles three HUDs. Units stay the same size in all of them, because the camera keeps one scale.
+**U** cycles four HUDs. **Mockup E** is the default: your `hud_E_classic.png` itself. `tools/python/make_hud_mockup_e.py` cuts its painted frame, buttons, labels and commander portrait into `assets/textures/ui/hud_mockup_e/` and paints out only what changes; the game draws names, health, stats, Mend, counters, the hold bar and state, the minimap and the V/Z/G/U toggles live with sharp fonts. The mockup is 1672 px wide, so its painted parts show at 1.15× on a 1080p screen; a clean high-resolution repaint of the frame would sharpen them. Other units show their own portrait in the frame. [Mockup E](../render_captures/rts_mission_1/07_hud_mockup_e_hd.png)
 
-- **Classic** (default), from mockup E: a sandstone top bar with steel counters, plus a steel-and-bronze sidebar with the portrait card, Mend strip, 2×2 enamel command buttons, parchment objective and the minimap at the bottom, as in Dune II.
+The other three: Units stay the same size in all of them, because the camera keeps one scale.
+
+- **Classic**, drawn in code after mockup E: a sandstone top bar with steel counters, plus a steel-and-bronze sidebar with the portrait card, Mend strip, 2×2 enamel command buttons, parchment objective and the minimap at the bottom, as in Dune II.
 - **Holo**, from mockup B: no sidebar. Glass panels float over the battlefield: status strip and objective at the top, minimap bottom-left, unit card bottom-centre, commands bottom-right. You see more of the map.
 - **Carbon**: the original placeholder, for comparison.
 
@@ -59,7 +72,7 @@ Both new HUDs are drawn by `scripts/rts_kit/rts_mission_hud.gd` with sharp [MSDF
 
 Art is in `assets/textures/rts/desert_kit/`. Pieces with no kit painting use original Carbon's art in `assets/textures/rts/carbon/`.
 
-**Move something.** Open `scenes/maps/rts_mission_1.tscn`, select the piece under `YSortWorld`, `Dunes` or `GroundDecals`, and drag it. Its blocked ground moves with it. Units walk where the painting says they can. Press F1 in play to check.
+**Move something.** Open `scenes/maps/rts_mission_1_desert.tscn`, select the piece under `YSortWorld`, `Dunes` or `GroundDecals`, and drag it. Its blocked ground moves with it. Units walk where the painting says they can. Press F1 in play to check.
 
 **Add something.** Drag a scene from `scenes/rts/desert_kit/pieces/` (or `groups/`) onto `YSortWorld` for upright things (rocks, trees, buildings), `Dunes` for dunes, or `GroundDecals` for flat things (pebbles, road patches). Water and banks inside groups already have the right layering.
 
@@ -67,17 +80,17 @@ Art is in `assets/textures/rts/desert_kit/`. Pieces with no kit painting use ori
 
 **Change a piece everywhere.** Open the piece's own scene in `pieces/` and edit it: footprint, size, shadow. Every placement updates. To change one placement only, edit it in the map. Godot stores just that difference.
 
-**Make a new map.** Duplicate `rts_mission_1.tscn`, rearrange pieces, move the `CameraViews` markers (first marker = opening view) and the units, then add a Play card for it.
+**Make a new map.** Duplicate `rts_mission_1_desert.tscn`, rearrange pieces, move the `CameraViews` markers (first marker = opening view) and the units, then add a Play card for it.
 
 ## Checks
 
 | Check | Result |
 | --- | --- |
-| `tests/test_rts_mission_1.gd` headless: kit integrity, kit-only placements, blocked ground, passage close/reopen, tank tracks, Red tank through the passage, tree fade, Mend, reset, Developers Page cards and Esc | All passed |
+| `tests/test_rts_mission_1_desert.gd` headless: kit integrity, kit-only placements, blocked ground, passage close/reopen, tank tracks, Red tank through the passage, tree fade, Mend, reset, Developers Page cards and Esc | All passed |
 | Same test, Forward+ fullscreen `--capture --compare --record` | All passed; stills and frames measure 1920 × 1080 |
 | Same test against the exported build (`--main-pack builds/Balance.exe`), headless and in a fullscreen window | All passed; both new cards launch and Esc returns |
 | `test_rts_test_map.gd`, `test_rts_reusable_2_carbon.gd` (and `--miasaki`), `test_rts_reusable_3.gd`, `test_rts_reusable_4.gd` | All passed, so the older builds are unchanged |
-| `test_rts_mission_1.gd` in a window: for each HUD style, same battlefield scale, Attack click arms an attack, minimap click pans, battlefield centre stays clickable; planet skin swaps art without changing blocked ground, then restores it | All passed, also against the exported build |
+| `test_rts_mission_1_desert.gd` in a window: for each HUD style, same battlefield scale, Attack click arms an attack, minimap click pans, battlefield centre stays clickable; planet skin swaps art without changing blocked ground, then restores it | All passed, also against the exported build |
 | `tests/capture_kit_palette.gd` (windowed): the Kit Palette loads all 37 entries with thumbnails, filters by tag and hands the 2D view a scene file to drop | Passed. Dropping into the real editor still needs a manual check |
 
 Captures: [opening](../render_captures/rts_mission_1/01_opening_command_hd.png) · [opening Pixel](../render_captures/rts_mission_1/01_opening_command_pixel.png) · [spring](../render_captures/rts_mission_1/02_sheltered_spring_hd.png) · [roadside pool](../render_captures/rts_mission_1/03_roadside_pool_and_fork_hd.png) · [HQ and squad](../render_captures/rts_mission_1/04_blue_headquarters_and_squad_hd.png) · [tracks](../render_captures/rts_mission_1/05_forked_dune_treads_hd.png) · [kit page 1](../render_captures/rts_mission_1/kit_1_arrangements_hd.png) · [kit page 2](../render_captures/rts_mission_1/kit_2_pieces_hd.png) · [12 s clip](../render_captures/rts_mission_1/mission_1_in_motion.mp4)
@@ -90,12 +103,12 @@ Art approval stays with the owner.
 $godot = 'C:/Godot/Godot_v4.7.2-stable_win64_console.exe'
 C:/Python312/python.exe tools/python/make_desert_kit_units.py
 & $godot --headless --editor --import --path .
-& $godot --headless --path . --script res://tests/test_rts_mission_1.gd
-& $godot --path . --rendering-method forward_plus --fullscreen --script res://tests/test_rts_mission_1.gd -- --capture --compare --record
+& $godot --headless --path . --script res://tests/test_rts_mission_1_desert.gd
+& $godot --path . --rendering-method forward_plus --fullscreen --script res://tests/test_rts_mission_1_desert.gd -- --capture --compare --record
 C:/ffmpeg/bin/ffmpeg.exe -y -framerate 30 -i 'tmp/rts_mission_1/frames/%05d.jpg' -frames:v 360 -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart 'render_captures/rts_mission_1/mission_1_in_motion.mp4'
 & $godot --headless --path . --export-release 'Windows Desktop' 'builds/Balance.exe'
-& $godot --headless --main-pack builds/Balance.exe --script res://tests/test_rts_mission_1.gd
-& $godot --main-pack builds/Balance.exe --rendering-method forward_plus --fullscreen --script res://tests/test_rts_mission_1.gd
+& $godot --headless --main-pack builds/Balance.exe --script res://tests/test_rts_mission_1_desert.gd
+& $godot --main-pack builds/Balance.exe --rendering-method forward_plus --fullscreen --script res://tests/test_rts_mission_1_desert.gd
 ```
 
 `tools/godot/bootstrap_desert_kit.gd` made the kit and the first Mission 1 layout from Reusable 4 and Carbon. It was a one-time step. Rerunning it with `-- --force` overwrites the hand edits above.

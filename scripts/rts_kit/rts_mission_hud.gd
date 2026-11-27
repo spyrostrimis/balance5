@@ -6,16 +6,22 @@ extends RtsCarbonHud
 ##                  2×2 enamel command buttons, parchment objective, minimap at the bottom.
 ##   "holo"         Holo-glass field tablet: no sidebar; floating chamfered glass panels (status strip and
 ##                  objective at the top, minimap bottom-left, unit card bottom-centre, commands bottom-right).
+##   "mockup_e"     The mockup itself: its painted chrome (cut by tools/python/make_hud_mockup_e.py) with
+##                  names, numbers, bars, status and minimap drawn live on top.
 ##   "placeholder"  The original Carbon HUD, for comparison.
 ## U cycles styles in play. Every style keeps the same battlefield scale (see framing_width()).
 ## Drawing happens in Carbon's 960×540 virtual space, so clicks, minimap orders and toggles reuse
 ## RtsCarbonHud's input code.
 
-const STYLES := ["classic", "holo", "placeholder"]
-const STYLE_LABELS := {"classic": "Classic", "holo": "Holo", "placeholder": "Carbon"}
+const STYLES := ["mockup_e", "classic", "holo", "placeholder"]
+const STYLE_LABELS := {"mockup_e": "Mockup E", "classic": "Classic", "holo": "Holo", "placeholder": "Carbon"}
+const MOCK_DIR := "res://assets/textures/ui/hud_mockup_e/"
+const MOCK_K := 960.0 / 1672.0  # mockup pixels -> HUD virtual units
+const MOCK_SIDE_W := (1672.0 - 1262.0) * MOCK_K
+const MOCK_TOP_H := 62.0 * MOCK_K
 const SIDE_W := 212.0  # same as Carbon so Command framing stays 21 cells wide
 
-var style := "classic":
+var style := "mockup_e":
 	set(v):
 		style = v if v in STYLES else "classic"
 		request_repaint()
@@ -38,7 +44,9 @@ func playable_screen_rect() -> Rect2:
 	if not hud_visible or style == "holo":
 		return Rect2(Vector2.ZERO, vp)
 	var s := vp.y / VIRTUAL_H
-	return Rect2(Vector2(0.0, TOP_BAR_H * s), Vector2(maxf(64.0, vp.x - SIDE_W * s), maxf(64.0, vp.y - TOP_BAR_H * s)))
+	var top := MOCK_TOP_H if style == "mockup_e" else TOP_BAR_H
+	var side := MOCK_SIDE_W if style == "mockup_e" else SIDE_W
+	return Rect2(Vector2(0.0, top * s), Vector2(maxf(64.0, vp.x - side * s), maxf(64.0, vp.y - top * s)))
 
 
 func consumes_screen_point(screen_pt: Vector2) -> bool:
@@ -61,6 +69,8 @@ func _draw_hud() -> void:
 			_draw_holo()
 		"classic":
 			_draw_classic()
+		"mockup_e":
+			_draw_mockup_e()
 		_:
 			super._draw_hud()
 
@@ -557,5 +567,172 @@ func _draw_holo() -> void:
 		_icon(Vector2(r.position.x + 20, r.get_center().y), id, line, 1.0)
 		_text(Vector2(r.position.x + 34, r.position.y + 25), cmds[i][1], 14, H_TEXT if (id != "mend" or mend_ok) else H_TEXT_DIM, "holo", HORIZONTAL_ALIGNMENT_LEFT)
 		_btn_rects["cmd_" + id] = r
+
+	_panel.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+# --- Mockup E: the owner's mockup chrome with live content ------------------------------------------
+
+var _mock_tex := {}
+
+
+func _mock(key: String) -> Texture2D:
+	if not _mock_tex.has(key):
+		var path := MOCK_DIR + key + ".png"
+		_mock_tex[key] = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	return _mock_tex[key]
+
+
+## Sidebar coordinates in mockup pixels, anchored to the right edge.
+func _ms(vw: float, mx: float, my: float) -> Vector2:
+	return Vector2(vw - (1672.0 - mx) * MOCK_K, my * MOCK_K)
+
+
+func _mr(vw: float, x0: float, y0: float, x1: float, y1: float) -> Rect2:
+	var a := _ms(vw, x0, y0)
+	return Rect2(a, _ms(vw, x1, y1) - a)
+
+
+## Top-bar coordinates in mockup pixels, stretched across the window width.
+func _mt(vw: float, x0: float, y0: float, x1: float, y1: float) -> Rect2:
+	var sx := vw / 960.0 * MOCK_K
+	return Rect2(Vector2(x0 * sx, y0 * MOCK_K), Vector2((x1 - x0) * sx, (y1 - y0) * MOCK_K))
+
+
+func _draw_mockup_e() -> void:
+	_btn_rects.clear()
+	var s := ui_scale()
+	var vw := _virtual_w_actual()
+	var top_tex := _mock("top_bar")
+	var side_tex := _mock("sidebar")
+	if top_tex == null or side_tex == null:
+		_draw_classic()
+		return
+	_panel.draw_set_transform(Vector2.ZERO, 0.0, Vector2(s, s))
+	var gold := Color(1.0, 0.83, 0.30)
+	var cream := Color(0.98, 0.95, 0.88)
+	var ink := Color(0.12, 0.07, 0.03)
+	var steel := Color(0.12, 0.13, 0.14)
+
+	_panel.draw_texture_rect(top_tex, Rect2(0, 0, vw, MOCK_TOP_H), false)
+	var values := [
+		[835.0, 905.0, str(orichalcum)],
+		[1133.0, 1200.0, "%d/%d" % [blue_alive, blue_total]],
+		[1410.0, 1505.0, "0:%02d" % int(ceil(maxf(0.0, hold_seconds_left)))],
+	]
+	for v in values:
+		var r := _mt(vw, v[0], 12.0, v[1], 50.0)
+		_panel.draw_rect(r, Color(0.11, 0.09, 0.08))
+		_text(Vector2(r.position.x, r.end.y - 4.5), v[2], 17, gold, "classic_bold", HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
+
+	var side := Rect2(vw - MOCK_SIDE_W, MOCK_TOP_H, MOCK_SIDE_W, 879.0 * MOCK_K)
+	_panel.draw_texture_rect(side_tex, side, false)
+	var lead := _lead()
+
+	# Portrait: the mockup's painted commander stays for her; other selections show their portrait.
+	var port := _mr(vw, 1288, 88, 1428, 268)
+	var blue_commander := lead != null and lead.team == RtsCarbonUnit.Team.BLUE and lead.role == RtsCarbonUnit.Role.COMMANDER
+	if not blue_commander:
+		_panel.draw_rect(port, Color(0.09, 0.18, 0.40))
+		var ptex := _portrait(lead.portrait_key if lead != null else "orichalcum")
+		if ptex != null:
+			var side_len := minf(port.size.x, port.size.y)
+			_panel.draw_texture_rect(ptex, Rect2(port.get_center() - Vector2.ONE * side_len * 0.5, Vector2.ONE * side_len), false)
+
+	# Name, health, stats.
+	var name_r := _mr(vw, 1446, 84, 1660, 122)
+	_panel.draw_rect(name_r, Color(0.12, 0.13, 0.14))
+	var hb := _mr(vw, 1452, 128, 1654, 154)
+	_panel.draw_rect(hb, Color(0.05, 0.05, 0.02))
+	var vals := _mr(vw, 1598, 168, 1656, 264)
+	_panel.draw_rect(vals, Color(0.085, 0.08, 0.085))
+	if lead != null:
+		var title := lead.display_name if selected_units.size() <= 1 else "%s +%d" % [lead.display_name, selected_units.size() - 1]
+		_text(Vector2(name_r.position.x + 3, name_r.end.y - 5), title, 15, cream, "classic_bold", HORIZONTAL_ALIGNMENT_LEFT, name_r.size.x - 4)
+		var hp := clampf(float(lead.health) / float(maxi(lead.max_health, 1)), 0.0, 1.0)
+		var inner := hb.grow(-1.5)
+		_panel.draw_rect(Rect2(inner.position, Vector2(inner.size.x * hp, inner.size.y)), Color(0.20, 0.78, 0.22) if hp > 0.35 else Color(0.90, 0.30, 0.16))
+		_panel.draw_rect(hb, Color(0.62, 0.86, 0.36), false, 1.0)
+		_text(Vector2(hb.position.x, hb.end.y - 3), "%d / %d" % [lead.health, lead.max_health], 13, Color.WHITE, "classic", HORIZONTAL_ALIGNMENT_CENTER, hb.size.x, 2, Color(0.02, 0.16, 0.03, 0.9))
+		var stat_vals := [str(lead.attack_damage), str(lead.armour), "%.1f" % lead.attack_range_cells]
+		for i in 3:
+			var base := _ms(vw, 1598, 194.0 + i * 31.5)
+			_text(base, stat_vals[i], 15, gold, "classic_bold", HORIZONTAL_ALIGNMENT_RIGHT, vals.size.x - 4)
+	else:
+		_text(Vector2(name_r.position.x + 3, name_r.end.y - 5), "Orichalcum Vein", 15, cream, "classic_bold")
+		_text(Vector2(hb.position.x, hb.end.y - 3), "Central outcrop", 12, gold, "classic", HORIZONTAL_ALIGNMENT_CENTER, hb.size.x)
+
+	# Ability / squad strip.
+	var strip := _mr(vw, 1288, 288, 1652, 340)
+	_panel.draw_rect(strip, Color(0.10, 0.10, 0.11))
+	if lead != null and lead.role == RtsCarbonUnit.Role.SQUAD:
+		var fit := lead.fit_count()
+		_text(Vector2(strip.position.x + 8, strip.end.y - 9), "Squad  %d of 4 fit" % fit, 15, cream, "classic_bold")
+		for i in 4:
+			var pr := Rect2(strip.end.x - 78 + i * 18.0, strip.position.y + 7, 13, 16)
+			_panel.draw_rect(pr, Color(0.22, 0.44, 0.85) if i < fit else Color(0.28, 0.26, 0.24))
+			_panel.draw_rect(pr, gold, false, 1.0)
+	elif lead != null and lead.role == RtsCarbonUnit.Role.TANK:
+		_text(Vector2(strip.position.x + 8, strip.end.y - 9), "Tracked chassis", 15, cream, "classic_bold")
+	else:
+		var icon := _mock("mend_icon")
+		if icon != null:
+			_panel.draw_texture_rect(icon, _mr(vw, 1291, 289, 1362, 338), false)
+		_text(_ms(vw, 1377, 324), "Mend +30 HP", 16, cream, "classic_bold")
+		var mend := _mend_state()
+		var badge := _mr(vw, 1556, 298, 1647, 330)
+		_panel.draw_rect(badge, Color(0.10, 0.24, 0.10) if mend[0] else Color(0.18, 0.17, 0.16))
+		_panel.draw_rect(badge, Color(0.45, 0.92, 0.42) if mend[0] else Color(0.45, 0.43, 0.40), false, 1.2)
+		_text(Vector2(badge.position.x, badge.end.y - 4.5), String(mend[1]).to_upper(), 12, Color(0.55, 1.0, 0.5) if mend[0] else cream, "classic_bold", HORIZONTAL_ALIGNMENT_CENTER, badge.size.x)
+
+	# Command buttons are painted in the mockup; lit and unavailable states are overlays.
+	var any_hold := false
+	for u in selected_units:
+		if is_instance_valid(u) and u.hold_position:
+			any_hold = true
+	var mend_ok: bool = _mend_state()[0]
+	var buttons := {
+		"move": _mr(vw, 1285, 360, 1470, 430), "attack": _mr(vw, 1477, 360, 1660, 430),
+		"hold": _mr(vw, 1285, 440, 1470, 510), "mend": _mr(vw, 1477, 440, 1660, 510),
+	}
+	for id: String in buttons:
+		var r: Rect2 = buttons[id]
+		if command_cursor_mode == id or (id == "hold" and any_hold):
+			_panel.draw_rect(r.grow(-2), Color(1.0, 0.66, 0.16, 0.26))
+			_panel.draw_rect(r.grow(-1), Color(1.0, 0.86, 0.40), false, 1.6)
+		elif id == "mend" and not mend_ok:
+			_panel.draw_rect(r.grow(-2), Color(0.04, 0.04, 0.05, 0.55))
+		_btn_rects["cmd_" + id] = r
+
+	# Objective bar and state.
+	var bar := _mr(vw, 1305, 580, 1645, 608)
+	_panel.draw_rect(bar, Color(0.08, 0.08, 0.085))
+	var inner_bar := bar.grow(-2)
+	var fill_col := Color(0.98, 0.84, 0.16) if hold_owner == 0 else _hold_colour()
+	_panel.draw_rect(Rect2(inner_bar.position, Vector2(inner_bar.size.x * maxf(0.04, _hold_progress()), inner_bar.size.y)), fill_col)
+	_panel.draw_rect(bar, Color(0.05, 0.04, 0.03), false, 1.2)
+	var state_r := _mr(vw, 1300, 612, 1648, 650)
+	_panel.draw_rect(state_r, Color(0.88, 0.59, 0.29))
+	_text(Vector2(state_r.position.x, state_r.end.y - 5.5), hold_state, 16, ink, "classic_bold", HORIZONTAL_ALIGNMENT_CENTER, state_r.size.x)
+
+	# Minimap.
+	_draw_minimap_content(_mr(vw, 1302, 685, 1640, 890))
+
+	# Toggles along the bottom of the sidebar.
+	var defs := [
+		["style", "V · Pixel" if pixel_mode else "V · HD"],
+		["zoom", "Z · 15×10" if close_zoom else "Z · 21×14"],
+		["ai", "G · AI" if red_ai_active else "G · Guard"],
+		["hud", "U · HUD"],
+	]
+	var row := _mr(vw, 1276, 900, 1660, 932)
+	var cw := (row.size.x - 9.0) / 4.0
+	for i in defs.size():
+		var tr := Rect2(row.position.x + i * (cw + 3.0), row.position.y, cw, row.size.y)
+		var on: bool = (defs[i][0] == "style" and pixel_mode) or (defs[i][0] == "zoom" and close_zoom) or (defs[i][0] == "ai" and red_ai_active)
+		_panel.draw_rect(tr, Color(0.30, 0.42, 0.20) if on else (Color(0.10, 0.22, 0.48) if defs[i][0] == "hud" else steel))
+		_panel.draw_rect(tr, Color(0.80, 0.60, 0.30), false, 1.0)
+		_text(Vector2(tr.position.x, tr.end.y - 5), defs[i][1], 10, cream, "classic", HORIZONTAL_ALIGNMENT_CENTER, tr.size.x)
+		_btn_rects[defs[i][0]] = tr
 
 	_panel.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)

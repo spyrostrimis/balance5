@@ -2,15 +2,15 @@ extends SceneTree
 ## Checks and captures for RTS Mission 1, the canonical RTS scene built from the shared desert kit.
 ##
 ## Headless (kit integrity, blocked ground, passage widening, tracks, canopy, Mend, catalog + Esc):
-##   Godot_console.exe --headless --path . --script res://tests/test_rts_mission_1.gd
+##   Godot_console.exe --headless --path . --script res://tests/test_rts_mission_1_desert.gd
 ## RTS acceptance view is 1920x1080 (the native size of Carbon's Detailed art). The monitor's work area
 ## is shorter than 1080, so captures run fullscreen:
-##   Godot_console.exe --path . --rendering-method forward_plus --fullscreen --script res://tests/test_rts_mission_1.gd -- --capture --compare --record
+##   Godot_console.exe --path . --rendering-method forward_plus --fullscreen --script res://tests/test_rts_mission_1_desert.gd -- --capture --compare --record
 ##   --capture  Mission 1 stills (opening, spring, roadside pool, HQ, dune tracks, kit pages, Pixel)
 ##   --compare  the same camera and unit lineup in Reusable 4 and Mission 1 (before/after)
 ##   --record   12 s moving sequence, frames to tmp/rts_mission_1/frames (encode with ffmpeg)
 
-const SCENE_PATH := "res://scenes/maps/rts_mission_1.tscn"
+const SCENE_PATH := "res://scenes/maps/rts_mission_1_desert.tscn"
 const R4_PATH := "res://scenes/maps/rts_reusable_4.tscn"
 const KIT_PATH := "res://scenes/rts/desert_kit/kit_preview.tscn"
 const PIECES_DIR := "res://scenes/rts/desert_kit/pieces/"
@@ -167,8 +167,9 @@ func _verify_mission(capture: bool) -> void:
 	_check(map.height_at(Vector2(382, 654)) > 0.6, "Forked dune gives elevation")
 	map.close_zoom = false
 	map.apply_zoom_framing()
-	var cells_w := map.hud.camera_world_rect.size.x / 32.0
-	_check(absf(cells_w - 21.0) < 0.5, "Command zoom spans ~21 cells (%.2f)" % cells_w)
+	# Command scale: 21 cells across Carbon's original play width, whatever the HUD style shows around it.
+	var frame_w: float = map.hud.call("framing_width") if map.hud.has_method("framing_width") else map.hud.playable_screen_rect().size.x
+	_check(absf(map.camera.zoom.x - frame_w / (21.0 * 32.0)) < 0.001, "Command zoom keeps Carbon's 21-cell scale (zoom %.3f)" % map.camera.zoom.x)
 
 	if capture:
 		map.set_selection([])
@@ -185,6 +186,7 @@ func _verify_mission(capture: bool) -> void:
 		map.close_zoom = false
 		map.apply_zoom_framing()
 
+	await _verify_sand_hill(map, capture)
 	if DisplayServer.get_name() != "headless":
 		await _verify_hud_styles(map, capture)
 
@@ -297,6 +299,55 @@ func _verify_mission(capture: bool) -> void:
 	await process_frame
 
 
+# --- Sand hill: units rise with the ground and catch the light --------------------------------------
+
+func _verify_sand_hill(map: RtsCarbonBattlefield, capture: bool) -> void:
+	var hill := map.get_node_or_null("Dunes/SandHillWest") as RtsCarbonPiece
+	_check(hill != null, "Mission 1 has a sand hill from the kit")
+	if hill == null:
+		return
+	var summit := hill.global_position + hill.relief_offset
+	var lift_top: float = map.call("terrain_lift_at", summit)
+	var lift_flat: float = map.call("terrain_lift_at", Vector2(700, 300))
+	_check(lift_top > 18.0 and lift_flat < 0.5, "Units rise ~%.0f px on the summit and stay flat on open sand" % lift_top)
+	var lit_side: float = map.call("terrain_light_at", summit + Vector2(-40, -18))
+	var far_side: float = map.call("terrain_light_at", summit + Vector2(40, 18))
+	_check(lit_side > 1.03 and far_side < 0.97, "Sunward slope brightens units (%.2f) and the far slope darkens them (%.2f)" % [lit_side, far_side])
+	var squad := map.get_node("YSortWorld/BlueSquad3") as RtsCarbonUnit
+	var tank := map.get_node("YSortWorld/BlueTank") as RtsCarbonUnit
+	var saved := [squad.position, tank.position]
+	squad.position = summit + Vector2(-110, 0)
+	squad.command_move(summit + Vector2(110, 10))
+	tank.position = summit + Vector2(-30, -70)
+	tank.hull_angle = PI * 0.5
+	tank.turret_angle = tank.hull_angle
+	tank.command_move(summit + Vector2(-20, 80))
+	var max_lift := 0.0
+	var frames := [0.9, 1.7, 2.6]
+	var t := 0.0
+	map.set_selection([])
+	map.set_camera_focus(summit + Vector2(40, -10))
+	map.close_zoom = true
+	map.apply_zoom_framing()
+	for i in frames.size():
+		_advance_sim(map, frames[i] - t)
+		t = frames[i]
+		max_lift = maxf(max_lift, float(map.call("terrain_lift_at", squad.position)))
+		if capture:
+			squad.queue_redraw()
+			tank.queue_redraw()
+			await _save_still("08_sand_hill_%d_hd" % i)
+	_advance_sim(map, 2.5)
+	_check(max_lift > 10.0, "Squad climbed the hill (peak lift %.0f px)" % max_lift)
+	_check(squad.position.x > summit.x + 60.0, "Squad crossed the hill to the far side (x=%.0f)" % squad.position.x)
+	map.close_zoom = false
+	map.apply_zoom_framing()
+	squad.command_stop()
+	tank.command_stop()
+	squad.position = saved[0]
+	tank.position = saved[1]
+
+
 # --- HUD styles ------------------------------------------------------------------------------------
 
 func _click_hud(map: RtsCarbonBattlefield, virtual_pt: Vector2, button := MOUSE_BUTTON_LEFT) -> void:
@@ -316,7 +367,7 @@ func _verify_hud_styles(map: RtsCarbonBattlefield, capture: bool) -> void:
 		return
 	var commander := map.get_node("YSortWorld/BlueCommander") as RtsCarbonUnit
 	var zoom_ref := -1.0
-	for st in ["classic", "holo", "placeholder"]:
+	for st in RtsMissionHud.STYLES:
 		map.call("set_hud_style", st)
 		map.set_selection([commander])
 		map.call("focus_view", 0)
@@ -341,7 +392,7 @@ func _verify_hud_styles(map: RtsCarbonBattlefield, capture: bool) -> void:
 		if capture:
 			await process_frame
 			await _save_still("07_hud_%s_hd" % st)
-	map.call("set_hud_style", "classic")
+	map.call("set_hud_style", "mockup_e")
 	map.set_selection([])
 
 

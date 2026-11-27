@@ -40,6 +40,8 @@ extends Node2D
 ## Gentle elevation for dune clusters (shortens uphill infantry stride & enables tread flattening).
 @export var relief_height := 0.0
 @export var relief_radii := Vector2(110.0, 80.0)
+## Moves the top of the relief bump away from the piece centre (e.g. a hill's summit).
+@export var relief_offset := Vector2.ZERO
 @export var is_orichalcum := false
 
 var texture: Texture2D
@@ -129,7 +131,7 @@ func blocks_world_point(world_pt: Vector2) -> bool:
 func height_at(world_pt: Vector2) -> float:
 	if relief_height <= 0.0 or relief_radii.x <= 1.0 or relief_radii.y <= 1.0:
 		return 0.0
-	var local_pt := to_local(world_pt)
+	var local_pt := to_local(world_pt) - relief_offset
 	var nx := local_pt.x / relief_radii.x
 	var ny := local_pt.y / relief_radii.y
 	var d2 := nx * nx + ny * ny

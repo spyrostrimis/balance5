@@ -33,14 +33,19 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Build and export **RTS Reusable 3** with matched infantry comparisons, two editable oasis layouts and a driveable roadside passage. [Play and mapmaking](RTS_REUSABLE_3.md)
 - [x] Build and export **RTS Reusable 4** from fresh ChatGPT front/rear unit paintings, flat-sand signed-delta dunes, two editable oasis groups, road fork/plaza joins, and a steeper-angle Blue Field Headquarters. [Play, kit and matched evidence](RTS_REUSABLE_4.md)
 - [ ] Owner judges infantry count, faction colours in motion, and the Reusable 4 desert kit at Command zoom.
-- [x] Consolidate into one canonical **RTS Mission 1** scene built only from a shared desert kit (one scene per piece), with brighter Blue uniforms, seam-free sand, the HQ joined to the road and a greener spring. Captured at 1920 × 1080. [Play, edit and evidence](RTS_MISSION_1.md)
-- [x] Owner generated the steeper-angle Blue HQ; installed with `make_desert_kit_hq.py` and checked in Mission 1. [HQ](RTS_MISSION_1.md#what-changed-from-reusable-4)
-- [ ] Owner builds a small second map from the desert kit without help, to prove the kit is reusable. [How to make maps](RTS_MISSION_1.md#make-and-edit-maps)
-- [x] Put Carbon's painted cliff oasis back in Mission 1, tag every kit piece, and add the **Kit Palette** editor dock (thumbnails, tag filters, drag to place). [Kit Palette](RTS_MISSION_1.md#make-and-edit-maps)
+- [x] Consolidate into one canonical **RTS Mission 1** scene built only from a shared desert kit (one scene per piece), with brighter Blue uniforms, seam-free sand, the HQ joined to the road and a greener spring. Captured at 1920 × 1080. [Play, edit and evidence](RTS_MISSION_1_DESERT.md)
+- [x] Owner generated the steeper-angle Blue HQ; installed with `make_desert_kit_hq.py` and checked in Mission 1. [HQ](RTS_MISSION_1_DESERT.md#what-changed-from-reusable-4)
+- [ ] Owner builds a small second map from the desert kit without help, to prove the kit is reusable. [How to make maps](RTS_MISSION_1_DESERT.md#make-and-edit-maps)
+- [x] Put Carbon's painted cliff oasis back in Mission 1, tag every kit piece, and add the **Kit Palette** editor dock (thumbnails, tag filters, drag to place). [Kit Palette](RTS_MISSION_1_DESERT.md#make-and-edit-maps)
 - [ ] Owner drags a piece from the Kit Palette into Mission 1 in the editor and confirms it lands where dropped.
-- [x] Owner generated five HUD mockups and picked **Holo** (B) and **Classic** (E); both are built as switchable HUDs in Mission 1 (U). [HUD styles](RTS_MISSION_1.md#hud-styles-u)
-- [ ] Owner plays Mission 1 with Classic and Holo and chooses the HUD to keep (or what to change).
-- [x] Make Miasaki a switchable planet skin for Mission 1 (P), with palette-matched art for kit pieces Miasaki never painted. [Planet skins](RTS_MISSION_1.md#planet-skins-p)
+- [x] Owner generated five HUD mockups and picked **Holo** (B) and **Classic** (E); both are built as switchable HUDs in Mission 1 (U). [HUD styles](RTS_MISSION_1_DESERT.md#hud-styles-u)
+- [x] Add **Mockup E**, the owner's HUD mockup itself with live values, as the default HUD (U cycles Mockup E, Classic, Holo, Carbon).
+- [ ] Owner plays Mission 1 with the four HUDs and chooses the one to keep (or what to change).
+- [x] Add sand hills, dune swells and a ripple field from Desert Crossing to the kit; units rise over hills and catch the light on sunward slopes. [Sand hills](RTS_MISSION_1_DESERT.md#sand-hills-units-go-up-and-down)
+- [x] Rename to **RTS Mission 1 – Desert** (Red's mission) and plan **RTS Mission 1 – Forest** (Blue's). [Forest plan](RTS_MISSION_1_FOREST_PLAN.md)
+- [ ] Make Red the player's side in RTS Mission 1 – Desert.
+- [ ] Build **RTS Mission 1 – Forest** from the plan.
+- [x] Make Miasaki a switchable planet skin for Mission 1 (P), with palette-matched art for kit pieces Miasaki never painted. [Planet skins](RTS_MISSION_1_DESERT.md#planet-skins-p)
 - [ ] Give planet skins Pixel art (Miasaki currently falls back to the desert Pixel set).
 - [ ] Tune the first fight. Compare one group move, a split approach and a retreat to Mend. Record who survives and who controls the rock.
 - [ ] At Command zoom, have a new player identify the commander, a wounded squad and which side is holding the plaza.

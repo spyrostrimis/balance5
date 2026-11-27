@@ -179,12 +179,7 @@ func _build_blocked_and_calm_masks() -> void:
 	for cy in range(GRID_H):
 		for cx in range(GRID_W):
 			var wpt := Vector2(float(cx) * CELL_SIZE + 16.0, float(cy) * CELL_SIZE + 16.0)
-			var blocked := false
-			for p in _pieces:
-				if p.blocks_world_point(wpt):
-					blocked = true
-					break
-			mask.set_pixel(cx, cy, Color.WHITE if blocked else Color.BLACK)
+			mask.set_pixel(cx, cy, Color.WHITE if is_point_blocked(wpt) else Color.BLACK)
 	grid.cell_pixels = Vector2i(CELL_SIZE, CELL_SIZE)
 	grid.blocked_cells = ImageTexture.create_from_image(mask)
 	grid.setup()
@@ -204,6 +199,15 @@ func _build_blocked_and_calm_masks() -> void:
 			var calm := 1.0 - smoothstep(38.0, 145.0, min_d)
 			calm_img.set_pixel(x, y, Color(calm, calm, calm, 1.0))
 	_calm_tex = ImageTexture.create_from_image(calm_img)
+
+
+## True when any piece's blocked footprint covers world point p. Subclasses may refine it
+## (RtsMissionBattlefield lets fords and bridges open water).
+func is_point_blocked(wpt: Vector2) -> bool:
+	for p in _pieces:
+		if p.blocks_world_point(wpt):
+			return true
+	return false
 
 
 func _init_tread_buffer() -> void:

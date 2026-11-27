@@ -1,0 +1,150 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_kit/desert_kit_preview.gd" id="1_qhovk"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/sand_tile_hd.png" id="2_xsdif"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/river.tscn" id="3_0qie8"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/river_ford.tscn" id="4_j8s33"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/river_bridge.tscn" id="5_e2pxy"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/groups/woodland_copse.tscn" id="6_7njau"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/groups/forest_corner.tscn" id="7_rbt8j"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/groups/mossy_cover.tscn" id="8_gkv4v"]
+
+[node name="ForestKitPreview" type="Node2D" unique_id=411717402]
+script = ExtResource("1_qhovk")
+art_directory = "res://assets/textures/rts/forest_kit"
+pieces_directory = "res://scenes/rts/forest_kit/pieces"
+kit_title = "Forest Kit"
+centre_paintings = true
+
+[node name="Sand" type="Sprite2D" parent="." unique_id=1898193781]
+z_index = -5
+texture_repeat = 2
+position = Vector2(-832, -480)
+texture = ExtResource("2_xsdif")
+centered = false
+region_enabled = true
+
+[node name="CastShadows" type="Node2D" parent="." unique_id=417761311]
+z_index = -3
+
+[node name="Camera" type="Camera2D" parent="." unique_id=738661211]
+zoom = Vector2(1.49, 1.49)
+
+[node name="Views" type="Node2D" parent="." unique_id=1504469930]
+
+[node name="Arrangements" type="Marker2D" parent="Views" unique_id=796195012]
+metadata/zoom = 1.49
+
+[node name="Pieces" type="Marker2D" parent="Views" unique_id=773780587]
+position = Vector2(0, 896)
+metadata/zoom = 0.88
+
+[node name="GroundDecals" type="Node2D" parent="." unique_id=1833191341]
+z_index = -4
+
+[node name="River" parent="GroundDecals" unique_id=1652371793 instance=ExtResource("3_0qie8")]
+
+[node name="Course" parent="GroundDecals/River" index="0" unique_id=526973171]
+points = PackedVector2Array(-330, -150, -120, -138, 80, -158, 330, -146)
+
+[node name="RiverFord" parent="GroundDecals" unique_id=1370257592 instance=ExtResource("4_j8s33")]
+position = Vector2(-150, -140)
+
+[node name="RiverBridge" parent="GroundDecals" unique_id=1613437057 instance=ExtResource("5_e2pxy")]
+position = Vector2(170, -152)
+rotation = -0.02
+
+[node name="@Label@2" type="Label" parent="." unique_id=303829849]
+z_index = 4
+offset_left = -260.0
+offset_top = -84.0
+offset_right = 260.0
+offset_bottom = -61.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.05, 1)
+theme_override_constants/outline_size = 6
+text = "River (drag the Course points) · ford · bridge"
+horizontal_alignment = 1
+
+[node name="YSortWorld" type="Node2D" parent="." unique_id=107916790]
+y_sort_enabled = true
+
+[node name="WoodlandCopse" parent="YSortWorld" unique_id=1767419758 instance=ExtResource("6_7njau")]
+position = Vector2(-470, 140)
+
+[node name="ForestCorner" parent="YSortWorld" unique_id=1342704395 instance=ExtResource("7_rbt8j")]
+position = Vector2(0, 150)
+
+[node name="MossyCover" parent="YSortWorld" unique_id=1258628143 instance=ExtResource("8_gkv4v")]
+position = Vector2(450, 110)
+
+[node name="@Label@3" type="Label" parent="." unique_id=1265764278]
+z_index = 4
+offset_left = -600.0
+offset_top = 206.0
+offset_right = -340.0
+offset_bottom = 229.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.05, 1)
+theme_override_constants/outline_size = 6
+text = "Woodland copse"
+horizontal_alignment = 1
+
+[node name="@Label@4" type="Label" parent="." unique_id=999859893]
+z_index = 4
+offset_left = -130.0
+offset_top = 216.0
+offset_right = 130.0
+offset_bottom = 239.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.05, 1)
+theme_override_constants/outline_size = 6
+text = "Forest corner"
+horizontal_alignment = 1
+
+[node name="@Label@5" type="Label" parent="." unique_id=493726538]
+z_index = 4
+offset_left = 320.0
+offset_top = 176.0
+offset_right = 580.0
+offset_bottom = 199.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.05, 1)
+theme_override_constants/outline_size = 6
+text = "Mossy cover"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="." unique_id=19557043]
+z_index = 4
+offset_left = -380.0
+offset_top = -232.0
+offset_right = 380.0
+offset_bottom = -204.0
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.05, 1)
+theme_override_constants/outline_size = 6
+text = "Forest Kit · arrangements (Command scale) · 2 = every piece"
+horizontal_alignment = 1
+
+[node name="ModeHint" type="Label" parent="." unique_id=644467330]
+z_index = 4
+offset_left = -260.0
+offset_top = 218.0
+offset_right = 260.0
+offset_bottom = 240.33333
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.05, 1)
+theme_override_constants/outline_size = 4
+text = "[V] Detailed Painted  ·  [Esc] Developers Page"
+horizontal_alignment = 1
+
+[node name="Palette" type="Node2D" parent="." unique_id=1516125950]
+y_sort_enabled = true
+
+[editable path="GroundDecals/River"]

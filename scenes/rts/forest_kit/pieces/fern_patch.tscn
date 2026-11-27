@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_8er4q"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/fern_patch_hd.png" id="2_ly4um"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/fern_patch_pixel.png" id="3_q22qc"]
+
+[node name="FernPatch" type="Node2D" unique_id=69701215]
+script = ExtResource("1_8er4q")
+piece_id = "fern_patch"
+world_size = Vector2(48, 36)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_ly4um")
+pixel_texture_override = ExtResource("3_q22qc")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+metadata/tags = PackedStringArray("forest", "ground", "detail", "plants")

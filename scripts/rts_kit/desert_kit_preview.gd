@@ -8,6 +8,10 @@ extends Node2D
 ## Every .tscn in this folder appears on page 2, so a new piece shows up without editing this scene.
 @export_dir var pieces_directory := "res://scenes/rts/desert_kit/pieces"
 @export var palette_columns := 9
+## Shown in page 2's title ("Desert Kit", "Forest Kit").
+@export var kit_title := "Desert Kit"
+## Page 2: centre each painting in its cell even when it is drawn above its pivot (forest crowns).
+@export var centre_paintings := false
 @export var palette_cell := Vector2(150, 140)
 
 const DUNE_SHADER := preload("res://assets/shaders/rts_carbon_dune.gdshader")
@@ -64,7 +68,7 @@ func _build_palette() -> void:
 	var rows := ceili(float(files.size()) / palette_columns)
 	var grid_size := Vector2(palette_columns, rows) * palette_cell
 	var origin := page.position - grid_size * 0.5 + palette_cell * 0.5 + Vector2(0, 28)
-	var title := _make_label("Desert Kit · every piece (%d) · %s · 1 = arrangements" % [files.size(), pieces_directory.trim_prefix("res://")], 18, 1000)
+	var title := _make_label("%s · every piece (%d) · %s · 1 = arrangements" % [kit_title, files.size(), pieces_directory.trim_prefix("res://")], 18, 1000)
 	title.position = Vector2(page.position.x - 500, page.position.y - grid_size.y * 0.5 - 18)
 	add_child(title)
 	for i in files.size():
@@ -73,7 +77,7 @@ func _build_palette() -> void:
 			continue
 		var cell_centre := origin + Vector2(i % palette_columns, i / palette_columns) * palette_cell
 		var fit := minf(1.0, minf((palette_cell.x - 14.0) / piece.world_size.x, (palette_cell.y - 36.0) / piece.world_size.y))
-		piece.position = cell_centre + Vector2(0, -8)
+		piece.position = cell_centre + Vector2(0, -8) - (piece.draw_offset * fit if centre_paintings else Vector2.ZERO)
 		piece.scale = Vector2(fit, fit)
 		piece.z_index = 0
 		palette.add_child(piece)

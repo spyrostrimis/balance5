@@ -105,6 +105,30 @@ Area: RTS movement
 
 The ground cells a piece occupies and prevents units from entering. A forest tree reserves the cell under its trunk. Branches spread over the nearby cells so a squad can walk beneath them. [Forest Claim](RTS_FOREST_CLAIM.md)
 
+### Corridor width
+Area: RTS maps
+
+How wide a route is at its narrowest, counted in map cells. The forest test checks it by trying to slide a round body several cells wide along each lane: if the body gets stuck, the lane is too narrow somewhere.
+*In Balance:* main lanes in RTS Mission 1 – Forest must pass a 4-cell body, tank routes a 3-cell one.
+
+### Path piece
+Area: RTS maps
+
+A kit piece shaped by a line of points instead of a fixed picture. The picture is repeated along the line, so you can bend it by dragging the points.
+*In Balance:* the forest `river` piece; drag its **Course** points to bend the water and its blocked ground together.
+
+### Crossing
+Area: RTS maps
+
+A piece laid over water whose footprint makes the ground walkable again, like a ford or a bridge.
+*In Balance:* `river_ford` (wide enough for the tank) and `river_bridge` in the forest kit.
+
+### Stand-in art
+Area: Art
+
+Temporary pictures, drawn by a script, that let the map and rules be built and tested before the real paintings exist. They are replaced, not polished.
+*In Balance:* `tools/python/make_forest_kit.py` draws the forest kit's stand-ins until the ChatGPT paintings arrive.
+
 ### Ground contact
 Area: RTS art
 

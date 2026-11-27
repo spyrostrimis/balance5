@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_arvjg"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/tree_cluster_large_hd.png" id="2_p1lyh"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/tree_cluster_large_pixel.png" id="3_2xu42"]
+
+[node name="TreeClusterLarge" type="Node2D" unique_id=2070014477]
+script = ExtResource("1_arvjg")
+piece_id = "tree_cluster_large"
+world_size = Vector2(288, 224)
+draw_offset = Vector2(0, -80)
+detailed_texture_override = ExtResource("2_p1lyh")
+pixel_texture_override = ExtResource("3_2xu42")
+blocked_poly = PackedVector2Array(116, -80, 106, -43, 69, -18, 23, -7, -25, -3, -74, -14, -105, -44, -108, -80, -96, -113, -71, -143, -26, -163, 25, -159, 66, -139, 97, -113)
+shadow_offset = Vector2(16, -66)
+shadow_size = Vector2(293.76, 228.48)
+shadow_alpha = 0.4
+shade_offset = Vector2(12, -72)
+shade_radii = Vector2(149.76, 116.479996)
+shade_strength = 0.34
+minimap_color = Color(0.09, 0.24, 0.13, 1)
+canopy_fade = true
+metadata/tags = PackedStringArray("forest", "trees", "cluster")

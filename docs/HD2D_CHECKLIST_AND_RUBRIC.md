@@ -1,5 +1,18 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Mission 1 – Forest · 2026-11-27
+
+Same acceptance view as the desert: 1920 × 1080 fullscreen Forward+, Detailed HD at Command zoom.
+
+- [x] Every placed piece comes from the forest or desert kit; the forces and their numbers match the desert map.
+- [x] Main lanes carry a 4-cell corridor and tank routes a 3-cell one; tanks and squads drive every lane.
+- [x] The river blocks along its whole course away from the crossings; banks stay walkable; the ford carries the tank and the bridge carries infantry; without both the meadow is cut off.
+- [x] Woods block only their trunks' core; crowns fade over a selected squad beneath them.
+- [x] Minimap shows woods dark green, the river blue and the clearing as dirt.
+- [x] All four HUD styles keep the battlefield scale and take clicks.
+- [ ] Owner's paintings replace the stand-in art.
+- [ ] Owner approves the forest's look at 1080p.
+
 ## RTS Mission 1 · 2026-11-27
 
 RTS acceptance view is now **1920 × 1080** (fullscreen Forward+), Detailed HD at Command zoom.

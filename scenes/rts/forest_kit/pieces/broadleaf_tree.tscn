@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_ntvyd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/broadleaf_tree_hd.png" id="2_tb4he"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/broadleaf_tree_pixel.png" id="3_lce8f"]
+
+[node name="BroadleafTree" type="Node2D" unique_id=2050244014]
+script = ExtResource("1_ntvyd")
+piece_id = "broadleaf_tree"
+world_size = Vector2(72, 66)
+draw_offset = Vector2(0, -18)
+detailed_texture_override = ExtResource("2_tb4he")
+pixel_texture_override = ExtResource("3_lce8f")
+blocked_poly = PackedVector2Array(-10, -6, 10, -6, 11, 7, -11, 7)
+shadow_offset = Vector2(14, -8)
+shadow_size = Vector2(75.6, 69.299995)
+shadow_alpha = 0.32
+shade_offset = Vector2(12, -12)
+shade_radii = Vector2(39.600002, 36.3)
+shade_strength = 0.3
+minimap_color = Color(0.09, 0.24, 0.13, 1)
+canopy_fade = true
+metadata/tags = PackedStringArray("forest", "trees", "single")

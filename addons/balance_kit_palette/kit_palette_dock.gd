@@ -1,12 +1,16 @@
 @tool
 extends VBoxContainer
-## Kit Palette: every piece and group in the kit folders as a sand-backed thumbnail.
+## Kit Palette: every piece and group in the kit folders (desert and forest) as a thumbnail over its
+## own kit's ground (sand or grass).
 ## - Click tag buttons to filter (several tags = must have all). Type to search names and tags.
 ## - Drag an item onto the 2D view to place it (select YSortWorld, Dunes or GroundDecals first).
 ## - Double-click to open the piece's own scene.
 ## Tags live on each scene's root as metadata "tags" (Inspector → Metadata), so add or change them there.
 
-const FOLDERS := ["res://scenes/rts/desert_kit/pieces", "res://scenes/rts/desert_kit/groups"]
+const FOLDERS := ["res://scenes/rts/desert_kit/pieces", "res://scenes/rts/desert_kit/groups",
+	"res://scenes/rts/forest_kit/pieces", "res://scenes/rts/forest_kit/groups"]
+## Thumbnail ground per kit folder; folders not listed use SAND.
+const KIT_GROUND := {"res://scenes/rts/forest_kit/": "res://assets/textures/rts/forest_kit/sand_tile_hd.png"}
 const DUNE_SHADER := preload("res://assets/shaders/rts_carbon_dune.gdshader")
 const SAND := preload("res://assets/textures/rts/carbon/sand_tile_hd.png")
 const THUMB := 104
@@ -65,6 +69,8 @@ func _build_ui() -> void:
 func refresh() -> void:
 	_entries.clear()
 	for folder in FOLDERS:
+		if not DirAccess.dir_exists_absolute(folder):
+			continue
 		var files := Array(DirAccess.get_files_at(folder))
 		files.sort()
 		for f: String in files:
@@ -163,6 +169,11 @@ func _render_thumbnails() -> void:
 	for e in _entries:
 		if generation != _render_generation or not is_inside_tree():
 			break
+		var ground_tex: Texture2D = SAND
+		for prefix in KIT_GROUND:
+			if String(e["path"]).begins_with(prefix) and ResourceLoader.exists(KIT_GROUND[prefix]):
+				ground_tex = load(KIT_GROUND[prefix])
+		sand.texture = ground_tex
 		var inst := (load(e["path"]) as PackedScene).instantiate() as Node2D
 		vp.add_child(inst)
 		var pieces: Array[RtsCarbonPiece] = []

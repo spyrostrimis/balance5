@@ -33,6 +33,14 @@ func _run() -> void:
 	await process_frame
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().get_region(Rect2i(0, 0, 560, 1000)).save_png(ProjectSettings.globalize_path(OUT + "kit_palette_rock.png"))
+	dock._active_tags = {"forest": true}
+	dock._rebuild_tags()
+	dock._apply_filter()
+	print("forest filter items=", dock._list.item_count)
+	await process_frame
+	await RenderingServer.frame_post_draw
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://render_captures/rts_mission_1_forest/"))
+	root.get_texture().get_image().get_region(Rect2i(0, 0, 560, 1000)).save_png(ProjectSettings.globalize_path("res://render_captures/rts_mission_1_forest/kit_palette_forest.png"))
 	var drag: Variant = dock._list._get_drag_data(dock._list.get_item_rect(0).get_center())
 	print("drag data=", drag)
 	quit(0 if missing == 0 else 1)

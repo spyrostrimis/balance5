@@ -1,5 +1,23 @@
 # Decisions
 
+### 2026-11-27 · Forest river is a path piece; fords and bridges reopen it
+
+Area: RTS maps · Forest kit · Status: Verified
+
+The river follows a line of points: the same points draw the painted strip and decide which cells are water, so the visible water and the blocked ground always agree and bending it needs no repainting. Fords and bridges are separate pieces whose footprint reopens the water under them. The map has a tank-wide ford and an infantry bridge until the owner picks. [Forest mission](RTS_MISSION_1_FOREST.md#the-river-the-ford-and-the-bridge)
+
+### 2026-11-27 · Forest lanes are checked by test
+
+Area: RTS maps · Status: Verified
+
+Main lanes must carry a 4-cell corridor and tank routes a 3-cell one, checked by `test_rts_mission_1_forest.gd`, so dressing the forest cannot box troops in the way the reference painting does. [Room](RTS_MISSION_1_FOREST.md#the-map)
+
+### 2026-11-27 · Forest features are switches on the shared battlefield
+
+Area: RTS code · Status: Verified
+
+Minimap colours per piece, canopy fade on any piece, crossings and the forest's own Pixel ground are settings on `RtsMissionBattlefield` and the kit pieces, off by default. The desert map and older builds pass their tests unchanged; no battlefield script was copied. [What changed](RTS_MISSION_1_FOREST.md#what-changed-in-the-shared-code)
+
 ### 2026-11-27 · Mission 1 has a Desert (Red) and a Forest (Blue) map
 
 Area: RTS · Campaign · Status: Decided by owner

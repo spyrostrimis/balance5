@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_medium.tscn" id="1_ynssg"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/conifer_tree.tscn" id="2_rf4db"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/broadleaf_tree.tscn" id="3_b1tu2"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/forest_verge.tscn" id="4_ujjd6"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/mossy_boulder.tscn" id="5_5djw7"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/fern_patch.tscn" id="6_ygn8f"]
+
+[node name="WoodlandCopse" type="Node2D" unique_id=1767419758]
+y_sort_enabled = true
+metadata/tags = PackedStringArray("forest", "group", "trees", "cluster", "plants", "edge", "rock", "cover", "ground", "detail")
+
+[node name="TreeClusterMedium0" parent="." unique_id=260385005 instance=ExtResource("1_ynssg")]
+
+[node name="ConiferTree1" parent="." unique_id=1149490317 instance=ExtResource("2_rf4db")]
+position = Vector2(-96, 6)
+
+[node name="BroadleafTree2" parent="." unique_id=2050244014 instance=ExtResource("3_b1tu2")]
+position = Vector2(92, 10)
+
+[node name="ForestVerge3" parent="." unique_id=975854636 instance=ExtResource("4_ujjd6")]
+position = Vector2(-6, 30)
+scale = Vector2(0.8, 0.8)
+
+[node name="MossyBoulder4" parent="." unique_id=1357637808 instance=ExtResource("5_5djw7")]
+position = Vector2(64, 34)
+
+[node name="FernPatch5" parent="." unique_id=69701215 instance=ExtResource("6_ygn8f")]
+position = Vector2(-58, 40)

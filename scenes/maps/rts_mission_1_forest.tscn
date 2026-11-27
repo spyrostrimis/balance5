@@ -1,0 +1,467 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_kit/rts_mission_battlefield.gd" id="1_smqm3"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/river.tscn" id="2_quaij"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/dirt_clearing_plaza.tscn" id="3_pvo60"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/gravel_pad_base.tscn" id="4_2s7j5"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/gravel_field.tscn" id="5_oa123"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/dirt_patch_round.tscn" id="6_jmlsy"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/dirt_patch_long.tscn" id="7_i7us8"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/grass_flowers.tscn" id="8_ilktm"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/grass_stones.tscn" id="9_vh1iv"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/fern_patch.tscn" id="10_2hkpb"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/river_ford.tscn" id="11_kx8cs"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/river_bridge.tscn" id="12_u1316"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_large.tscn" id="13_fb4bj"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_medium.tscn" id="14_d731d"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_small.tscn" id="15_8flim"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/forest_verge.tscn" id="16_lev3n"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/conifer_tree.tscn" id="17_w5f6u"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/broadleaf_tree.tscn" id="18_qo2bm"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/broadleaf_tree_tall.tscn" id="19_dsmvp"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/blue_field_hq.tscn" id="20_se5oq"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/outpost_pad.tscn" id="21_sypb5"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/orichalcum_outcrop.tscn" id="22_56eea"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/mossy_boulder_pair.tscn" id="23_rbnc5"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/mossy_slab.tscn" id="24_el05e"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/fallen_log.tscn" id="25_xa7ub"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/mossy_boulder.tscn" id="26_dwr52"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_stump.tscn" id="27_pjhov"]
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_unit.gd" id="28_eij6f"]
+[ext_resource type="Script" path="res://scripts/rts/rts_grid.gd" id="29_7hucf"]
+[ext_resource type="Script" path="res://scripts/rts_kit/rts_mission_hud.gd" id="30_nb5bi"]
+
+[sub_resource type="Gradient" id="Gradient_2lbq4"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eado2"]
+gradient = SubResource("Gradient_2lbq4")
+width = 44
+height = 28
+
+[node name="RtsMission1Forest" type="Node2D" unique_id=800691216]
+script = ExtResource("1_smqm3")
+skin_names = PackedStringArray("Forest")
+skin_paths = PackedStringArray("")
+skin_painted_sand = Array[bool]([true])
+pixel_ground_from_kit = true
+minimap_canopy_color = Color(0.14, 0.34, 0.16, 0.75)
+detailed_art_directory = "res://assets/textures/rts/forest_kit"
+visual_squad_spacing = 1.2
+metadata/owns_catalog_button = true
+
+[node name="GroundFloor" type="ColorRect" parent="." unique_id=846941458]
+z_index = -10
+offset_right = 1408.0
+offset_bottom = 896.0
+mouse_filter = 2
+
+[node name="Dunes" type="Node2D" parent="." unique_id=911133097]
+z_index = -9
+
+[node name="RoadNetwork" type="Node2D" parent="." unique_id=1737440128]
+z_index = -8
+
+[node name="MainRoad" type="Line2D" parent="RoadNetwork" unique_id=682766390]
+texture_repeat = 2
+points = PackedVector2Array(236, 940, 300, 862, 392, 780, 496, 690, 596, 586, 704, 456, 826, 408, 968, 372, 1120, 352, 1268, 352, 1440, 358)
+width = 48.0
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="BaseDriveway" type="Line2D" parent="RoadNetwork" unique_id=885436321]
+texture_repeat = 2
+points = PackedVector2Array(500, 686, 420, 662, 320, 652)
+width = 36.0
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="FordTrack" type="Line2D" parent="RoadNetwork" unique_id=906114875]
+texture_repeat = 2
+points = PackedVector2Array(452, 470, 404, 372, 372, 252, 330, 196, 284, 140, 236, 112)
+width = 34.0
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="GroundDecals" type="Node2D" parent="." unique_id=1995271586]
+z_index = -7
+
+[node name="River" parent="GroundDecals" unique_id=1652371793 instance=ExtResource("2_quaij")]
+
+[node name="Course" parent="GroundDecals/River" index="0" unique_id=526973171]
+points = PackedVector2Array(540, -60, 478, 40, 404, 132, 306, 214, 196, 284, 84, 336, -60, 372)
+
+[node name="PlazaClearing" parent="GroundDecals" unique_id=11502201 instance=ExtResource("3_pvo60")]
+position = Vector2(704, 448)
+
+[node name="BlueBasePad" parent="GroundDecals" unique_id=204464678 instance=ExtResource("4_2s7j5")]
+position = Vector2(296, 612)
+
+[node name="SoutheastGravelField" parent="GroundDecals" unique_id=1107118980 instance=ExtResource("5_oa123")]
+position = Vector2(1136, 760)
+
+[node name="NortheastDirt" parent="GroundDecals" unique_id=1107594603 instance=ExtResource("6_jmlsy")]
+position = Vector2(1080, 170)
+
+[node name="FordMeadowDirt" parent="GroundDecals" unique_id=256272144 instance=ExtResource("7_i7us8")]
+position = Vector2(196, 120)
+rotation = -0.35
+
+[node name="SouthLaneDirt" parent="GroundDecals" unique_id=1644671106 instance=ExtResource("6_jmlsy")]
+position = Vector2(560, 700)
+scale = Vector2(0.8, 0.8)
+
+[node name="FlowersNorth" parent="GroundDecals" unique_id=1434772785 instance=ExtResource("8_ilktm")]
+position = Vector2(560, 268)
+
+[node name="FlowersWest" parent="GroundDecals" unique_id=1867203022 instance=ExtResource("8_ilktm")]
+position = Vector2(110, 470)
+
+[node name="FlowersEast" parent="GroundDecals" unique_id=1206676876 instance=ExtResource("8_ilktm")]
+position = Vector2(1210, 268)
+
+[node name="FlowersSouth" parent="GroundDecals" unique_id=1512685678 instance=ExtResource("8_ilktm")]
+position = Vector2(900, 612)
+
+[node name="StonesPlazaNE" parent="GroundDecals" unique_id=131241425 instance=ExtResource("9_vh1iv")]
+position = Vector2(866, 324)
+
+[node name="StonesSE" parent="GroundDecals" unique_id=372644255 instance=ExtResource("9_vh1iv")]
+position = Vector2(990, 664)
+
+[node name="StonesBase" parent="GroundDecals" unique_id=915101952 instance=ExtResource("9_vh1iv")]
+position = Vector2(470, 560)
+
+[node name="FernsNorthEdge" parent="GroundDecals" unique_id=69701215 instance=ExtResource("10_2hkpb")]
+position = Vector2(760, 236)
+
+[node name="FernsSouthEdge" parent="GroundDecals" unique_id=107490117 instance=ExtResource("10_2hkpb")]
+position = Vector2(700, 742)
+
+[node name="FernsWest" parent="GroundDecals" unique_id=312400720 instance=ExtResource("10_2hkpb")]
+position = Vector2(120, 560)
+
+[node name="FernsMeadow" parent="GroundDecals" unique_id=768828050 instance=ExtResource("10_2hkpb")]
+position = Vector2(212, 150)
+
+[node name="RiverFord" parent="GroundDecals" unique_id=1370257592 instance=ExtResource("11_kx8cs")]
+position = Vector2(330, 196)
+rotation = -0.7
+
+[node name="RiverBridge" parent="GroundDecals" unique_id=1613437057 instance=ExtResource("12_u1316")]
+position = Vector2(140, 310)
+rotation = -0.43
+
+[node name="CastShadows" type="Node2D" parent="." unique_id=749217413]
+z_index = -6
+
+[node name="SurfaceMarks" type="Node2D" parent="." unique_id=525225627]
+z_index = -5
+
+[node name="YSortWorld" type="Node2D" parent="." unique_id=241312511]
+y_sort_enabled = true
+
+[node name="NorthForest" parent="YSortWorld" unique_id=2070014477 instance=ExtResource("13_fb4bj")]
+position = Vector2(700, 150)
+
+[node name="NorthForestEast" parent="YSortWorld" unique_id=260385005 instance=ExtResource("14_d731d")]
+position = Vector2(890, 104)
+
+[node name="NorthForestWest" parent="YSortWorld" unique_id=318056948 instance=ExtResource("15_8flim")]
+position = Vector2(560, 92)
+
+[node name="NorthForestVerge" parent="YSortWorld" unique_id=975854636 instance=ExtResource("16_lev3n")]
+position = Vector2(700, 196)
+
+[node name="NorthEdgeConifer" parent="YSortWorld" unique_id=1149490317 instance=ExtResource("17_w5f6u")]
+position = Vector2(586, 176)
+
+[node name="NorthEdgeBroadleaf" parent="YSortWorld" unique_id=2050244014 instance=ExtResource("18_qo2bm")]
+position = Vector2(826, 186)
+
+[node name="NortheastForest" parent="YSortWorld" unique_id=163042082 instance=ExtResource("13_fb4bj")]
+position = Vector2(1334, 176)
+
+[node name="NortheastForestNorth" parent="YSortWorld" unique_id=863939039 instance=ExtResource("14_d731d")]
+position = Vector2(1176, 58)
+
+[node name="NortheastEdgeTree" parent="YSortWorld" unique_id=977075958 instance=ExtResource("19_dsmvp")]
+position = Vector2(1228, 228)
+
+[node name="RiverWoodWest" parent="YSortWorld" unique_id=660172192 instance=ExtResource("14_d731d")]
+position = Vector2(40, 170)
+
+[node name="RiverWoodNorth" parent="YSortWorld" unique_id=1445678984 instance=ExtResource("15_8flim")]
+position = Vector2(300, 52)
+
+[node name="RiverMeadowConifer" parent="YSortWorld" unique_id=1544539068 instance=ExtResource("17_w5f6u")]
+position = Vector2(110, 36)
+
+[node name="WestForest" parent="YSortWorld" unique_id=1825094890 instance=ExtResource("14_d731d")]
+position = Vector2(32, 520)
+
+[node name="WestForestSouth" parent="YSortWorld" unique_id=1922874681 instance=ExtResource("15_8flim")]
+position = Vector2(40, 660)
+
+[node name="SouthwestForest" parent="YSortWorld" unique_id=1764542133 instance=ExtResource("13_fb4bj")]
+position = Vector2(60, 900)
+
+[node name="WestEdgeConifer" parent="YSortWorld" unique_id=439238476 instance=ExtResource("17_w5f6u")]
+position = Vector2(108, 430)
+
+[node name="SouthwestEdgeTree" parent="YSortWorld" unique_id=2145582257 instance=ExtResource("18_qo2bm")]
+position = Vector2(196, 800)
+
+[node name="SouthWood" parent="YSortWorld" unique_id=213220211 instance=ExtResource("13_fb4bj")]
+position = Vector2(744, 900)
+
+[node name="SouthWoodEast" parent="YSortWorld" unique_id=1796210506 instance=ExtResource("14_d731d")]
+position = Vector2(916, 906)
+
+[node name="SouthWoodWest" parent="YSortWorld" unique_id=1031816899 instance=ExtResource("15_8flim")]
+position = Vector2(552, 906)
+
+[node name="SouthWoodVerge" parent="YSortWorld" unique_id=469756449 instance=ExtResource("16_lev3n")]
+position = Vector2(744, 764)
+
+[node name="SouthWoodEdgeTree" parent="YSortWorld" unique_id=822109726 instance=ExtResource("19_dsmvp")]
+position = Vector2(624, 790)
+
+[node name="EastWood" parent="YSortWorld" unique_id=761945434 instance=ExtResource("14_d731d")]
+position = Vector2(1352, 610)
+
+[node name="EastWoodWest" parent="YSortWorld" unique_id=1920743506 instance=ExtResource("15_8flim")]
+position = Vector2(1236, 566)
+
+[node name="EastWoodConifer" parent="YSortWorld" unique_id=479883996 instance=ExtResource("17_w5f6u")]
+position = Vector2(1300, 486)
+
+[node name="SoutheastForest" parent="YSortWorld" unique_id=1749505959 instance=ExtResource("15_8flim")]
+position = Vector2(1376, 900)
+
+[node name="EastCopse" parent="YSortWorld" unique_id=1127522239 instance=ExtResource("15_8flim")]
+position = Vector2(990, 566)
+
+[node name="EastCopseTree" parent="YSortWorld" unique_id=1960074151 instance=ExtResource("18_qo2bm")]
+position = Vector2(1056, 586)
+
+[node name="BlueFieldHQ" parent="YSortWorld" unique_id=1770656320 instance=ExtResource("20_se5oq")]
+position = Vector2(250, 590)
+
+[node name="BlueOutpostPad" parent="YSortWorld" unique_id=953474894 instance=ExtResource("21_sypb5")]
+position = Vector2(380, 540)
+scale = Vector2(0.86, 0.86)
+
+[node name="RedOutpostPad" parent="YSortWorld" unique_id=1281572250 instance=ExtResource("21_sypb5")]
+position = Vector2(1296, 266)
+
+[node name="CentralOrichalcum" parent="YSortWorld" unique_id=1715800673 instance=ExtResource("22_56eea")]
+position = Vector2(704, 444)
+
+[node name="PlazaCoverNorth" parent="YSortWorld" unique_id=891619748 instance=ExtResource("23_rbnc5")]
+position = Vector2(470, 250)
+
+[node name="PlazaCoverEast" parent="YSortWorld" unique_id=344185512 instance=ExtResource("24_el05e")]
+position = Vector2(900, 300)
+rotation = 0.3
+
+[node name="NortheastMeadowLog" parent="YSortWorld" unique_id=1498380257 instance=ExtResource("25_xa7ub")]
+position = Vector2(1150, 180)
+rotation = -0.2
+
+[node name="SouthLaneBoulder" parent="YSortWorld" unique_id=1357637808 instance=ExtResource("26_dwr52")]
+position = Vector2(440, 820)
+
+[node name="NorthLaneBoulder" parent="YSortWorld" unique_id=425072893 instance=ExtResource("26_dwr52")]
+position = Vector2(1110, 262)
+
+[node name="BaseStump" parent="YSortWorld" unique_id=633303347 instance=ExtResource("27_pjhov")]
+position = Vector2(488, 486)
+
+[node name="MeadowTreeNorth" parent="YSortWorld" unique_id=1668639024 instance=ExtResource("18_qo2bm")]
+position = Vector2(1000, 236)
+
+[node name="MeadowConiferSouth" parent="YSortWorld" unique_id=854963099 instance=ExtResource("17_w5f6u")]
+position = Vector2(500, 830)
+
+[node name="FieldTreeEast" parent="YSortWorld" unique_id=180162166 instance=ExtResource("19_dsmvp")]
+position = Vector2(1290, 736)
+
+[node name="MeadowConiferWest" parent="YSortWorld" unique_id=1713237941 instance=ExtResource("17_w5f6u")]
+position = Vector2(176, 438)
+
+[node name="BlueTank" type="Node2D" parent="YSortWorld" unique_id=563101114]
+position = Vector2(452, 600)
+script = ExtResource("28_eij6f")
+display_name = "Vanguard Tank"
+subtitle = "Blue Light Armour"
+portrait_key = "blue_tank"
+sprite_key = "blue_tank"
+role = 2
+max_health = 135
+attack_damage = 22
+armour = 6
+attack_range_cells = 5.6
+guard_range_cells = 6.8
+attack_cooldown = 1.35
+speed_px = 68.0
+turn_rate = 4.6
+
+[node name="BlueCommander" type="Node2D" parent="YSortWorld" unique_id=85321628]
+position = Vector2(520, 560)
+script = ExtResource("28_eij6f")
+display_name = "Blue Commander"
+subtitle = "Royal Guard · Mend"
+portrait_key = "blue_commander"
+sprite_key = "blue_commander"
+role = 1
+max_health = 96
+attack_damage = 16
+armour = 4
+attack_range_cells = 5.2
+attack_cooldown = 0.9
+speed_px = 64.0
+
+[node name="BlueSquad1" type="Node2D" parent="YSortWorld" unique_id=1511396465]
+position = Vector2(528, 640)
+script = ExtResource("28_eij6f")
+max_health = 68
+attack_damage = 13
+guard_range_cells = 6.2
+attack_cooldown = 1.0
+speed_px = 58.0
+
+[node name="BlueSquad2" type="Node2D" parent="YSortWorld" unique_id=1419423006]
+position = Vector2(470, 524)
+script = ExtResource("28_eij6f")
+max_health = 68
+attack_damage = 13
+guard_range_cells = 6.2
+attack_cooldown = 1.0
+speed_px = 58.0
+
+[node name="BlueSquad3" type="Node2D" parent="YSortWorld" unique_id=1896702015]
+position = Vector2(576, 500)
+script = ExtResource("28_eij6f")
+max_health = 68
+attack_damage = 13
+guard_range_cells = 6.2
+attack_cooldown = 1.0
+speed_px = 58.0
+
+[node name="RedSquad1" type="Node2D" parent="YSortWorld" unique_id=743112716]
+position = Vector2(1000, 420)
+script = ExtResource("28_eij6f")
+display_name = "Legionary"
+subtitle = "Red Infantry"
+portrait_key = "red_squad"
+sprite_key = "red_soldier"
+team = 1
+attack_range_cells = 4.5
+guard_range_cells = 5.6
+speed_px = 56.0
+
+[node name="RedCommander" type="Node2D" parent="YSortWorld" unique_id=677363799]
+position = Vector2(1064, 448)
+script = ExtResource("28_eij6f")
+display_name = "Red Commander"
+subtitle = "Order Field Leader"
+portrait_key = "red_commander"
+sprite_key = "red_commander"
+team = 1
+role = 1
+max_health = 92
+attack_damage = 16
+armour = 4
+attack_range_cells = 5.0
+guard_range_cells = 5.8
+attack_cooldown = 0.95
+speed_px = 60.0
+
+[node name="RedSquad2" type="Node2D" parent="YSortWorld" unique_id=82100476]
+position = Vector2(1120, 420)
+script = ExtResource("28_eij6f")
+display_name = "Legionary"
+subtitle = "Red Infantry"
+portrait_key = "red_squad"
+sprite_key = "red_soldier"
+team = 1
+attack_range_cells = 4.5
+guard_range_cells = 5.6
+speed_px = 56.0
+
+[node name="RedTank" type="Node2D" parent="YSortWorld" unique_id=1259799789]
+position = Vector2(1176, 400)
+script = ExtResource("28_eij6f")
+display_name = "Ironclad Tank"
+subtitle = "Red Heavy Armour"
+portrait_key = "red_tank"
+sprite_key = "red_tank"
+team = 1
+role = 2
+max_health = 130
+attack_damage = 20
+armour = 6
+attack_range_cells = 5.4
+guard_range_cells = 5.8
+attack_cooldown = 1.4
+speed_px = 64.0
+turn_rate = 4.4
+
+[node name="RedSquad3" type="Node2D" parent="YSortWorld" unique_id=276727754]
+position = Vector2(1080, 300)
+script = ExtResource("28_eij6f")
+display_name = "Legionary"
+subtitle = "Red Infantry"
+portrait_key = "red_squad"
+sprite_key = "red_soldier"
+team = 1
+attack_range_cells = 4.5
+guard_range_cells = 5.4
+speed_px = 56.0
+
+[node name="CombatFx" type="Node2D" parent="." unique_id=1760402525]
+
+[node name="SelectionOverlay" type="Node2D" parent="." unique_id=1972428330]
+
+[node name="Grid" type="Node2D" parent="." unique_id=321978205]
+script = ExtResource("29_7hucf")
+blocked_cells = SubResource("GradientTexture2D_eado2")
+
+[node name="Camera" type="Camera2D" parent="." unique_id=1324323575]
+position = Vector2(500, 500)
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=723022782]
+script = ExtResource("30_nb5bi")
+
+[node name="CameraViews" type="Node2D" parent="." unique_id=958952993]
+
+[node name="1_Opening" type="Marker2D" parent="CameraViews" unique_id=794452551]
+position = Vector2(500, 500)
+
+[node name="2_RiverFord" type="Marker2D" parent="CameraViews" unique_id=79589901]
+position = Vector2(360, 200)
+
+[node name="3_NorthLane" type="Marker2D" parent="CameraViews" unique_id=1560573878]
+position = Vector2(880, 270)
+
+[node name="4_SouthLane" type="Marker2D" parent="CameraViews" unique_id=98137314]
+position = Vector2(760, 660)
+
+[node name="5_BlueBase" type="Marker2D" parent="CameraViews" unique_id=449604404]
+position = Vector2(330, 620)
+
+[node name="6_GravelField" type="Marker2D" parent="CameraViews" unique_id=338008560]
+position = Vector2(1120, 700)
+
+[node name="7_RedRoad" type="Marker2D" parent="CameraViews" unique_id=1359523664]
+position = Vector2(1140, 380)
+
+[editable path="GroundDecals/River"]

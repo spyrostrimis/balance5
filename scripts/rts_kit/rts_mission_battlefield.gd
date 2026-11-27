@@ -8,6 +8,8 @@ extends RtsCarbonBattlefield
 ## - seam-free wind lighting on open sand (smooth_wind)
 ## - planet skins: P cycles the terrain art (Desert, Miasaki, …) without touching the layout
 ## - HUD styles: U cycles Mockup E, Classic, Holo and the original Carbon HUD (RtsMissionHud)
+## - per-piece minimap colours, canopy-fading tree masses, and fords/bridges that reopen water
+##   (pieces with layer_role "crossing"), used by the forest kit; the desert sets none of them
 ## Make a new map by copying the mission scene and moving or adding kit pieces.
 
 @export var smooth_wind := true
@@ -24,6 +26,11 @@ extends RtsCarbonBattlefield
 @export var slope_light := 2.6
 ## "mockup_e", "classic", "holo" or "placeholder" (the original Carbon HUD).
 @export var start_hud_style := "mockup_e"
+## Pixel view takes its ground and road from this map's art folder too (the forest's grass and dirt),
+## instead of Carbon's Pixel sand and road. Off for the desert, whose Pixel art is Carbon's.
+@export var pixel_ground_from_kit := false
+## Minimap colour of open ground that a tree canopy overhangs (forest). Transparent = not drawn.
+@export var minimap_canopy_color := Color(0.0, 0.0, 0.0, 0.0)
 
 var skin_index := 0
 var _skin_dirs := PackedStringArray()
@@ -136,6 +143,9 @@ func apply_skin(index: int, announce := true) -> void:
 			_skin_dirs.append(d.strip_edges())
 	_sand_hd = _skin_texture("sand_tile")
 	_road_hd = _skin_texture("road_strip")
+	if pixel_ground_from_kit:
+		_sand_px = RtsCarbonArt.texture("sand_tile", true, detailed_art_directory)
+		_road_px = RtsCarbonArt.texture("road_strip", true, detailed_art_directory)
 	art_directory_has_painted_sand = skin_index < skin_painted_sand.size() and skin_painted_sand[skin_index]
 	_measure_minimap_colours()
 	apply_visual_mode(pixel_mode)
@@ -198,7 +208,7 @@ func _show_skin_banner() -> void:
 func _collect_trees() -> void:
 	_trees.clear()
 	for piece in _pieces:
-		if piece.piece_id.ends_with("_tree"):
+		if piece.piece_id.ends_with("_tree") or piece.canopy_fade:
 			_trees.append(piece)
 
 
@@ -226,6 +236,19 @@ func apply_visual_mode(use_pixel: bool) -> void:
 		var sm := d.material as ShaderMaterial
 		if sm != null:
 			sm.set_shader_parameter("smooth_wind", smooth_wind)
+
+
+## Fords and bridges (layer_role "crossing") reopen the ground their footprint covers, even over a
+## river; everything else blocks as in Carbon.
+func is_point_blocked(wpt: Vector2) -> bool:
+	var blocked := false
+	for p in _pieces:
+		if p.layer_role == "crossing":
+			if p.blocks_world_point(wpt):
+				return false
+		elif not blocked and p.blocks_world_point(wpt):
+			blocked = true
+	return blocked
 
 
 ## Call after moving kit pieces at runtime (tests, future editors) to refresh blocked ground.
@@ -307,6 +330,17 @@ func _build_minimap_texture() -> ImageTexture:
 	var mh := 118
 	var img := Image.create_empty(mw, mh, false, Image.FORMAT_RGBA8)
 	var segments := _road_segments()
+	var patches: Array[RtsCarbonPiece] = []
+	var crossings: Array[RtsCarbonPiece] = []
+	var blockers: Array[RtsCarbonPiece] = []
+	for p in _pieces:
+		if p.layer_role == "crossing":
+			crossings.append(p)
+		elif p.blocked_poly.size() >= 3 or p is RtsKitRiver:
+			blockers.append(p)
+		elif p.minimap_color.a > 0.0:
+			patches.append(p)
+	var canopies: Array[RtsCarbonPiece] = _trees if minimap_canopy_color.a > 0.0 else ([] as Array[RtsCarbonPiece])
 	for y in range(mh):
 		for x in range(mw):
 			var wpt := Vector2((float(x) + 0.5) / float(mw) * WORLD_SIZE.x, (float(y) + 0.5) / float(mh) * WORLD_SIZE.y)
@@ -321,13 +355,31 @@ func _build_minimap_texture() -> ImageTexture:
 					if wpt.distance_to(nearest) < 23.0:
 						col = _mm_road
 						break
-			for p in _pieces:
+			# Flat patches with their own colour (clearings, gravel), then canopy overhangs.
+			for p in patches:
+				if _in_patch(p, wpt):
+					col = col.lerp(Color(p.minimap_color, 1.0), p.minimap_color.a)
+			for t in canopies:
+				if _in_patch(t, wpt, 0.42, true):
+					col = col.lerp(Color(minimap_canopy_color, 1.0), minimap_canopy_color.a)
+					break
+			var crossing := false
+			for p in crossings:
+				if p.blocks_world_point(wpt):
+					crossing = true
+					col = Color(p.minimap_color, 1.0) if p.minimap_color.a > 0.0 else _mm_road
+					break
+			for p in blockers:
+				if crossing:
+					break
 				if p.blocks_world_point(wpt):
 					col = Color(0.34, 0.23, 0.17)
 					if p.piece_id == "outpost_pad":
 						col = Color(0.52, 0.54, 0.58)
 					elif p.piece_id.ends_with("_hq"):
 						col = Color(0.28, 0.50, 0.80)
+					elif p.minimap_color.a > 0.0:
+						col = Color(p.minimap_color, 1.0)
 					elif p.layer_role == "water":
 						col = Color(0.18, 0.78, 0.74)
 					break
@@ -338,3 +390,14 @@ func _build_minimap_texture() -> ImageTexture:
 					col = Color(0.18, 0.78, 0.74)  # Carbon's painted pool inside its cliff
 			img.set_pixel(x, y, col)
 	return ImageTexture.create_from_image(img)
+
+
+## Whether world point p lies in the oval a piece's painting covers (radius `fraction` of its size).
+func _in_patch(piece: RtsCarbonPiece, wpt: Vector2, fraction := 0.44, use_offset := false) -> bool:
+	var local := piece.to_local(wpt) - (piece.draw_offset if use_offset else Vector2.ZERO)
+	var r := piece.world_size * fraction
+	if r.x < 1.0 or r.y < 1.0:
+		return false
+	var nx := local.x / r.x
+	var ny := local.y / r.y
+	return nx * nx + ny * ny <= 1.0

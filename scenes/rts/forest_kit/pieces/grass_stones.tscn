@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_mwx7x"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/grass_stones_hd.png" id="2_h4uut"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/grass_stones_pixel.png" id="3_ucs80"]
+
+[node name="GrassStones" type="Node2D" unique_id=131241425]
+script = ExtResource("1_mwx7x")
+piece_id = "grass_stones"
+world_size = Vector2(40, 30)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_h4uut")
+pixel_texture_override = ExtResource("3_ucs80")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+metadata/tags = PackedStringArray("forest", "ground", "detail", "rock")

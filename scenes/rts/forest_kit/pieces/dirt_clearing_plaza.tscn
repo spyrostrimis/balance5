@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_rua7g"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/dirt_clearing_plaza_hd.png" id="2_n5tb3"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/dirt_clearing_plaza_pixel.png" id="3_ri7fu"]
+
+[node name="DirtClearingPlaza" type="Node2D" unique_id=11502201]
+script = ExtResource("1_rua7g")
+piece_id = "dirt_clearing_plaza"
+world_size = Vector2(400, 288)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_n5tb3")
+pixel_texture_override = ExtResource("3_ri7fu")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+minimap_color = Color(0.66, 0.46, 0.24, 0.92)
+metadata/tags = PackedStringArray("forest", "ground", "clearing")

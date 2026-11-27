@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_large.tscn" id="1_u16wu"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_medium.tscn" id="2_0jivn"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_cluster_small.tscn" id="3_c77nl"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/broadleaf_tree_tall.tscn" id="4_ydqpp"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/forest_verge.tscn" id="5_2vwe0"]
+
+[node name="ForestCorner" type="Node2D" unique_id=1342704395]
+y_sort_enabled = true
+metadata/tags = PackedStringArray("forest", "group", "trees", "cluster", "plants", "edge")
+
+[node name="TreeClusterLarge0" parent="." unique_id=2070014477 instance=ExtResource("1_u16wu")]
+
+[node name="TreeClusterMedium1" parent="." unique_id=260385005 instance=ExtResource("2_0jivn")]
+position = Vector2(170, -60)
+
+[node name="TreeClusterSmall2" parent="." unique_id=318056948 instance=ExtResource("3_c77nl")]
+position = Vector2(-150, -20)
+
+[node name="BroadleafTreeTall3" parent="." unique_id=977075958 instance=ExtResource("4_ydqpp")]
+position = Vector2(120, 16)
+
+[node name="ForestVerge4" parent="." unique_id=975854636 instance=ExtResource("5_2vwe0")]
+position = Vector2(10, 34)

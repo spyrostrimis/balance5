@@ -17,6 +17,15 @@ Area: RTS maps · Status: In use · Tools: Godot 4.7.2, ChatGPT Images, Python (
 3. Run `tests/test_rts_mission_1_desert.gd` headless, then in Forward+ with `--fullscreen -- --capture --compare --record` for 1920 × 1080 stills, before/after against Reusable 4 and the clip. Inspect every PNG.
 4. Export, then run the test with `--main-pack builds/Balance.exe`, headless and in a fullscreen window. `Balance.exe` itself ignores `--script` and just opens the game, so window checks of the export go through the Godot runner. [Commands](RTS_MISSION_1_DESERT.md#reproduce)
 
+## Make or change an RTS map from the forest kit
+
+Area: RTS maps · Status: Trying (stand-in art) · Tools: Godot 4.7.2, ChatGPT Images, Python (Pillow, NumPy, OpenCV), FFmpeg
+
+1. Work in `scenes/maps/rts_mission_1_forest.tscn`. Place pieces from the Kit Palette (**forest** tag) or `scenes/rts/forest_kit/pieces/` under `YSortWorld` (trees, rocks, logs, buildings) or `GroundDecals` (clearings, gravel, details, fords, bridges). Bend the river by dragging `GroundDecals/River/Course` points; put a `river_ford` or `river_bridge` on the water, turned across it.
+2. Paintings: generate them from `assets/source_inputs/forest_kit/PROMPTS.md` into that folder, then run `C:/Python312/python.exe tools/python/make_forest_kit.py`. It cuts each sheet into pieces by transparency, writes `<piece>_hd.png` and `_pixel.png` into `assets/textures/rts/forest_kit/` and keeps stand-ins for anything unpainted.
+3. Run `tests/test_rts_mission_1_forest.gd` headless (lane widths, river, routes), then fullscreen with `-- --capture --record`, and inspect every PNG. Check woods with F1 after new paintings.
+4. Export and run the test with `--main-pack builds/Balance.exe`, headless and fullscreen. [Commands](RTS_MISSION_1_FOREST.md#reproduce)
+
 ## Extend Carbon with modular ChatGPT landmarks, dunes and unit sheets (RTS Reusable 4)
 
 Area: RTS art · Status: Retired 2026-11-27. Painting and cutout steps still apply; new pieces go into the desert kit ([above](#make-or-change-an-rts-map-from-the-desert-kit)) · Tools: ChatGPT Images, Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+, FFmpeg

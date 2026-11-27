@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_kit/rts_kit_river.gd" id="1_tfape"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/river_hd.png" id="2_7bpnu"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/river_pixel.png" id="3_q0uqh"]
+
+[node name="River" type="Node2D" unique_id=1652371793]
+script = ExtResource("1_tfape")
+piece_id = "river"
+world_size = Vector2(256, 112)
+layer_role = "water"
+detailed_texture_override = ExtResource("2_7bpnu")
+pixel_texture_override = ExtResource("3_q0uqh")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+minimap_color = Color(0.2, 0.5, 0.8, 1)
+metadata/tags = PackedStringArray("forest", "water", "river")
+
+[node name="Course" type="Line2D" parent="." unique_id=526973171]
+texture_repeat = 2
+points = PackedVector2Array(-128, 0, 0, 8, 128, 0)
+width = 112.0
+texture = ExtResource("2_7bpnu")
+texture_mode = 1
+joint_mode = 2

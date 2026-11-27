@@ -1,6 +1,6 @@
 # RTS Mission 1 – Forest: plan and session prompt
 
-Blue's first mission, *The First Claim*, on a tropical forest planet. It is the mirror of **RTS Mission 1 – Desert** (Red's): same units, buildings, Orichalcum rock, HUD, rules and camera, with a new **forest kit** for the map. Reference goal: [`references/rts_mission1_forest_blue.webp`](references/rts_mission1_forest_blue.webp). Paste the prompt below into a new session.
+Blue's first mission, *The First Claim*, on a tropical forest planet. It is the mirror of **RTS Mission 1 – Desert** (Red's): same units, buildings, Orichalcum rock, HUD, rules and camera, with a new **forest kit** for the map. Reference goal: [`references/rts_mission1_forest_blue.webp`](references/rts_mission1_forest_blue.webp). Paste the prompt below into a new session. **Built 2026-11-27 with stand-in art:** [RTS_MISSION_1_FOREST.md](RTS_MISSION_1_FOREST.md).
 
 ---
 

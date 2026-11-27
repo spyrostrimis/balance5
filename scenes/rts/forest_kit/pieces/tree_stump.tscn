@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_32jhn"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/tree_stump_hd.png" id="2_vwxmu"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/tree_stump_pixel.png" id="3_bwbud"]
+
+[node name="TreeStump" type="Node2D" unique_id=633303347]
+script = ExtResource("1_32jhn")
+piece_id = "tree_stump"
+world_size = Vector2(28, 24)
+detailed_texture_override = ExtResource("2_vwxmu")
+pixel_texture_override = ExtResource("3_bwbud")
+blocked_poly = PackedVector2Array(9, 0, 7, 5, 3, 7, -3, 8, -8, 5, -9, 0, -7, -5, -3, -8, 3, -8, 7, -5)
+shadow_offset = Vector2(6, 5)
+shadow_size = Vector2(30.240002, 25.920002)
+minimap_color = Color(0.42, 0.29, 0.16, 1)
+metadata/tags = PackedStringArray("forest", "log")

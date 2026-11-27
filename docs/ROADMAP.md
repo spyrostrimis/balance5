@@ -44,7 +44,10 @@ The first playable vertical slice: four troops plus a field commander per side f
 - [x] Add sand hills, dune swells and a ripple field from Desert Crossing to the kit; units rise over hills and catch the light on sunward slopes. [Sand hills](RTS_MISSION_1_DESERT.md#sand-hills-units-go-up-and-down)
 - [x] Rename to **RTS Mission 1 – Desert** (Red's mission) and plan **RTS Mission 1 – Forest** (Blue's). [Forest plan](RTS_MISSION_1_FOREST_PLAN.md)
 - [ ] Make Red the player's side in RTS Mission 1 – Desert.
-- [ ] Build **RTS Mission 1 – Forest** from the plan.
+- [x] Build **RTS Mission 1 – Forest** (Blue's) from the plan with a forest kit: tree masses with canopy fade, a river that blocks along its course with a ford and a bridge, clearings, gravel pads, mossy rocks and logs, all in the Kit Palette. Lanes tested at 4 cells, tank routes at 3. Stand-in art. [Play, edit and evidence](RTS_MISSION_1_FOREST.md)
+- [ ] Owner generates the nine forest paintings from [the prompts](../assets/source_inputs/forest_kit/PROMPTS.md); an agent runs `make_forest_kit.py` to swap them in.
+- [ ] Owner plays RTS Mission 1 – Forest and judges the room, the river crossings (ford, bridge or both) and the look.
+- [ ] Owner names Blue's forest planet.
 - [x] Make Miasaki a switchable planet skin for Mission 1 (P), with palette-matched art for kit pieces Miasaki never painted. [Planet skins](RTS_MISSION_1_DESERT.md#planet-skins-p)
 - [ ] Give planet skins Pixel art (Miasaki currently falls back to the desert Pixel set).
 - [ ] Tune the first fight. Compare one group move, a split approach and a retreat to Mend. Record who survives and who controls the rock.

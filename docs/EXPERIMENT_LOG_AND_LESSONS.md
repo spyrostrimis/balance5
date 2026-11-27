@@ -775,6 +775,16 @@ The review favours Approach 3 for a short painted walk. It recommends comparing 
 
 **Verified.** At 1376 × 768 Forward+, the same minimap click lands in cell (11, 10) in both maps. The tank crossed the ridge's longitude in row 13 on A and row 10 on B, with full clearance. A squad also reached A's high pass. The suite checked four corner picks and cliff-side orders at both zooms. Both Play cards, Esc, Mend, contested hold and elimination passed in the source and in the embedded Windows build. The art verdict remains open. [Command and close captures, annotated routes and clip](RTS_FOREST_CLAIM.md)
 
+## 30. RTS Mission 1 – Forest · 2026-11-27
+
+**Question.** Can the desert's kit method build Blue's forest map without forking the battlefield, with more room than the reference painting?
+
+**Built.** A forest kit of 23 pieces and 3 groups (`scenes/rts/forest_kit/`) with stand-in art from `make_forest_kit.py`, and `rts_mission_1_forest.tscn` on `RtsMissionBattlefield` with the desert's forces. New behaviour is per-scene switches: per-piece minimap colour, canopy fade on any piece, a path-following river (`RtsKitRiver`), crossings that reopen water, and Pixel ground from the map's own folder.
+
+**What the checks caught.** The first layout passed a plain pathfinding test but failed the corridor test in three places: cover rocks and a log placed next to the Orichalcum left only 1–3 cells round the rock, a log in the meadow pinched the ford's exit to 2 cells, and a ford and bridge placed close together reopened almost the whole river between them, so visible water was walkable. Moving cover away from the rock, widening the ford to match its gravel bar, and moving the bridge downstream fixed all three. **Lesson:** "a path exists" is not "there is room"; test width, and test that water you can see is water units cannot enter.
+
+**Verified.** Headless, fullscreen 1920 × 1080 and against the exported build: all checks pass. Desert, Carbon (and Miasaki), Reusable 3/4 and the test map pass unchanged. Inspected the opening, F1, ford, lanes, base, plaza fight, Pixel, all HUDs, kit pages and the 12 s clip. The art verdict stays with the owner. [Play, edit and evidence](RTS_MISSION_1_FOREST.md)
+
 ## 29. RTS Reusable 3 · 2026-11-26
 
 **Question.** Can a player tell Blue from Red and four soldiers from three at Carbon’s normal Command zoom while the desert gains reusable scenery? The first Forward+ comparison changed colour alone with the same camera, unit positions, scale and spacing on sand and road, and with selection clear. Cobalt and crimson survived the south and rear views. Some diagonal soldiers still touched visually, so the final variant widened only the drawn formation by 18%. The Blue commander kept the broad ivory scarf. [Matched units and eight directions](RTS_REUSABLE_3.md#captures-and-checks)

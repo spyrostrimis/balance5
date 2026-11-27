@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_f02gi"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/mossy_slab_hd.png" id="2_qj6x0"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/forest_kit/mossy_slab_pixel.png" id="3_rragc"]
+
+[node name="MossySlab" type="Node2D" unique_id=344185512]
+script = ExtResource("1_f02gi")
+piece_id = "mossy_slab"
+world_size = Vector2(88, 48)
+detailed_texture_override = ExtResource("2_qj6x0")
+pixel_texture_override = ExtResource("3_rragc")
+blocked_poly = PackedVector2Array(37, 0, 30, 10, 11, 15, -11, 15, -30, 10, -35, 0, -29, -9, -12, -16, 11, -15, 28, -9)
+shadow_offset = Vector2(6, 5)
+shadow_size = Vector2(95.04, 51.840004)
+minimap_color = Color(0.4, 0.42, 0.36, 1)
+metadata/tags = PackedStringArray("forest", "rock", "cover")

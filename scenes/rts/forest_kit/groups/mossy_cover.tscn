@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/mossy_boulder_pair.tscn" id="1_54hca"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/fallen_log.tscn" id="2_ba5xe"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/tree_stump.tscn" id="3_u705d"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/fern_patch.tscn" id="4_1jt3s"]
+[ext_resource type="PackedScene" path="res://scenes/rts/forest_kit/pieces/grass_stones.tscn" id="5_krj2l"]
+
+[node name="MossyCover" type="Node2D" unique_id=1258628143]
+y_sort_enabled = true
+metadata/tags = PackedStringArray("forest", "group", "rock", "cover", "log", "ground", "detail", "plants")
+
+[node name="MossyBoulderPair0" parent="." unique_id=891619748 instance=ExtResource("1_54hca")]
+position = Vector2(-40, 0)
+
+[node name="FallenLog1" parent="." unique_id=1498380257 instance=ExtResource("2_ba5xe")]
+position = Vector2(46, 14)
+
+[node name="TreeStump2" parent="." unique_id=633303347 instance=ExtResource("3_u705d")]
+position = Vector2(-2, 30)
+
+[node name="FernPatch3" parent="." unique_id=69701215 instance=ExtResource("4_1jt3s")]
+position = Vector2(-70, 22)
+
+[node name="GrassStones4" parent="." unique_id=131241425 instance=ExtResource("5_krj2l")]
+position = Vector2(16, -18)

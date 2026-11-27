@@ -43,6 +43,13 @@ extends Node2D
 ## Moves the top of the relief bump away from the piece centre (e.g. a hill's summit).
 @export var relief_offset := Vector2.ZERO
 @export var is_orichalcum := false
+## Minimap colour of this piece's blocked ground (or, for a flat piece with no blocked ground, of its
+## whole patch). Fully transparent = the battlefield's default (rock brown, water teal). Read by
+## RtsMissionBattlefield only, so older battlefields ignore it.
+@export var minimap_color := Color(0.0, 0.0, 0.0, 0.0)
+## Crown fades over selected troops walking beneath it (RtsMissionBattlefield). Pieces whose id ends
+## in "_tree" always fade, as in the desert kit.
+@export var canopy_fade := false
 
 var texture: Texture2D
 var pixel_mode := false

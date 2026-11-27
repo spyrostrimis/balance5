@@ -1,0 +1,438 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_kit/rts_mission_battlefield.gd" id="1_s7w06"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_shoulder.tscn" id="2_3gbx8"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_cluster_a.tscn" id="3_efc1k"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_fork.tscn" id="4_amyg6"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_end.tscn" id="5_tyab8"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_ripples.tscn" id="6_vlowe"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_cluster_b.tscn" id="7_xpe0o"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/dune_cluster_c.tscn" id="8_yu4v2"]
+[ext_resource type="Shader" path="res://assets/shaders/rts_desert_road_fade.gdshader" id="9_x4sg6"]
+[ext_resource type="Script" path="res://scripts/rts_kit/road_sand_end.gd" id="10_n2ksh"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/plaza_oval.tscn" id="11_yeihd"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/road_join_patch.tscn" id="12_38qlq"]
+[ext_resource type="Script" path="res://scripts/rts_kit/road_fork_join.gd" id="13_27gbx"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/road_join_patch_hd.png" id="14_71ivk"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/road_join_patch_pixel.png" id="15_a2the"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/road_end_cap.tscn" id="16_acdou"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/road_sand_spill.tscn" id="17_ldbwk"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/pebble_scatter.tscn" id="18_yr5sb"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_mesa.tscn" id="19_a3qca"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/outpost_pad.tscn" id="20_yemtc"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/blue_field_hq.tscn" id="21_b3f2q"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/groups/sheltered_spring.tscn" id="22_iiwxo"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/orichalcum_outcrop.tscn" id="23_65vjw"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_outcrop_low.tscn" id="24_ww5q8"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_boulders.tscn" id="25_je70i"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/groups/roadside_pool.tscn" id="26_o8lgc"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/scrub_large.tscn" id="27_datr8"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/scrub_small.tscn" id="28_fhtn6"]
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_unit.gd" id="29_5a380"]
+[ext_resource type="Script" path="res://scripts/rts/rts_grid.gd" id="30_sjrrk"]
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_hud.gd" id="31_5fryn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_varkf"]
+shader = ExtResource("9_x4sg6")
+shader_parameter/end_point = Vector2(1018, 828)
+shader_parameter/end_direction = Vector2(0.16, 0.987)
+shader_parameter/fade_length = 84.0
+shader_parameter/sand_tint = Color(0.894, 0.529, 0.157, 1)
+
+[sub_resource type="Gradient" id="Gradient_init_mask"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_init_mask"]
+gradient = SubResource("Gradient_init_mask")
+width = 44
+height = 28
+
+[node name="RtsMission1" type="Node2D" unique_id=282986996]
+script = ExtResource("1_s7w06")
+detailed_art_directory = "res://assets/textures/rts/desert_kit"
+art_directory_has_painted_sand = false
+visual_squad_spacing = 1.2
+metadata/owns_catalog_button = true
+
+[node name="GroundFloor" type="ColorRect" parent="." unique_id=677545532]
+z_index = -10
+offset_right = 1408.0
+offset_bottom = 896.0
+mouse_filter = 2
+
+[node name="Dunes" type="Node2D" parent="." unique_id=1483716686]
+z_index = -9
+
+[node name="DuneWestShoulder" parent="Dunes" unique_id=1276396850 instance=ExtResource("2_3gbx8")]
+position = Vector2(156, 548)
+
+[node name="DuneSWBase" parent="Dunes" unique_id=1939312134 instance=ExtResource("3_efc1k")]
+position = Vector2(192, 744)
+
+[node name="DuneLongFork" parent="Dunes" unique_id=1283841588 instance=ExtResource("4_amyg6")]
+position = Vector2(382, 654)
+
+[node name="DuneLongEnd" parent="Dunes" unique_id=867936151 instance=ExtResource("5_tyab8")]
+position = Vector2(552, 594)
+
+[node name="DuneSWRipples" parent="Dunes" unique_id=77655048 instance=ExtResource("6_vlowe")]
+position = Vector2(448, 808)
+
+[node name="DuneNorthRipples" parent="Dunes" unique_id=1091349939 instance=ExtResource("6_vlowe")]
+position = Vector2(444, 158)
+world_size = Vector2(236, 144)
+relief_height = 0.42
+relief_radii = Vector2(104, 64)
+
+[node name="DuneNorthCluster" parent="Dunes" unique_id=1934747380 instance=ExtResource("7_xpe0o")]
+position = Vector2(584, 122)
+
+[node name="DuneNorthBrokenEnd" parent="Dunes" unique_id=638634912 instance=ExtResource("5_tyab8")]
+position = Vector2(772, 98)
+world_size = Vector2(248, 156)
+relief_height = 0.68
+relief_radii = Vector2(112, 70)
+
+[node name="DuneEastShoulder" parent="Dunes" unique_id=277917301 instance=ExtResource("2_3gbx8")]
+position = Vector2(1232, 504)
+world_size = Vector2(296, 180)
+relief_height = 0.58
+relief_radii = Vector2(132, 80)
+
+[node name="DuneEastCluster" parent="Dunes" unique_id=1962010039 instance=ExtResource("8_yu4v2")]
+position = Vector2(1296, 594)
+
+[node name="DuneSERipples" parent="Dunes" unique_id=1237773046 instance=ExtResource("6_vlowe")]
+position = Vector2(812, 806)
+world_size = Vector2(244, 148)
+relief_height = 0.42
+relief_radii = Vector2(108, 66)
+
+[node name="RoadNetwork" type="Node2D" parent="." unique_id=395856774]
+z_index = -8
+
+[node name="MainRoad" type="Line2D" parent="RoadNetwork" unique_id=42843297]
+texture_repeat = 2
+points = PackedVector2Array(-24, 248, 136, 290, 296, 348, 440, 404, 548, 436, 656, 452, 768, 488, 912, 564, 1068, 646, 1228, 728, 1432, 824)
+width = 48.0
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="RoadsideSpur" type="Line2D" parent="RoadNetwork" unique_id=1344905307]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_varkf")
+points = PackedVector2Array(912, 564, 968, 648, 1004, 736, 1018, 828)
+width = 44.0
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("10_n2ksh")
+end_cap_path = NodePath("../../GroundDecals/RoadSpurEndCap")
+
+[node name="HQDriveway" type="Line2D" parent="RoadNetwork" unique_id=1406220931]
+texture_repeat = 2
+points = PackedVector2Array(316, 276, 317, 314, 320, 348)
+width = 34.0
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="GroundDecals" type="Node2D" parent="." unique_id=1173708700]
+z_index = -7
+
+[node name="PlazaOval" parent="GroundDecals" unique_id=96262887 instance=ExtResource("11_yeihd")]
+position = Vector2(656, 452)
+
+[node name="PlazaJoinWest" parent="GroundDecals" unique_id=342422324 instance=ExtResource("12_38qlq")]
+position = Vector2(534, 432)
+rotation = 0.24
+
+[node name="PlazaJoinEast" parent="GroundDecals" unique_id=1282175178 instance=ExtResource("12_38qlq")]
+position = Vector2(776, 492)
+rotation = 0.42
+
+[node name="RoadForkJoin" type="Node2D" parent="GroundDecals" unique_id=271949528]
+position = Vector2(924, 578)
+rotation = 0.62
+script = ExtResource("13_27gbx")
+spur_path = NodePath("../../RoadNetwork/RoadsideSpur")
+piece_id = "road_join_patch"
+world_size = Vector2(96, 62)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("14_71ivk")
+pixel_texture_override = ExtResource("15_a2the")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+
+[node name="RoadSpurEndCap" parent="GroundDecals" unique_id=677940988 instance=ExtResource("16_acdou")]
+position = Vector2(1016, 820)
+rotation = 1.41
+
+[node name="RoadSandSpillWest" parent="GroundDecals" unique_id=563678400 instance=ExtResource("17_ldbwk")]
+position = Vector2(188, 326)
+rotation = 0.32
+
+[node name="RoadSandSpillSE" parent="GroundDecals" unique_id=1901673888 instance=ExtResource("17_ldbwk")]
+position = Vector2(1184, 718)
+rotation = 0.45
+world_size = Vector2(84, 36)
+
+[node name="OutpostSandDriftBlue" parent="GroundDecals" unique_id=237233809 instance=ExtResource("17_ldbwk")]
+position = Vector2(162, 238)
+rotation = -0.35
+world_size = Vector2(64, 32)
+
+[node name="OutpostSandDriftRed" parent="GroundDecals" unique_id=1291084101 instance=ExtResource("17_ldbwk")]
+position = Vector2(1224, 386)
+rotation = 0.38
+world_size = Vector2(68, 34)
+
+[node name="PebblesNW" parent="GroundDecals" unique_id=1950079778 instance=ExtResource("18_yr5sb")]
+position = Vector2(236, 134)
+
+[node name="PebblesSW" parent="GroundDecals" unique_id=1897091935 instance=ExtResource("18_yr5sb")]
+position = Vector2(318, 566)
+world_size = Vector2(42, 32)
+
+[node name="PebblesFork" parent="GroundDecals" unique_id=37733545 instance=ExtResource("18_yr5sb")]
+position = Vector2(868, 632)
+world_size = Vector2(40, 32)
+
+[node name="PebblesNE" parent="GroundDecals" unique_id=1293529609 instance=ExtResource("18_yr5sb")]
+position = Vector2(886, 268)
+
+[node name="CastShadows" type="Node2D" parent="." unique_id=1650296652]
+z_index = -6
+
+[node name="SurfaceMarks" type="Node2D" parent="." unique_id=69140698]
+z_index = -5
+
+[node name="YSortWorld" type="Node2D" parent="." unique_id=1935479311]
+y_sort_enabled = true
+
+[node name="NorthwestMesa" parent="YSortWorld" unique_id=1091056217 instance=ExtResource("19_a3qca")]
+position = Vector2(118, 72)
+
+[node name="BlueOutpostPad" parent="YSortWorld" unique_id=953474894 instance=ExtResource("20_yemtc")]
+position = Vector2(116, 192)
+
+[node name="BlueFieldHQ" parent="YSortWorld" unique_id=1770656320 instance=ExtResource("21_b3f2q")]
+position = Vector2(316, 232)
+
+[node name="ShelteredSpring" parent="YSortWorld" unique_id=1965367934 instance=ExtResource("22_iiwxo")]
+position = Vector2(1024, 196)
+
+[node name="RedOutpostPad" parent="YSortWorld" unique_id=1499918559 instance=ExtResource("20_yemtc")]
+position = Vector2(1264, 336)
+world_size = Vector2(124, 122)
+blocked_poly = PackedVector2Array(-50, -48, 50, -48, 50, 48, -50, 48)
+shadow_size = Vector2(138, 132)
+shade_offset = Vector2(20, 16)
+shade_radii = Vector2(72, 68)
+shade_strength = 0.38
+
+[node name="CentralOrichalcum" parent="YSortWorld" unique_id=1715800673 instance=ExtResource("23_65vjw")]
+position = Vector2(656, 444)
+
+[node name="NorthApproachOutcrop" parent="YSortWorld" unique_id=1377812252 instance=ExtResource("24_ww5q8")]
+position = Vector2(512, 242)
+world_size = Vector2(116, 64)
+blocked_poly = PackedVector2Array(-48, -22, 48, -22, 50, 22, -48, 22)
+shadow_offset = Vector2(10, 8)
+shadow_size = Vector2(124, 68)
+shadow_alpha = 0.3
+shade_offset = Vector2(14, 12)
+shade_radii = Vector2(64, 42)
+shade_strength = 0.32
+
+[node name="SouthPassBoulders" parent="YSortWorld" unique_id=1415411326 instance=ExtResource("25_je70i")]
+position = Vector2(652, 672)
+
+[node name="SouthwestCliffMesa" parent="YSortWorld" unique_id=1665307106 instance=ExtResource("19_a3qca")]
+position = Vector2(96, 836)
+world_size = Vector2(196, 138)
+blocked_poly = PackedVector2Array(-84, -52, 78, -54, 88, 12, 54, 56, -68, 54, -90, 8)
+shadow_size = Vector2(210, 146)
+shade_radii = Vector2(106, 74)
+shade_strength = 0.42
+
+[node name="RoadsidePool" parent="YSortWorld" unique_id=463338688 instance=ExtResource("26_o8lgc")]
+position = Vector2(1148, 764)
+
+[node name="ScrubHQEast" parent="YSortWorld" unique_id=1305240575 instance=ExtResource("27_datr8")]
+position = Vector2(404, 286)
+
+[node name="ScrubPlazaNW" parent="YSortWorld" unique_id=1184330406 instance=ExtResource("28_fhtn6")]
+position = Vector2(534, 488)
+world_size = Vector2(18, 15)
+
+[node name="ScrubPlazaNE" parent="YSortWorld" unique_id=1051316617 instance=ExtResource("28_fhtn6")]
+position = Vector2(786, 404)
+world_size = Vector2(18, 15)
+
+[node name="ScrubEastDune" parent="YSortWorld" unique_id=1383533970 instance=ExtResource("27_datr8")]
+position = Vector2(1144, 578)
+world_size = Vector2(24, 20)
+
+[node name="BlueTank" type="Node2D" parent="YSortWorld" unique_id=1379136745]
+position = Vector2(272, 316)
+script = ExtResource("29_5a380")
+display_name = "Vanguard Tank"
+subtitle = "Blue Light Armour"
+portrait_key = "blue_tank"
+sprite_key = "blue_tank"
+role = 2
+max_health = 135
+attack_damage = 22
+armour = 6
+attack_range_cells = 5.6
+guard_range_cells = 6.8
+attack_cooldown = 1.35
+speed_px = 68.0
+turn_rate = 4.6
+
+[node name="BlueCommander" type="Node2D" parent="YSortWorld" unique_id=1767673012]
+position = Vector2(400, 392)
+script = ExtResource("29_5a380")
+display_name = "Blue Commander"
+subtitle = "Royal Guard · Mend"
+portrait_key = "blue_commander"
+sprite_key = "blue_commander"
+role = 1
+max_health = 96
+attack_damage = 16
+armour = 4
+attack_range_cells = 5.2
+attack_cooldown = 0.9
+speed_px = 64.0
+
+[node name="BlueSquad1" type="Node2D" parent="YSortWorld" unique_id=1467452157]
+position = Vector2(400, 464)
+script = ExtResource("29_5a380")
+max_health = 68
+attack_damage = 13
+guard_range_cells = 6.2
+attack_cooldown = 1.0
+speed_px = 58.0
+
+[node name="BlueSquad2" type="Node2D" parent="YSortWorld" unique_id=1769712673]
+position = Vector2(336, 432)
+script = ExtResource("29_5a380")
+max_health = 68
+attack_damage = 13
+guard_range_cells = 6.2
+attack_cooldown = 1.0
+speed_px = 58.0
+
+[node name="BlueSquad3" type="Node2D" parent="YSortWorld" unique_id=2137608019]
+position = Vector2(464, 344)
+script = ExtResource("29_5a380")
+max_health = 68
+attack_damage = 13
+guard_range_cells = 6.2
+attack_cooldown = 1.0
+speed_px = 58.0
+
+[node name="RedSquad1" type="Node2D" parent="YSortWorld" unique_id=427726290]
+position = Vector2(848, 536)
+script = ExtResource("29_5a380")
+display_name = "Legionary"
+subtitle = "Red Infantry"
+portrait_key = "red_squad"
+sprite_key = "red_soldier"
+team = 1
+attack_range_cells = 4.5
+guard_range_cells = 5.6
+speed_px = 56.0
+
+[node name="RedCommander" type="Node2D" parent="YSortWorld" unique_id=1887649563]
+position = Vector2(912, 576)
+script = ExtResource("29_5a380")
+display_name = "Red Commander"
+subtitle = "Order Field Leader"
+portrait_key = "red_commander"
+sprite_key = "red_commander"
+team = 1
+role = 1
+max_health = 92
+attack_damage = 16
+armour = 4
+attack_range_cells = 5.0
+guard_range_cells = 5.8
+attack_cooldown = 0.95
+speed_px = 60.0
+
+[node name="RedSquad2" type="Node2D" parent="YSortWorld" unique_id=2051720296]
+position = Vector2(960, 616)
+script = ExtResource("29_5a380")
+display_name = "Legionary"
+subtitle = "Red Infantry"
+portrait_key = "red_squad"
+sprite_key = "red_soldier"
+team = 1
+attack_range_cells = 4.5
+guard_range_cells = 5.6
+speed_px = 56.0
+
+[node name="RedTank" type="Node2D" parent="YSortWorld" unique_id=542366527]
+position = Vector2(1008, 640)
+script = ExtResource("29_5a380")
+display_name = "Ironclad Tank"
+subtitle = "Red Heavy Armour"
+portrait_key = "red_tank"
+sprite_key = "red_tank"
+team = 1
+role = 2
+max_health = 130
+attack_damage = 20
+armour = 6
+attack_range_cells = 5.4
+guard_range_cells = 5.8
+attack_cooldown = 1.4
+speed_px = 64.0
+turn_rate = 4.4
+
+[node name="RedSquad3" type="Node2D" parent="YSortWorld" unique_id=64412781]
+position = Vector2(1072, 400)
+script = ExtResource("29_5a380")
+display_name = "Legionary"
+subtitle = "Red Infantry"
+portrait_key = "red_squad"
+sprite_key = "red_soldier"
+team = 1
+attack_range_cells = 4.5
+guard_range_cells = 5.4
+speed_px = 56.0
+
+[node name="CombatFx" type="Node2D" parent="." unique_id=1468076563]
+
+[node name="SelectionOverlay" type="Node2D" parent="." unique_id=91813354]
+
+[node name="Grid" type="Node2D" parent="." unique_id=1544754444]
+script = ExtResource("30_sjrrk")
+blocked_cells = SubResource("GradientTexture2D_init_mask")
+
+[node name="Camera" type="Camera2D" parent="." unique_id=1871657820]
+position = Vector2(520, 400)
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1361923972]
+script = ExtResource("31_5fryn")
+
+[node name="CameraViews" type="Node2D" parent="." unique_id=440991414]
+
+[node name="1_Opening" type="Marker2D" parent="CameraViews" unique_id=1099439679]
+position = Vector2(520, 400)
+
+[node name="2_ShelteredSpring" type="Marker2D" parent="CameraViews" unique_id=162953743]
+position = Vector2(1040, 232)
+
+[node name="3_RoadsidePool" type="Marker2D" parent="CameraViews" unique_id=801506332]
+position = Vector2(1052, 708)
+
+[node name="4_ForkedDunes" type="Marker2D" parent="CameraViews" unique_id=1046586841]
+position = Vector2(384, 648)

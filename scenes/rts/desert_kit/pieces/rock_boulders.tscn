@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_2ggv6"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_boulders_hd.png" id="2_y0s8b"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_boulders_pixel.png" id="3_m35ok"]
+
+[node name="RockBoulders" type="Node2D" unique_id=1415411326]
+script = ExtResource("1_2ggv6")
+piece_id = "rock_boulders"
+world_size = Vector2(132, 110)
+detailed_texture_override = ExtResource("2_y0s8b")
+pixel_texture_override = ExtResource("3_m35ok")
+blocked_poly = PackedVector2Array(-52, -32, 18, -46, 56, -4, 44, 44, -46, 42)
+shadow_offset = Vector2(14, 11)
+shadow_size = Vector2(144, 116)
+shadow_alpha = 0.36
+shade_offset = Vector2(24, 18)
+shade_radii = Vector2(84, 64)
+shade_strength = 0.44

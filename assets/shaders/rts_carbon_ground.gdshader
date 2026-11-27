@@ -7,6 +7,9 @@ uniform vec2 world_size = vec2(1408.0, 896.0);
 uniform bool pixel_mode = false;
 uniform bool show_treads = true;
 uniform bool painted_sand = false;
+// Desert kit / Mission 1: gradient noise with quintic fade. Value noise leaves straight light seams
+// along its cell borders (visible as long diagonals in open sand); this keeps the same swell scale.
+uniform bool smooth_wind = false;
 
 float hash21(vec2 p) {
 	p = fract(p * vec2(123.34, 456.21));
@@ -25,6 +28,23 @@ float value_noise(vec2 p) {
 	return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
 
+vec2 grad_dir(vec2 p) {
+	float ang = hash21(p) * 6.2831853;
+	return vec2(cos(ang), sin(ang));
+}
+
+// Centred gradient noise in about [-0.5, 0.5], continuous in slope and curvature.
+float gradient_noise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+	float a = dot(grad_dir(i), f);
+	float b = dot(grad_dir(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0));
+	float c = dot(grad_dir(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0));
+	float d = dot(grad_dir(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0));
+	return mix(mix(a, b, u.x), mix(c, d, u.x), u.y) * 0.75;
+}
+
 vec3 eval_desert_sand(vec2 wpos, float calm) {
 	vec2 sample_pos = pixel_mode ? (floor(wpos) + vec2(0.5)) : wpos;
 	vec3 base = texture(sand_tex, sample_pos / 256.0).rgb;
@@ -41,6 +61,10 @@ vec3 eval_desert_sand(vec2 wpos, float calm) {
 	}
 	float swell = value_noise(wind_uv / vec2(190.0, 78.0)) - 0.5;
 	float drift = value_noise(sample_pos / 320.0) - 0.5;
+	if (smooth_wind) {
+		swell = gradient_noise(wind_uv / vec2(190.0, 78.0));
+		drift = gradient_noise(sample_pos / 320.0 + vec2(17.3, 5.1));
+	}
 	float open_factor = mix(1.0, 0.25, calm);
 	float relief = swell * 0.16 * open_factor;
 	if (pixel_mode) {

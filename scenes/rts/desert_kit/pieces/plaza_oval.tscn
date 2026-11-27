@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_t6f5l"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/plaza_oval_hd.png" id="2_m8g5g"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/plaza_oval_pixel.png" id="3_yvnk8"]
+
+[node name="PlazaOval" type="Node2D" unique_id=96262887]
+script = ExtResource("1_t6f5l")
+piece_id = "plaza_oval"
+world_size = Vector2(288, 192)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_m8g5g")
+pixel_texture_override = ExtResource("3_yvnk8")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

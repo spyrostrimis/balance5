@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_l5xso"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/road_end_cap_hd.png" id="2_jvcyy"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/road_end_cap_pixel.png" id="3_p5dsf"]
+
+[node name="RoadEndCap" type="Node2D" unique_id=677940988]
+script = ExtResource("1_l5xso")
+piece_id = "road_end_cap"
+world_size = Vector2(68, 44)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_jvcyy")
+pixel_texture_override = ExtResource("3_p5dsf")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

@@ -1,5 +1,16 @@
 # HD-2D Visual Checklist & Regression Rubric
 
+## RTS Mission 1 · 2026-11-27
+
+RTS acceptance view is now **1920 × 1080** (fullscreen Forward+), Detailed HD at Command zoom.
+
+- [x] Open sand shows no straight light seams at Command zoom (contrast-boosted check by the spring and HQ). Older builds keep the old noise unless `smooth_wind` is on.
+- [x] Blue squads read as cobalt, not navy, on sand and road beside Red, with wounded 3-of-4 countable. Brackets off. [Before/after](RTS_MISSION_1.md#what-changed-from-reusable-4)
+- [x] HQ joins the road with a driveway; no loose paving oval. The sheltered spring has scrub and reeds at the waterline.
+- [x] Every placed piece in Mission 1 is a kit instance; moving PassCliff still closes and reopens the tank lane.
+- [ ] Blue HQ repainted at Carbon's camera angle ([prompt](../assets/source_inputs/desert_kit/PROMPTS.md)).
+- [ ] Owner approves Mission 1's look at 1080p.
+
 ## RTS Reusable 4 · 2026-11-26
 
 - [x] Capture original Carbon vs colour-only (`1.0×` spacing) vs Reusable 4 (`1.20×` spacing) at Command zoom on pale road and calm sand with selection brackets off. Verify painted front-and-rear cobalt/crimson silhouettes, ivory-scarfed Blue Commander, wounded 3-of-4 countability, and all eight walking facings (`1376 × 768` requested, `1365 × 768` saved).

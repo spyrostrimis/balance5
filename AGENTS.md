@@ -13,9 +13,9 @@ This file is the single source of truth for how the project is built, for every 
 | `scenes/maps/` | Playable levels and studies. `canyon_v2.tscn` is the flat, route-driven canyon. The `desert_canyon_*` scenes are the earlier inherited test chain, kept for comparisons. |
 | `scenes/canyon/` | Canyon module wrappers (`modules/`) and layout data (`canyon_v2_layout.tres`). |
 | `scenes/actors/` | Reusable actors: `blue_commander_3d.tscn`, `canyon_camera.tscn`, `rts_unit.tscn`. |
-| `scenes/rts/` | RTS data: unit stat files (`units/*.tres`) and the placeholder tile set. |
+| `scenes/rts/` | RTS data: the shared **desert kit** (`desert_kit/pieces/` one scene per painted piece, `desert_kit/groups/` editable groups, `desert_kit/kit_preview.tscn`), unit stat files (`units/*.tres`), the placeholder tile set and older study kits. |
 | `scenes/ui/` | Opening screen, Developers Page and build launcher. |
-| `scripts/` | Runtime GDScript only. Canyon systems live in `scripts/canyon/`, RTS systems in `scripts/rts/`. |
+| `scripts/` | Runtime GDScript only. Canyon systems live in `scripts/canyon/`, RTS systems in `scripts/rts/`, `scripts/rts_carbon/` (Carbon's battlefield, units, HUD, pieces) and `scripts/rts_kit/` (Mission 1 battlefield, road helpers, kit preview). |
 | `tests/` | Headless and windowed test harnesses, such as the walk captures. |
 | `tools/godot/` | Editor and bootstrap scripts (assemblers, generators, `build_canyon_v2.gd`). Each one that overwrites committed scenes refuses to run without `-- --force` (`tool_guard.gd`). |
 | `tools/blender/`, `tools/python/` | Blender authoring and image-processing scripts. `tools/legacy/` holds superseded one-offs. |
@@ -43,7 +43,7 @@ Canyon v2 reproduces the composition test: a 2 m S-curve, a stone right wall fro
 1. Before changing geometry, textures, shaders or layout, read `docs/HD2D_CHECKLIST_AND_RUBRIC.md` and `docs/EXPERIMENT_LOG_AND_LESSONS.md`. A `[x]` guards a visual goal against *accidental* regression. It is not a lock.
 2. Nothing is hard-locked. Camera pitch, offset and follow, sun direction, route curve, fog, focus method and landmark timing are tunable composition parameters (table in the rubric). Change one deliberately when it serves Img 1 better: name the change, capture matched before/after views, and update the rubric and log.
 3. Test one hypothesis at a time. A deliberate group (such as the composition test) counts as one when each part keeps a toggle for A/B. Give experiments their own scene and capture prefix.
-4. Render from the real Forward+ viewport at 1376×768. Use `tests/test_true_3d_walk.gd` (D4b default) or `tests/test_composition_walk.gd` (adds whole-scene landmark occlusion) with `--scene`, `--capture-dir` and `--prefix`. For canyon v2 also run `tests/test_canyon_corridor.gd` headless (walls, end caps, exit signal, obstacle-aware navigation). Inspect start (Z +6), midway (−3.5) and exit (−14). Record positions, floor contact and the exit signal, and look at every PNG before reporting.
+4. Render from the real Forward+ viewport. **RTS:** 1920×1080, run with `--fullscreen` (a 1080p window does not fit the work area); Carbon's Detailed art is painted for 1080p. **Canyon:** 1376×768, the size of its reference image. Use `tests/test_true_3d_walk.gd` (D4b default) or `tests/test_composition_walk.gd` (adds whole-scene landmark occlusion) with `--scene`, `--capture-dir` and `--prefix`. For canyon v2 also run `tests/test_canyon_corridor.gd` headless (walls, end caps, exit signal, obstacle-aware navigation). Inspect start (Z +6), midway (−3.5) and exit (−14). Record positions, floor contact and the exit signal, and look at every PNG before reporting.
 5. Log verified results in `docs/EXPERIMENT_LOG_AND_LESSONS.md` and the rubric right after the run.
 6. Use metres and foot-level pivots. Preserve the rock vertex channels: red selects slate, green carries AO, blue at 1 selects ochre boulders. Store binary flags only as 0 or 1 because of sRGB.
 7. Keep source art sharp. Use one blur method per capture.
@@ -82,10 +82,10 @@ The commander script defaults to D4b. With a `route` object assigned it clamps t
 
 ## Next steps
 
-**RTS (priority)** — Start future RTS work from the original **RTS Reusable 2 Carbon** (`scenes/maps/rts_reusable_2_carbon.tscn`). For Mission 1, follow the [Carbon assessment and plan](docs/RTS_REUSABLE_2_CARBON.md#proposed-order-of-work) and [campaign design](docs/GAME_DESIGN.md).
+**RTS (priority)** — All RTS work happens in **RTS Mission 1** (`scenes/maps/rts_mission_1.tscn`) and the shared desert kit (`scenes/rts/desert_kit/`). Do not create new "Reusable N" copies of Carbon. Change the kit or the mission, and keep an A/B switch when a change needs comparing. Carbon, Miasaki and Reusable 3/4 are frozen comparison builds. How to edit: [docs/RTS_MISSION_1.md](docs/RTS_MISSION_1.md). For gameplay, follow the [Carbon assessment and plan](docs/RTS_REUSABLE_2_CARBON.md#proposed-order-of-work) and [campaign design](docs/GAME_DESIGN.md). Run `tests/test_rts_mission_1.gd` after RTS changes.
 
 1. ~~Select, move and attack with four troops plus the commander per side.~~ Done on `scenes/maps/rts_test_map.tscn` (2D, 32 px grid, AStarGrid2D, one unit per tile, placeholder discs). Run `tests/test_rts_test_map.gd` headless and `tests/capture_rts_test_map.gd` windowed after RTS changes.
-2. Tune Carbon's existing opponent, Mend and hold timer into a contested opening. Run `tests/test_rts_reusable_2_carbon.gd` headless and with `-- --capture` for Carbon checks.
+2. Tune the existing opponent, Mend and hold timer into a contested opening in Mission 1. Keep balancing changes switchable so they can be judged against the familiar encounter.
 3. Improve unit and objective visibility at Command zoom. Finish the briefing, result and retry, and verify both victory conditions for each side.
 4. Both settings from one layout: Red's desert and Blue's tropical forest (`docs/references/rts_mission1_*.webp`). Build maps from tiles (the kitbash/Tiled work), not a single painted image, so maps, fog and pathfinding scale.
 

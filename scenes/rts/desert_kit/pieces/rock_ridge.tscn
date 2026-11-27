@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_ggb1d"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_ridge_hd.png" id="2_8a6yx"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_ridge_pixel.png" id="3_ilk2c"]
+
+[node name="RockRidge" type="Node2D" unique_id=94217709]
+script = ExtResource("1_ggb1d")
+piece_id = "rock_ridge"
+world_size = Vector2(232, 180)
+detailed_texture_override = ExtResource("2_8a6yx")
+pixel_texture_override = ExtResource("3_ilk2c")
+blocked_poly = PackedVector2Array(-96, -68, 88, -56, 102, 52, -88, 72)
+shadow_offset = Vector2(16, 12)
+shadow_size = Vector2(242, 184)
+shadow_alpha = 0.36
+shade_offset = Vector2(28, 20)
+shade_radii = Vector2(124, 94)
+shade_strength = 0.44

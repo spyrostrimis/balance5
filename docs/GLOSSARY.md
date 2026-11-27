@@ -32,7 +32,25 @@ Godot does all of this about 60 times a second. The **renderer** we use is calle
 Area: Godot scenes
 
 A small saved scene (such as an oasis or crystal outcrop) made of several separate child pieces that you can drop onto a map as one unit, or open in Godot to move, scale, or swap any individual rock, water pool, bank, or tree inside it.
-*In Balance:* `scenes/rts/reusable_4/roadside_pool.tscn` and `sheltered_spring.tscn` are editable groups placed inside `scenes/maps/rts_reusable_4.tscn`.
+*In Balance:* `scenes/rts/desert_kit/groups/roadside_pool.tscn` and `sheltered_spring.tscn` are editable groups placed inside `scenes/maps/rts_mission_1.tscn`.
+
+### Kit piece
+Area: RTS maps
+
+One painted map part saved as its own small scene, such as a rock, dune, pool or building. It carries its pictures and the ground it blocks, so placing it on a map needs no extra setup. Changing the piece's own scene changes every map that uses it.
+*In Balance:* `scenes/rts/desert_kit/pieces/rock_mesa.tscn`. The **RTS Desert Kit** card shows all of them.
+
+### Instance
+Area: Godot scenes
+
+A copy of a saved scene placed inside another scene. It stays linked to the original, and Godot only stores what you changed on that copy (its position, say). Edit the original and every instance updates.
+*In Balance:* each rock in `rts_mission_1.tscn` is an instance of a kit piece.
+
+### Value noise and gradient noise
+Area: Shaders
+
+Two recipes for smooth random patterns, used for things like gentle light swells across sand. Value noise blends random numbers on a grid and can leave faint straight lines along the grid. Gradient noise blends random slopes instead, so those lines disappear.
+*In Balance:* `smooth_wind` in the RTS sand shaders switches to gradient noise and removed the diagonal seams.
 
 ### Signed-delta dune
 Area: RTS terrain

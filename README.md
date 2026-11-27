@@ -32,6 +32,6 @@ The experimental **Pixel Canyon** builds are listed under Canyon builds. [Two-Ro
 
 ## Status
 
-Early prototype. RTS Mission 1 (*The First Claim*) has a drivable tank on the desert map and a modular kitbash mini-map. The RPG canyon approach has a route-driven 3D scene (`scenes/maps/canyon_v2.tscn`).
+Early prototype. RTS Mission 1 (*The First Claim*) is playable in `scenes/maps/rts_mission_1.tscn`, built from a reusable desert kit (`scenes/rts/desert_kit/`). The RPG canyon approach has a route-driven 3D scene (`scenes/maps/canyon_v2.tscn`).
 
 Everything shipped must be original or properly licensed.

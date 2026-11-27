@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_v2342"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_cliff_ledge_hd.png" id="2_mtobd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_cliff_ledge_pixel.png" id="3_bop8k"]
+
+[node name="OasisCliffLedge" type="Node2D" unique_id=2129010959]
+script = ExtResource("1_v2342")
+piece_id = "oasis_cliff_ledge"
+world_size = Vector2(212, 168)
+detailed_texture_override = ExtResource("2_mtobd")
+pixel_texture_override = ExtResource("3_bop8k")
+blocked_poly = PackedVector2Array(-98, -22, -46, -74, 32, -74, 96, -16, 94, 48, 34, 76, -36, 46, -94, 18)
+shadow_offset = Vector2(16, 12)
+shadow_size = Vector2(220, 170)
+shadow_alpha = 0.36
+shade_offset = Vector2(24, 18)
+shade_radii = Vector2(114, 88)
+shade_strength = 0.44

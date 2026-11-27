@@ -1,0 +1,73 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_water.tscn" id="1_8vtmx"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_bank_sand.tscn" id="2_eyleq"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_gravel.tscn" id="3_gv4gn"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_bank_rock.tscn" id="4_xbbpp"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_cliff_end.tscn" id="5_4b7kg"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_tree.tscn" id="6_nntvk"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_reeds.tscn" id="7_gutxo"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/scrub_small.tscn" id="8_gdncp"]
+
+[node name="RoadsidePool" type="Node2D" unique_id=463338688]
+y_sort_enabled = true
+
+[node name="Water" parent="." unique_id=1306154293 instance=ExtResource("1_8vtmx")]
+position = Vector2(10, 4)
+scale = Vector2(1.16, 0.72)
+world_size = Vector2(156, 118)
+blocked_poly = PackedVector2Array(-74, 8, -48, -28, 12, -48, 64, -36, 72, 0, 34, 36, -24, 48, -68, 34)
+
+[node name="SandyBank" parent="." unique_id=891907653 instance=ExtResource("2_eyleq")]
+position = Vector2(42, 10)
+world_size = Vector2(138, 92)
+
+[node name="WestSandRim" parent="." unique_id=1719483943 instance=ExtResource("2_eyleq")]
+position = Vector2(-18, 12)
+world_size = Vector2(118, 82)
+flip_x = true
+
+[node name="ShoreGravel" parent="." unique_id=64050780 instance=ExtResource("3_gv4gn")]
+position = Vector2(54, 48)
+world_size = Vector2(58, 38)
+
+[node name="RockyBank" parent="." unique_id=1049549522 instance=ExtResource("4_xbbpp")]
+position = Vector2(68, 14)
+world_size = Vector2(124, 98)
+blocked_poly = PackedVector2Array(14, -40, 48, -32, 56, 2, 24, 34, -30, 42, -40, 28, 6, 14, 26, -10)
+shadow_size = Vector2(106, 80)
+shadow_alpha = 0.21
+
+[node name="PassCliff" parent="." unique_id=772727168 instance=ExtResource("5_4b7kg")]
+position = Vector2(-212, 8)
+world_size = Vector2(108, 98)
+blocked_poly = PackedVector2Array(-44, -12, -8, -40, 38, -22, 42, 18, 12, 40, -38, 28)
+shadow_offset = Vector2(11, 9)
+shadow_size = Vector2(114, 100)
+shadow_alpha = 0.3
+shade_offset = Vector2(15, 12)
+shade_radii = Vector2(56, 48)
+shade_strength = 0.34
+
+[node name="BankTree" parent="." unique_id=672989587 instance=ExtResource("6_nntvk")]
+position = Vector2(64, 30)
+world_size = Vector2(92, 58)
+draw_offset = Vector2(0, -19)
+blocked_poly = PackedVector2Array(-12, -10, 12, -10, 13, 8, -13, 8)
+shadow_size = Vector2(82, 44)
+shade_radii = Vector2(44, 26)
+
+[node name="WestReeds" parent="." unique_id=1736258314 instance=ExtResource("7_gutxo")]
+position = Vector2(-54, -14)
+world_size = Vector2(28, 22)
+
+[node name="NearReeds" parent="." unique_id=487313327 instance=ExtResource("7_gutxo")]
+position = Vector2(-4, 34)
+world_size = Vector2(32, 26)
+
+[node name="EastReeds" parent="." unique_id=1370363553 instance=ExtResource("7_gutxo")]
+position = Vector2(92, -16)
+world_size = Vector2(28, 22)
+
+[node name="PassScrub" parent="." unique_id=1184330406 instance=ExtResource("8_gdncp")]
+position = Vector2(-192, 44)

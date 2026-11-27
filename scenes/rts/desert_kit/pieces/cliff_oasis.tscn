@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_btrka"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/cliff_oasis_hd.png" id="2_nvpea"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/cliff_oasis_pixel.png" id="3_0nv1i"]
+
+[node name="CliffOasis" type="Node2D" unique_id=1019146482]
+script = ExtResource("1_btrka")
+piece_id = "cliff_oasis"
+world_size = Vector2(336, 312)
+detailed_texture_override = ExtResource("2_nvpea")
+pixel_texture_override = ExtResource("3_0nv1i")
+blocked_poly = PackedVector2Array(-142, -40, -36, -138, 88, -132, 152, -24, 146, 112, 34, 138, -28, 88, -112, 82, -148, 22)
+shadow_offset = Vector2(18, 14)
+shadow_size = Vector2(344, 310)
+shadow_alpha = 0.38
+shade_offset = Vector2(28, 22)
+shade_radii = Vector2(178, 156)
+shade_strength = 0.48

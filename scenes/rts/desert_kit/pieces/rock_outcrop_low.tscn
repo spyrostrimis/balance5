@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_g1vde"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_outcrop_low_hd.png" id="2_ji4cy"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_outcrop_low_pixel.png" id="3_mjaru"]
+
+[node name="RockOutcropLow" type="Node2D" unique_id=1377812252]
+script = ExtResource("1_g1vde")
+piece_id = "rock_outcrop_low"
+world_size = Vector2(108, 60)
+detailed_texture_override = ExtResource("2_ji4cy")
+pixel_texture_override = ExtResource("3_mjaru")
+blocked_poly = PackedVector2Array(-44, -18, 42, -20, 46, 18, -42, 20)
+shadow_offset = Vector2(9, 7)
+shadow_size = Vector2(112, 64)
+shadow_alpha = 0.28
+shade_offset = Vector2(12, 10)
+shade_radii = Vector2(56, 34)
+shade_strength = 0.28

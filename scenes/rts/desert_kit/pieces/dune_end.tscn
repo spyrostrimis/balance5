@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_vynst"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/dune_end_hd.png" id="2_bwk86"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/dune_end_pixel.png" id="3_wmigv"]
+
+[node name="DuneEnd" type="Node2D" unique_id=867936151]
+script = ExtResource("1_vynst")
+piece_id = "dune_end"
+world_size = Vector2(264, 168)
+layer_role = "dune"
+detailed_texture_override = ExtResource("2_bwk86")
+pixel_texture_override = ExtResource("3_wmigv")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+relief_height = 0.72
+relief_radii = Vector2(122, 76)

@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_fkd7v"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_bank_sand_hd.png" id="2_oqyj1"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_bank_sand_pixel.png" id="3_lnim4"]
+
+[node name="OasisBankSand" type="Node2D" unique_id=891907653]
+z_index = -1
+script = ExtResource("1_fkd7v")
+piece_id = "oasis_bank_sand"
+world_size = Vector2(130, 96)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_oqyj1")
+pixel_texture_override = ExtResource("3_lnim4")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

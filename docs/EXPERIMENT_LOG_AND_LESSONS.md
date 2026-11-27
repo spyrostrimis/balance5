@@ -1,5 +1,15 @@
 # Experiment Log & Hard-Won Lessons
 
+## RTS Mission 1 and the desert kit · 2026-11-27
+
+Rebuilt Reusable 4's map as `scenes/maps/rts_mission_1.tscn` from 33 kit piece scenes and 4 groups (`scenes/rts/desert_kit/`) using the one-time `tools/godot/bootstrap_desert_kit.gd`. [Guide and evidence](RTS_MISSION_1.md)
+
+1. **Instances only store differences if instantiated with edit state.** The first bootstrap saved every property on every placed piece, so it would not have been linked to the kit at all. `instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)` made Godot save only position and real overrides.
+2. **The sand seams were value-noise grid lines.** The non-painted sand branch of `rts_carbon_ground/dune.gdshader` used value noise in rotated wind coordinates; its cell borders showed as long diagonals at Command zoom. Gradient noise with a quintic blend (`smooth_wind`) removed them at the same swell scale. Contrast-boosted before/after confirmed it.
+3. **1080p changes the readability verdict.** At 1920 × 1080 even Reusable 4's soldiers read better than the 1376 × 768 captures suggested, because the art is shown at its painted size. The brighter cobalt (value ×1.22 plus a 0.09 lift on cobalt pixels only) still separates Blue from both sand and road more clearly.
+4. **`Balance.exe` ignores `--script`.** A release export opens the game normally, so earlier "windowed Balance.exe" checks did not run the test script. Run export checks with the Godot runner and `--main-pack builds/Balance.exe` (headless and windowed).
+5. **Verification:** `test_rts_mission_1.gd` passed headless, in Forward+ fullscreen (all PNGs and the 360-frame clip at 1920 × 1080), and against the exported data headless and windowed. Carbon, Miasaki, Reusable 3, Reusable 4 and the test map checks still pass. The HQ is still at the low camera angle until the owner generates the new painting.
+
 ## RTS Reusable 4 · 2026-11-26
 
 Built `scenes/maps/rts_reusable_4.tscn` (`RTS Reusable 4`) and `scenes/rts/reusable_4/kit_preview.tscn` (`RTS Reusable 4 — Desert Kit`) from original Carbon plus six new ChatGPT paintings (`assets/source_inputs/rts_reusable_4/`):

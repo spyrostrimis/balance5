@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_elkhw"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_bank_rock_hd.png" id="2_kp32g"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_bank_rock_pixel.png" id="3_iolau"]
+
+[node name="OasisBankRock" type="Node2D" unique_id=1049549522]
+script = ExtResource("1_elkhw")
+piece_id = "oasis_bank_rock"
+world_size = Vector2(124, 110)
+detailed_texture_override = ExtResource("2_kp32g")
+pixel_texture_override = ExtResource("3_iolau")
+blocked_poly = PackedVector2Array(18, -42, 48, -34, 56, 2, 28, 34, -6, 38, -12, 24, 16, 10, 28, -12)
+shadow_offset = Vector2(6, 5)
+shadow_size = Vector2(108, 86)
+shadow_alpha = 0.22

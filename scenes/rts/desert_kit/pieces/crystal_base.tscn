@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_7jj5g"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/crystal_base_hd.png" id="2_xxeuw"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/crystal_base_pixel.png" id="3_vxiqc"]
+
+[node name="CrystalBase" type="Node2D" unique_id=1662554597]
+script = ExtResource("1_7jj5g")
+piece_id = "crystal_base"
+world_size = Vector2(154, 102)
+detailed_texture_override = ExtResource("2_xxeuw")
+pixel_texture_override = ExtResource("3_vxiqc")
+blocked_poly = PackedVector2Array(-68, -10, -24, -44, 36, -42, 70, -6, 56, 36, -12, 46, -64, 28)
+shadow_offset = Vector2(12, 10)
+shadow_size = Vector2(162, 106)
+shadow_alpha = 0.36
+shade_offset = Vector2(18, 14)
+shade_radii = Vector2(84, 58)
+shade_strength = 0.42

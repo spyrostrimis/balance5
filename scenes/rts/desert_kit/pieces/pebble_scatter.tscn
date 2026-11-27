@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_g7x3r"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/pebble_scatter_hd.png" id="2_uy0vl"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/pebble_scatter_pixel.png" id="3_ynlxg"]
+
+[node name="PebbleScatter" type="Node2D" unique_id=1950079778]
+script = ExtResource("1_g7x3r")
+piece_id = "pebble_scatter"
+world_size = Vector2(44, 34)
+layer_role = "ground_decal"
+detailed_texture_override = ExtResource("2_uy0vl")
+pixel_texture_override = ExtResource("3_ynlxg")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

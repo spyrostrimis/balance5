@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_rbnqq"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_cliff_end_hd.png" id="2_hmumy"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_cliff_end_pixel.png" id="3_tp7jk"]
+
+[node name="OasisCliffEnd" type="Node2D" unique_id=772727168]
+script = ExtResource("1_rbnqq")
+piece_id = "oasis_cliff_end"
+world_size = Vector2(118, 108)
+detailed_texture_override = ExtResource("2_hmumy")
+pixel_texture_override = ExtResource("3_tp7jk")
+blocked_poly = PackedVector2Array(-48, -14, -8, -46, 42, -26, 48, 22, 14, 46, -42, 32)
+shadow_offset = Vector2(12, 10)
+shadow_size = Vector2(124, 110)
+shade_offset = Vector2(18, 14)
+shade_radii = Vector2(64, 54)
+shade_strength = 0.38

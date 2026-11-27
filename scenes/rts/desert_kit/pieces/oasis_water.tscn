@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_ekq5p"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_water_hd.png" id="2_c8bev"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_water_pixel.png" id="3_77c1p"]
+
+[node name="OasisWater" type="Node2D" unique_id=1306154293]
+z_index = -2
+script = ExtResource("1_ekq5p")
+piece_id = "oasis_water"
+world_size = Vector2(156, 114)
+layer_role = "water"
+detailed_texture_override = ExtResource("2_c8bev")
+pixel_texture_override = ExtResource("3_77c1p")
+blocked_poly = PackedVector2Array(-66, 6, -42, -26, 12, -46, 58, -34, 64, -2, 26, 26, -24, 34, -60, 26)
+shadow_alpha = 0.0

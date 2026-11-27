@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_hx2rw"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_reeds_hd.png" id="2_o7d8y"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/oasis_reeds_pixel.png" id="3_1asx2"]
+
+[node name="OasisReeds" type="Node2D" unique_id=1736258314]
+script = ExtResource("1_hx2rw")
+piece_id = "oasis_reeds"
+world_size = Vector2(30, 24)
+layer_role = "prop"
+detailed_texture_override = ExtResource("2_o7d8y")
+pixel_texture_override = ExtResource("3_1asx2")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

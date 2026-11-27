@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_u88u0"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/crystal_tall_hd.png" id="2_ag3tk"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/crystal_tall_pixel.png" id="3_g582i"]
+
+[node name="CrystalTall" type="Node2D" unique_id=1305665006]
+script = ExtResource("1_u88u0")
+piece_id = "crystal_tall"
+world_size = Vector2(66, 70)
+layer_role = "prop"
+draw_offset = Vector2(0, -20)
+detailed_texture_override = ExtResource("2_ag3tk")
+pixel_texture_override = ExtResource("3_g582i")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

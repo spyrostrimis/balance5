@@ -1,5 +1,23 @@
 # Decisions
 
+### 2026-11-27 · Stop making Reusable copies; all RTS work goes into Mission 1 and the shared desert kit
+
+Area: RTS · Status: Decided by owner
+
+Four builds in a row copied Carbon's scene, scripts and art to change a few pieces. **RTS Mission 1** (`scenes/maps/rts_mission_1.tscn`) is now the one RTS scene, built only from `scenes/rts/desert_kit/` (one scene per painted piece plus editable groups). Visual changes become edits to the kit, with a switch for A/B where needed (for example `smooth_wind`). Carbon, Miasaki, Reusable 3 and Reusable 4 stay as frozen comparison cards. [Mission 1 and the kit](RTS_MISSION_1.md)
+
+### 2026-11-27 · Judge the RTS at 1920 × 1080
+
+Area: RTS · Status: Decided by owner
+
+The 1376 × 768 capture size came from the first RPG canyon reference image (`docs/references/rpg_canyon_goal.jpg`). It never related to the RTS. Carbon's Detailed art is painted at twice 960 × 540, which is 1080p, and players will see it at that size. RTS captures now run fullscreen at 1920 × 1080, because a 1080p window does not fit inside the taskbar-reduced work area. The canyon keeps 1376 × 768 for comparison with its reference.
+
+### 2026-11-27 · Replace value noise with gradient noise for open-sand lighting
+
+Area: RTS terrain · Status: Verified
+
+The wind-lighting noise in Carbon's sand shaders drew straight light seams along its grid cells, visible as long diagonals by the spring. Gradient noise with a smoother blend keeps the same swell size without seams. It is an opt-in switch (`smooth_wind`) so the older builds are unchanged. [Before/after](RTS_MISSION_1.md#what-changed-from-reusable-4)
+
 ### 2026-11-26 · Build RTS Reusable 4 with front-and-rear unit paintings, flat-sand dune deltas and seamless road joins
 
 Area: RTS · Status: Trying

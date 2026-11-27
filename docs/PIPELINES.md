@@ -1,8 +1,17 @@
 # Pipelines
 
+## Make or change an RTS map from the desert kit
+
+Area: RTS maps · Status: In use · Tools: Godot 4.7.2, ChatGPT Images, Python (Pillow, NumPy, OpenCV), FFmpeg
+
+1. Work in `scenes/maps/rts_mission_1.tscn` (or a duplicate of it for a new map). Place pieces by dragging scenes from `scenes/rts/desert_kit/pieces/` or `groups/` under `YSortWorld` (upright), `Dunes` or `GroundDecals` (flat). Bend roads by dragging the `Line2D` points under `RoadNetwork`. Set the 1–9 camera views with the `CameraViews` markers.
+2. A new piece is a new painting plus a scene in `pieces/` named after its `piece_id`, holding its art, [blocked footprint](GLOSSARY.md#blocked-footprint), shadow and shade. It appears on the kit preview's page 2 on its own. Put new art in `assets/textures/rts/desert_kit/` as `<piece_id>_hd.png` (2×) and `_pixel.png` (1×). Prompts and source paintings go in `assets/source_inputs/desert_kit/`.
+3. Run `tests/test_rts_mission_1.gd` headless, then in Forward+ with `--fullscreen -- --capture --compare --record` for 1920 × 1080 stills, before/after against Reusable 4 and the clip. Inspect every PNG.
+4. Export, then run the test with `--main-pack builds/Balance.exe`, headless and in a fullscreen window. `Balance.exe` itself ignores `--script` and just opens the game, so window checks of the export go through the Godot runner. [Commands](RTS_MISSION_1.md#reproduce)
+
 ## Extend Carbon with modular ChatGPT landmarks, dunes and unit sheets (RTS Reusable 4)
 
-Area: RTS art · Status: In use · Tools: ChatGPT Images, Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+, FFmpeg
+Area: RTS art · Status: Retired 2026-11-27. Painting and cutout steps still apply; new pieces go into the desert kit ([above](#make-or-change-an-rts-map-from-the-desert-kit)) · Tools: ChatGPT Images, Python (Pillow, NumPy, OpenCV), Godot 4.7.2 Forward+, FFmpeg
 
 1. Stage Carbon's opening, oasis, dune, crystal and unit references in `assets/source_inputs/rts_reusable_4/refs/`. Generate transparent cutouts for front-and-rear units (`01_units_readability.png`), the 6-piece oasis kit (`03_oasis_kit.png`), freestanding tree (`04_oasis_tree.png`), steeper-angle Blue Field HQ (`05_blue_headquarters.png`), and crystal/gravel kit (`06_orichalcum_and_scatter.png`), while generating new dune shapes (`02_dune_kit.png`) on flat `#E48728` orange sand so Gaussian background subtraction feeds Carbon's [signed-delta dune](GLOSSARY.md#signed-delta-dune) shader seamlessly.
 2. Run `C:/Python312/python.exe tools/python/make_rts_reusable_4.py` to slice each sheet along verified empty channels, decontaminate outer rims, synthesize 8 walking facings with non-wrapping `cv2.remap` leg strides, and derive matching road-fork, plaza-join, and sand-fade end pieces from `05_road_and_outpost.png`.

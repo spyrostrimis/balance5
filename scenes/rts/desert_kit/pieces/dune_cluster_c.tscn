@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_6rv8m"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/dune_cluster_c_hd.png" id="2_0d5bl"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/dune_cluster_c_pixel.png" id="3_gsbia"]
+
+[node name="DuneClusterC" type="Node2D" unique_id=1962010039]
+script = ExtResource("1_6rv8m")
+piece_id = "dune_cluster_c"
+world_size = Vector2(280, 174)
+layer_role = "dune"
+detailed_texture_override = ExtResource("2_0d5bl")
+pixel_texture_override = ExtResource("3_gsbia")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+relief_height = 0.85
+relief_radii = Vector2(128, 78)

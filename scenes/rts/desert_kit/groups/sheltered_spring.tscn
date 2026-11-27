@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_water.tscn" id="1_f3lml"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_bank_sand.tscn" id="2_k8jvj"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_gravel.tscn" id="3_2w41v"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_cliff_ledge.tscn" id="4_ntxuj"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_cliff_end.tscn" id="5_sl60w"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/rock_outcrop_low.tscn" id="6_mlvog"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_bank_rock.tscn" id="7_m5s8t"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_tree.tscn" id="8_sxml5"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/oasis_reeds.tscn" id="9_3co4s"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/scrub_small.tscn" id="10_7qtkh"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/scrub_large.tscn" id="11_scrbl"]
+
+[node name="ShelteredSpring" type="Node2D" unique_id=1965367934]
+y_sort_enabled = true
+
+[node name="Water" parent="." unique_id=1306154293 instance=ExtResource("1_f3lml")]
+position = Vector2(-28, 44)
+
+[node name="SandyBank" parent="." unique_id=891907653 instance=ExtResource("2_k8jvj")]
+position = Vector2(-2, 54)
+
+[node name="ShoreGravel" parent="." unique_id=64050780 instance=ExtResource("3_2w41v")]
+position = Vector2(-58, 92)
+
+[node name="MainCliffLedge" parent="." unique_id=2129010959 instance=ExtResource("4_ntxuj")]
+position = Vector2(26, -34)
+
+[node name="EastCliffEnd" parent="." unique_id=772727168 instance=ExtResource("5_sl60w")]
+position = Vector2(116, 36)
+
+[node name="WestShoulderRock" parent="." unique_id=1377812252 instance=ExtResource("6_mlvog")]
+position = Vector2(-88, -4)
+
+[node name="RockyBank" parent="." unique_id=1049549522 instance=ExtResource("7_m5s8t")]
+position = Vector2(18, 62)
+
+[node name="SpringTree" parent="." unique_id=672989587 instance=ExtResource("8_sxml5")]
+position = Vector2(-94, 56)
+
+[node name="WestReeds" parent="." unique_id=1736258314 instance=ExtResource("9_3co4s")]
+position = Vector2(-78, 76)
+
+[node name="SouthReeds" parent="." unique_id=1887164336 instance=ExtResource("9_3co4s")]
+position = Vector2(-30, 90)
+world_size = Vector2(34, 28)
+
+[node name="InnerReeds" parent="." unique_id=1338712019 instance=ExtResource("9_3co4s")]
+position = Vector2(28, 22)
+world_size = Vector2(28, 22)
+
+[node name="CliffScrub" parent="." unique_id=1184330406 instance=ExtResource("10_7qtkh")]
+position = Vector2(88, 92)
+
+[node name="CliffFootScrub" parent="." instance=ExtResource("11_scrbl")]
+position = Vector2(-72, 0)
+world_size = Vector2(30, 25)
+
+[node name="NorthRimScrubA" parent="." instance=ExtResource("11_scrbl")]
+position = Vector2(-50, 10)
+world_size = Vector2(34, 28)
+
+[node name="NorthRimScrubB" parent="." instance=ExtResource("10_7qtkh")]
+position = Vector2(-26, 4)
+world_size = Vector2(22, 18)
+
+[node name="NorthRimScrubC" parent="." instance=ExtResource("11_scrbl")]
+position = Vector2(-4, 8)
+world_size = Vector2(30, 25)
+
+[node name="EastRimScrub" parent="." instance=ExtResource("10_7qtkh")]
+position = Vector2(10, 18)
+world_size = Vector2(20, 16)
+
+[node name="WestRimReeds" parent="." instance=ExtResource("9_3co4s")]
+position = Vector2(-66, 36)
+world_size = Vector2(26, 22)

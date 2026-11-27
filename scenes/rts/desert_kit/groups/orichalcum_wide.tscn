@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_gravel.tscn" id="1_q3rn1"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_base.tscn" id="2_22o1i"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_wide.tscn" id="3_e2v8q"]
+
+[node name="WideOrichalcum" type="Node2D" unique_id=119926475]
+y_sort_enabled = true
+
+[node name="GravelWest" parent="." unique_id=64050780 instance=ExtResource("1_q3rn1")]
+position = Vector2(-46, 30)
+world_size = Vector2(64, 46)
+
+[node name="GravelEast" parent="." unique_id=275124655 instance=ExtResource("1_q3rn1")]
+position = Vector2(48, 26)
+world_size = Vector2(60, 42)
+flip_x = true
+
+[node name="RockBase" parent="." unique_id=1662554597 instance=ExtResource("2_22o1i")]
+
+[node name="WideCluster" parent="." unique_id=924511281 instance=ExtResource("3_e2v8q")]
+position = Vector2(2, 4)

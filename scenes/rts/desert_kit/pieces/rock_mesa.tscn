@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_2rbfp"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_mesa_hd.png" id="2_07kwn"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/rock_mesa_pixel.png" id="3_hg4g8"]
+
+[node name="RockMesa" type="Node2D" unique_id=1091056217]
+script = ExtResource("1_2rbfp")
+world_size = Vector2(188, 132)
+detailed_texture_override = ExtResource("2_07kwn")
+pixel_texture_override = ExtResource("3_hg4g8")
+blocked_poly = PackedVector2Array(-80, -48, 74, -50, 84, 12, 50, 52, -64, 50, -86, 8)
+shadow_offset = Vector2(16, 12)
+shadow_size = Vector2(202, 140)
+shadow_alpha = 0.36
+shade_offset = Vector2(26, 20)
+shade_radii = Vector2(102, 70)
+shade_strength = 0.44

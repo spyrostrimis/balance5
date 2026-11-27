@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_0a5e8"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/dune_ripples_hd.png" id="2_xftkd"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/dune_ripples_pixel.png" id="3_ml673"]
+
+[node name="DuneRipples" type="Node2D" unique_id=77655048]
+script = ExtResource("1_0a5e8")
+piece_id = "dune_ripples"
+world_size = Vector2(248, 152)
+layer_role = "dune"
+detailed_texture_override = ExtResource("2_xftkd")
+pixel_texture_override = ExtResource("3_ml673")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0
+relief_height = 0.4
+relief_radii = Vector2(110, 68)

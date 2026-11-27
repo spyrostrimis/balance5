@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_ki4xn"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/crystal_wide_hd.png" id="2_5rn1k"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/desert_kit/crystal_wide_pixel.png" id="3_7vu0q"]
+
+[node name="CrystalWide" type="Node2D" unique_id=924511281]
+script = ExtResource("1_ki4xn")
+piece_id = "crystal_wide"
+world_size = Vector2(104, 40)
+layer_role = "prop"
+draw_offset = Vector2(0, -10)
+detailed_texture_override = ExtResource("2_5rn1k")
+pixel_texture_override = ExtResource("3_7vu0q")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

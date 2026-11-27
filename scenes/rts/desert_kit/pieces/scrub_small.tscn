@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/rts_carbon/rts_carbon_piece.gd" id="1_jjuev"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/scrub_small_hd.png" id="2_44u51"]
+[ext_resource type="Texture2D" path="res://assets/textures/rts/carbon/scrub_small_pixel.png" id="3_0pyg3"]
+
+[node name="ScrubSmall" type="Node2D" unique_id=1184330406]
+script = ExtResource("1_jjuev")
+piece_id = "scrub_small"
+world_size = Vector2(20, 16)
+layer_role = "prop"
+detailed_texture_override = ExtResource("2_44u51")
+pixel_texture_override = ExtResource("3_0pyg3")
+blocked_poly = PackedVector2Array()
+shadow_alpha = 0.0

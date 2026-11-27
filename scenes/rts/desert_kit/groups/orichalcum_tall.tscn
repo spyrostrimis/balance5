@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_gravel.tscn" id="1_ddcod"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_base.tscn" id="2_46wve"]
+[ext_resource type="PackedScene" path="res://scenes/rts/desert_kit/pieces/crystal_tall.tscn" id="3_cisua"]
+
+[node name="TallOrichalcum" type="Node2D" unique_id=1772636417]
+y_sort_enabled = true
+
+[node name="GravelSkirt" parent="." unique_id=64050780 instance=ExtResource("1_ddcod")]
+position = Vector2(0, 34)
+world_size = Vector2(72, 48)
+
+[node name="RockBase" parent="." unique_id=1662554597 instance=ExtResource("2_46wve")]
+world_size = Vector2(126, 90)
+blocked_poly = PackedVector2Array(-56, -8, -20, -38, 30, -36, 58, -4, 46, 32, -10, 40, -52, 24)
+shadow_size = Vector2(134, 96)
+shadow_alpha = 0.38
+shade_radii = Vector2(72, 54)
+shade_strength = 0.44
+
+[node name="TallSpire" parent="." unique_id=1305665006 instance=ExtResource("3_cisua")]
+position = Vector2(0, 6)

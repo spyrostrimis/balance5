@@ -1,5 +1,17 @@
 # Balance dictionary
 
+## Travel backup
+
+A ZIP containing the editable project and original asset inputs for continuing on another computer. Balance's travel backup also includes saved evidence for the two Mission 1 maps and Fight 4. [Setup and contents](CONTINUE_ON_ANOTHER_PC.md)
+
+## SHA-256 checksum
+
+A file fingerprint used to check that a copied file has the same contents. The travel ZIP has a checksum beside it, and its manifest lists fingerprints for the included files. [Travel backup](CONTINUE_ON_ANOTHER_PC.md)
+
+## Git clone
+
+A local copy of a GitHub repository with its change history and connection back to GitHub. Use a clone when you want to commit and push work from another PC. [Moving computers](CONTINUE_ON_ANOTHER_PC.md)
+
 ## Sculpted Bend
 
 - **Matte painting** — a picture of the far landscape placed beyond the playable 3D ground. It can add cliffs, distance and light that would take much longer to model.

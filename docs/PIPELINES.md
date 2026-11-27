@@ -1,5 +1,13 @@
 # Pipelines
 
+## Package the project for another PC
+
+Area: Project portability · Status: In use · Tools: Git, Python standard library, Godot 4.7.2
+
+1. Commit all intended source and asset changes. Run `python tools/python/make_travel_backup.py` to package all tracked files and the three selected evidence folders into ignored `builds/`.
+2. The tool checks ZIP integrity and writes a per-file manifest and an adjacent SHA-256 checksum. Transfer the ZIP and checksum together. Git history, Godot caches, binaries and installed software are excluded.
+3. Verify a separate source copy by importing it without an existing `.godot` folder and running the Forest Mission 1, Desert Mission 1 and Fight 4 suites. All passed on 2026-11-27; the full-project import also reported unrelated canyon resource-ID errors. [Exact setup and commands](CONTINUE_ON_ANOTHER_PC.md)
+
 ## Add a planet skin
 
 Area: RTS art · Status: In use · Tools: ChatGPT Images or an existing repaint, Python (Pillow, NumPy), Godot 4.7.2

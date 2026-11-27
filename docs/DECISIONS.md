@@ -1,5 +1,11 @@
 # Decisions
 
+### 2026-11-27 · Carry the complete editable project when travelling
+
+Area: Project portability · Status: Verified source checks
+
+The owner requested a GitHub push and a ZIP for continuing Mission 1 Forest, Mission 1 Desert and Painted Forest Fight 4 abroad. Keep the whole tracked project in the backup, including shared assets, both kits, original paintings and authoring tools, rather than risk omitting shared dependencies. Include local evidence for the three builds separately from GitHub. A cache-free source copy imported and passed all three gameplay suites in Godot 4.7.2; unrelated canyon saved-resource IDs produced seven first-import errors. [Setup, scope and checks](CONTINUE_ON_ANOTHER_PC.md)
+
 ### 2026-11-27 · Forest blocked ground comes from the paintings
 
 Area: RTS maps · Forest kit · Status: Verified

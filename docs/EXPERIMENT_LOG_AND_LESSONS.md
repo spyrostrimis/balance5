@@ -1,5 +1,9 @@
 # Experiment Log & Hard-Won Lessons
 
+## Travel source portability · 2026-11-27
+
+Copied every tracked project file to `tmp/travel_portability_check`, excluding this PC's Godot cache, then imported using Godot 4.7.2 headless. Import completed. `test_rts_mission_1_forest.gd`, `test_rts_mission_1_desert.gd` and `test_forest_fight_4.gd` all passed from that copy. Seven unresolved saved-resource IDs came from the unrelated canyon-kit GLB import configuration; none appeared in the requested gameplay checks. No geometry, art or layout changed, so there is no new visual comparison. This establishes source availability and gameplay portability on this machine, not performance on the travel PC. [Setup and complete-source backup](CONTINUE_ON_ANOTHER_PC.md)
+
 ## RTS Mission 1 and the desert kit · 2026-11-27
 
 Rebuilt Reusable 4's map as `scenes/maps/rts_mission_1_desert.tscn` from 33 kit piece scenes and 4 groups (`scenes/rts/desert_kit/`) using the one-time `tools/godot/bootstrap_desert_kit.gd`. [Guide and evidence](RTS_MISSION_1_DESERT.md)

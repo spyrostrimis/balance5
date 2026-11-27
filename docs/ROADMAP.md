@@ -1,5 +1,9 @@
 # Roadmap
 
+## Working on another computer
+
+- [x] Verify Forest Mission 1, Desert Mission 1 and Painted Forest Fight 4 from a separate tracked-source copy without the existing Godot cache; all three headless suites pass (2026-11-27). Add complete-source travel packaging, source paintings, both kits and local evidence. [Setup and backup](CONTINUE_ON_ANOTHER_PC.md)
+
 ## Painted tropical forest study
 
 - [x] Build and export **2D Painted Forest Fight 4** with a fixed isometric camera, continuous two-way doorway and three-bat encounter. Verify full-circle fire in both settings. [Play and captures](FOREST_FIGHT_4.md)
